@@ -9,7 +9,10 @@ import Pagination from '../../components/Pagination';
 
 class DataList extends Component { // eslint-disable-line react/prefer-stateless-function
     constructor(props) {
-        super(props)
+        super(props);
+
+        this.makeLoading = this.makeLoading.bind(this);
+        this.makeContentPlaceholderLoading = this.makeContentPlaceholderLoading.bind(this);
     }
 
     makeDataList(Items,selectedView){
@@ -29,13 +32,16 @@ class DataList extends Component { // eslint-disable-line react/prefer-stateless
         );
     }
 
-    makeLoading(Placeholder,total){
-        // return (
-        //     // <li className="dl__dataList--loading">
-        //     //     <h1>Loading...</h1>
-        //     //     <div> </div>
-        //     // </li>
-        // );
+    makeLoading(){
+        return (
+            <li className="dl__dataList--loading">
+                <h1>Loading...</h1>
+                <div> </div>
+            </li>
+        );
+    }
+
+    makeContentPlaceholderLoading(Placeholder,total){
         let placeholders = [];
         
         for(let i=0;i<total;i++){ 
@@ -47,7 +53,10 @@ class DataList extends Component { // eslint-disable-line react/prefer-stateless
 
     render() {   
         const {config,selectedView,Items=[],showLoading,width} = this.props,  
-            listItems = showLoading ? this.makeLoading(selectedView.customContentPlaceholder,selectedView.customContentPlaceholderAmount) : ((Items && Items.length > 0) ? this.makeDataList(Items,selectedView) : this.makeNoResults(selectedView.noResultsMessage)),
+            listItems = showLoading 
+                ? selectedView.customContentPlaceholder ? this.makeContentPlaceholderLoading(selectedView.customContentPlaceholder,selectedView.customContentPlaceholderAmount) : this.makeLoading()
+                : ((Items && Items.length > 0) ? this.makeDataList(Items,selectedView) : this.makeNoResults(selectedView.noResultsMessage)),
+
             classNames = config.pinPagination ? 'dl__dataList dl__pinPagination' : 'dl__dataList',
             listHeader = selectedView.showListHeader ? (<ListHeader selectedView={selectedView} item={Items[0]}> </ListHeader>) :'',
             pagination = (Items && Items.length > 0) ? (<Pagination bottom={config.dataList.paginationBottomPosition}> </Pagination>) : '';
