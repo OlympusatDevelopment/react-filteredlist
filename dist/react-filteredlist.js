@@ -59931,17 +59931,17 @@ function extend() {
 },{}],329:[function(require,module,exports){
 module.exports={
   "name": "react-filteredlist",
-  "version": "1.14.2", 
+  "version": "1.14.4", 
   "description": "FilteredList",
   "main": "lib/FilteredList.js",
   "author": "Adam Gedney",
-  "homepage": "https://bitbucket.org/olympusat/react-filteredlist",
+  "homepage":"https://github.com/OlympusatDevelopment/react-filteredlist",
   "repository": {
     "type": "git",
-    "url": "git@bitbucket.org:olympusat/react-filteredlist.git"
+    "url":"git@github.com:OlympusatDevelopment/react-filteredlist.git"
   },
   "bugs": {
-    "url": "https://bitbucket.org/olympusat/react-filteredlist"
+    "url":"https://github.com/OlympusatDevelopment/react-filteredlist/issues"
   },
   "dependencies": {
     "bluebird": "^3.5.0",
@@ -63669,7 +63669,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// Remove the first load marker,
+// Remove the first load marker,..
 // first_load gets used in the app reducer
 window.onbeforeunload = function (e) {
     localStorage.removeItem("first_load", "1");
@@ -64574,7 +64574,11 @@ var DataList = function (_Component) {
     function DataList(props) {
         _classCallCheck(this, DataList);
 
-        return _possibleConstructorReturn(this, (DataList.__proto__ || Object.getPrototypeOf(DataList)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (DataList.__proto__ || Object.getPrototypeOf(DataList)).call(this, props));
+
+        _this.makeLoading = _this.makeLoading.bind(_this);
+        _this.makeContentPlaceholderLoading = _this.makeContentPlaceholderLoading.bind(_this);
+        return _this;
     }
 
     _createClass(DataList, [{
@@ -64605,13 +64609,25 @@ var DataList = function (_Component) {
         }
     }, {
         key: 'makeLoading',
-        value: function makeLoading(Placeholder, total) {
-            // return (
-            //     // <li className="dl__dataList--loading">
-            //     //     <h1>Loading...</h1>
-            //     //     <div> </div>
-            //     // </li>
-            // );
+        value: function makeLoading() {
+            return _react2.default.createElement(
+                'li',
+                { className: 'dl__dataList--loading' },
+                _react2.default.createElement(
+                    'h1',
+                    null,
+                    'Loading...'
+                ),
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    ' '
+                )
+            );
+        }
+    }, {
+        key: 'makeContentPlaceholderLoading',
+        value: function makeContentPlaceholderLoading(Placeholder, total) {
             var placeholders = [];
 
             for (var i = 0; i < total; i++) {
@@ -64630,7 +64646,7 @@ var DataList = function (_Component) {
                 Items = _props$Items === undefined ? [] : _props$Items,
                 showLoading = _props.showLoading,
                 width = _props.width,
-                listItems = showLoading ? this.makeLoading(selectedView.customContentPlaceholder, selectedView.customContentPlaceholderAmount) : Items && Items.length > 0 ? this.makeDataList(Items, selectedView) : this.makeNoResults(selectedView.noResultsMessage),
+                listItems = showLoading ? selectedView.customContentPlaceholder ? this.makeContentPlaceholderLoading(selectedView.customContentPlaceholder, selectedView.customContentPlaceholderAmount) : this.makeLoading() : Items && Items.length > 0 ? this.makeDataList(Items, selectedView) : this.makeNoResults(selectedView.noResultsMessage),
                 classNames = config.pinPagination ? 'dl__dataList dl__pinPagination' : 'dl__dataList',
                 listHeader = selectedView.showListHeader ? _react2.default.createElement(
                 _ListHeader2.default,

@@ -53,7 +53,7 @@ class DataList extends Component { // eslint-disable-line react/prefer-stateless
 
     render() {   
         const {config,selectedView,Items=[],showLoading,width} = this.props,  
-            listItems = showLoading 
+            listItems = (showLoading || !Items) 
                 ? selectedView.customContentPlaceholder ? this.makeContentPlaceholderLoading(selectedView.customContentPlaceholder,selectedView.customContentPlaceholderAmount) : this.makeLoading()
                 : ((Items && Items.length > 0) ? this.makeDataList(Items,selectedView) : this.makeNoResults(selectedView.noResultsMessage)),
 
@@ -67,7 +67,7 @@ class DataList extends Component { // eslint-disable-line react/prefer-stateless
 
                 <div className="dl__dataListWrapper" style={{overflowY:config.dataList.overflowY}}> 
                     <ul className="dl__dataList-list">
-                        {listItems}
+                        {listItems} 
                     </ul>
                 </div>
                 {pagination}
