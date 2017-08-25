@@ -1,0 +1,54 @@
+.dl__viewInfo{
+  margin: 0;
+
+  .label{
+	font-weight: 700;
+  }
+
+  li{
+	line-height: 1.2;
+	padding-left: 9px;
+	height: 38px;
+	vertical-align: middle;
+	display: block;
+
+	&:first-of-type{
+	  //margin-top: 11px;
+	}
+
+	&:last-of-type{
+	  //margin-bottom: 11px;
+	}
+  }
+
+  &PaginationData{
+	padding-top: 6px;
+  }
+
+  &IconStrip{
+	@extend .cf;
+	border-bottom: 1px solid #efefef;
+	width: 100%;
+	margin: 0;
+    height: auto !important;
+  }
+
+  &--share{
+	position: relative;
+	width: 37px;
+	height: 37px;
+	text-align: center;
+	float: right;
+    padding-top: 12px;
+
+	&:after{
+	  @include faPseudo($fa-var-share-alt,0,0,0,0);
+      position: relative;
+	}
+
+	&:hover{
+	  cursor: pointer;
+	  background: #efefef;
+	}
+  }
+}

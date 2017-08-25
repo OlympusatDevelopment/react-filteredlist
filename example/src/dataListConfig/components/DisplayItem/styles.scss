@@ -1,0 +1,218 @@
+
+.ms__displayItem{
+  $this : &;
+  position: relative;
+  z-index: 0;
+
+  a{
+	color: $color-link;
+	//position: relative;
+    
+    &:hover{
+        text-decoration: none;
+    }
+  }
+
+  h1,h2,h3,h4,p,li{
+	margin: 0;
+	color: $color-text-primary;
+  }
+
+  h2{
+	// font-family: Georgia, Times, "Times New Roman", serif;
+	font-size: 18px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 700;
+	line-height: 15.4px;
+	color: $color-h-text-primary; 
+  }
+
+  .ms__titleAddon{
+      font-size: 14px;
+      vertical-align: baseline;
+      color: $color-h-text-secondary;
+  }
+
+  h3{
+	font-size: 12px;
+	margin-top: 3px;
+	color: $color-text;
+  }
+
+  p,span,img{
+	vertical-align: top;
+  }
+
+  p{
+	line-height: 1.2;
+	overflow: hidden;
+	white-space: normal;
+  }
+
+  
+	#{$this}Inner{
+	  @extend .cf;
+	  padding: 18px 15px 18px 0;
+
+	  >div,>a{
+        display: block;
+		@extend .cf;
+		@include col(4);
+		float: left;
+		height: 95px;  
+
+		&:nth-of-type(2){
+
+		}
+
+		&#{$this}ImgWrapper{
+		  width: 238px;
+		}
+	  }
+	}
+
+  &--pinBottom{
+	bottom : -5px;
+	position: absolute;
+  }
+
+  &InnerCol{
+	display: inline-block;
+	//float: left;
+	position: relative;
+
+	&:first-of-type{
+	   @include col(7);
+	}
+
+	&:last-of-type{
+	  @include col(5);
+	}
+  }
+
+  &ImgWrapper{
+	overflow: hidden;
+	position: relative;
+	z-index: 99999;
+    overflow: visible;
+
+	img{
+	  max-height: 100%;
+	  display: inline-block;
+	  margin: 0 auto;
+	}
+
+	.ms__imgMaxWidth{
+	  max-width: 180px;
+	  max-height: 100%;
+	//   box-shadow: 0 0 22px #555;
+	}
+  }
+
+  &MetaGroup{
+	margin-bottom: 18px;
+	position: relative;
+	height: 100%;
+	z-index: 99999;
+
+    span{
+        font-size: 12px;
+    }
+
+	&:last-of-type{
+	  margin-bottom: 0;
+	}
+
+	#{$this}--label{
+	  font-weight: 400;
+	}
+
+	#{$this}--link{
+	  color: $color-link;
+	}
+
+    #{$this}--bold{
+	  font-weight: 800;
+	}
+  }
+
+  &Flag{
+	height: 9px;
+	margin-left: 3px;
+	margin-top: 2px;
+	display:inline-block;
+  }
+
+  &Check{
+	display: inline-block;
+
+	// Commented out because we need to handle displaying for the checked state
+	//input[type="checkbox"]{
+	//  appearance: none;
+	//  -webkit-appearance: none;
+	//  background: none;
+	//  border: none;
+	//  border:1px solid $color-link;
+	//  color: $color-link;
+	//  width: 12px;
+	//  height: 12px;
+	//  border-radius: 2px;
+	//}
+  }
+
+  &Button{
+	padding: 6px;
+	color: #fff;
+	font-weight: 700;
+	font-size: 14px;
+	background: $color-link;
+	border: none;
+
+	&:hover{
+	  cursor: pointer;
+	  opacity: 0.7;
+	}
+
+	&--stripe{
+	  background: repeating-linear-gradient(
+		  135deg,
+		  $color-link,
+		  $color-link 10px,
+		  darken($color-link,15%) 12px,
+		  darken($color-link,15%) 12px
+	  );
+	}
+  }
+}
+
+.marketPage{
+    .ms{
+    &__featuredImgWrapper{
+        width: 226px;
+        height: 100%;
+        display: inline-block;
+        background: #000;
+        text-align: center;
+        box-shadow: 1px 1px 7px #aaa;
+    }
+
+    &__displayItemButton{
+        width: 105px;
+        height: 26px;
+        display: block;
+        position: relative;
+        z-index: 5;
+        font-size: 11px;
+        
+        &:first-of-type{
+            margin-bottom: 9px;
+        }
+
+        &--black{
+            background: $color-base-black;
+            color: #fff;
+        }
+    }
+    }
+}

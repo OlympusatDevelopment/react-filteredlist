@@ -1,0 +1,47 @@
+.dl{
+    &__saveFilterset{
+         label{
+            line-height: 1.5;
+            font-weight: 700;
+        }
+
+        &Form{
+
+            input{
+                height: 33px;
+                border: 1px solid #efefef;
+                width: 100%;
+
+                &[type="text"]{
+                    padding-left: 6px;
+                }
+
+                &[type="submit"]{
+                    background: #333;
+                    color: #fff;
+                    margin: 9px 0;
+                }
+            }
+        }
+
+        &Delete{
+            margin-bottom: 18px;
+            position: relative;
+            padding-left: 18px;
+
+            &:after{
+                @include faPseudo($fa-var-trash,0,auto,auto,0);
+                color: #333;
+                font-size: 14px;
+                line-height: 14px;
+            }
+
+            &Button{
+                height: 33px;
+                color: #333;
+                line-height: 14px;
+            }
+        }
+    }
+
+}

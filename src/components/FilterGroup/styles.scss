@@ -1,0 +1,72 @@
+.dl__filterGroup{
+  $this:&;
+  $text : #fff;
+  $text-alt : #333;
+  $border : #efefef;
+  $border-alt : #efefef;
+
+  @include duration;
+  height: 33px;
+  position: relative;
+  overflow: hidden;
+
+  &:after{
+	content: $fa-var-chevron-right;
+	font-family: FontAwesome;
+	position: absolute;
+	right: 18px;
+	top: 9px;
+	font-size: 14px;
+	// color: $text;
+	@include duration(0.3);
+  }
+
+  &:hover{
+	cursor: pointer;
+  }
+
+  &--open{
+	@include duration;
+	height: auto;
+	overflow: visible;
+
+	&:after{
+	  transform: rotate(90deg);
+	  @include duration(0.3);
+	}
+  }
+
+  &Label{
+	position: relative;
+	line-height: 33px;
+	color: $text;
+	background: $color-base-blue;
+	height: 33px;
+	padding-left: 6px;
+	border-bottom: 1px solid $border;
+  }
+
+  &Filters{
+	padding: 6px;
+	padding-bottom: 24px;
+  }
+
+  &[data-issingle="true"]{
+	height: auto;
+	overflow: visible;
+
+	#{$this}{
+	  &:after{
+		content: '';
+	  }
+
+	  &Label{
+		background: none;
+		color: $text-alt;
+		border-bottom: 1px solid $border-alt;
+		font-size: 14px;
+		font-weight: 100;
+	  }
+	}
+  }
+}

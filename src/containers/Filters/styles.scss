@@ -1,0 +1,114 @@
+.dl__filters{
+  $bg:#333;
+
+  width: 18%;
+  min-width: 200px;
+  float: left;
+  height: auto;
+  min-height: 100%;
+  padding-bottom: 57px;
+
+  @include break (md-lg){
+      @include duration();
+      width: 300px;
+      margin-left: -340px;
+      position: absolute;
+      background: #fff;
+      z-index: 9999;
+      box-shadow: 3px 1px 3px #aaa;
+  }
+
+// In the app component
+  &--toggle{
+    display: none;
+
+    @include break (md-lg){
+        display: block;
+        width: 27px;
+        height: 27px;
+        position: absolute;
+        background: #fff;
+        z-index: 99999;
+        border: 1px solid #efefef;
+        border-radius: 3px;
+        left: 2px;
+        top: 2px;
+    }
+
+    &:after{
+        @include faPseudo($fa-var-filter, 0,0,0,0);
+        width: 27px;
+        height: 27px;
+        font-size: 18px;
+        text-align: center;
+        line-height: 27px;
+        color: #777;
+    }
+
+    &:hover{
+        background: #777;
+        cursor: pointer;
+        
+        &:after{
+            color: #fff;
+        }
+    }
+  }
+
+  &--open{
+      @include duration();
+      margin-left: 0;
+  }
+
+  .dl__viewTabs{
+    @extend .cf;
+    width: 100%;
+    background: $bg;
+    height: 33px;
+  }
+
+  .dl__viewTab{
+    padding: 6px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    display: block;
+    float: left;
+    margin-top: 9px;
+    margin-right: 1px;
+    border-bottom: none;
+    background: lighten($bg,20%);
+    color: darken(#fff,35%);
+    position: relative;
+    z-index: 4;
+    line-height: 12px;
+
+    &[data-active="true"]{
+      font-weight: 700;
+      background: #ffffff;
+      border: 1px solid #efefef;
+      color: #333;
+      border-bottom: none;
+    }
+
+    //&[data-active="false"]{
+    //  margin-top: 10px;
+    //}
+
+    &[data-issingle="true"]{
+      border: none;
+      font-size: 18px;
+      margin-bottom: -14px;
+      font-weight: 100;
+
+      &:hover{
+        cursor: default;
+        opacity: 1;
+      }
+    }
+
+    &:hover{
+      cursor: pointer;
+      opacity: 0.7;
+    }
+  }
+}

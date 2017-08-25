@@ -1,0 +1,32 @@
+.select-style{
+ border-radius: 3px;
+ overflow: hidden;
+ width: 100%;
+ position: relative;
+
+ select{
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+ }
+
+ &:after {
+  content: "▼";
+  position: absolute;
+  top: 10px;
+  right: 1px;
+  bottom: 1px;
+  font-size: 60%;
+  padding: 0 7px;
+  line-height: 33px;
+  background: rgba(0, 0, 0, 0.4);
+  color: rgba(255,255,255,0.7);
+  pointer-events: none;
+  border-radius: 0 3px 3px 0;
+ }
+
+ &:hover{
+  opacity: 0.7;
+  cursor: pointer;
+ }
+}

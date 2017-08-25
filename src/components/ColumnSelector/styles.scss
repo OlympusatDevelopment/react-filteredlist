@@ -1,0 +1,41 @@
+.dl__columnSelector{
+  $bg : #fff;
+  $border : #efefef;
+  $shadow : #888;
+
+  border: 1px solid #efefef;
+  width: auto;
+  position: absolute;
+  right: 36px;
+  top :21px;
+  z-index: 3;
+  padding: 18px 9px 18px 9px;
+  border-radius: 3px;
+  background: $bg;
+  box-shadow: 0 0 6px $shadow;
+
+  h4{
+	margin: 0;
+	padding: 0 90px 0 0;
+	font-weight: 700;
+	font-size: 14px;
+	border-bottom: 1px solid $border;
+	margin-bottom: 9px;
+  }
+
+  span{
+	display: block;
+	line-height: 18px;
+	font-size: 12px;
+
+	.dl__checkbox{
+	 	display: inline-block;
+	}
+
+	input{
+	  margin-right: 6px;
+	  width: 12px;
+	  height: 12px;
+	}
+  }
+}

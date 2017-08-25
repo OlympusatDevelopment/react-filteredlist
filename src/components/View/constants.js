@@ -1,0 +1,1 @@
+export const RESET_FILTERS = 'dl/RESET_FILTERS';

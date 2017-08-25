@@ -1,0 +1,97 @@
+
+//===========================//
+// Colors
+// > prepend color variables with 'color-'
+//===========================//
+
+
+
+//===========================//
+// Base Colors (For brand specific theming)
+//===========================//
+$color-base-red : red;
+$color-base-orange : #d78d45;
+$color-base-yellow : yellow;
+$color-base-green : green;
+$color-base-blue : #105caa;
+$color-base-light-blue : #4ab2cd;
+$color-base-purple : #3f3685;
+$color-base-brown : brown;
+$color-base-black : #000;
+$color-base-grey : #ddd;
+$color-base-dark-grey : #aaa;
+$color-base-off-white : #efefef;
+$color-base-white : #fff;
+
+
+//===========================//
+// General
+//===========================//
+$color-go: $color-base-green;
+$color-warning: $color-base-yellow;
+$color-danger: $color-base-red;
+
+$color-icon : #4e5961;
+$color-icon-secondary : lighten($color-icon,10%);
+
+
+
+//===========================//
+// Backgrounds
+//===========================//
+$color-bg : $color-base-off-white;
+$color-bg-alt : $color-base-dark-grey;
+
+
+
+//===========================//
+// Links
+//===========================//
+$color-link: #4ab2cd;
+$color-link-visited: darken($color-link,10%);
+$color-link-hover: darken($color-link,20%);
+$color-link-active: darken($color-link,30%);
+
+
+
+//===========================//
+// Type
+//===========================//
+$color-text: #777777;
+$color-text-primary: darken($color-text,10%);
+$color-text_secondary: darken($color-text,20%);
+$color-text-tertiary: darken($color-text,30%);
+
+$color-text-alt : #fff;
+$color-text-primary-alt: darken($color-text-alt,5%);
+$color-text-secondary-alt: darken($color-text-alt,10%);
+$color-text-tertiary-alt: darken($color-text-alt,15%);
+
+$color-h-text-primary: #333;
+$color-h-text-secondary: lighten($color-h-text-primary,10%);
+
+$color-text-standout : $color-base-red;
+
+
+
+//===========================//
+// Borders
+//===========================//
+$color-border: $color-base-grey;
+$color-border-primary: darken($color-border,5%);
+$color-border-secondary: darken($color-border,10%);
+$color-border-tertiary: darken($color-border,15%);
+
+
+
+//===========================//
+// Buttons
+//===========================//
+$color-button: #e12826;
+
+
+
+
+
+
+

@@ -1,0 +1,43 @@
+.datatable{
+  &__rowHeader{
+	height: 33px;
+	line-height: 33px;
+	font-weight: 700;
+	font-size: 14px;
+	font-family: 'Roboto',sans-serif;
+	margin-top: 36px;
+  }
+
+  &__a{
+	padding: 0;
+	color: $color-text;
+	display: block;
+	height: 33px;
+	line-height: 33px;
+	font-size: 12px;
+	vertical-align: middle;
+	border-bottom: 1px solid $color-border;
+	@extend .truncate;
+
+	&:hover{
+	  //background: rgba(0,0,0,0.02);
+	  //box-shadow: 0 2px 2px 0 rgba(0,0,0,.16), 0 0 2px 0 rgba(0,0,0,.12);
+	  //margin-top: -1px;
+	  background: #fafafa;
+	}
+  }
+
+  &__gravatar{
+	height: 27px;
+	width: 27px;
+	overflow: hidden;
+	border-radius: 50%;
+	margin: 3px auto;
+
+	img{
+	  height: 30px;
+	  width: auto;
+	  text-align: center;
+	}
+  }
+}

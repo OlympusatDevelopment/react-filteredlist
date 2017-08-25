@@ -1,0 +1,83 @@
+.dl__filterItem{
+  position: relative;
+  @extend .cf;
+
+	label{
+	  display: block;
+	  padding-top: 9px;
+	  line-height: 1.75;
+      color: #333;
+	}
+
+  &RangeClear{
+	width: 18px;
+	height: 18px;
+	text-align :right;
+	position: absolute;
+	right: 7px;
+	top: 10px;
+	display: inline-block;
+
+	a{
+	  color: darken($color-danger,15%);
+	  text-decoration: underline;
+	}
+
+	&:hover{
+	  @extend .hover;
+	}
+  }
+
+  .DateRangePicker{
+	width: 100%;
+
+	&__picker{
+	  z-index: 100;
+	  top: 29px;
+	}
+
+	&Input{
+	  z-index: 0;
+	  position: relative;
+	  width: 100%;
+
+	  &__arrow svg{
+		width: 17px;
+		height: 17px;
+	  }
+	}
+  }
+
+  .DateInput{
+	font-size: 11px;
+	line-height: 9px;
+	padding: 3px 8px;
+	width: 43%;
+
+	&--with-caret{
+	  &:before{
+		top: 18px
+	  }
+	  &:after{
+		top: 20px;
+		transform:none;
+	  }
+	}
+  }
+
+  &Checkbox{
+      color: #333;
+      font-size: 12px;
+      border-top: 1px solid #efefef;
+      @extend .cf;
+
+      input[type="checkbox"]{
+          margin-right: 6px;
+      }
+
+      label{
+        width: 50%;
+        float: left;
+      }
+  }
+}
