@@ -1,0 +1,87 @@
+.dl__container{
+    overflow: hidden;
+}
+
+.dl__dataList{
+    width: 82%;
+    float: left;
+    position: relative;
+    overflow-x: hidden;
+
+  @include break (md-lg){
+      width: 100%;
+  }
+
+  &Wrapper{
+    // position:absolute;
+    position:relative;
+    width:102%;
+    height:92%;
+    height:auto;
+    // overflow-y:scroll; 
+    z-index:100;
+
+    @include break (md-lg){
+        margin-top: 33px;
+        border-top: 1px solid #efefef;
+    }
+  }
+
+  &.dl__pinPagination{
+    //max-height: 700px;
+  }
+
+  &-list{//ul
+    margin: 0;
+    min-height: 500px;
+  }
+
+  &--noResults,
+  &--loading{
+    min-height: 100%;
+
+    h1,h3{
+      text-align: center;
+      color: $color-text-secondary;
+    }
+
+    h1{
+      padding-top: 15%;
+    }
+  }
+
+  &--loading{
+    position: relative;
+
+    h1{
+      color: $color-link;
+      font-size: 21px;
+    }
+
+    >div{
+      &:after{
+        @include faPseudo($fa-var-spinner,60%,48%,40%,48%);
+        @extend .fa-spin;
+        width: 39px;
+        height: 39px;
+        font-size: 39px;
+        line-height: 39px;
+        color: #b3b3b3;
+      }
+    }
+  }
+}
+
+// Makes the lightbox text dark on a light background
+figure[class^="figure"]{
+  div[class^="footer"]{
+    color: $color-text-primary;
+  }
+}
+
+
+
+
+
+
+

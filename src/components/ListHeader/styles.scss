@@ -1,0 +1,101 @@
+.dl__listHeader{
+  border-bottom: 1px solid #efefef;
+  position: relative;
+  padding-left: 6px;
+  background: #333;
+  white-space: nowrap;
+  width: auto;
+
+	&-item{
+	  display: inline-block;
+	  font-weight: 700;
+	  line-height: 33px;
+	  color: #fff;
+	}
+
+  &.dl__pinPagination{
+	//position: absolute;
+	//z-index: 200;
+	////lefT: 0;
+	//top: 0;
+	//right: 0;
+	//width: 82%;
+  }
+
+  &-listSettings,
+  &-listSort{
+	position: absolute;
+	right: 18px;
+	top: 9px;
+	width: 33px;
+	height: 33px;
+	text-align: center;
+
+	&:after{
+	  content: $fa-var-cog;
+	  font-family: FontAwesome;
+	  font-size: 14px;
+	  color: #fff;
+	}
+
+	&:hover{
+	  cursor: pointer;
+	  opacity: 0.7;
+	}
+  }
+
+  &-listSort{
+      &:after{
+        content: $fa-var-sort;
+        font-family: FontAwesome;
+        font-size: 14px;
+        color: #fff;
+    }
+  }
+
+  &--sort{
+	position: relative;
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+
+	&:after{
+	  @include faPseudo($fa-var-chevron-up,0,auto,auto,auto);
+	  line-height: 22px;
+	  font-size: 9px;
+	  opacity: 0.5;
+	  padding-left: 3px;
+	  @include duration;
+	}
+
+	&--desc{
+	  &:after{
+		transform: rotate(180deg);
+		@include duration;
+	  }
+	}
+
+	&:hover{
+	  cursor: pointer;
+	}
+
+    &--disabled{
+      &:after{
+          content: '';  
+      }
+
+      &:hover{
+            cursor: default;
+        }
+    }
+  }
+}
+
+.dl__detachedSort{
+    position: absolute;
+    top: -36px;
+    right: 0;
+    height: 36px;
+    width: auto;
+    background: #efefef;  
+}

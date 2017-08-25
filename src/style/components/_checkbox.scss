@@ -1,0 +1,29 @@
+/* Checkbox styler */
+.checkbox{
+ background: none;
+ outline: none;
+ border-radius: 3px;
+ border: 1px solid rgba(0,0,0,0.5);
+ appearance: none;
+ width: 14px;
+ height: 14px;
+ line-height: 14px;
+ position: relative;
+ margin: 0 3px;
+
+ &:after{
+  content: '';
+  font-family: FontAwesome;
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  font-size: 10px;
+  left: 1px;
+ }
+
+ &:checked{
+   &:after{
+    color: $color-go;
+   }
+ }
+}

@@ -57,3 +57,36 @@ typings/
 # dotenv environment variables file
 .env
 
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Coverage tools
+lib-cov
+coverage
+coverage.html
+.cover*
+
+
+# Example build directory
+example/dist
+.publish
+
+# Editor and other tmp files
+*.swp
+*.un~
+*.iml
+*.ipr
+*.iws
+*.sublime-*
+.idea/
+*.DS_Store
+.editorConfig
+.vscode
+
+

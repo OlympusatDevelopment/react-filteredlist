@@ -1,0 +1,38 @@
+.dl__textItem{
+  position: relative;
+
+  a{
+	color: $color-link;
+	//position: relative;
+  }
+
+	&-item{
+	  display: inline-block;
+	  line-height: 33px;
+	  position: relative;
+	  z-index: 1;
+	  overflow: hidden;
+	  //@extend .truncate;
+
+	  &--copy{
+		position: relative;
+		z-index: 2;
+		display: inline-block;
+		width: 21px;
+		height: 21px;
+
+		&:after{
+		  content: $fa-var-copy;
+		  font-family: FontAwesome;
+		  font-size: 12px;
+		  color: $color-icon;
+		}
+
+		&:hover{
+		  cursor: pointer;
+		  opacity: 0.7;
+		}
+	  }
+	}
+
+}

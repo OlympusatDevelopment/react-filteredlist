@@ -1,0 +1,158 @@
+/*-----12 col grid------*/
+
+@mixin col($num_col){
+
+	@if $num_col == 1 {
+		width: 8.33333333%;
+		}
+	@if $num_col == 2 {
+		width: 16.6666667%;
+		}
+	@if $num_col == 3 {
+		width: 25%;
+		}
+	@if  $num_col == 4 {
+		width: 33.3333333%;
+		}
+	@if $num_col == 5 {
+		width: 41.6666666%;
+		}
+	@if $num_col == 6 {
+		width: 50%;
+		}
+	@if $num_col == 7 {
+		width: 58.3333333%;
+		}
+	@if $num_col == 8 {
+		width: 66.6666666%;
+		}
+	@if $num_col == 9 {
+		width: 75%;
+		}
+	@if $num_col == 10{
+		width: 83.3333333%;
+		}
+	@if $num_col == 11 {
+		width: 91.6666666%;
+		}
+	@if $num_col == 12 {
+		width: 100%;
+	}
+}
+
+
+
+@mixin col_ctr($num_col){
+	@if $num_col == 0 {
+		margin-left: 0;
+		margin-right: 0;
+		}
+	@if $num_col == 1 {
+		margin-left: 45.8333334%;
+		margin-right: 45.8333334%;
+		}
+	@if $num_col == 2 {
+		margin-left: 41.6666666%;
+		margin-right: 41.6666666%;
+		}
+	@if $num_col == 3 {
+		margin-left: 37.5%;
+		margin-right: 37.5%;
+		}
+	@if  $num_col == 4 {
+		margin-left: 33.3333334%;
+		margin-right: 33.3333334%;
+		}
+	@if $num_col == 5 {
+		margin-left: 29.1666667%;
+		margin-right: 29.1666667%;
+		}
+	@if $num_col == 6 {
+		margin-left: 25%;
+		margin-right: 25%;
+		}
+	@if $num_col == 7 {
+		margin-left: 20.833335%;
+		margin-right: 20.833335%;
+		}
+	@if $num_col == 8 {
+		margin-left: 16.6666667%;
+		margin-right: 16.6666667%;
+		}
+	@if $num_col == 9 {
+		margin-left: 12.5%;
+		margin-right: 12.5%;
+		}
+	@if $num_col == 10{
+		margin-left: 8.33333335%;
+		margin-right: 8.33333335%;
+		}
+	@if $num_col == 11 {
+		margin-left: 4.1666667%;
+		margin-right: 4.1666667%;
+		}
+	@if $num_col == 12 {
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+
+$gutter: 9px;
+
+
+.col__one{@include col(1);}
+.col__two{@include col(2);}
+.col__three{@include col(3);}
+.col__four{@include col(4);}
+.col__five{@include col(5);}
+.col__six{@include col(6);}
+.col__seven{@include col(7);}
+.col__eight{@include col(8);}
+.col__nine{@include col(9);}
+.col__ten{@include col(10);}
+.col__eleven{@include col(11);}
+.col__twelve{@include col(12);}
+
+.col__one,
+.col__two,
+.col__three,
+.col__four,
+.col__five,
+.col__six,
+.col__seven,
+.col__eight,
+.col__nine,
+.col__ten,
+.col__eleven,
+.col__twelve{
+  float: left;
+  box-sizing: border-box;
+  padding-left: $gutter;
+  padding-right: $gutter;
+  margin-left: 0;
+  margin-right: 0;
+
+  @include break(sm){
+	@include col(12);
+  }
+}
+
+
+
+
+
+// @todo May rewrite the grid in the future to use a calculated function instead
+//@function calculate-width ($col-span) {
+//  @return 100% / $col-span
+//}
+
+//.span-two {
+//  width: calculate-width(2); // spans 2 columns, width = 50%
+//}
+//
+//.span-three {
+//  width: calculate-width(3); // spans 3 columns, width = 33.3%
+//}
+
+
+

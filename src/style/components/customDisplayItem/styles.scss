@@ -1,0 +1,163 @@
+@import 'flags';
+
+.dl__customItemInner {
+  .dl__displayItem {
+	$this : &;
+	position : relative;
+	z-index  : 0;
+	float: left;
+	width: 97%;
+
+	a {
+	  color : $color-link;
+	  //position: relative;
+	}
+
+	h1, h2, h3, h4, p, li {
+	  margin : 0;
+	  color  : $color-text-primary;
+	}
+
+	h2 {
+	  font-family  : Georgia, Times, "Times New Roman", serif;
+	  font-size    : 16px;
+	  font-style   : normal;
+	  font-variant : normal;
+	  font-weight  : 500;
+	  line-height  : 15.4px;
+	  color        : $color-link;
+	}
+
+	h3 {
+	  font-size  : 9px;
+	  margin-top : 3px;
+	  color      : $color-link;
+	}
+
+	p, span, img {
+	  vertical-align : top;
+	}
+
+	p {
+	  line-height : 1.2;
+	  overflow    : hidden;
+	  white-space : normal;
+	}
+
+	&Inner {
+	  @extend .cf;
+	  padding : 18px 15px 18px 0;
+
+	  > div {
+		@extend .cf;
+		@include col(4);
+		float  : left;
+		height : 95px;
+
+		&:nth-of-type(2) {
+		}
+
+		&.dl__displayItemImgWrapper{
+		  width : 238px;
+		}
+	  }
+	}
+
+	&--pinBottom {
+	  bottom   : -5px;
+	  position : absolute;
+	}
+
+	&InnerCol {
+	  display  : inline-block;
+	  //float: left;
+	  position : relative;
+
+	  &:first-of-type {
+		@include col(7);
+	  }
+
+	  &:last-of-type {
+		@include col(5);
+	  }
+	}
+
+	&ImgWrapper {
+	  overflow : hidden;
+	  position : relative;
+	  z-index  : 99999;
+
+	  img {
+		max-height : 100%;
+		display    : inline-block;
+		margin     : 0 auto;
+	  }
+
+	  .dl__imgMaxWidth {
+		max-width  : 180px;
+		max-height : 100%;
+		box-shadow : 0 0 22px #555;
+	  }
+	}
+
+	&MetaGroup {
+	  margin-bottom : 18px;
+	  position      : relative;
+	  height        : 100%;
+	  z-index       : 99999;
+
+	  &:last-of-type {
+		margin-bottom : 0;
+	  }
+
+	  #{$this}--label {
+		font-weight : 700;
+	  }
+
+	  #{$this}--link {
+		color : $color-link;
+	  }
+	}
+
+	&Flag {
+	  height      : 9px;
+	  margin-left : 3px;
+	  margin-top  : 2px;
+	  display     : inline-block;
+	}
+
+	&Button {
+	  padding     : 6px;
+	  color       : #fff;
+	  font-weight : 700;
+	  font-size   : 14px;
+	  background  : $color-link;
+	  border      : none;
+
+	  &:hover {
+		cursor  : pointer;
+		opacity : 0.7;
+	  }
+
+	  &--stripe {
+		background : repeating-linear-gradient(
+						135deg,
+						$color-link,
+						$color-link 10px,
+						darken($color-link, 15%) 12px,
+						darken($color-link, 15%) 12px
+		);
+	  }
+	}
+  }
+}
+
+.dl{
+  &__featuredImgWrapper{
+	width: 179px;
+	height: 100%;
+	display: inline-block;
+	background: #000;
+	text-align: center;
+  }
+}

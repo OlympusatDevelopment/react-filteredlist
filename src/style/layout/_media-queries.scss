@@ -1,0 +1,61 @@
+// New media queries using mapping
+//@include break(xs) {
+//  color: tomato;
+//}
+$breakpoints: (
+    xs: 479px,
+    sm: 767px,
+    sm-md : 991px,
+    md: 1023px,
+    md-lg :1199px,
+    lg: 1365px
+);
+
+@mixin break($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (max-width: #{map-get($breakpoints, $breakpoint)}) {
+      @content;
+    }
+  }
+
+  @else {
+    @media (max-width: $breakpoint) {
+      @content;
+    }
+  }
+}
+
+@mixin break-min($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: #{map-get($breakpoints, $breakpoint)}) {
+      @content;
+    }
+  }
+
+  @else {
+    @media (min-width: $breakpoint) {
+      @content;
+    }
+  }
+}
+
+@mixin break-min-max($min,$max) {
+  @if map-has-key($breakpoints, $min) and map-has-key($breakpoints, $max) {
+    @media (min-width: #{map-get($breakpoints, $min)}) and (max-width: #{map-get($breakpoints, $max)}) {
+      @content;
+    }
+  }
+
+  @else {
+    @media (min-width: $min) and (max-width: $max){
+      @content;
+    }
+  }
+}
+
+
+
+
+
+
+
