@@ -364,5 +364,5 @@ To build, watch and serve the examples (which will also watch the component sour
 
 ## License
 
-Copyright (c) 2017 Adam Gedney.
+MIT
 
