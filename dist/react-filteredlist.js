@@ -59931,7 +59931,7 @@ function extend() {
 },{}],329:[function(require,module,exports){
 module.exports={
   "name": "react-filteredlist",
-  "version": "1.14.4", 
+  "version": "1.14.6", 
   "description": "FilteredList",
   "main": "lib/FilteredList.js",
   "author": "Adam Gedney",
@@ -61498,13 +61498,24 @@ var FilterItem = function (_Component) {
                     break;
                 case 'select':
                 default:
+                    var val = null;
                     var defaults = self.props.selectedView.filterDefaults ? self.props.selectedView.filterDefaults() : {};
                     try {
                         defaults = JSON.parse(defaults);
                     } catch (e) {}
-                    var val = defaults && defaults[options.id] ? defaults[options.id].filter(function (item) {
-                        return item[options.options.key] == self.props.options.value;
-                    })[0] : null;
+
+                    // Decipher what set of defaults are to be used in the component options list
+                    if (defaults) {
+                        if (options.options && options.options.defaultsKey) {
+                            val = defaults[options.options.defaultsKey] ? defaults[options.options.defaultsKey].filter(function (item) {
+                                return item[options.options.key] == self.props.options.value;
+                            })[0] : null;
+                        } else {
+                            val = defaults[options.id] ? defaults[options.id].filter(function (item) {
+                                return item[options.options.key] == self.props.options.value;
+                            })[0] : null;
+                        }
+                    }
 
                     // If a value exist via a query string run or state update, set the component initial val, otherwise leave blank to display the placeholder
                     if (self.props.options.value) {
