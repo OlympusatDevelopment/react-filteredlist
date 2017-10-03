@@ -59931,7 +59931,7 @@ function extend() {
 },{}],329:[function(require,module,exports){
 module.exports={
   "name": "react-filteredlist",
-  "version": "1.14.6", 
+  "version": "1.14.8", 
   "description": "FilteredList",
   "main": "lib/FilteredList.js",
   "author": "Adam Gedney",
@@ -61234,7 +61234,7 @@ var FILTER_CHANGE = exports.FILTER_CHANGE = 'dl/FILTER_CHANGE';
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -61288,304 +61288,304 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var FilterItem = function (_Component) {
-    _inherits(FilterItem, _Component);
+  _inherits(FilterItem, _Component);
 
-    // eslint-disable-line react/prefer-stateless-function
-    function FilterItem(props) {
-        _classCallCheck(this, FilterItem);
+  // eslint-disable-line react/prefer-stateless-function
+  function FilterItem(props) {
+    _classCallCheck(this, FilterItem);
 
-        var _this = _possibleConstructorReturn(this, (FilterItem.__proto__ || Object.getPrototypeOf(FilterItem)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (FilterItem.__proto__ || Object.getPrototypeOf(FilterItem)).call(this, props));
 
-        _this.state = {
-            focusedInput: null,
-            lastFocusedInput: null
-        };
+    _this.state = {
+      focusedInput: null,
+      lastFocusedInput: null
+    };
 
-        _this.makeFilter = _this.makeFilter.bind(_this);
-        _this.onSelectChange = _this.onSelectChange.bind(_this);
-        _this.onSortClick = _this.onSortClick.bind(_this);
-        return _this;
+    _this.makeFilter = _this.makeFilter.bind(_this);
+    _this.onSelectChange = _this.onSelectChange.bind(_this);
+    _this.onSortClick = _this.onSortClick.bind(_this);
+    return _this;
+  }
+
+  _createClass(FilterItem, [{
+    key: 'onSelectChange',
+    value: function onSelectChange(data) {
+      var self = this,
+          _props = this.props,
+          options = _props.options,
+          selectedView = _props.selectedView,
+          filterChange = _props.filterChange,
+          value = data ? data[options.options.key] : null;
+
+
+      filterChange({
+        id: options.id,
+        view: selectedView.id,
+        value: value
+      });
+    }
+  }, {
+    key: 'onSortClick',
+    value: function onSortClick(direction) {
+      var self = this;
+      var _props2 = this.props,
+          options = _props2.options,
+          selectedView = _props2.selectedView,
+          filterChange = _props2.filterChange;
+
+
+      filterChange({
+        id: options.id,
+        view: selectedView.id,
+        value: direction
+      });
     }
 
-    _createClass(FilterItem, [{
-        key: 'onSelectChange',
-        value: function onSelectChange(data) {
-            var self = this,
-                _props = this.props,
-                options = _props.options,
-                selectedView = _props.selectedView,
-                filterChange = _props.filterChange,
-                value = data ? data[options.options.key] : null;
+    /**
+     * Returned as moment objects
+     * @param startDate
+     * @param endDate
+     */
+
+  }, {
+    key: 'onRangeChange',
+    value: function onRangeChange(_ref) {
+      var startDate = _ref.startDate,
+          endDate = _ref.endDate;
+      var _props3 = this.props,
+          options = _props3.options,
+          selectedView = _props3.selectedView,
+          filterChange = _props3.filterChange;
 
 
-            filterChange({
-                id: options.id,
-                view: selectedView.id,
-                value: value
-            });
-        }
-    }, {
-        key: 'onSortClick',
-        value: function onSortClick(direction) {
-            var self = this;
-            var _props2 = this.props,
-                options = _props2.options,
-                selectedView = _props2.selectedView,
-                filterChange = _props2.filterChange;
+      if (startDate) {
+        var local = (0, _moment2.default)(startDate.utc()).local();
+
+        filterChange({
+          id: options.id + '--start',
+          view: selectedView.id,
+          value: local.unix() * 1000
+          //value : parseInt(startDate.unix()+'000',10)
+        });
+      }
+
+      if (endDate) {
+        var _local = (0, _moment2.default)(endDate.utc()).local();
+
+        filterChange({
+          id: options.id + '--end',
+          view: selectedView.id,
+          value: _local.unix() * 1000
+        });
+      }
+    }
+  }, {
+    key: 'onRangeReset',
+    value: function onRangeReset(e) {
+      e.preventDefault();
+      var _props4 = this.props,
+          options = _props4.options,
+          selectedView = _props4.selectedView,
+          filterChange = _props4.filterChange;
 
 
-            filterChange({
-                id: options.id,
-                view: selectedView.id,
-                value: direction
-            });
-        }
+      filterChange([{
+        id: options.id + '--start',
+        view: selectedView.id,
+        value: null
+      }, {
+        id: options.id + '--end',
+        view: selectedView.id,
+        value: null
+      }]);
+    }
+  }, {
+    key: 'onRangeFocusChange',
+    value: function onRangeFocusChange(focusedInput) {
 
-        /**
-         * Returned as moment objects
-         * @param startDate
-         * @param endDate
-         */
+      // State loop bug fix for dates component
+      if (this.state.lastFocusedInput !== focusedInput) {
+        this.setState({ lastFocusedInput: focusedInput, focusedInput: focusedInput });
+      }
+    }
+  }, {
+    key: 'handleCheckboxChange',
+    value: function handleCheckboxChange(options, values) {
+      var _props5 = this.props,
+          selectedView = _props5.selectedView,
+          filterChange = _props5.filterChange,
+          optValues = options.options.getOptions();
 
-    }, {
-        key: 'onRangeChange',
-        value: function onRangeChange(_ref) {
-            var startDate = _ref.startDate,
-                endDate = _ref.endDate;
-            var _props3 = this.props,
-                options = _props3.options,
-                selectedView = _props3.selectedView,
-                filterChange = _props3.filterChange;
+      var value = [];
 
+      optValues.forEach(function (collectionItem) {
+        values.forEach(function (checkVal) {
+          if (checkVal == collectionItem[options.options.key]) {
+            value.push(collectionItem[options.options.key]);
+          }
+        });
+      });
 
-            if (startDate) {
-                var local = (0, _moment2.default)(startDate.utc()).local();
+      filterChange({
+        id: options.id,
+        view: selectedView.id,
+        value: value.length > 0 ? JSON.stringify(value) : null
+      });
+    }
+  }, {
+    key: 'makeFilter',
+    value: function makeFilter(options) {
+      var self = this,
+          selectValue = {
+        label: 'test',
+        value: self.props.options.value
+      };
 
-                filterChange({
-                    id: options.id + '--start',
-                    view: selectedView.id,
-                    value: local.unix() * 1000
-                    //value : parseInt(startDate.unix()+'000',10)
-                });
+      switch (self.props.options.type) {
+        case 'range':
+          return [_react2.default.createElement(
+            'span',
+            { key: Math.random() * 100000, className: 'dl__filterItemRangeClear' },
+            _react2.default.createElement(
+              'a',
+              { href: '#', onClick: self.onRangeReset.bind(self) },
+              'reset'
+            )
+          ), _react2.default.createElement(_reactDates.DateRangePicker, {
+            key: Math.random() * 100000,
+            startDate: options.range.start ? (0, _moment2.default)(options.range.start * 1) : (0, _moment2.default)() // .momentObj or null,
+            , endDate: options.range.end ? (0, _moment2.default)(options.range.end * 1) : (0, _moment2.default)() // .momentObj or null,
+            , onDatesChange: self.onRangeChange.bind(self) // .func.isRequired,
+            , focusedInput: self.state.focusedInput // .oneOf([START_DATE, END_DATE]) or null,
+            , onFocusChange: self.onRangeFocusChange.bind(self) // .func.isRequired,
+            , isOutsideRange: function isOutsideRange() {
+              return false;
             }
+          })];
+        case 'checkbox':
+          var vals = [].concat(_toConsumableArray(decodeURIComponent(self.props.options.value)));
 
-            if (endDate) {
-                var _local = (0, _moment2.default)(endDate.utc()).local();
+          // Handle reading url values @todo: fix the read later when we get more time
+          if (vals[0] === "[" || vals[0] === "n" && vals[1] === "u") {
+            vals = vals.join('');
+          }
 
-                filterChange({
-                    id: options.id + '--end',
-                    view: selectedView.id,
-                    value: _local.unix() * 1000
-                });
+          try {
+            vals = JSON.parse(vals);
+          } catch (e) {}
+
+          vals = vals === 'null' ? null : vals;
+
+          //@todo .need to spend some time looking at why this component won't render checked values if the first render had no values.
+          return _react2.default.createElement(
+            _reactCheckboxGroup.CheckboxGroup,
+            { name: options.id, values: vals, onChange: this.handleCheckboxChange.bind(this, options) },
+            _react2.default.createElement(
+              'div',
+              { className: 'dl__filterItemCheckbox' },
+              options.options.getOptions().map(function (option) {
+                return _react2.default.createElement(
+                  'label',
+                  { key: Math.random() * 10000 },
+                  _react2.default.createElement(_reactCheckboxGroup.Checkbox, { value: option[options.options.key] }),
+                  option[options.options.value]
+                );
+              })
+            )
+          );
+        case 'sort':
+          return _react2.default.createElement(_SortItem.SortItem, { options: self.props.options, onClick: this.onSortClick });
+          break;
+        case 'select':
+        default:
+          var val = null;
+          var defaults = self.props.selectedView.filterDefaults ? self.props.selectedView.filterDefaults() : {};
+          try {
+            defaults = JSON.parse(defaults);
+          } catch (e) {}
+
+          // Decipher what set of defaults are to be used in the component options list
+          if (defaults) {
+            if (options.options && options.options.defaultsKey) {
+              val = defaults[options.options.defaultsKey] ? defaults[options.options.defaultsKey].filter(function (item) {
+                return item[options.options.key] == self.props.options.value;
+              })[0] : null;
+            } else {
+              val = defaults[options.id] ? defaults[options.id].filter(function (item) {
+                return item[options.options.key] == self.props.options.value;
+              })[0] : null;
             }
-        }
-    }, {
-        key: 'onRangeReset',
-        value: function onRangeReset(e) {
-            e.preventDefault();
-            var _props4 = this.props,
-                options = _props4.options,
-                selectedView = _props4.selectedView,
-                filterChange = _props4.filterChange;
+          }
 
+          // If a value exist via a query string run or state update, set the component initial val, otherwise leave blank to display the placeholder
+          if (self.props.options.value) {
+            var _ref2;
 
-            filterChange([{
-                id: options.id + '--start',
-                view: selectedView.id,
-                value: null
-            }, {
-                id: options.id + '--end',
-                view: selectedView.id,
-                value: null
-            }]);
-        }
-    }, {
-        key: 'onRangeFocusChange',
-        value: function onRangeFocusChange(focusedInput) {
-
-            // State loop bug fix for dates component
-            if (this.state.lastFocusedInput !== focusedInput) {
-                this.setState({ lastFocusedInput: focusedInput, focusedInput: focusedInput });
-            }
-        }
-    }, {
-        key: 'handleCheckboxChange',
-        value: function handleCheckboxChange(options, values) {
-            var _props5 = this.props,
-                selectedView = _props5.selectedView,
-                filterChange = _props5.filterChange,
-                optValues = options.options.getOptions();
-
-            var value = [];
-
-            optValues.forEach(function (collectionItem) {
-                values.forEach(function (checkVal) {
-                    if (checkVal == collectionItem[options.options.key]) {
-                        value.push(collectionItem[options.options.key]);
-                    }
-                });
+            return _react2.default.createElement(_reactSuperSelect2.default, {
+              ajaxDataFetch: options.options.getOptions || [],
+              optionLabelKey: options.options.value,
+              optionValueKey: options.options.key,
+              initialValue: (_ref2 = {}, _defineProperty(_ref2, options.options.key, self.props.options.value), _defineProperty(_ref2, options.options.value, val ? val[options.options.value] : null), _ref2),
+              placeholder: 'Make Your Selections',
+              onChange: function onChange(data) {
+                return self.onSelectChange(data);
+              },
+              searchable: false
             });
-
-            filterChange({
-                id: options.id,
-                view: selectedView.id,
-                value: value.length > 0 ? JSON.stringify(value) : null
+          } else {
+            return _react2.default.createElement(_reactSuperSelect2.default, {
+              ajaxDataFetch: options.options.getOptions || [],
+              optionLabelKey: options.options.value,
+              optionValueKey: options.options.key,
+              placeholder: 'Make Your Selections',
+              onChange: function onChange(data) {
+                return self.onSelectChange(data);
+              },
+              searchable: false
             });
-        }
-    }, {
-        key: 'makeFilter',
-        value: function makeFilter(options) {
-            var self = this,
-                selectValue = {
-                label: 'test',
-                value: self.props.options.value
-            };
+          }
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props6 = this.props,
+          options = _props6.options,
+          config = _props6.config,
+          selectedView = _props6.selectedView,
+          filter = this.makeFilter(options);
 
-            switch (self.props.options.type) {
-                case 'range':
-                    return [_react2.default.createElement(
-                        'span',
-                        { key: Math.random() * 100000, className: 'dl__filterItemRangeClear' },
-                        _react2.default.createElement(
-                            'a',
-                            { href: '#', onClick: self.onRangeReset.bind(self) },
-                            'reset'
-                        )
-                    ), _react2.default.createElement(_reactDates.DateRangePicker, {
-                        key: Math.random() * 100000,
-                        startDate: options.range.start ? (0, _moment2.default)(options.range.start * 1) : (0, _moment2.default)() // .momentObj or null,
-                        , endDate: options.range.end ? (0, _moment2.default)(options.range.end * 1) : (0, _moment2.default)() // .momentObj or null,
-                        , onDatesChange: self.onRangeChange.bind(self) // .func.isRequired,
-                        , focusedInput: self.state.focusedInput // .oneOf([START_DATE, END_DATE]) or null,
-                        , onFocusChange: self.onRangeFocusChange.bind(self) // .func.isRequired,
-                        , isOutsideRange: function isOutsideRange() {
-                            return false;
-                        }
-                    })];
-                case 'checkbox':
-                    var vals = [].concat(_toConsumableArray(decodeURIComponent(self.props.options.value)));
+      var classNames = 'dl__filterItem ' + options.id;
 
-                    // Handle reading url values @todo: fix the read later when we get more time
-                    if (vals[0] === "[" || vals[0] === "n" && vals[1] === "u") {
-                        vals = vals.join('');
-                    }
+      return _react2.default.createElement(
+        'div',
+        { className: classNames },
+        _react2.default.createElement(
+          'label',
+          { htmlFor: options.id },
+          options.label
+        ),
+        filter
+      );
+    }
+  }]);
 
-                    try {
-                        vals = JSON.parse(vals);
-                    } catch (e) {}
-
-                    vals = vals === 'null' ? null : vals;
-
-                    //@todo need to spend some time looking at why this component won't render checked values if the first render had no values.
-                    return _react2.default.createElement(
-                        _reactCheckboxGroup.CheckboxGroup,
-                        { name: options.id, values: vals, onChange: this.handleCheckboxChange.bind(this, options) },
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'dl__filterItemCheckbox' },
-                            options.options.getOptions().map(function (option) {
-                                return _react2.default.createElement(
-                                    'label',
-                                    { key: Math.random() * 10000 },
-                                    _react2.default.createElement(_reactCheckboxGroup.Checkbox, { value: option[options.options.key] }),
-                                    option[options.options.value]
-                                );
-                            })
-                        )
-                    );
-                case 'sort':
-                    return _react2.default.createElement(_SortItem.SortItem, { options: self.props.options, onClick: this.onSortClick });
-                    break;
-                case 'select':
-                default:
-                    var val = null;
-                    var defaults = self.props.selectedView.filterDefaults ? self.props.selectedView.filterDefaults() : {};
-                    try {
-                        defaults = JSON.parse(defaults);
-                    } catch (e) {}
-
-                    // Decipher what set of defaults are to be used in the component options list
-                    if (defaults) {
-                        if (options.options && options.options.defaultsKey) {
-                            val = defaults[options.options.defaultsKey] ? defaults[options.options.defaultsKey].filter(function (item) {
-                                return item[options.options.key] == self.props.options.value;
-                            })[0] : null;
-                        } else {
-                            val = defaults[options.id] ? defaults[options.id].filter(function (item) {
-                                return item[options.options.key] == self.props.options.value;
-                            })[0] : null;
-                        }
-                    }
-
-                    // If a value exist via a query string run or state update, set the component initial val, otherwise leave blank to display the placeholder
-                    if (self.props.options.value) {
-                        var _ref2;
-
-                        return _react2.default.createElement(_reactSuperSelect2.default, {
-                            ajaxDataFetch: options.options.getOptions || [],
-                            optionLabelKey: options.options.value,
-                            optionValueKey: options.options.key,
-                            initialValue: (_ref2 = {}, _defineProperty(_ref2, options.options.key, self.props.options.value), _defineProperty(_ref2, options.options.value, val ? val[options.options.value] : null), _ref2),
-                            placeholder: 'Make Your Selections',
-                            onChange: function onChange(data) {
-                                return self.onSelectChange(data);
-                            },
-                            searchable: false
-                        });
-                    } else {
-                        return _react2.default.createElement(_reactSuperSelect2.default, {
-                            ajaxDataFetch: options.options.getOptions || [],
-                            optionLabelKey: options.options.value,
-                            optionValueKey: options.options.key,
-                            placeholder: 'Make Your Selections',
-                            onChange: function onChange(data) {
-                                return self.onSelectChange(data);
-                            },
-                            searchable: false
-                        });
-                    }
-            }
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _props6 = this.props,
-                options = _props6.options,
-                config = _props6.config,
-                selectedView = _props6.selectedView,
-                filter = this.makeFilter(options);
-
-            var classNames = 'dl__filterItem ' + options.id;
-
-            return _react2.default.createElement(
-                'div',
-                { className: classNames },
-                _react2.default.createElement(
-                    'label',
-                    { htmlFor: options.id },
-                    options.label
-                ),
-                filter
-            );
-        }
-    }]);
-
-    return FilterItem;
+  return FilterItem;
 }(_react.Component);
 
 //Which part of the Redux global state does our component want to receive as props?
 
 
 function mapStateToProps(state, ownProps) {
-    return {
-        config: state.app.config,
-        force: state.app.force,
-        filterItem: state.filterItem
-    };
+  return {
+    config: state.app.config,
+    force: state.app.force,
+    filterItem: state.filterItem
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)(FilterItemActions, dispatch);
+  return (0, _redux.bindActionCreators)(FilterItemActions, dispatch);
 }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(FilterItem);
@@ -62992,11 +62992,16 @@ var SortItem = exports.SortItem = function (_Component) {
 
     _createClass(SortItem, [{
         key: 'onSortClick',
-        value: function onSortClick() {
+        value: function onSortClick(e) {
             var asc = !this.state.asc;
 
-            this.setState({ asc: asc });
-            this.props.onClick(asc ? 'asc' : 'desc');
+            if (!e.target.classList.contains('dl__sortItem--clear')) {
+                this.setState({ asc: asc });
+                this.props.onClick(asc ? 'asc' : 'desc');
+            } else {
+                // Handle the clear button click
+                this.props.onClick(null);
+            }
         }
     }, {
         key: 'render',
@@ -63007,6 +63012,7 @@ var SortItem = exports.SortItem = function (_Component) {
                 onClick = _props.onClick;
 
             var orderClass = (options.value === null ? true : options.value === 'asc') ? 'dl__sortItem--asc' : 'dl__sortItem--desc';
+            var clearSort = options.value ? _react2.default.createElement('span', { className: 'dl__sortItem--clear' }) : '';
 
             return _react2.default.createElement(
                 'li',
@@ -63016,6 +63022,7 @@ var SortItem = exports.SortItem = function (_Component) {
                     null,
                     _utils2.default.propToTitleCase(options.id.split('-')[1])
                 ),
+                clearSort,
                 _react2.default.createElement('span', { className: orderClass })
             );
         }
@@ -63625,7 +63632,7 @@ var UPDATE_WORKSPACE = exports.UPDATE_WORKSPACE = 'dl/UPDATE_WORKSPACE';
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -63683,407 +63690,407 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 // Remove the first load marker,..
 // first_load gets used in the app reducer
 window.onbeforeunload = function (e) {
-    localStorage.removeItem("first_load", "1");
+  localStorage.removeItem("first_load", "1");
 };
 
 var App = function (_Component) {
-    _inherits(App, _Component);
+  _inherits(App, _Component);
 
-    // eslint-disable-line react/prefer-stateless-function
-    function App(props) {
-        _classCallCheck(this, App);
+  // eslint-disable-line react/prefer-stateless-function
+  function App(props) {
+    _classCallCheck(this, App);
 
-        // Kickoff first data load
-        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+    // Kickoff first data load
+    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-        _this.init(props);
+    _this.init(props);
 
-        // Setup the render listener for dipatching items to the store after xhr requests
-        _this._initRenderer();
+    // Setup the render listener for dipatching items to the store after xhr requests
+    _this._initRenderer();
 
-        _this.state = {
-            toggleFilter: false
-        };
-        return _this;
+    _this.state = {
+      toggleFilter: false
+    };
+    return _this;
+  }
+
+  /**
+   * Init actions
+   * props is a main app reducer
+   * @param props
+   */
+
+
+  _createClass(App, [{
+    key: 'init',
+    value: function init(props) {
+      var updatePagination = props.updatePagination,
+          config = props.config,
+          dataListConfig = props.dataListConfig,
+          filterChange = props.filterChange,
+          appInit = props.appInit,
+          app = props.app,
+          self = this,
+          paginationParams = _underscore2.default.pick(_utils.queries.parseParms(_utils.queries.readQueryStringFromURL()), ['skip', 'take', 'page']),
+          nonPaginationParams = Object.keys(_underscore2.default.omit(_utils.queries.parseParms(_utils.queries.readQueryStringFromURL()), ['skip', 'take', 'page', ""]));
+
+      // // Set the config as soon as we get it
+
+
+      appInit({ config: dataListConfig });
+
+      if (dataListConfig.hooks && dataListConfig.hooks.onInit) {
+        dataListConfig.hooks.onInit(app);
+      }
+
+      // Cast the incoming values to int
+      var pagination = {
+        skip: (paginationParams.skip || 0) * 1,
+        take: (paginationParams.take || app.pagination.take) * 1,
+        page: (paginationParams.page || 1) * 1,
+        id: 'dl__items__' + dataListConfig.id
+      };
+
+      appInit({
+        pagination: pagination
+      }); // Set the initial pagination from query string read
+
+      // Add the pagination listener
+      self._initPaginationChangeListener();
+
+      // If the config option was set to allow run of query string on render & if there is a string in the url
+      // Filter out pagination params & the view param from our filter query string detection
+      // if((dataListConfig.runQueryStringURLOnRender && nonPaginationParams.length > 0)) {
+      self._applyQueryStringToFilters({ props: props, self: self, pagination: pagination });
+      // }else{
+      // @todo This is wiping out the pagination data on load
+      // filterChange([]);//triggers an empty load to load the default dataset. No filters were in url or the config prevents running filter queries
+      // }
     }
 
     /**
-     * Init actions
-     * props is a main app reducer
-     * @param props
+     * Procedure used to Convert the query string to filter values
      */
 
+  }, {
+    key: '_applyQueryStringToFilters',
+    value: function _applyQueryStringToFilters(args) {
+      return this._readQueryString(args).then(this._makeQueryObjectFromQueryString).then(this._populateFilterArrays);
+    }
 
-    _createClass(App, [{
-        key: 'init',
-        value: function init(props) {
-            var updatePagination = props.updatePagination,
-                config = props.config,
-                dataListConfig = props.dataListConfig,
-                filterChange = props.filterChange,
-                appInit = props.appInit,
-                app = props.app,
-                self = this,
-                paginationParams = _underscore2.default.pick(_utils.queries.parseParms(_utils.queries.readQueryStringFromURL()), ['skip', 'take', 'page']),
-                nonPaginationParams = Object.keys(_underscore2.default.omit(_utils.queries.parseParms(_utils.queries.readQueryStringFromURL()), ['skip', 'take', 'page', ""]));
+    /**
+     * Read the query string in the address bar
+     */
 
-            // // Set the config as soon as we get it
+  }, {
+    key: '_readQueryString',
+    value: function _readQueryString(args) {
+      return new _bluebird2.default(function (resolve, reject) {
+        resolve(_extends({}, args, { queryString: _utils.queries.readQueryStringFromURL() }));
+      });
+    }
 
+    /**
+     * Convert the query string to a query object
+     * @param args
+     * @private
+     */
 
-            appInit({ config: dataListConfig });
+  }, {
+    key: '_makeQueryObjectFromQueryString',
+    value: function _makeQueryObjectFromQueryString(args) {
+      return new _bluebird2.default(function (resolve, reject) {
+        resolve(_extends({}, args, { queryObject: _utils.queries.makeQueryObjectFromQueryString(args.queryString) }));
+      });
+    }
 
-            if (dataListConfig.hooks && dataListConfig.hooks.onInit) {
-                dataListConfig.hooks.onInit(app);
-            }
+    /**
+     * Dispatches to create a new filter for each value present in the query Object
+     * @param args
+     * @private
+     */
 
-            // Cast the incoming values to int
-            var pagination = {
-                skip: (paginationParams.skip || 0) * 1,
-                take: (paginationParams.take || app.pagination.take) * 1,
-                page: (paginationParams.page || 1) * 1,
-                id: 'dl__items__' + dataListConfig.id
-            };
+  }, {
+    key: '_populateFilterArrays',
+    value: function _populateFilterArrays(args) {
+      var self = this;
 
-            appInit({
-                pagination: pagination
-            }); // Set the initial pagination from query string read
+      return new _bluebird2.default(function (resolve, reject) {
+        var filterChangeBatch = [];
 
-            // Add the pagination listener
-            self._initPaginationChangeListener();
+        var nonPaginationParams = _underscore2.default.omit(args.queryObject, ['skip', 'take', 'page', ""]),
+            viewId = _underscore2.default.pick(nonPaginationParams, 'view').view;
 
-            // If the config option was set to allow run of query string on render & if there is a string in the url
-            // Filter out pagination params & the view param from our filter query string detection
-            // if((dataListConfig.runQueryStringURLOnRender && nonPaginationParams.length > 0)) {
-            self._applyQueryStringToFilters({ props: props, self: self, pagination: pagination });
-            // }else{
-            // @todo This is wiping out the pagination data on load
-            // filterChange([]);//triggers an empty load to load the default dataset. No filters were in url or the config prevents running filter queries
-            // }
-        }
+        delete nonPaginationParams.view; // Internal use only, no more need to have it included
 
-        /**
-         * Procedure used to Convert the query string to filter values
-         */
-
-    }, {
-        key: '_applyQueryStringToFilters',
-        value: function _applyQueryStringToFilters(args) {
-            return this._readQueryString(args).then(this._makeQueryObjectFromQueryString).then(this._populateFilterArrays);
-        }
-
-        /**
-         * Read the query string in the address bar
-         */
-
-    }, {
-        key: '_readQueryString',
-        value: function _readQueryString(args) {
-            return new _bluebird2.default(function (resolve, reject) {
-                resolve(_extends({}, args, { queryString: _utils.queries.readQueryStringFromURL() }));
+        _underscore2.default.mapObject(nonPaginationParams, function (value, key) {
+          if (_underscore2.default.isArray(value)) {
+            value.forEach(function (val) {
+              filterChangeBatch.push({
+                id: key,
+                view: viewId,
+                value: val
+              });
             });
-        }
-
-        /**
-         * Convert the query string to a query object
-         * @param args
-         * @private
-         */
-
-    }, {
-        key: '_makeQueryObjectFromQueryString',
-        value: function _makeQueryObjectFromQueryString(args) {
-            return new _bluebird2.default(function (resolve, reject) {
-                resolve(_extends({}, args, { queryObject: _utils.queries.makeQueryObjectFromQueryString(args.queryString) }));
+          } else if (_underscore2.default.isObject(value) && key === 'sort') {
+            args.self._sortDispatcher(_extends(args, { sort: value }));
+          } else {
+            // Handle the sort object
+            filterChangeBatch.push({
+              id: key,
+              view: viewId,
+              value: value
             });
-        }
+          }
+        });
 
-        /**
-         * Dispatches to create a new filter for each value present in the query Object
-         * @param args
-         * @private
-         */
+        args.props.filterChange(filterChangeBatch);
+        args.props.appInit({
+          pagination: args.pagination,
+          queryObject: args.queryObject,
+          queryString: args.queryString
+        });
+        resolve(_extends({}, args));
+      });
+    }
 
-    }, {
-        key: '_populateFilterArrays',
-        value: function _populateFilterArrays(args) {
-            var self = this;
+    /**
+     * Handles dynamically dispatching to the store by building objects based on our config file
+     * @param args
+     * @param key
+     * @param value
+     * @private
+     */
 
-            return new _bluebird2.default(function (resolve, reject) {
-                var filterChangeBatch = [];
+  }, {
+    key: '_filterDispatchBuilder',
+    value: function _filterDispatchBuilder(args, key, value, viewId) {
+      var self = this;
+      var filterDispatch = {};
 
-                var nonPaginationParams = _underscore2.default.omit(args.queryObject, ['skip', 'take', 'page', ""]),
-                    viewId = _underscore2.default.pick(nonPaginationParams, 'view').view;
+      // Loop through the views, filter groups & child filters until we find our id.
+      //Dispatch the filter as a normal change
+      self.props.app.views.forEach(function (view) {
+        if (viewId === view.id) {
+          view.filterGroups.forEach(function (group) {
+            group.filters.forEach(function (filter) {
 
-                delete nonPaginationParams.view; // Internal use only, no more need to have it included
-
-                _underscore2.default.mapObject(nonPaginationParams, function (value, key) {
-                    if (_underscore2.default.isArray(value)) {
-                        value.forEach(function (val) {
-                            filterChangeBatch.push({
-                                id: key,
-                                view: viewId,
-                                value: val
-                            });
-                        });
-                    } else if (_underscore2.default.isObject(value) && key === 'sort') {
-                        args.self._sortDispatcher(_extends(args, { sort: value }));
-                    } else {
-                        // Handle the sort object
-                        filterChangeBatch.push({
-                            id: key,
-                            view: viewId,
-                            value: value
-                        });
-                    }
-                });
-
-                args.props.filterChange(filterChangeBatch);
-                args.props.appInit({
-                    pagination: args.pagination,
-                    queryObject: args.queryObject,
-                    queryString: args.queryString
-                });
-                resolve(_extends({}, args));
+              // Dispatch only when we have found our filter by value.
+              // Special handling of constant for date filters
+              if (filter.id === key) {
+                filterDispatch = {
+                  id: key,
+                  view: viewId,
+                  value: value
+                };
+              }
             });
+          });
         }
+      });
 
-        /**
-         * Handles dynamically dispatching to the store by building objects based on our config file
-         * @param args
-         * @param key
-         * @param value
-         * @private
-         */
+      return filterDispatch;
+    }
 
-    }, {
-        key: '_filterDispatchBuilder',
-        value: function _filterDispatchBuilder(args, key, value, viewId) {
-            var self = this;
-            var filterDispatch = {};
+    /**
+     * Does a mapping of the id to the particular default.
+     * Runs when a url is producing the filter configuration
+     * @param def
+     * @param entityUUID
+     * @param dataSources
+     * @private
+     */
 
-            // Loop through the views, filter groups & child filters until we find our id.
-            //Dispatch the filter as a normal change
-            self.props.app.views.forEach(function (view) {
-                if (viewId === view.id) {
-                    view.filterGroups.forEach(function (group) {
-                        group.filters.forEach(function (filter) {
+  }, {
+    key: '_lookupLabelByID',
+    value: function _lookupLabelByID(def, entityUUID, dataSources) {
+      var entity = _underscore2.default.findWhere(dataSources[def], { entityUUID: entityUUID });
+      return typeof entity === 'undefined' ? def : entity.entityValue;
+    }
 
-                            // Dispatch only when we have found our filter by value.
-                            // Special handling of constant for date filters
-                            if (filter.id === key) {
-                                filterDispatch = {
-                                    id: key,
-                                    view: viewId,
-                                    value: value
-                                };
-                            }
-                        });
-                    });
-                }
+    /**
+     * Dispatches for sort items
+     * @param args
+     * @private
+     */
+
+  }, {
+    key: '_sortDispatcher',
+    value: function _sortDispatcher(args) {}
+    //_.mapObject(args.sort,(value,key)=>{
+    //
+    //    // Run through the sort items
+    //    args.props.options.sort.by.forEach(sortItem=>{
+    //
+    //        // Dispatch only when we have found our filter by value.
+    //        // SPecial handling of constant for date filters
+    //        if(sortItem.id === key){
+    //
+    //            // Action CONSTANT is created by filter ui type ie. select,date,checkbox,link
+    //            let CONSTANT = `SORT_CHANGE`;
+    //
+    //            // Dispatch an action
+    //            args.props.setFilter({
+    //                type:CONSTANT,
+    //                data:{
+    //                    id:sortItem.id,
+    //                    label:sortItem.label,//get the value of the selected item
+    //                    instanceType : 'sort',
+    //                    value
+    //                }
+    //            });
+    //        }
+    //    });
+    //});
+
+
+    /**
+     * Handle listening for pagination events
+     * @private
+     */
+
+  }, {
+    key: '_initPaginationChangeListener',
+    value: function _initPaginationChangeListener() {
+      var _props = this.props,
+          app = _props.app,
+          config = _props.config,
+          dataListConfig = _props.dataListConfig,
+          appInit = _props.appInit,
+          self = this;
+
+
+      return new _bluebird2.default(function (resolve, reject) {
+        var elem = document;
+
+        elem.addEventListener('paginationChange', function (e) {
+          var event = e.data;
+
+          // Only run if we are filtering dataTable items & there are items in the queryObject
+          if (event.id === 'dl__items__' + dataListConfig.id) {
+
+            // Need to update the store here
+            self.loadNextPage(event).then(function (res) {
+              // Update the redux store to keep everything in sync
+              appInit({ pagination: e.data });
+
+              /**
+               * The pagination component update is set by the
+               * xhr request response in utils.js makeXHRRequest func
+               */
             });
+          }
+        });
+      });
+    }
 
-            return filterDispatch;
-        }
+    /**
+     * Listen for filter xhr list item data to be returned from the app
+     * @private
+     */
 
-        /**
-         * Does a mapping of the id to the particular default.
-         * Runs when a url is producing the filter configuration
-         * @param def
-         * @param entityUUID
-         * @param dataSources
-         * @private
-         */
+  }, {
+    key: '_initRenderer',
+    value: function _initRenderer() {
+      var updateItems = this.props.updateItems;
 
-    }, {
-        key: '_lookupLabelByID',
-        value: function _lookupLabelByID(def, entityUUID, dataSources) {
-            var entity = _underscore2.default.findWhere(dataSources[def], { entityUUID: entityUUID });
-            return typeof entity === 'undefined' ? def : entity.entityValue;
-        }
+      var elem = document;
 
-        /**
-         * Dispatches for sort items
-         * @param args
-         * @private
-         */
+      elem.addEventListener('renderToStore', function (e) {
+        updateItems({
+          Items: e.data.Items,
+          count: e.data.total
+        });
+      });
+    }
 
-    }, {
-        key: '_sortDispatcher',
-        value: function _sortDispatcher(args) {}
-        //_.mapObject(args.sort,(value,key)=>{
-        //
-        //    // Run through the sort items
-        //    args.props.options.sort.by.forEach(sortItem=>{
-        //
-        //        // Dispatch only when we have found our filter by value.
-        //        // SPecial handling of constant for date filters
-        //        if(sortItem.id === key){
-        //
-        //            // Action CONSTANT is created by filter ui type ie. select,date,checkbox,link
-        //            let CONSTANT = `SORT_CHANGE`;
-        //
-        //            // Dispatch an action
-        //            args.props.setFilter({
-        //                type:CONSTANT,
-        //                data:{
-        //                    id:sortItem.id,
-        //                    label:sortItem.label,//get the value of the selected item
-        //                    instanceType : 'sort',
-        //                    value
-        //                }
-        //            });
-        //        }
-        //    });
-        //});
+    /**
+     * Send a request to run the filters passing the new pagination params but the same queryObject taken from the state tree
+     */
 
+  }, {
+    key: 'loadNextPage',
+    value: function loadNextPage(event) {
+      var _this2 = this;
 
-        /**
-         * Handle listening for pagination events
-         * @private
-         */
+      return new _bluebird2.default(function (resolve, reject) {
+        var app = _this2.props.app;
 
-    }, {
-        key: '_initPaginationChangeListener',
-        value: function _initPaginationChangeListener() {
-            var _props = this.props,
-                app = _props.app,
-                config = _props.config,
-                dataListConfig = _props.dataListConfig,
-                appInit = _props.appInit,
-                self = this;
+        // Triggers the xhr Request
 
+        _utils.filters.run(_extends({}, app, { pagination: event }), app.selectedView).then(resolve, reject);
+      });
+    }
+  }, {
+    key: 'makeAppBody',
+    value: function makeAppBody(app) {
+      var _this3 = this;
 
-            return new _bluebird2.default(function (resolve, reject) {
-                var elem = document;
+      var filters = this.props.config.showFilters ? _react2.default.createElement(_Filters2.default, { className: this.state.toggleFilter ? 'dl__filters--open' : '' }) : '',
+          width = this.props.config.showFilters ? undefined : '100%',
+          filtersToggle = this.props.config.showFilters ? _react2.default.createElement('div', { className: 'dl__filters--toggle', onClick: function onClick() {
+          return _this3.setState({ toggleFilter: !_this3.state.toggleFilter });
+        } }) : '';
 
-                elem.addEventListener('paginationChange', function (e) {
-                    var event = e.data;
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          _Header2.default,
+          null,
+          ' '
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'dl__container' },
+          filtersToggle,
+          filters,
+          _react2.default.createElement(
+            _DataList2.default,
+            { Items: app.Items, width: width },
+            ' '
+          )
+        ),
+        _react2.default.createElement(
+          _Footer2.default,
+          null,
+          ' '
+        )
+      );
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props2 = this.props,
+          selector = _props2.config.selector,
+          app = _props2.app,
+          classNames = 'dl ' + selector,
+          appBody = Object.keys(app.selectedView).length > 0 ? this.makeAppBody(app) : ''; //Delay render until config is loaded
 
-                    // Only run if we are filtering dataTable items & there are items in the queryObject
-                    if (event.id === 'dl__items__' + dataListConfig.id) {
+      return _react2.default.createElement(
+        'div',
+        { className: classNames },
+        appBody
+      );
+    }
+  }]);
 
-                        // Need to update the store here
-                        self.loadNextPage(event).then(function (res) {
-                            // Update the redux store to keep everything in sync
-                            appInit({ pagination: e.data });
-
-                            /**
-                             * The pagination component update is set by the
-                             * xhr request response in utils.js makeXHRRequest func
-                             */
-                        });
-                    }
-                });
-            });
-        }
-
-        /**
-         * Listen for filter xhr list item data to be returned from the app
-         * @private
-         */
-
-    }, {
-        key: '_initRenderer',
-        value: function _initRenderer() {
-            var updateItems = this.props.updateItems;
-
-            var elem = document;
-
-            elem.addEventListener('renderToStore', function (e) {
-                updateItems({
-                    Items: e.data.Items,
-                    count: e.data.total
-                });
-            });
-        }
-
-        /**
-         * Send a request to run the filters passing the new pagination params but the same queryObject taken from the state tree
-         */
-
-    }, {
-        key: 'loadNextPage',
-        value: function loadNextPage(event) {
-            var _this2 = this;
-
-            return new _bluebird2.default(function (resolve, reject) {
-                var app = _this2.props.app;
-
-                // Triggers the xhr Request
-
-                _utils.filters.run(_extends({}, app, { pagination: event }), app.selectedView).then(resolve, reject);
-            });
-        }
-    }, {
-        key: 'makeAppBody',
-        value: function makeAppBody(app) {
-            var _this3 = this;
-
-            var filters = this.props.config.showFilters ? _react2.default.createElement(_Filters2.default, { className: this.state.toggleFilter ? 'dl__filters--open' : '' }) : '',
-                width = this.props.config.showFilters ? undefined : '100%',
-                filtersToggle = this.props.config.showFilters ? _react2.default.createElement('div', { className: 'dl__filters--toggle', onClick: function onClick() {
-                    return _this3.setState({ toggleFilter: !_this3.state.toggleFilter });
-                } }) : '';
-
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(
-                    _Header2.default,
-                    null,
-                    ' '
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'dl__container' },
-                    filtersToggle,
-                    filters,
-                    _react2.default.createElement(
-                        _DataList2.default,
-                        { Items: app.Items, width: width },
-                        ' '
-                    )
-                ),
-                _react2.default.createElement(
-                    _Footer2.default,
-                    null,
-                    ' '
-                )
-            );
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _props2 = this.props,
-                selector = _props2.config.selector,
-                app = _props2.app,
-                classNames = 'dl ' + selector,
-                appBody = Object.keys(app.selectedView).length > 0 ? this.makeAppBody(app) : ''; //Delay render until config is loaded
-
-            return _react2.default.createElement(
-                'div',
-                { className: classNames },
-                appBody
-            );
-        }
-    }]);
-
-    return App;
+  return App;
 }(_react.Component);
 
 //Which part of the Redux global state does our component want to receive as props?
 
 
 function mapStateToProps(state, ownProps) {
-    //console.log('STATE in App/index.js',state,ownProps);
-    return {
-        config: state.app.config,
-        app: state.app
-    };
+  //console.log('STATE in App/index.js',state,ownProps);
+  return {
+    config: state.app.config,
+    app: state.app
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)(AppActions, dispatch);
+  return (0, _redux.bindActionCreators)(AppActions, dispatch);
 }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(App);

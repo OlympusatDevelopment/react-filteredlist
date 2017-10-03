@@ -13,20 +13,27 @@ export class SortItem extends Component {
         this.onSortClick = this.onSortClick.bind(this);
     }
 
-    onSortClick(){
+    onSortClick(e){
         const asc = !this.state.asc;
 
-        this.setState({asc});
-        this.props.onClick(asc ? 'asc' : 'desc');
+        if(!e.target.classList.contains('dl__sortItem--clear')){
+          this.setState({asc});
+          this.props.onClick(asc ? 'asc' : 'desc');
+        }else{
+          // Handle the clear button click
+          this.props.onClick(null);
+        }
     }
 
     render() {
         const {options,selectedView,onClick} = this.props;
         const orderClass = (options.value === null ? true : (options.value === 'asc')) ? 'dl__sortItem--asc' : 'dl__sortItem--desc';
+        const clearSort = options.value ? (<span className="dl__sortItem--clear"></span>) : '';
 
         return (
             <li className="dl__sortItem" onClick={this.onSortClick}>
                 <span>{utils.propToTitleCase(options.id.split('-')[1])}</span>
+                {clearSort}
                 <span className={orderClass}></span>
             </li>
         );
