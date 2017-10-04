@@ -59931,7 +59931,7 @@ function extend() {
 },{}],329:[function(require,module,exports){
 module.exports={
   "name": "react-filteredlist",
-  "version": "1.14.8", 
+  "version": "1.14.9", 
   "description": "FilteredList",
   "main": "lib/FilteredList.js",
   "author": "Adam Gedney",

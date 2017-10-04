@@ -4720,7 +4720,8 @@ code {
   vertical-align: middle;
   background: #f9f9f9;
   border: 1px solid #efefef;
-  overflow: hidden; }
+  overflow: hidden;
+  padding-right: 24px; }
   .dl__sortItem > span {
     display: inline-block;
     width: 48%;
@@ -4761,9 +4762,12 @@ code {
     -o-transition-duration: 0.7s;
     -ms-transition-duration: 0.7s;
     transition-duration: 0.7s; }
-  .dl__sortItem--clear:after {
-    content: "";
-    color: rgba(255, 0, 0, 0.6); }
+  .dl__sortItem--clear {
+    position: absolute;
+    right: 0; }
+    .dl__sortItem--clear:after {
+      content: "";
+      color: rgba(255, 0, 0, 0.6); }
 
 .dl__filterGroup.sorting .dl__filterItem {
   margin-bottom: 1px; }

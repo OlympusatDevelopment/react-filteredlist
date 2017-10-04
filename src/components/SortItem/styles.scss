@@ -10,6 +10,7 @@
         background: #f9f9f9;
         border: 1px solid #efefef;
         overflow: hidden;
+        padding-right: 24px;
 
         &:hover{
             @extend .hover;
@@ -55,6 +56,9 @@
         }
 
         &--clear{
+          position: absolute;
+          right: 0;
+        
           &:after{
             content : $fa-var-times-circle-o;
             color: rgba($color-danger,0.6);
