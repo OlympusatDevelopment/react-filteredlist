@@ -9,6 +9,8 @@
         vertical-align: middle;
         background: #f9f9f9;
         border: 1px solid #efefef;
+        overflow: hidden;
+        padding-right: 24px;
 
         &:hover{
             @extend .hover;
@@ -22,19 +24,23 @@
         }
 
         &--asc,
-        &--desc{
-            display: block;
-            width: 45px;
+        &--desc,
+        &--clear{
+            display: inline-block;
+            width: 24px !important;
+            height: 24px;
+            float: right;
+            position: relative;
 
            &:after{
-                @include faPseudo($fa-var-sort-alpha-desc,0,9px,auto,auto);
+                @include faPseudo($fa-var-sort-alpha-desc,0,auto,auto,auto);
                 line-height: 24px;
                 font-size: 14px;
                 padding-left: 3px;
                 @include duration;
                 transform: rotate(0deg);
                 font-weight: 400;
-                width: 33px;
+                width: 100%;
                 border-left: 1px solid #efefef;
                 text-align: center;
                 color: #777;
@@ -49,12 +55,15 @@
             }
         }
 
-        &--desc{
-            &:after{
-
-                @include duration;
-            }
-        }
+        &--clear{
+          position: absolute;
+          right: 0;
+        
+          &:after{
+            content : $fa-var-times-circle-o;
+            color: rgba($color-danger,0.6);
+          }
+      }
     }
 }
 
