@@ -1,16 +1,16 @@
 {
   "name": "react-filteredlist",
-  "version": "1.14.9", 
+  "version": "1.14.10",
   "description": "FilteredList",
   "main": "lib/FilteredList.js",
   "author": "Adam Gedney",
-  "homepage":"https://github.com/OlympusatDevelopment/react-filteredlist",
+  "homepage": "https://github.com/OlympusatDevelopment/react-filteredlist",
   "repository": {
     "type": "git",
-    "url":"git@github.com:OlympusatDevelopment/react-filteredlist.git"
+    "url": "git@github.com:OlympusatDevelopment/react-filteredlist.git"
   },
   "bugs": {
-    "url":"https://github.com/OlympusatDevelopment/react-filteredlist/issues"
+    "url": "https://github.com/OlympusatDevelopment/react-filteredlist/issues"
   },
   "dependencies": {
     "bluebird": "^3.5.0",

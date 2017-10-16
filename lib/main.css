@@ -4444,7 +4444,8 @@ code {
     top: 0;
     display: block;
     width: 33px;
-    height: 100%; }
+    height: 100%;
+    z-index: 2; }
     .dl__searchClearButton:after {
       content: "";
       font-family: FontAwesome;
@@ -4452,7 +4453,7 @@ code {
       width: 100%;
       height: 100%;
       color: #b3b3b3;
-      line-height: 31px; }
+      line-height: 36px; }
 
 .dl__pagination.dl__pinPagination {
   position: absolute;

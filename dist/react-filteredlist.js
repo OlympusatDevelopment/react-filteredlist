@@ -59931,7 +59931,7 @@ function extend() {
 },{}],329:[function(require,module,exports){
 module.exports={
   "name": "react-filteredlist",
-  "version": "1.14.9", 
+  "version": "1.14.10",  
   "description": "FilteredList",
   "main": "lib/FilteredList.js",
   "author": "Adam Gedney",
@@ -63017,6 +63017,7 @@ var SortItem = exports.SortItem = function (_Component) {
             return _react2.default.createElement(
                 'li',
                 { className: 'dl__sortItem', onClick: this.onSortClick },
+                _react2.default.createElement('span', null),
                 _react2.default.createElement(
                     'span',
                     null,
