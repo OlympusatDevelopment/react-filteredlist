@@ -47,7 +47,7 @@ class Search extends Component { // eslint-disable-line react/prefer-stateless-f
     const val = a ? decodeURIComponent(a.value) : '';
     const searchVal = (val == 'null' || val == null) ? '' : val;
     const searchButton = options.searchButton || {};
-console.log('SEARCH',a,val,searchVal);
+
     return (
       <div className="dl__search">
         {/* could put options.label here if the search should have a label */}
