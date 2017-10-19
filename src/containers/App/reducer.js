@@ -36,6 +36,10 @@ var config = {
 const initialState = {
   config,
   views: [],
+  preferences: [],// {view:'catalog': data: {props:[]} Get's potentially populated in the onInit hook or anywhere else. Keys are dot notation
+  overridePreferences: {
+    props: false
+  },
   selectedView: {},//Must be an empty object by default
   queryString: '',// the current query string based on filter value
   queryObject: {},
@@ -113,6 +117,14 @@ function appReducer(state = initialState, action) {
       _state.showLoading = true;
       _state.Items = [];
 
+      /**
+      * Allow injection of preferences for use throughout the app
+      */
+      if (_data.hasOwnProperty('preferences')) {
+        _state.preferences = _data.preferences;
+        _state = applyPreferences(_state);
+      }
+
       // HOOK @todo should allow returning new state from hook
       if (_state.config && _state.config.hooks && _state.config.hooks.onStateUpdate) {
         _state.config.hooks.onStateUpdate(_state);
@@ -167,17 +179,26 @@ function appReducer(state = initialState, action) {
       // 2. set the prop.display to the checked val true/false
       // 3. force a render down the tree
       //prop,checked,viewId
-      _state.views = [..._state.views.map(view => {
-        if (view.id === _data.viewId) {
-          view.props.forEach(prop => {
-            if (prop.key === _data.prop) {
-              prop.display = _data.checked;
-            }
-          });
-        }
+      // _state.views = [..._state.views.map(view => {
+      //   if (view.id === _data.viewId) {
+      //     view.props.forEach(prop => {
+      //       if (prop.key === _data.prop) {
+      //         prop.display = _data.checked;
+      //       }
+      //     });
+      //   }
 
-        return view;
-      })];
+      //   return view;
+      // })];
+
+      _state.selectedView.props = _state.selectedView.props
+        .map(prop => {
+          if (prop.key === _data.prop) {
+            prop.display = _data.checked;
+          }
+
+          return prop;
+        });
 
       /**
        * Important for forcing a rerender when mutating nested state. Redux won't see nested changes.
@@ -187,7 +208,22 @@ function appReducer(state = initialState, action) {
       _state.force = Math.random() * 10000000;
       _state.config.hooks.onStateUpdate(_state);
 
-      return { ..._state };
+      // Run the on Update hook
+      if (_state.config.hooks.onViewPropChange) {
+        _state.config.hooks.onViewPropChange({
+          prop: _data.prop,
+          checked: _data.checked,
+          viewId: _data.viewId,
+          selectedView: _state.selectedView
+        });
+      }
+
+      console.log('ON view prop change', _state.selectedView.props, _data);
+
+      // Override preferences because the user indicated they wanted to change the default/preferenced set of visible props
+      // _state.overridePreferences.props = true;
+
+      return _state;
 
     case FILTER_CHANGE:
       const isBatchUpdate = _.isArray(_data);
@@ -277,7 +313,7 @@ function appReducer(state = initialState, action) {
       _state.Items = [];
       _state.force = Math.random() * 10000000;
       //@todo need to run through items in addons and set their values to null
-      
+
       //Clear the search addon value
       _state.selectedView.addons = _state.selectedView.addons
         .map(addon => addon.id == 'search'
@@ -424,4 +460,39 @@ function makeViews(_state, filterChange) {
 
     return view;
   })];
+}
+
+/**
+ * Apply any preferences being passed in. Called at the end of the INIT action. Must return state
+ */
+function applyPreferences(state) {
+
+  /**
+   * Apply the props preferences being passed in for rendering view props
+   */
+  state.selectedView.props = mergePropsAndPreferences(state.selectedView, state.preferences);
+  console.log('Modified state preferences on init', state.selectedView.props);
+  return state;
+}
+
+/** 
+* Reduce preferences to only the selected view for the "props" key.
+* Run that over the config props to see if we need to make any changes.
+* Return the adjusted config props for use in rendering.
+* @todo see how this plays with dynamically changed props...
+*/
+function mergePropsAndPreferences(selectedView, preferences = []) {
+  const propsPreferences = preferences
+    ? preferences
+      .filter(pref => pref.view === selectedView.id && pref.data.props)
+      .reduce((acc, curr) => acc.concat(curr.data.props), [])
+    : [];
+
+  return selectedView.props
+    .map(prop => {
+      const propPref = propsPreferences
+        .filter(pref => pref.key === prop.key);
+
+      return propPref ? { ...prop, ...propPref[0] } : prop
+    });
 }
