@@ -49,8 +49,8 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
     }
 
     render() {
-        const {item,selectedView} = this.props;
-        const props = selectedView.props,
+        const {item,selectedView, preferencedProps} = this.props;
+        const props = preferencedProps,
             check = selectedView.enableRowChecks ? (
                 <span key={-1} style={{width:'33px'}} className="dl__textItem-item">
                     <Checkbox onChecked={this.onChecked.bind(this)} id={item[selectedView.itemIdProp]}> </Checkbox>
