@@ -23,15 +23,16 @@ export class SortItem extends Component {
           // Handle the clear button click
           this.props.onClick(null);
         }
-    }
+    } 
 
-    render() {
+    render() { 
         const {options,selectedView,onClick} = this.props;
         const orderClass = (options.value === null ? true : (options.value === 'asc')) ? 'dl__sortItem--asc' : 'dl__sortItem--desc';
         const clearSort = options.value ? (<span className="dl__sortItem--clear"></span>) : '';
 
         return (
             <li className="dl__sortItem" onClick={this.onSortClick}>
+              <span></span> 
                 <span>{utils.propToTitleCase(options.id.split('-')[1])}</span>
                 {clearSort}
                 <span className={orderClass}></span>

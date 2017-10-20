@@ -8,11 +8,11 @@ import CustomItem from '../CustomItem';
 
 class ListRow extends Component { // eslint-disable-line react/prefer-stateless-function
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             renderDropdown: false
-        }
+        };
     }
 
     makeListItem(item,selectedView,props){
@@ -28,7 +28,7 @@ class ListRow extends Component { // eslint-disable-line react/prefer-stateless-
                 return (<TextItem item={item} selectedView={selectedView} />);
         }
     }
-
+    
     /**
      * Renders dropdown on chevron click
      * @param {Event} e 
@@ -58,21 +58,21 @@ class ListRow extends Component { // eslint-disable-line react/prefer-stateless-
             </li>
         );
     }
-}
+  }
 
 //Which part of the Redux global state does our component want to receive as props?
-function mapStateToProps(state,ownProps) {
-    return {
-        config:state.app.config,
-        listRow : state.listRow
-    };
+function mapStateToProps(state, ownProps) {
+  return {
+    config: state.app.config,
+    listRow: state.listRow
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(ListRowActions, dispatch);
+  return bindActionCreators(ListRowActions, dispatch);
 }
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(ListRow);

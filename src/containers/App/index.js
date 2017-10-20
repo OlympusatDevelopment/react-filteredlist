@@ -43,36 +43,64 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
       paginationParams = _.pick(queries.parseParms(queries.readQueryStringFromURL()), ['skip', 'take', 'page']),
       nonPaginationParams = Object.keys(_.omit(queries.parseParms(queries.readQueryStringFromURL()), ['skip', 'take', 'page', ""]));
 
-    // // Set the config as soon as we get it
     appInit({ config: dataListConfig });
 
+    /**
+     * Check the hooks for onInit
+     */
     if (dataListConfig.hooks && dataListConfig.hooks.onInit) {
-      dataListConfig.hooks.onInit(app);
+
+      /**
+       * One last config check. Set the config as soon as we get it but allow a 
+       * preferences object to be passed in.
+       */
+      const onInit = dataListConfig.hooks.onInit(app, dataListConfig);
+
+      /**
+       * do a fn exists check. If a return fn wasn't passed then onInit wil be 
+       * undefined and we can move on, otherwise let's pass along the preferences here.
+       */
+      if (onInit) {
+        onInit((preferences = []) => {
+          appInit({ preferences });
+          _initNext();
+        });
+      } else {
+        _initNext();
+      }
+    } else {
+      _initNext();
     }
 
-    // Cast the incoming values to int
-    const pagination = {
-      skip: (paginationParams.skip || 0) * 1,
-      take: (paginationParams.take || app.pagination.take) * 1,
-      page: (paginationParams.page || 1) * 1,
-      id: `dl__items__${dataListConfig.id}`
-    };
+    // Encapuslated to allow async nexting
+    function _initNext() {
 
-    appInit({
-      pagination,
-    });// Set the initial pagination from query string read
+      // Cast the incoming values to int
+      const pagination = {
+        skip: (paginationParams.skip || 0) * 1,
+        take: (paginationParams.take || app.pagination.take) * 1,
+        page: (paginationParams.page || 1) * 1,
+        id: `dl__items__${dataListConfig.id}`
+      };
 
-    // Add the pagination listener
-    self._initPaginationChangeListener();
+      appInit({
+        pagination,
+      });// Set the initial pagination from query string read
 
-    // If the config option was set to allow run of query string on render & if there is a string in the url
-    // Filter out pagination params & the view param from our filter query string detection
-    // if((dataListConfig.runQueryStringURLOnRender && nonPaginationParams.length > 0)) {
-    self._applyQueryStringToFilters({ props, self, pagination });
-    // }else{
-    // @todo This is wiping out the pagination data on load
-    // filterChange([]);//triggers an empty load to load the default dataset. No filters were in url or the config prevents running filter queries
-    // }
+      // Add the pagination listener
+      self._initPaginationChangeListener();
+
+      /** 
+      * If the config option was set to allow run of query string on render & if there is a string in the url
+      * Filter out pagination params & the view param from our filter query string detection
+      */
+      //if((dataListConfig.runQueryStringURLOnRender && nonPaginationParams.length > 0)) {
+      self._applyQueryStringToFilters({ props, self, pagination });
+      // }else{
+      // @todo This is wiping out the pagination data on load
+      // filterChange([]);//triggers an empty load to load the default dataset. No filters were in url or the config prevents running filter queries
+      // }
+    }
   }
 
   /**

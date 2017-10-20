@@ -1401,7 +1401,7 @@ process.umask = function() { return 0; };
 /*!
  * The buffer module from node.js, for the browser.
  *
- * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+ * @author   Feross Aboukhadijeh <https://feross.org>
  * @license  MIT
  */
 /* eslint-disable no-proto */
@@ -1504,7 +1504,7 @@ function from (value, encodingOrOffset, length) {
     throw new TypeError('"value" argument must not be a number')
   }
 
-  if (value instanceof ArrayBuffer) {
+  if (isArrayBuffer(value)) {
     return fromArrayBuffer(value, encodingOrOffset, length)
   }
 
@@ -1764,7 +1764,7 @@ function byteLength (string, encoding) {
   if (Buffer.isBuffer(string)) {
     return string.length
   }
-  if (isArrayBufferView(string) || string instanceof ArrayBuffer) {
+  if (isArrayBufferView(string) || isArrayBuffer(string)) {
     return string.byteLength
   }
   if (typeof string !== 'string') {
@@ -3096,6 +3096,14 @@ function blitBuffer (src, dst, offset, length) {
   return i
 }
 
+// ArrayBuffers from another context (i.e. an iframe) do not pass the `instanceof` check
+// but they should be treated as valid. See: https://github.com/feross/buffer/issues/166
+function isArrayBuffer (obj) {
+  return obj instanceof ArrayBuffer ||
+    (obj != null && obj.constructor != null && obj.constructor.name === 'ArrayBuffer' &&
+      typeof obj.byteLength === 'number')
+}
+
 // Node 0.10 supports `ArrayBuffer` but lacks `ArrayBuffer.isView`
 function isArrayBufferView (obj) {
   return (typeof ArrayBuffer.isView === 'function') && ArrayBuffer.isView(obj)
@@ -3209,12 +3217,10 @@ module.exports = copy;
 
 },{"toggle-selection":322}],15:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -4083,12 +4089,10 @@ module.exports = factory;
 
 },{"fbjs/lib/emptyObject":31,"fbjs/lib/invariant":38,"fbjs/lib/warning":45,"object-assign":105}],16:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -4326,11 +4330,9 @@ module.exports = exports['default'];
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @typechecks
  */
@@ -4401,11 +4403,9 @@ module.exports = EventListener;
 },{"./emptyFunction":30}],24:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -4439,11 +4439,9 @@ module.exports = ExecutionEnvironment;
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @typechecks
  */
@@ -4469,11 +4467,9 @@ module.exports = camelize;
 },{}],26:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @typechecks
  */
@@ -4511,11 +4507,9 @@ module.exports = camelizeStyleName;
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -4551,11 +4545,9 @@ module.exports = containsNode;
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @typechecks
  */
@@ -4678,11 +4670,9 @@ module.exports = createArrayFromMixed;
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @typechecks
  */
@@ -4762,11 +4752,9 @@ module.exports = createNodesFromMarkup;
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -4799,11 +4787,9 @@ module.exports = emptyFunction;
 },{}],31:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -4819,11 +4805,9 @@ module.exports = emptyObject;
 },{}],32:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -4848,11 +4832,9 @@ module.exports = focusNode;
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @typechecks
  */
@@ -4887,11 +4869,9 @@ module.exports = getActiveElement;
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -4980,11 +4960,9 @@ module.exports = getMarkupWrap;
 },{"./ExecutionEnvironment":24,"./invariant":38}],35:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @typechecks
  */
@@ -5021,11 +4999,9 @@ module.exports = getUnboundedScrollPosition;
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @typechecks
  */
@@ -5052,11 +5028,9 @@ module.exports = hyphenate;
 },{}],37:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @typechecks
  */
@@ -5091,11 +5065,9 @@ module.exports = hyphenateStyleName;
 },{"./hyphenate":36}],38:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -5149,11 +5121,9 @@ module.exports = invariant;
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @typechecks
  */
@@ -5174,11 +5144,9 @@ module.exports = isNode;
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @typechecks
  */
@@ -5197,11 +5165,9 @@ module.exports = isTextNode;
 },{"./isNode":39}],41:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  * @typechecks static-only
@@ -5227,11 +5193,9 @@ module.exports = memoizeStringOnly;
 },{}],42:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @typechecks
  */
@@ -5252,11 +5216,9 @@ module.exports = performance || {};
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @typechecks
  */
@@ -5284,11 +5246,9 @@ module.exports = performanceNow;
 },{"./performance":42}],44:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @typechecks
  * 
@@ -5351,12 +5311,10 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 },{}],45:[function(require,module,exports){
 /**
- * Copyright 2014-2015, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2014-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -6089,34 +6047,49 @@ var REACT_STATICS = {
 };
 
 var KNOWN_STATICS = {
-    name: true,
-    length: true,
-    prototype: true,
-    caller: true,
-    arguments: true,
-    arity: true
+  name: true,
+  length: true,
+  prototype: true,
+  caller: true,
+  callee: true,
+  arguments: true,
+  arity: true
 };
 
-var isGetOwnPropertySymbolsAvailable = typeof Object.getOwnPropertySymbols === 'function';
+var defineProperty = Object.defineProperty;
+var getOwnPropertyNames = Object.getOwnPropertyNames;
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var getPrototypeOf = Object.getPrototypeOf;
+var objectPrototype = getPrototypeOf && getPrototypeOf(Object);
 
-module.exports = function hoistNonReactStatics(targetComponent, sourceComponent, customStatics) {
+module.exports = function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
     if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
-        var keys = Object.getOwnPropertyNames(sourceComponent);
 
-        /* istanbul ignore else */
-        if (isGetOwnPropertySymbolsAvailable) {
-            keys = keys.concat(Object.getOwnPropertySymbols(sourceComponent));
+        if (objectPrototype) {
+            var inheritedComponent = getPrototypeOf(sourceComponent);
+            if (inheritedComponent && inheritedComponent !== objectPrototype) {
+                hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+            }
+        }
+
+        var keys = getOwnPropertyNames(sourceComponent);
+
+        if (getOwnPropertySymbols) {
+            keys = keys.concat(getOwnPropertySymbols(sourceComponent));
         }
 
         for (var i = 0; i < keys.length; ++i) {
-            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]] && (!customStatics || !customStatics[keys[i]])) {
-                try {
-                    targetComponent[keys[i]] = sourceComponent[keys[i]];
-                } catch (error) {
-
-                }
+            var key = keys[i];
+            if (!REACT_STATICS[key] && !KNOWN_STATICS[key] && (!blacklist || !blacklist[key])) {
+                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+                try { // Avoid failures from read-only properties
+                    defineProperty(targetComponent, key, descriptor);
+                } catch (e) {}
             }
         }
+
+        return targetComponent;
     }
 
     return targetComponent;
@@ -8445,7 +8418,7 @@ function StringFormat(id) {
 }
 
 StringFormat.prototype.format = function (value) {
-    if (!value) {
+    if (!value && typeof value !== 'number') {
         return '';
     }
 
@@ -8536,7 +8509,18 @@ function MessageFormat(message, locales, formats) {
     // the other `Intl` APIs.
     var messageFormat = this;
     this.format = function (values) {
+      try {
         return messageFormat._format(pattern, values);
+      } catch (e) {
+        if (e.variableId) {
+          throw new Error(
+            'The intl string context variable \'' + e.variableId + '\'' +
+            ' was not provided to the string \'' + message + '\''
+          );
+        } else {
+          throw e;
+        }
+      }
     };
 }
 
@@ -8671,7 +8655,7 @@ MessageFormat.prototype._findPluralRuleFunction = function (locale) {
 
 MessageFormat.prototype._format = function (pattern, values) {
     var result = '',
-        i, len, part, id, value;
+        i, len, part, id, value, err;
 
     for (i = 0, len = pattern.length; i < len; i += 1) {
         part = pattern[i];
@@ -8686,7 +8670,9 @@ MessageFormat.prototype._format = function (pattern, values) {
 
         // Enforce that all required values are provided by the caller.
         if (!(values && src$utils$$.hop.call(values, id))) {
-            throw new Error('A value must be provided for: ' + id);
+          err = new Error('A value must be provided for: ' + id);
+          err.variableId = id;
+          throw err;
         }
 
         value = values[id];
@@ -8813,6 +8799,7 @@ var objCreate = Object.create || function (proto, props) {
 
     return obj;
 };
+
 exports.defineProperty = defineProperty, exports.objCreate = objCreate;
 
 
@@ -8893,7 +8880,14 @@ exports["default"] = RelativeFormat;
 
 // -----------------------------------------------------------------------------
 
-var FIELDS = ['second', 'minute', 'hour', 'day', 'month', 'year'];
+var FIELDS = [
+    'second', 'second-short',
+    'minute', 'minute-short',
+    'hour', 'hour-short',
+    'day', 'day-short',
+    'month', 'month-short',
+    'year', 'year-short'
+];
 var STYLES = ['best fit', 'numeric'];
 
 // -- RelativeFormat -----------------------------------------------------------
@@ -8956,11 +8950,11 @@ src$es5$$.defineProperty(RelativeFormat, 'thresholds', {
     enumerable: true,
 
     value: {
-        second: 45,  // seconds to minute
-        minute: 45,  // minutes to hour
-        hour  : 22,  // hours to day
-        day   : 26,  // days to month
-        month : 11   // months to year
+        second: 45, 'second-short': 45,  // seconds to minute
+        minute: 45, 'minute-short': 45, // minutes to hour
+        hour  : 22, 'hour-short': 22, // hours to day
+        day   : 26, 'day-short': 26, // days to month
+        month : 11, 'month-short': 11 // months to year
     }
 });
 
@@ -9163,9 +9157,12 @@ RelativeFormat.prototype._resolveStyle = function (style) {
 
 RelativeFormat.prototype._selectUnits = function (diffReport) {
     var i, l, units;
+    var fields = FIELDS.filter(function(field) {
+        return field.indexOf('-short') < 1;
+    });
 
-    for (i = 0, l = FIELDS.length; i < l; i += 1) {
-        units = FIELDS[i];
+    for (i = 0, l = fields.length; i < l; i += 1) {
+        units = fields[i];
 
         if (Math.abs(diffReport[units]) < RelativeFormat.thresholds[units]) {
             break;
@@ -9211,14 +9208,21 @@ exports["default"] = function (from, to) {
         year     = round(rawYears);
 
     return {
-        millisecond: millisecond,
-        second     : second,
-        minute     : minute,
-        hour       : hour,
-        day        : day,
-        week       : week,
-        month      : month,
-        year       : year
+        millisecond    : millisecond,
+        second         : second,
+        'second-short' : second,
+        minute         : minute,
+        'minute-short' : minute,
+        hour           : hour,
+        'hour-short'   : hour,
+        day            : day,
+        'day-short'    : day,
+        week           : week,
+        'week-short'   : week,
+        month          : month,
+        'month-short'  : month,
+        year           : year,
+        'year-short'   : year
     };
 };
 
@@ -9226,7 +9230,7 @@ exports["default"] = function (from, to) {
 },{}],88:[function(require,module,exports){
 // GENERATED FILE
 "use strict";
-exports["default"] = {"locale":"en","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1],t0=Number(s[0])==n,n10=t0&&s[0].slice(-1),n100=t0&&s[0].slice(-2);if(ord)return n10==1&&n100!=11?"one":n10==2&&n100!=12?"two":n10==3&&n100!=13?"few":"other";return n==1&&v0?"one":"other"},"fields":{"year":{"displayName":"year","relative":{"0":"this year","1":"next year","-1":"last year"},"relativeTime":{"future":{"one":"in {0} year","other":"in {0} years"},"past":{"one":"{0} year ago","other":"{0} years ago"}}},"month":{"displayName":"month","relative":{"0":"this month","1":"next month","-1":"last month"},"relativeTime":{"future":{"one":"in {0} month","other":"in {0} months"},"past":{"one":"{0} month ago","other":"{0} months ago"}}},"day":{"displayName":"day","relative":{"0":"today","1":"tomorrow","-1":"yesterday"},"relativeTime":{"future":{"one":"in {0} day","other":"in {0} days"},"past":{"one":"{0} day ago","other":"{0} days ago"}}},"hour":{"displayName":"hour","relativeTime":{"future":{"one":"in {0} hour","other":"in {0} hours"},"past":{"one":"{0} hour ago","other":"{0} hours ago"}}},"minute":{"displayName":"minute","relativeTime":{"future":{"one":"in {0} minute","other":"in {0} minutes"},"past":{"one":"{0} minute ago","other":"{0} minutes ago"}}},"second":{"displayName":"second","relative":{"0":"now"},"relativeTime":{"future":{"one":"in {0} second","other":"in {0} seconds"},"past":{"one":"{0} second ago","other":"{0} seconds ago"}}}}};
+exports["default"] = {"locale":"en","pluralRuleFunction":function (n,ord){var s=String(n).split("."),v0=!s[1],t0=Number(s[0])==n,n10=t0&&s[0].slice(-1),n100=t0&&s[0].slice(-2);if(ord)return n10==1&&n100!=11?"one":n10==2&&n100!=12?"two":n10==3&&n100!=13?"few":"other";return n==1&&v0?"one":"other"},"fields":{"year":{"displayName":"year","relative":{"0":"this year","1":"next year","-1":"last year"},"relativeTime":{"future":{"one":"in {0} year","other":"in {0} years"},"past":{"one":"{0} year ago","other":"{0} years ago"}}},"year-short":{"displayName":"yr.","relative":{"0":"this yr.","1":"next yr.","-1":"last yr."},"relativeTime":{"future":{"one":"in {0} yr.","other":"in {0} yr."},"past":{"one":"{0} yr. ago","other":"{0} yr. ago"}}},"month":{"displayName":"month","relative":{"0":"this month","1":"next month","-1":"last month"},"relativeTime":{"future":{"one":"in {0} month","other":"in {0} months"},"past":{"one":"{0} month ago","other":"{0} months ago"}}},"month-short":{"displayName":"mo.","relative":{"0":"this mo.","1":"next mo.","-1":"last mo."},"relativeTime":{"future":{"one":"in {0} mo.","other":"in {0} mo."},"past":{"one":"{0} mo. ago","other":"{0} mo. ago"}}},"day":{"displayName":"day","relative":{"0":"today","1":"tomorrow","-1":"yesterday"},"relativeTime":{"future":{"one":"in {0} day","other":"in {0} days"},"past":{"one":"{0} day ago","other":"{0} days ago"}}},"day-short":{"displayName":"day","relative":{"0":"today","1":"tomorrow","-1":"yesterday"},"relativeTime":{"future":{"one":"in {0} day","other":"in {0} days"},"past":{"one":"{0} day ago","other":"{0} days ago"}}},"hour":{"displayName":"hour","relative":{"0":"this hour"},"relativeTime":{"future":{"one":"in {0} hour","other":"in {0} hours"},"past":{"one":"{0} hour ago","other":"{0} hours ago"}}},"hour-short":{"displayName":"hr.","relative":{"0":"this hour"},"relativeTime":{"future":{"one":"in {0} hr.","other":"in {0} hr."},"past":{"one":"{0} hr. ago","other":"{0} hr. ago"}}},"minute":{"displayName":"minute","relative":{"0":"this minute"},"relativeTime":{"future":{"one":"in {0} minute","other":"in {0} minutes"},"past":{"one":"{0} minute ago","other":"{0} minutes ago"}}},"minute-short":{"displayName":"min.","relative":{"0":"this minute"},"relativeTime":{"future":{"one":"in {0} min.","other":"in {0} min."},"past":{"one":"{0} min. ago","other":"{0} min. ago"}}},"second":{"displayName":"second","relative":{"0":"now"},"relativeTime":{"future":{"one":"in {0} second","other":"in {0} seconds"},"past":{"one":"{0} second ago","other":"{0} seconds ago"}}},"second-short":{"displayName":"sec.","relative":{"0":"now"},"relativeTime":{"future":{"one":"in {0} sec.","other":"in {0} sec."},"past":{"one":"{0} sec. ago","other":"{0} sec. ago"}}}}};
 
 
 },{}],89:[function(require,module,exports){
@@ -9238,10 +9242,10 @@ See the accompanying LICENSE file for terms.
 
 /* jslint esnext: true */
 
-"use strict";
-
 // Purposely using the same implementation as the Intl.js `Intl` polyfill.
 // Copyright 2013 Andy Earnshaw, MIT License
+
+"use strict";
 
 var hop = Object.prototype.hasOwnProperty;
 var toString = Object.prototype.toString;
@@ -9302,6 +9306,7 @@ var isArray = Array.isArray || function (obj) {
 var dateNow = Date.now || function () {
     return new Date().getTime();
 };
+
 exports.defineProperty = defineProperty, exports.objCreate = objCreate, exports.arrIndexOf = arrIndexOf, exports.isArray = isArray, exports.dateNow = dateNow;
 
 
@@ -26716,7 +26721,7 @@ module.exports = isPlainObject;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],104:[function(require,module,exports){
 //! moment.js
-//! version : 2.18.1
+//! version : 2.19.1
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 //! license : MIT
 //! momentjs.com
@@ -26750,12 +26755,17 @@ function isObject(input) {
 }
 
 function isObjectEmpty(obj) {
-    var k;
-    for (k in obj) {
-        // even if its not own property I'd still call it non-empty
-        return false;
+    if (Object.getOwnPropertyNames) {
+        return (Object.getOwnPropertyNames(obj).length === 0);
+    } else {
+        var k;
+        for (k in obj) {
+            if (obj.hasOwnProperty(k)) {
+                return false;
+            }
+        }
+        return true;
     }
-    return true;
 }
 
 function isUndefined(input) {
@@ -26849,12 +26859,10 @@ if (Array.prototype.some) {
     };
 }
 
-var some$1 = some;
-
 function isValid(m) {
     if (m._isValid == null) {
         var flags = getParsingFlags(m);
-        var parsedParts = some$1.call(flags.parsedDateParts, function (i) {
+        var parsedParts = some.call(flags.parsedDateParts, function (i) {
             return i != null;
         });
         var isNowValid = !isNaN(m._d.getTime()) &&
@@ -26862,6 +26870,7 @@ function isValid(m) {
             !flags.empty &&
             !flags.invalidMonth &&
             !flags.invalidWeekday &&
+            !flags.weekdayMismatch &&
             !flags.nullInput &&
             !flags.invalidFormat &&
             !flags.userInvalidated &&
@@ -27127,8 +27136,6 @@ if (Object.keys) {
     };
 }
 
-var keys$1 = keys;
-
 var defaultCalendar = {
     sameDay : '[Today at] LT',
     nextDay : '[Tomorrow at] LT',
@@ -27252,56 +27259,6 @@ function getPrioritizedUnits(unitsObj) {
         return a.priority - b.priority;
     });
     return units;
-}
-
-function makeGetSet (unit, keepTime) {
-    return function (value) {
-        if (value != null) {
-            set$1(this, unit, value);
-            hooks.updateOffset(this, keepTime);
-            return this;
-        } else {
-            return get(this, unit);
-        }
-    };
-}
-
-function get (mom, unit) {
-    return mom.isValid() ?
-        mom._d['get' + (mom._isUTC ? 'UTC' : '') + unit]() : NaN;
-}
-
-function set$1 (mom, unit, value) {
-    if (mom.isValid()) {
-        mom._d['set' + (mom._isUTC ? 'UTC' : '') + unit](value);
-    }
-}
-
-// MOMENTS
-
-function stringGet (units) {
-    units = normalizeUnits(units);
-    if (isFunction(this[units])) {
-        return this[units]();
-    }
-    return this;
-}
-
-
-function stringSet (units, value) {
-    if (typeof units === 'object') {
-        units = normalizeObjectUnits(units);
-        var prioritized = getPrioritizedUnits(units);
-        for (var i = 0; i < prioritized.length; i++) {
-            this[prioritized[i].unit](units[prioritized[i].unit]);
-        }
-    } else {
-        units = normalizeUnits(units);
-        if (isFunction(this[units])) {
-            return this[units](value);
-        }
-    }
-    return this;
 }
 
 function zeroFill(number, targetLength, forceSign) {
@@ -27494,6 +27451,131 @@ var MILLISECOND = 6;
 var WEEK = 7;
 var WEEKDAY = 8;
 
+// FORMATTING
+
+addFormatToken('Y', 0, 0, function () {
+    var y = this.year();
+    return y <= 9999 ? '' + y : '+' + y;
+});
+
+addFormatToken(0, ['YY', 2], 0, function () {
+    return this.year() % 100;
+});
+
+addFormatToken(0, ['YYYY',   4],       0, 'year');
+addFormatToken(0, ['YYYYY',  5],       0, 'year');
+addFormatToken(0, ['YYYYYY', 6, true], 0, 'year');
+
+// ALIASES
+
+addUnitAlias('year', 'y');
+
+// PRIORITIES
+
+addUnitPriority('year', 1);
+
+// PARSING
+
+addRegexToken('Y',      matchSigned);
+addRegexToken('YY',     match1to2, match2);
+addRegexToken('YYYY',   match1to4, match4);
+addRegexToken('YYYYY',  match1to6, match6);
+addRegexToken('YYYYYY', match1to6, match6);
+
+addParseToken(['YYYYY', 'YYYYYY'], YEAR);
+addParseToken('YYYY', function (input, array) {
+    array[YEAR] = input.length === 2 ? hooks.parseTwoDigitYear(input) : toInt(input);
+});
+addParseToken('YY', function (input, array) {
+    array[YEAR] = hooks.parseTwoDigitYear(input);
+});
+addParseToken('Y', function (input, array) {
+    array[YEAR] = parseInt(input, 10);
+});
+
+// HELPERS
+
+function daysInYear(year) {
+    return isLeapYear(year) ? 366 : 365;
+}
+
+function isLeapYear(year) {
+    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+}
+
+// HOOKS
+
+hooks.parseTwoDigitYear = function (input) {
+    return toInt(input) + (toInt(input) > 68 ? 1900 : 2000);
+};
+
+// MOMENTS
+
+var getSetYear = makeGetSet('FullYear', true);
+
+function getIsLeapYear () {
+    return isLeapYear(this.year());
+}
+
+function makeGetSet (unit, keepTime) {
+    return function (value) {
+        if (value != null) {
+            set$1(this, unit, value);
+            hooks.updateOffset(this, keepTime);
+            return this;
+        } else {
+            return get(this, unit);
+        }
+    };
+}
+
+function get (mom, unit) {
+    return mom.isValid() ?
+        mom._d['get' + (mom._isUTC ? 'UTC' : '') + unit]() : NaN;
+}
+
+function set$1 (mom, unit, value) {
+    if (mom.isValid() && !isNaN(value)) {
+        if (unit === 'FullYear' && isLeapYear(mom.year())) {
+            mom._d['set' + (mom._isUTC ? 'UTC' : '') + unit](value, mom.month(), daysInMonth(value, mom.month()));
+        }
+        else {
+            mom._d['set' + (mom._isUTC ? 'UTC' : '') + unit](value);
+        }
+    }
+}
+
+// MOMENTS
+
+function stringGet (units) {
+    units = normalizeUnits(units);
+    if (isFunction(this[units])) {
+        return this[units]();
+    }
+    return this;
+}
+
+
+function stringSet (units, value) {
+    if (typeof units === 'object') {
+        units = normalizeObjectUnits(units);
+        var prioritized = getPrioritizedUnits(units);
+        for (var i = 0; i < prioritized.length; i++) {
+            this[prioritized[i].unit](units[prioritized[i].unit]);
+        }
+    } else {
+        units = normalizeUnits(units);
+        if (isFunction(this[units])) {
+            return this[units](value);
+        }
+    }
+    return this;
+}
+
+function mod(n, x) {
+    return ((n % x) + x) % x;
+}
+
 var indexOf;
 
 if (Array.prototype.indexOf) {
@@ -27511,10 +27593,13 @@ if (Array.prototype.indexOf) {
     };
 }
 
-var indexOf$1 = indexOf;
-
 function daysInMonth(year, month) {
-    return new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+    if (isNaN(year) || isNaN(month)) {
+        return NaN;
+    }
+    var modMonth = mod(month, 12);
+    year += (month - modMonth) / 12;
+    return modMonth === 1 ? (isLeapYear(year) ? 29 : 28) : (31 - modMonth % 7 % 2);
 }
 
 // FORMATTING
@@ -27603,26 +27688,26 @@ function handleStrictParse(monthName, format, strict) {
 
     if (strict) {
         if (format === 'MMM') {
-            ii = indexOf$1.call(this._shortMonthsParse, llc);
+            ii = indexOf.call(this._shortMonthsParse, llc);
             return ii !== -1 ? ii : null;
         } else {
-            ii = indexOf$1.call(this._longMonthsParse, llc);
+            ii = indexOf.call(this._longMonthsParse, llc);
             return ii !== -1 ? ii : null;
         }
     } else {
         if (format === 'MMM') {
-            ii = indexOf$1.call(this._shortMonthsParse, llc);
+            ii = indexOf.call(this._shortMonthsParse, llc);
             if (ii !== -1) {
                 return ii;
             }
-            ii = indexOf$1.call(this._longMonthsParse, llc);
+            ii = indexOf.call(this._longMonthsParse, llc);
             return ii !== -1 ? ii : null;
         } else {
-            ii = indexOf$1.call(this._longMonthsParse, llc);
+            ii = indexOf.call(this._longMonthsParse, llc);
             if (ii !== -1) {
                 return ii;
             }
-            ii = indexOf$1.call(this._shortMonthsParse, llc);
+            ii = indexOf.call(this._shortMonthsParse, llc);
             return ii !== -1 ? ii : null;
         }
     }
@@ -27779,72 +27864,6 @@ function computeMonthsParse () {
     this._monthsShortRegex = this._monthsRegex;
     this._monthsStrictRegex = new RegExp('^(' + longPieces.join('|') + ')', 'i');
     this._monthsShortStrictRegex = new RegExp('^(' + shortPieces.join('|') + ')', 'i');
-}
-
-// FORMATTING
-
-addFormatToken('Y', 0, 0, function () {
-    var y = this.year();
-    return y <= 9999 ? '' + y : '+' + y;
-});
-
-addFormatToken(0, ['YY', 2], 0, function () {
-    return this.year() % 100;
-});
-
-addFormatToken(0, ['YYYY',   4],       0, 'year');
-addFormatToken(0, ['YYYYY',  5],       0, 'year');
-addFormatToken(0, ['YYYYYY', 6, true], 0, 'year');
-
-// ALIASES
-
-addUnitAlias('year', 'y');
-
-// PRIORITIES
-
-addUnitPriority('year', 1);
-
-// PARSING
-
-addRegexToken('Y',      matchSigned);
-addRegexToken('YY',     match1to2, match2);
-addRegexToken('YYYY',   match1to4, match4);
-addRegexToken('YYYYY',  match1to6, match6);
-addRegexToken('YYYYYY', match1to6, match6);
-
-addParseToken(['YYYYY', 'YYYYYY'], YEAR);
-addParseToken('YYYY', function (input, array) {
-    array[YEAR] = input.length === 2 ? hooks.parseTwoDigitYear(input) : toInt(input);
-});
-addParseToken('YY', function (input, array) {
-    array[YEAR] = hooks.parseTwoDigitYear(input);
-});
-addParseToken('Y', function (input, array) {
-    array[YEAR] = parseInt(input, 10);
-});
-
-// HELPERS
-
-function daysInYear(year) {
-    return isLeapYear(year) ? 366 : 365;
-}
-
-function isLeapYear(year) {
-    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
-}
-
-// HOOKS
-
-hooks.parseTwoDigitYear = function (input) {
-    return toInt(input) + (toInt(input) > 68 ? 1900 : 2000);
-};
-
-// MOMENTS
-
-var getSetYear = makeGetSet('FullYear', true);
-
-function getIsLeapYear () {
-    return isLeapYear(this.year());
 }
 
 function createDate (y, m, d, h, M, s, ms) {
@@ -28114,48 +28133,48 @@ function handleStrictParse$1(weekdayName, format, strict) {
 
     if (strict) {
         if (format === 'dddd') {
-            ii = indexOf$1.call(this._weekdaysParse, llc);
+            ii = indexOf.call(this._weekdaysParse, llc);
             return ii !== -1 ? ii : null;
         } else if (format === 'ddd') {
-            ii = indexOf$1.call(this._shortWeekdaysParse, llc);
+            ii = indexOf.call(this._shortWeekdaysParse, llc);
             return ii !== -1 ? ii : null;
         } else {
-            ii = indexOf$1.call(this._minWeekdaysParse, llc);
+            ii = indexOf.call(this._minWeekdaysParse, llc);
             return ii !== -1 ? ii : null;
         }
     } else {
         if (format === 'dddd') {
-            ii = indexOf$1.call(this._weekdaysParse, llc);
+            ii = indexOf.call(this._weekdaysParse, llc);
             if (ii !== -1) {
                 return ii;
             }
-            ii = indexOf$1.call(this._shortWeekdaysParse, llc);
+            ii = indexOf.call(this._shortWeekdaysParse, llc);
             if (ii !== -1) {
                 return ii;
             }
-            ii = indexOf$1.call(this._minWeekdaysParse, llc);
+            ii = indexOf.call(this._minWeekdaysParse, llc);
             return ii !== -1 ? ii : null;
         } else if (format === 'ddd') {
-            ii = indexOf$1.call(this._shortWeekdaysParse, llc);
+            ii = indexOf.call(this._shortWeekdaysParse, llc);
             if (ii !== -1) {
                 return ii;
             }
-            ii = indexOf$1.call(this._weekdaysParse, llc);
+            ii = indexOf.call(this._weekdaysParse, llc);
             if (ii !== -1) {
                 return ii;
             }
-            ii = indexOf$1.call(this._minWeekdaysParse, llc);
+            ii = indexOf.call(this._minWeekdaysParse, llc);
             return ii !== -1 ? ii : null;
         } else {
-            ii = indexOf$1.call(this._minWeekdaysParse, llc);
+            ii = indexOf.call(this._minWeekdaysParse, llc);
             if (ii !== -1) {
                 return ii;
             }
-            ii = indexOf$1.call(this._weekdaysParse, llc);
+            ii = indexOf.call(this._weekdaysParse, llc);
             if (ii !== -1) {
                 return ii;
             }
-            ii = indexOf$1.call(this._shortWeekdaysParse, llc);
+            ii = indexOf.call(this._shortWeekdaysParse, llc);
             return ii !== -1 ? ii : null;
         }
     }
@@ -28544,11 +28563,10 @@ function loadLocale(name) {
             module && module.exports) {
         try {
             oldLocale = globalLocale._abbr;
-            require('./locale/' + name);
-            // because defineLocale currently also sets the global locale, we
-            // want to undo that for lazy loaded locales
+            var aliasedRequire = require;
+            aliasedRequire('./locale/' + name);
             getSetGlobalLocale(oldLocale);
-        } catch (e) { }
+        } catch (e) {}
     }
     return locales[name];
 }
@@ -28674,7 +28692,7 @@ function getLocale (key) {
 }
 
 function listLocales() {
-    return keys$1(locales);
+    return keys(locales);
 }
 
 function checkOverflow (m) {
@@ -28705,6 +28723,154 @@ function checkOverflow (m) {
     }
 
     return m;
+}
+
+// Pick the first defined of two or three arguments.
+function defaults(a, b, c) {
+    if (a != null) {
+        return a;
+    }
+    if (b != null) {
+        return b;
+    }
+    return c;
+}
+
+function currentDateArray(config) {
+    // hooks is actually the exported moment object
+    var nowValue = new Date(hooks.now());
+    if (config._useUTC) {
+        return [nowValue.getUTCFullYear(), nowValue.getUTCMonth(), nowValue.getUTCDate()];
+    }
+    return [nowValue.getFullYear(), nowValue.getMonth(), nowValue.getDate()];
+}
+
+// convert an array to a date.
+// the array should mirror the parameters below
+// note: all values past the year are optional and will default to the lowest possible value.
+// [year, month, day , hour, minute, second, millisecond]
+function configFromArray (config) {
+    var i, date, input = [], currentDate, yearToUse;
+
+    if (config._d) {
+        return;
+    }
+
+    currentDate = currentDateArray(config);
+
+    //compute day of the year from weeks and weekdays
+    if (config._w && config._a[DATE] == null && config._a[MONTH] == null) {
+        dayOfYearFromWeekInfo(config);
+    }
+
+    //if the day of the year is set, figure out what it is
+    if (config._dayOfYear != null) {
+        yearToUse = defaults(config._a[YEAR], currentDate[YEAR]);
+
+        if (config._dayOfYear > daysInYear(yearToUse) || config._dayOfYear === 0) {
+            getParsingFlags(config)._overflowDayOfYear = true;
+        }
+
+        date = createUTCDate(yearToUse, 0, config._dayOfYear);
+        config._a[MONTH] = date.getUTCMonth();
+        config._a[DATE] = date.getUTCDate();
+    }
+
+    // Default to current date.
+    // * if no year, month, day of month are given, default to today
+    // * if day of month is given, default month and year
+    // * if month is given, default only year
+    // * if year is given, don't default anything
+    for (i = 0; i < 3 && config._a[i] == null; ++i) {
+        config._a[i] = input[i] = currentDate[i];
+    }
+
+    // Zero out whatever was not defaulted, including time
+    for (; i < 7; i++) {
+        config._a[i] = input[i] = (config._a[i] == null) ? (i === 2 ? 1 : 0) : config._a[i];
+    }
+
+    // Check for 24:00:00.000
+    if (config._a[HOUR] === 24 &&
+            config._a[MINUTE] === 0 &&
+            config._a[SECOND] === 0 &&
+            config._a[MILLISECOND] === 0) {
+        config._nextDay = true;
+        config._a[HOUR] = 0;
+    }
+
+    config._d = (config._useUTC ? createUTCDate : createDate).apply(null, input);
+    // Apply timezone offset from input. The actual utcOffset can be changed
+    // with parseZone.
+    if (config._tzm != null) {
+        config._d.setUTCMinutes(config._d.getUTCMinutes() - config._tzm);
+    }
+
+    if (config._nextDay) {
+        config._a[HOUR] = 24;
+    }
+
+    // check for mismatching day of week
+    if (config._w && typeof config._w.d !== 'undefined' && config._w.d !== config._d.getDay()) {
+        getParsingFlags(config).weekdayMismatch = true;
+    }
+}
+
+function dayOfYearFromWeekInfo(config) {
+    var w, weekYear, week, weekday, dow, doy, temp, weekdayOverflow;
+
+    w = config._w;
+    if (w.GG != null || w.W != null || w.E != null) {
+        dow = 1;
+        doy = 4;
+
+        // TODO: We need to take the current isoWeekYear, but that depends on
+        // how we interpret now (local, utc, fixed offset). So create
+        // a now version of current config (take local/utc/offset flags, and
+        // create now).
+        weekYear = defaults(w.GG, config._a[YEAR], weekOfYear(createLocal(), 1, 4).year);
+        week = defaults(w.W, 1);
+        weekday = defaults(w.E, 1);
+        if (weekday < 1 || weekday > 7) {
+            weekdayOverflow = true;
+        }
+    } else {
+        dow = config._locale._week.dow;
+        doy = config._locale._week.doy;
+
+        var curWeek = weekOfYear(createLocal(), dow, doy);
+
+        weekYear = defaults(w.gg, config._a[YEAR], curWeek.year);
+
+        // Default to current week.
+        week = defaults(w.w, curWeek.week);
+
+        if (w.d != null) {
+            // weekday -- low day numbers are considered next week
+            weekday = w.d;
+            if (weekday < 0 || weekday > 6) {
+                weekdayOverflow = true;
+            }
+        } else if (w.e != null) {
+            // local weekday -- counting starts from begining of week
+            weekday = w.e + dow;
+            if (w.e < 0 || w.e > 6) {
+                weekdayOverflow = true;
+            }
+        } else {
+            // default to begining of week
+            weekday = dow;
+        }
+    }
+    if (week < 1 || week > weeksInYear(weekYear, dow, doy)) {
+        getParsingFlags(config)._overflowWeeks = true;
+    } else if (weekdayOverflow != null) {
+        getParsingFlags(config)._overflowWeekday = true;
+    } else {
+        temp = dayOfYearFromWeeks(weekYear, week, weekday, dow, doy);
+        config._a[YEAR] = temp.year;
+        config._dayOfYear = temp.dayOfYear;
+    }
 }
 
 // iso 8601 regex
@@ -28798,70 +28964,94 @@ function configFromISO(config) {
 }
 
 // RFC 2822 regex: For details see https://tools.ietf.org/html/rfc2822#section-3.3
-var basicRfcRegex = /^((?:Mon|Tue|Wed|Thu|Fri|Sat|Sun),?\s)?(\d?\d\s(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s(?:\d\d)?\d\d\s)(\d\d:\d\d)(\:\d\d)?(\s(?:UT|GMT|[ECMP][SD]T|[A-IK-Za-ik-z]|[+-]\d{4}))$/;
+var rfc2822 = /^(?:(Mon|Tue|Wed|Thu|Fri|Sat|Sun),?\s)?(\d{1,2})\s(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s(\d{2,4})\s(\d\d):(\d\d)(?::(\d\d))?\s(?:(UT|GMT|[ECMP][SD]T)|([Zz])|([+-]\d{4}))$/;
+
+function extractFromRFC2822Strings(yearStr, monthStr, dayStr, hourStr, minuteStr, secondStr) {
+    var result = [
+        untruncateYear(yearStr),
+        defaultLocaleMonthsShort.indexOf(monthStr),
+        parseInt(dayStr, 10),
+        parseInt(hourStr, 10),
+        parseInt(minuteStr, 10)
+    ];
+
+    if (secondStr) {
+        result.push(parseInt(secondStr, 10));
+    }
+
+    return result;
+}
+
+function untruncateYear(yearStr) {
+    var year = parseInt(yearStr, 10);
+    if (year <= 49) {
+        return 2000 + year;
+    } else if (year <= 999) {
+        return 1900 + year;
+    }
+    return year;
+}
+
+function preprocessRFC2822(s) {
+    // Remove comments and folding whitespace and replace multiple-spaces with a single space
+    return s.replace(/\([^)]*\)|[\n\t]/g, ' ').replace(/(\s\s+)/g, ' ').trim();
+}
+
+function checkWeekday(weekdayStr, parsedInput, config) {
+    if (weekdayStr) {
+        // TODO: Replace the vanilla JS Date object with an indepentent day-of-week check.
+        var weekdayProvided = defaultLocaleWeekdaysShort.indexOf(weekdayStr),
+            weekdayActual = new Date(parsedInput[0], parsedInput[1], parsedInput[2]).getDay();
+        if (weekdayProvided !== weekdayActual) {
+            getParsingFlags(config).weekdayMismatch = true;
+            config._isValid = false;
+            return false;
+        }
+    }
+    return true;
+}
+
+var obsOffsets = {
+    UT: 0,
+    GMT: 0,
+    EDT: -4 * 60,
+    EST: -5 * 60,
+    CDT: -5 * 60,
+    CST: -6 * 60,
+    MDT: -6 * 60,
+    MST: -7 * 60,
+    PDT: -7 * 60,
+    PST: -8 * 60
+};
+
+function calculateOffset(obsOffset, militaryOffset, numOffset) {
+    if (obsOffset) {
+        return obsOffsets[obsOffset];
+    } else if (militaryOffset) {
+        // the only allowed military tz is Z
+        return 0;
+    } else {
+        var hm = parseInt(numOffset, 10);
+        var m = hm % 100, h = (hm - m) / 100;
+        return h * 60 + m;
+    }
+}
 
 // date and time from ref 2822 format
 function configFromRFC2822(config) {
-    var string, match, dayFormat,
-        dateFormat, timeFormat, tzFormat;
-    var timezones = {
-        ' GMT': ' +0000',
-        ' EDT': ' -0400',
-        ' EST': ' -0500',
-        ' CDT': ' -0500',
-        ' CST': ' -0600',
-        ' MDT': ' -0600',
-        ' MST': ' -0700',
-        ' PDT': ' -0700',
-        ' PST': ' -0800'
-    };
-    var military = 'YXWVUTSRQPONZABCDEFGHIKLM';
-    var timezone, timezoneIndex;
-
-    string = config._i
-        .replace(/\([^\)]*\)|[\n\t]/g, ' ') // Remove comments and folding whitespace
-        .replace(/(\s\s+)/g, ' ') // Replace multiple-spaces with a single space
-        .replace(/^\s|\s$/g, ''); // Remove leading and trailing spaces
-    match = basicRfcRegex.exec(string);
-
+    var match = rfc2822.exec(preprocessRFC2822(config._i));
     if (match) {
-        dayFormat = match[1] ? 'ddd' + ((match[1].length === 5) ? ', ' : ' ') : '';
-        dateFormat = 'D MMM ' + ((match[2].length > 10) ? 'YYYY ' : 'YY ');
-        timeFormat = 'HH:mm' + (match[4] ? ':ss' : '');
-
-        // TODO: Replace the vanilla JS Date object with an indepentent day-of-week check.
-        if (match[1]) { // day of week given
-            var momentDate = new Date(match[2]);
-            var momentDay = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][momentDate.getDay()];
-
-            if (match[1].substr(0,3) !== momentDay) {
-                getParsingFlags(config).weekdayMismatch = true;
-                config._isValid = false;
-                return;
-            }
+        var parsedArray = extractFromRFC2822Strings(match[4], match[3], match[2], match[5], match[6], match[7]);
+        if (!checkWeekday(match[1], parsedArray, config)) {
+            return;
         }
 
-        switch (match[5].length) {
-            case 2: // military
-                if (timezoneIndex === 0) {
-                    timezone = ' +0000';
-                } else {
-                    timezoneIndex = military.indexOf(match[5][1].toUpperCase()) - 12;
-                    timezone = ((timezoneIndex < 0) ? ' -' : ' +') +
-                        (('' + timezoneIndex).replace(/^-?/, '0')).match(/..$/)[0] + '00';
-                }
-                break;
-            case 4: // Zone
-                timezone = timezones[match[5]];
-                break;
-            default: // UT or +/-9999
-                timezone = timezones[' GMT'];
-        }
-        match[5] = timezone;
-        config._i = match.splice(1).join('');
-        tzFormat = ' ZZ';
-        config._f = dayFormat + dateFormat + timeFormat + tzFormat;
-        configFromStringAndFormat(config);
+        config._a = parsedArray;
+        config._tzm = calculateOffset(match[8], match[9], match[10]);
+
+        config._d = createUTCDate.apply(null, config._a);
+        config._d.setUTCMinutes(config._d.getUTCMinutes() - config._tzm);
+
         getParsingFlags(config).rfc2822 = true;
     } else {
         config._isValid = false;
@@ -28904,149 +29094,6 @@ hooks.createFromInputFallback = deprecate(
         config._d = new Date(config._i + (config._useUTC ? ' UTC' : ''));
     }
 );
-
-// Pick the first defined of two or three arguments.
-function defaults(a, b, c) {
-    if (a != null) {
-        return a;
-    }
-    if (b != null) {
-        return b;
-    }
-    return c;
-}
-
-function currentDateArray(config) {
-    // hooks is actually the exported moment object
-    var nowValue = new Date(hooks.now());
-    if (config._useUTC) {
-        return [nowValue.getUTCFullYear(), nowValue.getUTCMonth(), nowValue.getUTCDate()];
-    }
-    return [nowValue.getFullYear(), nowValue.getMonth(), nowValue.getDate()];
-}
-
-// convert an array to a date.
-// the array should mirror the parameters below
-// note: all values past the year are optional and will default to the lowest possible value.
-// [year, month, day , hour, minute, second, millisecond]
-function configFromArray (config) {
-    var i, date, input = [], currentDate, yearToUse;
-
-    if (config._d) {
-        return;
-    }
-
-    currentDate = currentDateArray(config);
-
-    //compute day of the year from weeks and weekdays
-    if (config._w && config._a[DATE] == null && config._a[MONTH] == null) {
-        dayOfYearFromWeekInfo(config);
-    }
-
-    //if the day of the year is set, figure out what it is
-    if (config._dayOfYear != null) {
-        yearToUse = defaults(config._a[YEAR], currentDate[YEAR]);
-
-        if (config._dayOfYear > daysInYear(yearToUse) || config._dayOfYear === 0) {
-            getParsingFlags(config)._overflowDayOfYear = true;
-        }
-
-        date = createUTCDate(yearToUse, 0, config._dayOfYear);
-        config._a[MONTH] = date.getUTCMonth();
-        config._a[DATE] = date.getUTCDate();
-    }
-
-    // Default to current date.
-    // * if no year, month, day of month are given, default to today
-    // * if day of month is given, default month and year
-    // * if month is given, default only year
-    // * if year is given, don't default anything
-    for (i = 0; i < 3 && config._a[i] == null; ++i) {
-        config._a[i] = input[i] = currentDate[i];
-    }
-
-    // Zero out whatever was not defaulted, including time
-    for (; i < 7; i++) {
-        config._a[i] = input[i] = (config._a[i] == null) ? (i === 2 ? 1 : 0) : config._a[i];
-    }
-
-    // Check for 24:00:00.000
-    if (config._a[HOUR] === 24 &&
-            config._a[MINUTE] === 0 &&
-            config._a[SECOND] === 0 &&
-            config._a[MILLISECOND] === 0) {
-        config._nextDay = true;
-        config._a[HOUR] = 0;
-    }
-
-    config._d = (config._useUTC ? createUTCDate : createDate).apply(null, input);
-    // Apply timezone offset from input. The actual utcOffset can be changed
-    // with parseZone.
-    if (config._tzm != null) {
-        config._d.setUTCMinutes(config._d.getUTCMinutes() - config._tzm);
-    }
-
-    if (config._nextDay) {
-        config._a[HOUR] = 24;
-    }
-}
-
-function dayOfYearFromWeekInfo(config) {
-    var w, weekYear, week, weekday, dow, doy, temp, weekdayOverflow;
-
-    w = config._w;
-    if (w.GG != null || w.W != null || w.E != null) {
-        dow = 1;
-        doy = 4;
-
-        // TODO: We need to take the current isoWeekYear, but that depends on
-        // how we interpret now (local, utc, fixed offset). So create
-        // a now version of current config (take local/utc/offset flags, and
-        // create now).
-        weekYear = defaults(w.GG, config._a[YEAR], weekOfYear(createLocal(), 1, 4).year);
-        week = defaults(w.W, 1);
-        weekday = defaults(w.E, 1);
-        if (weekday < 1 || weekday > 7) {
-            weekdayOverflow = true;
-        }
-    } else {
-        dow = config._locale._week.dow;
-        doy = config._locale._week.doy;
-
-        var curWeek = weekOfYear(createLocal(), dow, doy);
-
-        weekYear = defaults(w.gg, config._a[YEAR], curWeek.year);
-
-        // Default to current week.
-        week = defaults(w.w, curWeek.week);
-
-        if (w.d != null) {
-            // weekday -- low day numbers are considered next week
-            weekday = w.d;
-            if (weekday < 0 || weekday > 6) {
-                weekdayOverflow = true;
-            }
-        } else if (w.e != null) {
-            // local weekday -- counting starts from begining of week
-            weekday = w.e + dow;
-            if (w.e < 0 || w.e > 6) {
-                weekdayOverflow = true;
-            }
-        } else {
-            // default to begining of week
-            weekday = dow;
-        }
-    }
-    if (week < 1 || week > weeksInYear(weekYear, dow, doy)) {
-        getParsingFlags(config)._overflowWeeks = true;
-    } else if (weekdayOverflow != null) {
-        getParsingFlags(config)._overflowWeekday = true;
-    } else {
-        temp = dayOfYearFromWeeks(weekYear, week, weekday, dow, doy);
-        config._a[YEAR] = temp.year;
-        config._dayOfYear = temp.dayOfYear;
-    }
-}
 
 // constant that refers to the ISO standard
 hooks.ISO_8601 = function () {};
@@ -29372,7 +29419,7 @@ var ordering = ['year', 'quarter', 'month', 'week', 'day', 'hour', 'minute', 'se
 
 function isDurationValid(m) {
     for (var key in m) {
-        if (!(ordering.indexOf(key) !== -1 && (m[key] == null || !isNaN(m[key])))) {
+        if (!(indexOf.call(ordering, key) !== -1 && (m[key] == null || !isNaN(m[key])))) {
             return false;
         }
     }
@@ -29423,7 +29470,7 @@ function Duration (duration) {
     // day when working around DST, we need to store them separately
     this._days = +days +
         weeks * 7;
-    // It is impossible translate months into days without knowing
+    // It is impossible to translate months into days without knowing
     // which months you are are talking about, so we have to store
     // it separately.
     this._months = +months +
@@ -29670,12 +29717,12 @@ function isUtc () {
 }
 
 // ASP.NET json date format regex
-var aspNetRegex = /^(\-)?(?:(\d*)[. ])?(\d+)\:(\d+)(?:\:(\d+)(\.\d*)?)?$/;
+var aspNetRegex = /^(\-|\+)?(?:(\d*)[. ])?(\d+)\:(\d+)(?:\:(\d+)(\.\d*)?)?$/;
 
 // from http://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html
 // somewhat more in line with 4.4.3.2 2004 spec, but allows decimal anywhere
 // and further modified to allow for strings containing both week and day
-var isoRegex = /^(-)?P(?:(-?[0-9,.]*)Y)?(?:(-?[0-9,.]*)M)?(?:(-?[0-9,.]*)W)?(?:(-?[0-9,.]*)D)?(?:T(?:(-?[0-9,.]*)H)?(?:(-?[0-9,.]*)M)?(?:(-?[0-9,.]*)S)?)?$/;
+var isoRegex = /^(-|\+)?P(?:([-+]?[0-9,.]*)Y)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)W)?(?:([-+]?[0-9,.]*)D)?(?:T(?:([-+]?[0-9,.]*)H)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)S)?)?$/;
 
 function createDuration (input, key) {
     var duration = input,
@@ -29709,7 +29756,7 @@ function createDuration (input, key) {
             ms : toInt(absRound(match[MILLISECOND] * 1000)) * sign // the millisecond decimal point is included in the match
         };
     } else if (!!(match = isoRegex.exec(input))) {
-        sign = (match[1] === '-') ? -1 : 1;
+        sign = (match[1] === '-') ? -1 : (match[1] === '+') ? 1 : 1;
         duration = {
             y : parseIso(match[2], sign),
             M : parseIso(match[3], sign),
@@ -29812,14 +29859,14 @@ function addSubtract (mom, duration, isAdding, updateOffset) {
 
     updateOffset = updateOffset == null ? true : updateOffset;
 
-    if (milliseconds) {
-        mom._d.setTime(mom._d.valueOf() + milliseconds * isAdding);
+    if (months) {
+        setMonth(mom, get(mom, 'Month') + months * isAdding);
     }
     if (days) {
         set$1(mom, 'Date', get(mom, 'Date') + days * isAdding);
     }
-    if (months) {
-        setMonth(mom, get(mom, 'Month') + months * isAdding);
+    if (milliseconds) {
+        mom._d.setTime(mom._d.valueOf() + milliseconds * isAdding);
     }
     if (updateOffset) {
         hooks.updateOffset(mom, days || months);
@@ -29929,22 +29976,18 @@ function diff (input, units, asFloat) {
 
     units = normalizeUnits(units);
 
-    if (units === 'year' || units === 'month' || units === 'quarter') {
-        output = monthDiff(this, that);
-        if (units === 'quarter') {
-            output = output / 3;
-        } else if (units === 'year') {
-            output = output / 12;
-        }
-    } else {
-        delta = this - that;
-        output = units === 'second' ? delta / 1e3 : // 1000
-            units === 'minute' ? delta / 6e4 : // 1000 * 60
-            units === 'hour' ? delta / 36e5 : // 1000 * 60 * 60
-            units === 'day' ? (delta - zoneDelta) / 864e5 : // 1000 * 60 * 60 * 24, negate dst
-            units === 'week' ? (delta - zoneDelta) / 6048e5 : // 1000 * 60 * 60 * 24 * 7, negate dst
-            delta;
+    switch (units) {
+        case 'year': output = monthDiff(this, that) / 12; break;
+        case 'month': output = monthDiff(this, that); break;
+        case 'quarter': output = monthDiff(this, that) / 3; break;
+        case 'second': output = (this - that) / 1e3; break; // 1000
+        case 'minute': output = (this - that) / 6e4; break; // 1000 * 60
+        case 'hour': output = (this - that) / 36e5; break; // 1000 * 60 * 60
+        case 'day': output = (this - that - zoneDelta) / 864e5; break; // 1000 * 60 * 60 * 24, negate dst
+        case 'week': output = (this - that - zoneDelta) / 6048e5; break; // 1000 * 60 * 60 * 24 * 7, negate dst
+        default: output = this - that;
     }
+
     return asFloat ? output : absFloor(output);
 }
 
@@ -30922,6 +30965,10 @@ var asWeeks        = makeAs('w');
 var asMonths       = makeAs('M');
 var asYears        = makeAs('y');
 
+function clone$1 () {
+    return createDuration(this);
+}
+
 function get$2 (units) {
     units = normalizeUnits(units);
     return this.isValid() ? this[units + 's']() : NaN;
@@ -31031,6 +31078,10 @@ function humanize (withSuffix) {
 
 var abs$1 = Math.abs;
 
+function sign(x) {
+    return ((x > 0) - (x < 0)) || +x;
+}
+
 function toISOString$1() {
     // for ISO strings we do not use the normal bubbling rules:
     //  * milliseconds bubble up until they become hours
@@ -31065,7 +31116,7 @@ function toISOString$1() {
     var D = days;
     var h = hours;
     var m = minutes;
-    var s = seconds;
+    var s = seconds ? seconds.toFixed(3).replace(/\.?0+$/, '') : '';
     var total = this.asSeconds();
 
     if (!total) {
@@ -31074,15 +31125,19 @@ function toISOString$1() {
         return 'P0D';
     }
 
-    return (total < 0 ? '-' : '') +
-        'P' +
-        (Y ? Y + 'Y' : '') +
-        (M ? M + 'M' : '') +
-        (D ? D + 'D' : '') +
+    var totalSign = total < 0 ? '-' : '';
+    var ymSign = sign(this._months) !== sign(total) ? '-' : '';
+    var daysSign = sign(this._days) !== sign(total) ? '-' : '';
+    var hmsSign = sign(this._milliseconds) !== sign(total) ? '-' : '';
+
+    return totalSign + 'P' +
+        (Y ? ymSign + Y + 'Y' : '') +
+        (M ? ymSign + M + 'M' : '') +
+        (D ? daysSign + D + 'D' : '') +
         ((h || m || s) ? 'T' : '') +
-        (h ? h + 'H' : '') +
-        (m ? m + 'M' : '') +
-        (s ? s + 'S' : '');
+        (h ? hmsSign + h + 'H' : '') +
+        (m ? hmsSign + m + 'M' : '') +
+        (s ? hmsSign + s + 'S' : '');
 }
 
 var proto$2 = Duration.prototype;
@@ -31102,6 +31157,7 @@ proto$2.asMonths       = asMonths;
 proto$2.asYears        = asYears;
 proto$2.valueOf        = valueOf$1;
 proto$2._bubble        = bubble;
+proto$2.clone          = clone$1;
 proto$2.get            = get$2;
 proto$2.milliseconds   = milliseconds;
 proto$2.seconds        = seconds;
@@ -31143,7 +31199,7 @@ addParseToken('x', function (input, array, config) {
 // Side effect imports
 
 
-hooks.version = '2.18.1';
+hooks.version = '2.19.1';
 
 setHookCallback(createLocal);
 
@@ -31170,7 +31226,7 @@ hooks.updateLocale          = updateLocale;
 hooks.locales               = listLocales;
 hooks.weekdaysShort         = listWeekdaysShort;
 hooks.normalizeUnits        = normalizeUnits;
-hooks.relativeTimeRounding = getSetRelativeTimeRounding;
+hooks.relativeTimeRounding  = getSetRelativeTimeRounding;
 hooks.relativeTimeThreshold = getSetRelativeTimeThreshold;
 hooks.calendarFormat        = getCalendarFormat;
 hooks.prototype             = proto;
@@ -31305,12 +31361,10 @@ module.exports = function (headers) {
 }
 },{"for-each":46,"trim":323}],107:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 'use strict';
@@ -31344,7 +31398,7 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
         try {
           // This is intentionally an invariant that gets caught. It's the same
           // behavior as without this statement except with a better message.
-          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'React.PropTypes.', componentName || 'React class', location, typeSpecName);
+          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'the `prop-types` package, but received `%s`.', componentName || 'React class', location, typeSpecName, typeof typeSpecs[typeSpecName]);
           error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
         } catch (ex) {
           error = ex;
@@ -31368,12 +31422,10 @@ module.exports = checkPropTypes;
 
 },{"./lib/ReactPropTypesSecret":112,"fbjs/lib/invariant":38,"fbjs/lib/warning":45}],108:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 'use strict';
@@ -31391,12 +31443,10 @@ module.exports = function(isValidElement) {
 
 },{"./factoryWithTypeCheckers":110}],109:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 'use strict';
@@ -31441,7 +31491,8 @@ module.exports = function() {
     objectOf: getShim,
     oneOf: getShim,
     oneOfType: getShim,
-    shape: getShim
+    shape: getShim,
+    exact: getShim
   };
 
   ReactPropTypes.checkPropTypes = emptyFunction;
@@ -31452,12 +31503,10 @@ module.exports = function() {
 
 },{"./lib/ReactPropTypesSecret":112,"fbjs/lib/emptyFunction":30,"fbjs/lib/invariant":38}],110:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 'use strict';
@@ -31465,6 +31514,7 @@ module.exports = function() {
 var emptyFunction = require('fbjs/lib/emptyFunction');
 var invariant = require('fbjs/lib/invariant');
 var warning = require('fbjs/lib/warning');
+var assign = require('object-assign');
 
 var ReactPropTypesSecret = require('./lib/ReactPropTypesSecret');
 var checkPropTypes = require('./checkPropTypes');
@@ -31563,7 +31613,8 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
     objectOf: createObjectOfTypeChecker,
     oneOf: createEnumTypeChecker,
     oneOfType: createUnionTypeChecker,
-    shape: createShapeTypeChecker
+    shape: createShapeTypeChecker,
+    exact: createStrictShapeTypeChecker,
   };
 
   /**
@@ -31778,7 +31829,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
       if (typeof checker !== 'function') {
         warning(
           false,
-          'Invalid argument supplid to oneOfType. Expected an array of check functions, but ' +
+          'Invalid argument supplied to oneOfType. Expected an array of check functions, but ' +
           'received %s at index %s.',
           getPostfixForTypeWarning(checker),
           i
@@ -31829,6 +31880,36 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
       }
       return null;
     }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createStrictShapeTypeChecker(shapeTypes) {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+      }
+      // We need to check all keys in case some are required but missing from
+      // props.
+      var allKeys = assign({}, props[propName], shapeTypes);
+      for (var key in allKeys) {
+        var checker = shapeTypes[key];
+        if (!checker) {
+          return new PropTypeError(
+            'Invalid ' + location + ' `' + propFullName + '` key `' + key + '` supplied to `' + componentName + '`.' +
+            '\nBad object: ' + JSON.stringify(props[propName], null, '  ') +
+            '\nValid keys: ' +  JSON.stringify(Object.keys(shapeTypes), null, '  ')
+          );
+        }
+        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+        if (error) {
+          return error;
+        }
+      }
+      return null;
+    }
+
     return createChainableTypeChecker(validate);
   }
 
@@ -31964,14 +32045,12 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
   return ReactPropTypes;
 };
 
-},{"./checkPropTypes":107,"./lib/ReactPropTypesSecret":112,"fbjs/lib/emptyFunction":30,"fbjs/lib/invariant":38,"fbjs/lib/warning":45}],111:[function(require,module,exports){
+},{"./checkPropTypes":107,"./lib/ReactPropTypesSecret":112,"fbjs/lib/emptyFunction":30,"fbjs/lib/invariant":38,"fbjs/lib/warning":45,"object-assign":105}],111:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 if ("production" !== 'production') {
@@ -31998,12 +32077,10 @@ if ("production" !== 'production') {
 
 },{"./factoryWithThrowingShims":109,"./factoryWithTypeCheckers":110}],112:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 'use strict';
@@ -32172,7 +32249,7 @@ var CheckboxGroup = exports.CheckboxGroup = function (_Component2) {
       }
 
       if (typeof this.props.onChange === 'function') {
-        this.props.onChange(newValue, event);
+        this.props.onChange(newValue, event, this.props.name);
       }
     }
   }]);
@@ -32202,12 +32279,10 @@ module.exports = require('./lib/ReactDOM');
 
 },{"./lib/ReactDOM":144}],115:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -32276,12 +32351,10 @@ var ARIADOMPropertyConfig = {
 module.exports = ARIADOMPropertyConfig;
 },{}],116:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -32300,12 +32373,10 @@ var AutoFocusUtils = {
 module.exports = AutoFocusUtils;
 },{"./ReactDOMComponentTree":147,"fbjs/lib/focusNode":32}],117:[function(require,module,exports){
 /**
- * Copyright 2013-present Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -32684,12 +32755,10 @@ var BeforeInputEventPlugin = {
 module.exports = BeforeInputEventPlugin;
 },{"./EventPropagators":133,"./FallbackCompositionState":134,"./SyntheticCompositionEvent":198,"./SyntheticInputEvent":202,"fbjs/lib/ExecutionEnvironment":24}],118:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -32708,6 +32777,7 @@ var isUnitlessNumber = {
   boxFlexGroup: true,
   boxOrdinalGroup: true,
   columnCount: true,
+  columns: true,
   flex: true,
   flexGrow: true,
   flexPositive: true,
@@ -32838,12 +32908,10 @@ var CSSProperty = {
 module.exports = CSSProperty;
 },{}],119:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -33053,12 +33121,10 @@ var CSSPropertyOperations = {
 module.exports = CSSPropertyOperations;
 },{"./CSSProperty":118,"./ReactInstrumentation":176,"./dangerousStyleValue":215,"fbjs/lib/ExecutionEnvironment":24,"fbjs/lib/camelizeStyleName":26,"fbjs/lib/hyphenateStyleName":37,"fbjs/lib/memoizeStringOnly":41,"fbjs/lib/warning":45}],120:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -33172,12 +33238,10 @@ var CallbackQueue = function () {
 module.exports = PooledClass.addPoolingTo(CallbackQueue);
 },{"./PooledClass":138,"./reactProdInvariant":234,"fbjs/lib/invariant":38}],121:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -33302,7 +33366,7 @@ if (ExecutionEnvironment.canUseDOM) {
   // IE9 claims to support the input event but fails to trigger it when
   // deleting text, so we ignore its input events.
 
-  isInputEventSupported = isEventSupported('input') && (!('documentMode' in document) || document.documentMode > 9);
+  isInputEventSupported = isEventSupported('input') && (!document.documentMode || document.documentMode > 9);
 }
 
 /**
@@ -33484,12 +33548,10 @@ var ChangeEventPlugin = {
 module.exports = ChangeEventPlugin;
 },{"./EventPluginHub":130,"./EventPropagators":133,"./ReactDOMComponentTree":147,"./ReactUpdates":191,"./SyntheticEvent":200,"./getEventTarget":223,"./inputValueTracking":229,"./isEventSupported":231,"./isTextInputElement":232,"fbjs/lib/ExecutionEnvironment":24}],122:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -33710,12 +33772,10 @@ var DOMChildrenOperations = {
 module.exports = DOMChildrenOperations;
 },{"./DOMLazyTree":123,"./Danger":127,"./ReactDOMComponentTree":147,"./ReactInstrumentation":176,"./createMicrosoftUnsafeLocalFunction":214,"./setInnerHTML":236,"./setTextContent":237}],123:[function(require,module,exports){
 /**
- * Copyright 2015-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -33828,12 +33888,10 @@ DOMLazyTree.queueText = queueText;
 module.exports = DOMLazyTree;
 },{"./DOMNamespaces":124,"./createMicrosoftUnsafeLocalFunction":214,"./setInnerHTML":236,"./setTextContent":237}],124:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -33848,12 +33906,10 @@ var DOMNamespaces = {
 module.exports = DOMNamespaces;
 },{}],125:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -34057,12 +34113,10 @@ var DOMProperty = {
 module.exports = DOMProperty;
 },{"./reactProdInvariant":234,"fbjs/lib/invariant":38}],126:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -34292,12 +34346,10 @@ var DOMPropertyOperations = {
 module.exports = DOMPropertyOperations;
 },{"./DOMProperty":125,"./ReactDOMComponentTree":147,"./ReactInstrumentation":176,"./quoteAttributeValueForBrowser":233,"fbjs/lib/warning":45}],127:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -34338,12 +34390,10 @@ var Danger = {
 module.exports = Danger;
 },{"./DOMLazyTree":123,"./reactProdInvariant":234,"fbjs/lib/ExecutionEnvironment":24,"fbjs/lib/createNodesFromMarkup":29,"fbjs/lib/emptyFunction":30,"fbjs/lib/invariant":38}],128:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -34364,12 +34414,10 @@ var DefaultEventPluginOrder = ['ResponderEventPlugin', 'SimpleEventPlugin', 'Tap
 module.exports = DefaultEventPluginOrder;
 },{}],129:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -34462,12 +34510,10 @@ var EnterLeaveEventPlugin = {
 module.exports = EnterLeaveEventPlugin;
 },{"./EventPropagators":133,"./ReactDOMComponentTree":147,"./SyntheticMouseEvent":204}],130:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -34736,12 +34782,10 @@ var EventPluginHub = {
 module.exports = EventPluginHub;
 },{"./EventPluginRegistry":131,"./EventPluginUtils":132,"./ReactErrorUtils":167,"./accumulateInto":211,"./forEachAccumulated":219,"./reactProdInvariant":234,"fbjs/lib/invariant":38}],131:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -34989,12 +35033,10 @@ var EventPluginRegistry = {
 module.exports = EventPluginRegistry;
 },{"./reactProdInvariant":234,"fbjs/lib/invariant":38}],132:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -35215,12 +35257,10 @@ var EventPluginUtils = {
 module.exports = EventPluginUtils;
 },{"./ReactErrorUtils":167,"./reactProdInvariant":234,"fbjs/lib/invariant":38,"fbjs/lib/warning":45}],133:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -35349,12 +35389,10 @@ var EventPropagators = {
 module.exports = EventPropagators;
 },{"./EventPluginHub":130,"./EventPluginUtils":132,"./accumulateInto":211,"./forEachAccumulated":219,"fbjs/lib/warning":45}],134:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -35444,12 +35482,10 @@ PooledClass.addPoolingTo(FallbackCompositionState);
 module.exports = FallbackCompositionState;
 },{"./PooledClass":138,"./getTextContentAccessor":227,"object-assign":105}],135:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -35498,6 +35534,7 @@ var HTMLDOMPropertyConfig = {
     contentEditable: 0,
     contextMenu: 0,
     controls: HAS_BOOLEAN_VALUE,
+    controlsList: 0,
     coords: 0,
     crossOrigin: 0,
     data: 0, // For `<object />` acts as `src`.
@@ -35680,12 +35717,10 @@ var HTMLDOMPropertyConfig = {
 module.exports = HTMLDOMPropertyConfig;
 },{"./DOMProperty":125}],136:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -35739,12 +35774,10 @@ var KeyEscapeUtils = {
 module.exports = KeyEscapeUtils;
 },{}],137:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -35877,12 +35910,10 @@ var LinkedValueUtils = {
 module.exports = LinkedValueUtils;
 },{"./ReactPropTypesSecret":184,"./reactProdInvariant":234,"fbjs/lib/invariant":38,"fbjs/lib/warning":45,"prop-types/factory":108,"react/lib/React":287}],138:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -35989,12 +36020,10 @@ var PooledClass = {
 module.exports = PooledClass;
 },{"./reactProdInvariant":234,"fbjs/lib/invariant":38}],139:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -36314,12 +36343,10 @@ module.exports = ReactBrowserEventEmitter;
 },{"./EventPluginRegistry":131,"./ReactEventEmitterMixin":168,"./ViewportMetrics":210,"./getVendorPrefixedEventName":228,"./isEventSupported":231,"object-assign":105}],140:[function(require,module,exports){
 (function (process){
 /**
- * Copyright 2014-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2014-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -36468,12 +36495,10 @@ module.exports = ReactChildReconciler;
 }).call(this,require('_process'))
 },{"./KeyEscapeUtils":136,"./ReactReconciler":186,"./instantiateReactComponent":230,"./shouldUpdateReactComponent":238,"./traverseAllChildren":239,"_process":11,"fbjs/lib/warning":45,"react/lib/ReactComponentTreeHook":290}],141:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -36496,12 +36521,10 @@ var ReactComponentBrowserEnvironment = {
 module.exports = ReactComponentBrowserEnvironment;
 },{"./DOMChildrenOperations":122,"./ReactDOMIDOperations":151}],142:[function(require,module,exports){
 /**
- * Copyright 2014-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2014-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -36540,12 +36563,10 @@ var ReactComponentEnvironment = {
 module.exports = ReactComponentEnvironment;
 },{"./reactProdInvariant":234,"fbjs/lib/invariant":38}],143:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -36814,7 +36835,7 @@ var ReactCompositeComponent = {
   },
 
   _constructComponent: function (doConstruct, publicProps, publicContext, updateQueue) {
-    if ("production" !== 'production') {
+    if ("production" !== 'production' && !doConstruct) {
       ReactCurrentOwner.current = this;
       try {
         return this._constructComponentWithoutOwner(doConstruct, publicProps, publicContext, updateQueue);
@@ -37440,12 +37461,10 @@ var ReactCompositeComponent = {
 module.exports = ReactCompositeComponent;
 },{"./ReactComponentEnvironment":142,"./ReactErrorUtils":167,"./ReactInstanceMap":175,"./ReactInstrumentation":176,"./ReactNodeTypes":181,"./ReactReconciler":186,"./checkReactTypeSpec":213,"./reactProdInvariant":234,"./shouldUpdateReactComponent":238,"fbjs/lib/emptyObject":31,"fbjs/lib/invariant":38,"fbjs/lib/shallowEqual":44,"fbjs/lib/warning":45,"object-assign":105,"react/lib/React":287,"react/lib/ReactCurrentOwner":291}],144:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -37551,12 +37570,10 @@ if ("production" !== 'production') {
 module.exports = ReactDOM;
 },{"./ReactDOMComponentTree":147,"./ReactDOMInvalidARIAHook":153,"./ReactDOMNullInputValuePropHook":154,"./ReactDOMUnknownPropertyHook":161,"./ReactDefaultInjection":164,"./ReactInstrumentation":176,"./ReactMount":179,"./ReactReconciler":186,"./ReactUpdates":191,"./ReactVersion":192,"./findDOMNode":217,"./getHostComponentFromComposite":224,"./renderSubtreeIntoContainer":235,"fbjs/lib/ExecutionEnvironment":24,"fbjs/lib/warning":45}],145:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -38317,6 +38334,10 @@ ReactDOMComponent.Mixin = {
         // happen after `_updateDOMProperties`. Otherwise HTML5 input validations
         // raise warnings and prevent the new value from being assigned.
         ReactDOMInput.updateWrapper(this);
+
+        // We also check that we haven't missed a value update, such as a
+        // Radio group shifting the checked value to another named radio input.
+        inputValueTracking.updateValueIfChanged(this);
         break;
       case 'textarea':
         ReactDOMTextarea.updateWrapper(this);
@@ -38561,12 +38582,10 @@ _assign(ReactDOMComponent.prototype, ReactDOMComponent.Mixin, ReactMultiChild.Mi
 module.exports = ReactDOMComponent;
 },{"./AutoFocusUtils":116,"./CSSPropertyOperations":119,"./DOMLazyTree":123,"./DOMNamespaces":124,"./DOMProperty":125,"./DOMPropertyOperations":126,"./EventPluginHub":130,"./EventPluginRegistry":131,"./ReactBrowserEventEmitter":139,"./ReactDOMComponentFlags":146,"./ReactDOMComponentTree":147,"./ReactDOMInput":152,"./ReactDOMOption":155,"./ReactDOMSelect":156,"./ReactDOMTextarea":159,"./ReactInstrumentation":176,"./ReactMultiChild":180,"./ReactServerRenderingTransaction":188,"./escapeTextContentForBrowser":216,"./inputValueTracking":229,"./isEventSupported":231,"./reactProdInvariant":234,"./validateDOMNesting":240,"fbjs/lib/emptyFunction":30,"fbjs/lib/invariant":38,"fbjs/lib/shallowEqual":44,"fbjs/lib/warning":45,"object-assign":105}],146:[function(require,module,exports){
 /**
- * Copyright 2015-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -38579,12 +38598,10 @@ var ReactDOMComponentFlags = {
 module.exports = ReactDOMComponentFlags;
 },{}],147:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -38774,12 +38791,10 @@ var ReactDOMComponentTree = {
 module.exports = ReactDOMComponentTree;
 },{"./DOMProperty":125,"./ReactDOMComponentFlags":146,"./reactProdInvariant":234,"fbjs/lib/invariant":38}],148:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -38807,12 +38822,10 @@ function ReactDOMContainerInfo(topLevelWrapper, node) {
 module.exports = ReactDOMContainerInfo;
 },{"./validateDOMNesting":240}],149:[function(require,module,exports){
 /**
- * Copyright 2014-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2014-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -38867,12 +38880,10 @@ _assign(ReactDOMEmptyComponent.prototype, {
 module.exports = ReactDOMEmptyComponent;
 },{"./DOMLazyTree":123,"./ReactDOMComponentTree":147,"object-assign":105}],150:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -38886,12 +38897,10 @@ var ReactDOMFeatureFlags = {
 module.exports = ReactDOMFeatureFlags;
 },{}],151:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -38919,12 +38928,10 @@ var ReactDOMIDOperations = {
 module.exports = ReactDOMIDOperations;
 },{"./DOMChildrenOperations":122,"./ReactDOMComponentTree":147}],152:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -39206,12 +39213,10 @@ function _handleChange(event) {
 module.exports = ReactDOMInput;
 },{"./DOMPropertyOperations":126,"./LinkedValueUtils":137,"./ReactDOMComponentTree":147,"./ReactUpdates":191,"./reactProdInvariant":234,"fbjs/lib/invariant":38,"fbjs/lib/warning":45,"object-assign":105}],153:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -39299,12 +39304,10 @@ var ReactDOMInvalidARIAHook = {
 module.exports = ReactDOMInvalidARIAHook;
 },{"./DOMProperty":125,"fbjs/lib/warning":45,"react/lib/ReactComponentTreeHook":290}],154:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -39342,12 +39345,10 @@ var ReactDOMNullInputValuePropHook = {
 module.exports = ReactDOMNullInputValuePropHook;
 },{"fbjs/lib/warning":45,"react/lib/ReactComponentTreeHook":290}],155:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -39464,12 +39465,10 @@ var ReactDOMOption = {
 module.exports = ReactDOMOption;
 },{"./ReactDOMComponentTree":147,"./ReactDOMSelect":156,"fbjs/lib/warning":45,"object-assign":105,"react/lib/React":287}],156:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -39664,12 +39663,10 @@ function _handleChange(event) {
 module.exports = ReactDOMSelect;
 },{"./LinkedValueUtils":137,"./ReactDOMComponentTree":147,"./ReactUpdates":191,"fbjs/lib/warning":45,"object-assign":105}],157:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -39876,12 +39873,10 @@ var ReactDOMSelection = {
 module.exports = ReactDOMSelection;
 },{"./getNodeForCharacterOffset":226,"./getTextContentAccessor":227,"fbjs/lib/ExecutionEnvironment":24}],158:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -40038,12 +40033,10 @@ _assign(ReactDOMTextComponent.prototype, {
 module.exports = ReactDOMTextComponent;
 },{"./DOMChildrenOperations":122,"./DOMLazyTree":123,"./ReactDOMComponentTree":147,"./escapeTextContentForBrowser":216,"./reactProdInvariant":234,"./validateDOMNesting":240,"fbjs/lib/invariant":38,"object-assign":105}],159:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -40198,12 +40191,10 @@ function _handleChange(event) {
 module.exports = ReactDOMTextarea;
 },{"./LinkedValueUtils":137,"./ReactDOMComponentTree":147,"./ReactUpdates":191,"./reactProdInvariant":234,"fbjs/lib/invariant":38,"fbjs/lib/warning":45,"object-assign":105}],160:[function(require,module,exports){
 /**
- * Copyright 2015-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -40334,12 +40325,10 @@ module.exports = {
 };
 },{"./reactProdInvariant":234,"fbjs/lib/invariant":38}],161:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -40446,12 +40435,10 @@ var ReactDOMUnknownPropertyHook = {
 module.exports = ReactDOMUnknownPropertyHook;
 },{"./DOMProperty":125,"./EventPluginRegistry":131,"fbjs/lib/warning":45,"react/lib/ReactComponentTreeHook":290}],162:[function(require,module,exports){
 /**
- * Copyright 2016-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2016-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -40807,12 +40794,10 @@ if (/[?&]react_perf\b/.test(url)) {
 module.exports = ReactDebugTool;
 },{"./ReactHostOperationHistoryHook":172,"./ReactInvalidSetStateWarningHook":177,"fbjs/lib/ExecutionEnvironment":24,"fbjs/lib/performanceNow":43,"fbjs/lib/warning":45,"react/lib/ReactComponentTreeHook":290}],163:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -40875,12 +40860,10 @@ var ReactDefaultBatchingStrategy = {
 module.exports = ReactDefaultBatchingStrategy;
 },{"./ReactUpdates":191,"./Transaction":209,"fbjs/lib/emptyFunction":30,"object-assign":105}],164:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -40961,12 +40944,10 @@ module.exports = {
 };
 },{"./ARIADOMPropertyConfig":115,"./BeforeInputEventPlugin":117,"./ChangeEventPlugin":121,"./DefaultEventPluginOrder":128,"./EnterLeaveEventPlugin":129,"./HTMLDOMPropertyConfig":135,"./ReactComponentBrowserEnvironment":141,"./ReactDOMComponent":145,"./ReactDOMComponentTree":147,"./ReactDOMEmptyComponent":149,"./ReactDOMTextComponent":158,"./ReactDOMTreeTraversal":160,"./ReactDefaultBatchingStrategy":163,"./ReactEventListener":169,"./ReactInjection":173,"./ReactReconcileTransaction":185,"./SVGDOMPropertyConfig":193,"./SelectEventPlugin":194,"./SimpleEventPlugin":195}],165:[function(require,module,exports){
 /**
- * Copyright 2014-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2014-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -40981,12 +40962,10 @@ var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol['for'] && Symbol
 module.exports = REACT_ELEMENT_TYPE;
 },{}],166:[function(require,module,exports){
 /**
- * Copyright 2014-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2014-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -41011,12 +40990,10 @@ ReactEmptyComponent.injection = ReactEmptyComponentInjection;
 module.exports = ReactEmptyComponent;
 },{}],167:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -41073,7 +41050,9 @@ if ("production" !== 'production') {
   if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function' && typeof document !== 'undefined' && typeof document.createEvent === 'function') {
     var fakeNode = document.createElement('react');
     ReactErrorUtils.invokeGuardedCallback = function (name, func, a) {
-      var boundFunc = func.bind(null, a);
+      var boundFunc = function () {
+        func(a);
+      };
       var evtType = 'react-' + name;
       fakeNode.addEventListener(evtType, boundFunc, false);
       var evt = document.createEvent('Event');
@@ -41087,12 +41066,10 @@ if ("production" !== 'production') {
 module.exports = ReactErrorUtils;
 },{}],168:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -41119,12 +41096,10 @@ var ReactEventEmitterMixin = {
 module.exports = ReactEventEmitterMixin;
 },{"./EventPluginHub":130}],169:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -41274,12 +41249,10 @@ var ReactEventListener = {
 module.exports = ReactEventListener;
 },{"./PooledClass":138,"./ReactDOMComponentTree":147,"./ReactUpdates":191,"./getEventTarget":223,"fbjs/lib/EventListener":23,"fbjs/lib/ExecutionEnvironment":24,"fbjs/lib/getUnboundedScrollPosition":35,"object-assign":105}],170:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -41296,12 +41269,10 @@ var ReactFeatureFlags = {
 module.exports = ReactFeatureFlags;
 },{}],171:[function(require,module,exports){
 /**
- * Copyright 2014-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2014-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -41364,12 +41335,10 @@ var ReactHostComponent = {
 module.exports = ReactHostComponent;
 },{"./reactProdInvariant":234,"fbjs/lib/invariant":38}],172:[function(require,module,exports){
 /**
- * Copyright 2016-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2016-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -41398,12 +41367,10 @@ var ReactHostOperationHistoryHook = {
 module.exports = ReactHostOperationHistoryHook;
 },{}],173:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -41432,12 +41399,10 @@ var ReactInjection = {
 module.exports = ReactInjection;
 },{"./DOMProperty":125,"./EventPluginHub":130,"./EventPluginUtils":132,"./ReactBrowserEventEmitter":139,"./ReactComponentEnvironment":142,"./ReactEmptyComponent":166,"./ReactHostComponent":171,"./ReactUpdates":191}],174:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -41555,12 +41520,10 @@ var ReactInputSelection = {
 module.exports = ReactInputSelection;
 },{"./ReactDOMSelection":157,"fbjs/lib/containsNode":27,"fbjs/lib/focusNode":32,"fbjs/lib/getActiveElement":33}],175:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -41601,12 +41564,10 @@ var ReactInstanceMap = {
 module.exports = ReactInstanceMap;
 },{}],176:[function(require,module,exports){
 /**
- * Copyright 2016-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2016-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -41625,12 +41586,10 @@ if ("production" !== 'production') {
 module.exports = { debugTool: debugTool };
 },{"./ReactDebugTool":162}],177:[function(require,module,exports){
 /**
- * Copyright 2016-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2016-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -41662,12 +41621,10 @@ var ReactInvalidSetStateWarningHook = {
 module.exports = ReactInvalidSetStateWarningHook;
 },{"fbjs/lib/warning":45}],178:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -41712,12 +41669,10 @@ var ReactMarkupChecksum = {
 module.exports = ReactMarkupChecksum;
 },{"./adler32":212}],179:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -42250,12 +42205,10 @@ var ReactMount = {
 module.exports = ReactMount;
 },{"./DOMLazyTree":123,"./DOMProperty":125,"./ReactBrowserEventEmitter":139,"./ReactDOMComponentTree":147,"./ReactDOMContainerInfo":148,"./ReactDOMFeatureFlags":150,"./ReactFeatureFlags":170,"./ReactInstanceMap":175,"./ReactInstrumentation":176,"./ReactMarkupChecksum":178,"./ReactReconciler":186,"./ReactUpdateQueue":190,"./ReactUpdates":191,"./instantiateReactComponent":230,"./reactProdInvariant":234,"./setInnerHTML":236,"./shouldUpdateReactComponent":238,"fbjs/lib/emptyObject":31,"fbjs/lib/invariant":38,"fbjs/lib/warning":45,"react/lib/React":287,"react/lib/ReactCurrentOwner":291}],180:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -42696,12 +42649,10 @@ var ReactMultiChild = {
 module.exports = ReactMultiChild;
 },{"./ReactChildReconciler":140,"./ReactComponentEnvironment":142,"./ReactInstanceMap":175,"./ReactInstrumentation":176,"./ReactReconciler":186,"./flattenChildren":218,"./reactProdInvariant":234,"fbjs/lib/emptyFunction":30,"fbjs/lib/invariant":38,"react/lib/ReactCurrentOwner":291}],181:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -42736,12 +42687,10 @@ var ReactNodeTypes = {
 module.exports = ReactNodeTypes;
 },{"./reactProdInvariant":234,"fbjs/lib/invariant":38,"react/lib/React":287}],182:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -42829,12 +42778,10 @@ var ReactOwner = {
 module.exports = ReactOwner;
 },{"./reactProdInvariant":234,"fbjs/lib/invariant":38}],183:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -42854,12 +42801,10 @@ if ("production" !== 'production') {
 module.exports = ReactPropTypeLocationNames;
 },{}],184:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -42871,12 +42816,10 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 module.exports = ReactPropTypesSecret;
 },{}],185:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -43049,12 +42992,10 @@ PooledClass.addPoolingTo(ReactReconcileTransaction);
 module.exports = ReactReconcileTransaction;
 },{"./CallbackQueue":120,"./PooledClass":138,"./ReactBrowserEventEmitter":139,"./ReactInputSelection":174,"./ReactInstrumentation":176,"./ReactUpdateQueue":190,"./Transaction":209,"object-assign":105}],186:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -43215,12 +43156,10 @@ var ReactReconciler = {
 module.exports = ReactReconciler;
 },{"./ReactInstrumentation":176,"./ReactRef":187,"fbjs/lib/warning":45}],187:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -43304,12 +43243,10 @@ ReactRef.detachRefs = function (instance, element) {
 module.exports = ReactRef;
 },{"./ReactOwner":182}],188:[function(require,module,exports){
 /**
- * Copyright 2014-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2014-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -43394,12 +43331,10 @@ PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 module.exports = ReactServerRenderingTransaction;
 },{"./PooledClass":138,"./ReactInstrumentation":176,"./ReactServerUpdateQueue":189,"./Transaction":209,"object-assign":105}],189:[function(require,module,exports){
 /**
- * Copyright 2015-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -43533,12 +43468,10 @@ var ReactServerUpdateQueue = function () {
 module.exports = ReactServerUpdateQueue;
 },{"./ReactUpdateQueue":190,"fbjs/lib/warning":45}],190:[function(require,module,exports){
 /**
- * Copyright 2015-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -43767,12 +43700,10 @@ var ReactUpdateQueue = {
 module.exports = ReactUpdateQueue;
 },{"./ReactInstanceMap":175,"./ReactInstrumentation":176,"./ReactUpdates":191,"./reactProdInvariant":234,"fbjs/lib/invariant":38,"fbjs/lib/warning":45,"react/lib/ReactCurrentOwner":291}],191:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -43980,7 +43911,7 @@ function enqueueUpdate(component) {
  * if no updates are currently being performed.
  */
 function asap(callback, context) {
-  !batchingStrategy.isBatchingUpdates ? "production" !== 'production' ? invariant(false, 'ReactUpdates.asap: Can\'t enqueue an asap callback in a context whereupdates are not being batched.') : _prodInvariant('125') : void 0;
+  invariant(batchingStrategy.isBatchingUpdates, "ReactUpdates.asap: Can't enqueue an asap callback in a context where" + 'updates are not being batched.');
   asapCallbackQueue.enqueue(callback, context);
   asapEnqueued = true;
 }
@@ -44018,26 +43949,22 @@ var ReactUpdates = {
 module.exports = ReactUpdates;
 },{"./CallbackQueue":120,"./PooledClass":138,"./ReactFeatureFlags":170,"./ReactReconciler":186,"./Transaction":209,"./reactProdInvariant":234,"fbjs/lib/invariant":38,"object-assign":105}],192:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
 'use strict';
 
-module.exports = '15.6.1';
+module.exports = '15.6.2';
 },{}],193:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -44334,12 +44261,10 @@ Object.keys(ATTRS).forEach(function (key) {
 module.exports = SVGDOMPropertyConfig;
 },{}],194:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -44522,12 +44447,10 @@ var SelectEventPlugin = {
 module.exports = SelectEventPlugin;
 },{"./EventPropagators":133,"./ReactDOMComponentTree":147,"./ReactInputSelection":174,"./SyntheticEvent":200,"./isTextInputElement":232,"fbjs/lib/ExecutionEnvironment":24,"fbjs/lib/getActiveElement":33,"fbjs/lib/shallowEqual":44}],195:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -44748,12 +44671,10 @@ var SimpleEventPlugin = {
 module.exports = SimpleEventPlugin;
 },{"./EventPropagators":133,"./ReactDOMComponentTree":147,"./SyntheticAnimationEvent":196,"./SyntheticClipboardEvent":197,"./SyntheticDragEvent":199,"./SyntheticEvent":200,"./SyntheticFocusEvent":201,"./SyntheticKeyboardEvent":203,"./SyntheticMouseEvent":204,"./SyntheticTouchEvent":205,"./SyntheticTransitionEvent":206,"./SyntheticUIEvent":207,"./SyntheticWheelEvent":208,"./getEventCharCode":220,"./reactProdInvariant":234,"fbjs/lib/EventListener":23,"fbjs/lib/emptyFunction":30,"fbjs/lib/invariant":38}],196:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -44787,12 +44708,10 @@ SyntheticEvent.augmentClass(SyntheticAnimationEvent, AnimationEventInterface);
 module.exports = SyntheticAnimationEvent;
 },{"./SyntheticEvent":200}],197:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -44825,12 +44744,10 @@ SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 module.exports = SyntheticClipboardEvent;
 },{"./SyntheticEvent":200}],198:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -44861,12 +44778,10 @@ SyntheticEvent.augmentClass(SyntheticCompositionEvent, CompositionEventInterface
 module.exports = SyntheticCompositionEvent;
 },{"./SyntheticEvent":200}],199:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -44897,12 +44812,10 @@ SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
 module.exports = SyntheticDragEvent;
 },{"./SyntheticMouseEvent":204}],200:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -45078,6 +44991,33 @@ _assign(SyntheticEvent.prototype, {
 
 SyntheticEvent.Interface = EventInterface;
 
+/**
+ * Helper to reduce boilerplate when creating subclasses.
+ *
+ * @param {function} Class
+ * @param {?object} Interface
+ */
+SyntheticEvent.augmentClass = function (Class, Interface) {
+  var Super = this;
+
+  var E = function () {};
+  E.prototype = Super.prototype;
+  var prototype = new E();
+
+  _assign(prototype, Class.prototype);
+  Class.prototype = prototype;
+  Class.prototype.constructor = Class;
+
+  Class.Interface = _assign({}, Super.Interface, Interface);
+  Class.augmentClass = Super.augmentClass;
+
+  PooledClass.addPoolingTo(Class, PooledClass.fourArgumentPooler);
+};
+
+/** Proxying after everything set on SyntheticEvent
+  * to resolve Proxy issue on some WebKit browsers
+  * in which some Event properties are set to undefined (GH#10010)
+  */
 if ("production" !== 'production') {
   if (isProxySupported) {
     /*eslint-disable no-func-assign */
@@ -45101,28 +45041,6 @@ if ("production" !== 'production') {
     /*eslint-enable no-func-assign */
   }
 }
-/**
- * Helper to reduce boilerplate when creating subclasses.
- *
- * @param {function} Class
- * @param {?object} Interface
- */
-SyntheticEvent.augmentClass = function (Class, Interface) {
-  var Super = this;
-
-  var E = function () {};
-  E.prototype = Super.prototype;
-  var prototype = new E();
-
-  _assign(prototype, Class.prototype);
-  Class.prototype = prototype;
-  Class.prototype.constructor = Class;
-
-  Class.Interface = _assign({}, Super.Interface, Interface);
-  Class.augmentClass = Super.augmentClass;
-
-  PooledClass.addPoolingTo(Class, PooledClass.fourArgumentPooler);
-};
 
 PooledClass.addPoolingTo(SyntheticEvent, PooledClass.fourArgumentPooler);
 
@@ -45163,12 +45081,10 @@ function getPooledWarningPropertyDefinition(propName, getVal) {
 }
 },{"./PooledClass":138,"fbjs/lib/emptyFunction":30,"fbjs/lib/warning":45,"object-assign":105}],201:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -45199,12 +45115,10 @@ SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 module.exports = SyntheticFocusEvent;
 },{"./SyntheticUIEvent":207}],202:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -45236,12 +45150,10 @@ SyntheticEvent.augmentClass(SyntheticInputEvent, InputEventInterface);
 module.exports = SyntheticInputEvent;
 },{"./SyntheticEvent":200}],203:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -45320,12 +45232,10 @@ SyntheticUIEvent.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 module.exports = SyntheticKeyboardEvent;
 },{"./SyntheticUIEvent":207,"./getEventCharCode":220,"./getEventKey":221,"./getEventModifierState":222}],204:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -45392,12 +45302,10 @@ SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 module.exports = SyntheticMouseEvent;
 },{"./SyntheticUIEvent":207,"./ViewportMetrics":210,"./getEventModifierState":222}],205:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -45437,12 +45345,10 @@ SyntheticUIEvent.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 module.exports = SyntheticTouchEvent;
 },{"./SyntheticUIEvent":207,"./getEventModifierState":222}],206:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -45476,12 +45382,10 @@ SyntheticEvent.augmentClass(SyntheticTransitionEvent, TransitionEventInterface);
 module.exports = SyntheticTransitionEvent;
 },{"./SyntheticEvent":200}],207:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -45535,12 +45439,10 @@ SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 module.exports = SyntheticUIEvent;
 },{"./SyntheticEvent":200,"./getEventTarget":223}],208:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -45586,12 +45488,10 @@ SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 module.exports = SyntheticWheelEvent;
 },{"./SyntheticMouseEvent":204}],209:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -45814,12 +45714,10 @@ var TransactionImpl = {
 module.exports = TransactionImpl;
 },{"./reactProdInvariant":234,"fbjs/lib/invariant":38}],210:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -45839,12 +45737,10 @@ var ViewportMetrics = {
 module.exports = ViewportMetrics;
 },{}],211:[function(require,module,exports){
 /**
- * Copyright 2014-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2014-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -45897,12 +45793,10 @@ function accumulateInto(current, next) {
 module.exports = accumulateInto;
 },{"./reactProdInvariant":234,"fbjs/lib/invariant":38}],212:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -45942,12 +45836,10 @@ module.exports = adler32;
 },{}],213:[function(require,module,exports){
 (function (process){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -46030,12 +45922,10 @@ module.exports = checkReactTypeSpec;
 }).call(this,require('_process'))
 },{"./ReactPropTypeLocationNames":183,"./ReactPropTypesSecret":184,"./reactProdInvariant":234,"_process":11,"fbjs/lib/invariant":38,"fbjs/lib/warning":45,"react/lib/ReactComponentTreeHook":290}],214:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -46062,12 +45952,10 @@ var createMicrosoftUnsafeLocalFunction = function (func) {
 module.exports = createMicrosoftUnsafeLocalFunction;
 },{}],215:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -46141,12 +46029,10 @@ function dangerousStyleValue(name, value, component, isCustomProperty) {
 module.exports = dangerousStyleValue;
 },{"./CSSProperty":118,"fbjs/lib/warning":45}],216:[function(require,module,exports){
 /**
- * Copyright 2016-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2016-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * Based on the escape-html library, which is used under the MIT License below:
  *
@@ -46263,12 +46149,10 @@ function escapeTextContentForBrowser(text) {
 module.exports = escapeTextContentForBrowser;
 },{}],217:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -46324,12 +46208,10 @@ module.exports = findDOMNode;
 },{"./ReactDOMComponentTree":147,"./ReactInstanceMap":175,"./getHostComponentFromComposite":224,"./reactProdInvariant":234,"fbjs/lib/invariant":38,"fbjs/lib/warning":45,"react/lib/ReactCurrentOwner":291}],218:[function(require,module,exports){
 (function (process){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -46401,12 +46283,10 @@ module.exports = flattenChildren;
 }).call(this,require('_process'))
 },{"./KeyEscapeUtils":136,"./traverseAllChildren":239,"_process":11,"fbjs/lib/warning":45,"react/lib/ReactComponentTreeHook":290}],219:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -46432,12 +46312,10 @@ function forEachAccumulated(arr, cb, scope) {
 module.exports = forEachAccumulated;
 },{}],220:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -46482,12 +46360,10 @@ function getEventCharCode(nativeEvent) {
 module.exports = getEventCharCode;
 },{}],221:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -46594,12 +46470,10 @@ function getEventKey(nativeEvent) {
 module.exports = getEventKey;
 },{"./getEventCharCode":220}],222:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -46637,12 +46511,10 @@ function getEventModifierState(nativeEvent) {
 module.exports = getEventModifierState;
 },{}],223:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -46672,12 +46544,10 @@ function getEventTarget(nativeEvent) {
 module.exports = getEventTarget;
 },{}],224:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -46702,12 +46572,10 @@ function getHostComponentFromComposite(inst) {
 module.exports = getHostComponentFromComposite;
 },{"./ReactNodeTypes":181}],225:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -46743,12 +46611,10 @@ function getIteratorFn(maybeIterable) {
 module.exports = getIteratorFn;
 },{}],226:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -46817,12 +46683,10 @@ function getNodeForCharacterOffset(root, offset) {
 module.exports = getNodeForCharacterOffset;
 },{}],227:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -46850,12 +46714,10 @@ function getTextContentAccessor() {
 module.exports = getTextContentAccessor;
 },{"fbjs/lib/ExecutionEnvironment":24}],228:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -46951,12 +46813,10 @@ function getVendorPrefixedEventName(eventName) {
 module.exports = getVendorPrefixedEventName;
 },{"fbjs/lib/ExecutionEnvironment":24}],229:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -46979,7 +46839,7 @@ function attachTracker(inst, tracker) {
 }
 
 function detachTracker(inst) {
-  delete inst._wrapperState.valueTracker;
+  inst._wrapperState.valueTracker = null;
 }
 
 function getValueFromNode(node) {
@@ -47074,12 +46934,10 @@ var inputValueTracking = {
 module.exports = inputValueTracking;
 },{"./ReactDOMComponentTree":147}],230:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -47203,12 +47061,10 @@ _assign(ReactCompositeComponentWrapper.prototype, ReactCompositeComponent, {
 module.exports = instantiateReactComponent;
 },{"./ReactCompositeComponent":143,"./ReactEmptyComponent":166,"./ReactHostComponent":171,"./reactProdInvariant":234,"fbjs/lib/invariant":38,"fbjs/lib/warning":45,"object-assign":105,"react/lib/getNextDebugID":305}],231:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -47263,12 +47119,10 @@ function isEventSupported(eventNameSuffix, capture) {
 module.exports = isEventSupported;
 },{"fbjs/lib/ExecutionEnvironment":24}],232:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -47314,12 +47168,10 @@ function isTextInputElement(elem) {
 module.exports = isTextInputElement;
 },{}],233:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -47341,11 +47193,9 @@ module.exports = quoteAttributeValueForBrowser;
 },{"./escapeTextContentForBrowser":216}],234:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -47379,12 +47229,10 @@ function reactProdInvariant(code) {
 module.exports = reactProdInvariant;
 },{}],235:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -47395,12 +47243,10 @@ var ReactMount = require('./ReactMount');
 module.exports = ReactMount.renderSubtreeIntoContainer;
 },{"./ReactMount":179}],236:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -47493,12 +47339,10 @@ if (ExecutionEnvironment.canUseDOM) {
 module.exports = setInnerHTML;
 },{"./DOMNamespaces":124,"./createMicrosoftUnsafeLocalFunction":214,"fbjs/lib/ExecutionEnvironment":24}],237:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -47545,12 +47389,10 @@ if (ExecutionEnvironment.canUseDOM) {
 module.exports = setTextContent;
 },{"./escapeTextContentForBrowser":216,"./setInnerHTML":236,"fbjs/lib/ExecutionEnvironment":24}],238:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -47587,12 +47429,10 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 module.exports = shouldUpdateReactComponent;
 },{}],239:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -47763,12 +47603,10 @@ function traverseAllChildren(children, callback, traverseContext) {
 module.exports = traverseAllChildren;
 },{"./KeyEscapeUtils":136,"./ReactElementSymbol":165,"./getIteratorFn":225,"./reactProdInvariant":234,"fbjs/lib/invariant":38,"fbjs/lib/warning":45,"react/lib/ReactCurrentOwner":291}],240:[function(require,module,exports){
 /**
- * Copyright 2015-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -48201,6 +48039,7 @@ var Lightbox = (function (_Component) {
 
 		_get(Object.getPrototypeOf(Lightbox.prototype), 'constructor', this).call(this, props);
 		this.theme = (0, _utils.deepMerge)(_theme2['default'], props.theme);
+		this.classes = _aphroditeNoImportant.StyleSheet.create((0, _utils.deepMerge)(defaultStyles, this.theme));
 		_utils.bindFunctions.call(this, ['gotoNext', 'gotoPrev', 'closeBackdrop', 'handleKeyboardInput']);
 	}
 
@@ -48276,6 +48115,7 @@ var Lightbox = (function (_Component) {
 			var img = new Image();
 
 			img.src = image.src;
+			img.srcset = img.srcSet || img.srcset;
 
 			if (image.srcset) {
 				img.srcset = image.srcset.join();
@@ -48304,7 +48144,9 @@ var Lightbox = (function (_Component) {
 	}, {
 		key: 'closeBackdrop',
 		value: function closeBackdrop(event) {
-			if (event.target.id === 'lightboxBackdrop') {
+			// make sure event only happens if they click the backdrop
+			// and if the caption is widening the figure element let that respond too
+			if (event.target.id === 'lightboxBackdrop' || event.target.tagName === 'FIGURE') {
 				this.props.onClose();
 			}
 		}
@@ -48380,12 +48222,12 @@ var Lightbox = (function (_Component) {
 				_componentsContainer2['default'],
 				{
 					key: 'open',
-					onClick: !!backdropClosesModal && this.closeBackdrop,
-					onTouchEnd: !!backdropClosesModal && this.closeBackdrop
+					onClick: backdropClosesModal && this.closeBackdrop,
+					onTouchEnd: backdropClosesModal && this.closeBackdrop
 				},
 				_react2['default'].createElement(
 					'div',
-					{ className: (0, _aphroditeNoImportant.css)(classes.content), style: { marginBottom: offsetThumbnails, maxWidth: width } },
+					{ className: (0, _aphroditeNoImportant.css)(this.classes.content), style: { marginBottom: offsetThumbnails, maxWidth: width } },
 					_react2['default'].createElement(_componentsHeader2['default'], {
 						customControls: customControls,
 						onClose: onClose,
@@ -48414,6 +48256,7 @@ var Lightbox = (function (_Component) {
 			if (!images || !images.length) return null;
 
 			var image = images[currentImage];
+			image.srcset = image.srcSet || image.srcset;
 
 			var srcset = undefined;
 			var sizes = undefined;
@@ -48428,9 +48271,9 @@ var Lightbox = (function (_Component) {
 
 			return _react2['default'].createElement(
 				'figure',
-				{ className: (0, _aphroditeNoImportant.css)(classes.figure) },
+				{ className: (0, _aphroditeNoImportant.css)(this.classes.figure) },
 				_react2['default'].createElement('img', {
-					className: (0, _aphroditeNoImportant.css)(classes.image),
+					className: (0, _aphroditeNoImportant.css)(this.classes.image),
 					onClick: !!onClickImage && onClickImage,
 					sizes: sizes,
 					alt: image.alt,
@@ -48530,7 +48373,7 @@ Lightbox.childContextTypes = {
 	theme: _propTypes2['default'].object.isRequired
 };
 
-var classes = _aphroditeNoImportant.StyleSheet.create({
+var defaultStyles = {
 	content: {
 		position: 'relative'
 	},
@@ -48547,7 +48390,7 @@ var classes = _aphroditeNoImportant.StyleSheet.create({
 		WebkitTouchCallout: 'none',
 		userSelect: 'none'
 	}
-});
+};
 
 exports['default'] = Lightbox;
 module.exports = exports['default'];
@@ -48638,7 +48481,7 @@ var defaultStyles = {
 		userSelect: 'none'
 	},
 
-	// sizees
+	// sizes
 	arrow__size__medium: {
 		height: _theme2['default'].arrow.height,
 		marginTop: _theme2['default'].arrow.height / -2,
@@ -49012,7 +48855,9 @@ var classes = _aphroditeNoImportant.StyleSheet.create({
 		padding: '0 50px',
 		position: 'absolute',
 		textAlign: 'center',
-		whiteSpace: 'nowrap'
+		whiteSpace: 'nowrap',
+		left: '50%',
+		transform: 'translateX(-50%)'
 	}
 });
 
@@ -49532,7 +49377,7 @@ theme.thumbnail = {
 
 // arrow
 theme.arrow = {
-	background: 'black',
+	background: 'none',
 	fill: 'white',
 	height: 120
 };
@@ -49644,7 +49489,7 @@ var defaultLocaleData = { "locale": "en", "pluralRuleFunction": function pluralR
         t0 = Number(s[0]) == n,
         n10 = t0 && s[0].slice(-1),
         n100 = t0 && s[0].slice(-2);if (ord) return n10 == 1 && n100 != 11 ? "one" : n10 == 2 && n100 != 12 ? "two" : n10 == 3 && n100 != 13 ? "few" : "other";return n == 1 && v0 ? "one" : "other";
-  }, "fields": { "year": { "displayName": "year", "relative": { "0": "this year", "1": "next year", "-1": "last year" }, "relativeTime": { "future": { "one": "in {0} year", "other": "in {0} years" }, "past": { "one": "{0} year ago", "other": "{0} years ago" } } }, "month": { "displayName": "month", "relative": { "0": "this month", "1": "next month", "-1": "last month" }, "relativeTime": { "future": { "one": "in {0} month", "other": "in {0} months" }, "past": { "one": "{0} month ago", "other": "{0} months ago" } } }, "day": { "displayName": "day", "relative": { "0": "today", "1": "tomorrow", "-1": "yesterday" }, "relativeTime": { "future": { "one": "in {0} day", "other": "in {0} days" }, "past": { "one": "{0} day ago", "other": "{0} days ago" } } }, "hour": { "displayName": "hour", "relativeTime": { "future": { "one": "in {0} hour", "other": "in {0} hours" }, "past": { "one": "{0} hour ago", "other": "{0} hours ago" } } }, "minute": { "displayName": "minute", "relativeTime": { "future": { "one": "in {0} minute", "other": "in {0} minutes" }, "past": { "one": "{0} minute ago", "other": "{0} minutes ago" } } }, "second": { "displayName": "second", "relative": { "0": "now" }, "relativeTime": { "future": { "one": "in {0} second", "other": "in {0} seconds" }, "past": { "one": "{0} second ago", "other": "{0} seconds ago" } } } } };
+  }, "fields": { "year": { "displayName": "year", "relative": { "0": "this year", "1": "next year", "-1": "last year" }, "relativeTime": { "future": { "one": "in {0} year", "other": "in {0} years" }, "past": { "one": "{0} year ago", "other": "{0} years ago" } } }, "month": { "displayName": "month", "relative": { "0": "this month", "1": "next month", "-1": "last month" }, "relativeTime": { "future": { "one": "in {0} month", "other": "in {0} months" }, "past": { "one": "{0} month ago", "other": "{0} months ago" } } }, "day": { "displayName": "day", "relative": { "0": "today", "1": "tomorrow", "-1": "yesterday" }, "relativeTime": { "future": { "one": "in {0} day", "other": "in {0} days" }, "past": { "one": "{0} day ago", "other": "{0} days ago" } } }, "hour": { "displayName": "hour", "relative": { "0": "this hour" }, "relativeTime": { "future": { "one": "in {0} hour", "other": "in {0} hours" }, "past": { "one": "{0} hour ago", "other": "{0} hours ago" } } }, "minute": { "displayName": "minute", "relative": { "0": "this minute" }, "relativeTime": { "future": { "one": "in {0} minute", "other": "in {0} minutes" }, "past": { "one": "{0} minute ago", "other": "{0} minutes ago" } } }, "second": { "displayName": "second", "relative": { "0": "now" }, "relativeTime": { "future": { "one": "in {0} second", "other": "in {0} seconds" }, "past": { "one": "{0} second ago", "other": "{0} seconds ago" } } } } };
 
 /*
  * Copyright 2015, Yahoo Inc.
@@ -49653,36 +49498,36 @@ var defaultLocaleData = { "locale": "en", "pluralRuleFunction": function pluralR
  */
 
 function addLocaleData() {
-    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
-    var locales = Array.isArray(data) ? data : [data];
+  var locales = Array.isArray(data) ? data : [data];
 
-    locales.forEach(function (localeData) {
-        if (localeData && localeData.locale) {
-            IntlMessageFormat.__addLocaleData(localeData);
-            IntlRelativeFormat.__addLocaleData(localeData);
-        }
-    });
+  locales.forEach(function (localeData) {
+    if (localeData && localeData.locale) {
+      IntlMessageFormat.__addLocaleData(localeData);
+      IntlRelativeFormat.__addLocaleData(localeData);
+    }
+  });
 }
 
 function hasLocaleData(locale) {
-    var localeParts = (locale || '').split('-');
+  var localeParts = (locale || '').split('-');
 
-    while (localeParts.length > 0) {
-        if (hasIMFAndIRFLocaleData(localeParts.join('-'))) {
-            return true;
-        }
-
-        localeParts.pop();
+  while (localeParts.length > 0) {
+    if (hasIMFAndIRFLocaleData(localeParts.join('-'))) {
+      return true;
     }
 
-    return false;
+    localeParts.pop();
+  }
+
+  return false;
 }
 
 function hasIMFAndIRFLocaleData(locale) {
-    var normalizedLocale = locale && locale.toLowerCase();
+  var normalizedLocale = locale && locale.toLowerCase();
 
-    return !!(IntlMessageFormat.__localeData__[normalizedLocale] && IntlRelativeFormat.__localeData__[normalizedLocale]);
+  return !!(IntlMessageFormat.__localeData__[normalizedLocale] && IntlRelativeFormat.__localeData__[normalizedLocale]);
 }
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
@@ -49846,6 +49691,7 @@ var object = PropTypes.object;
 var oneOf = PropTypes.oneOf;
 var shape = PropTypes.shape;
 var any = PropTypes.any;
+var oneOfType = PropTypes.oneOfType;
 
 var localeMatcher = oneOf(['best fit', 'lookup']);
 var narrowShortLong = oneOf(['narrow', 'short', 'long']);
@@ -49853,76 +49699,76 @@ var numeric2digit = oneOf(['numeric', '2-digit']);
 var funcReq = func.isRequired;
 
 var intlConfigPropTypes = {
-    locale: string,
-    formats: object,
-    messages: object,
-    textComponent: any,
+  locale: string,
+  formats: object,
+  messages: object,
+  textComponent: any,
 
-    defaultLocale: string,
-    defaultFormats: object
+  defaultLocale: string,
+  defaultFormats: object
 };
 
 var intlFormatPropTypes = {
-    formatDate: funcReq,
-    formatTime: funcReq,
-    formatRelative: funcReq,
-    formatNumber: funcReq,
-    formatPlural: funcReq,
-    formatMessage: funcReq,
-    formatHTMLMessage: funcReq
+  formatDate: funcReq,
+  formatTime: funcReq,
+  formatRelative: funcReq,
+  formatNumber: funcReq,
+  formatPlural: funcReq,
+  formatMessage: funcReq,
+  formatHTMLMessage: funcReq
 };
 
 var intlShape = shape(_extends({}, intlConfigPropTypes, intlFormatPropTypes, {
-    formatters: object,
-    now: funcReq
+  formatters: object,
+  now: funcReq
 }));
 
 var messageDescriptorPropTypes = {
-    id: string.isRequired,
-    description: string,
-    defaultMessage: string
+  id: string.isRequired,
+  description: oneOfType([string, object]),
+  defaultMessage: string
 };
 
 var dateTimeFormatPropTypes = {
-    localeMatcher: localeMatcher,
-    formatMatcher: oneOf(['basic', 'best fit']),
+  localeMatcher: localeMatcher,
+  formatMatcher: oneOf(['basic', 'best fit']),
 
-    timeZone: string,
-    hour12: bool,
+  timeZone: string,
+  hour12: bool,
 
-    weekday: narrowShortLong,
-    era: narrowShortLong,
-    year: numeric2digit,
-    month: oneOf(['numeric', '2-digit', 'narrow', 'short', 'long']),
-    day: numeric2digit,
-    hour: numeric2digit,
-    minute: numeric2digit,
-    second: numeric2digit,
-    timeZoneName: oneOf(['short', 'long'])
+  weekday: narrowShortLong,
+  era: narrowShortLong,
+  year: numeric2digit,
+  month: oneOf(['numeric', '2-digit', 'narrow', 'short', 'long']),
+  day: numeric2digit,
+  hour: numeric2digit,
+  minute: numeric2digit,
+  second: numeric2digit,
+  timeZoneName: oneOf(['short', 'long'])
 };
 
 var numberFormatPropTypes = {
-    localeMatcher: localeMatcher,
+  localeMatcher: localeMatcher,
 
-    style: oneOf(['decimal', 'currency', 'percent']),
-    currency: string,
-    currencyDisplay: oneOf(['symbol', 'code', 'name']),
-    useGrouping: bool,
+  style: oneOf(['decimal', 'currency', 'percent']),
+  currency: string,
+  currencyDisplay: oneOf(['symbol', 'code', 'name']),
+  useGrouping: bool,
 
-    minimumIntegerDigits: number,
-    minimumFractionDigits: number,
-    maximumFractionDigits: number,
-    minimumSignificantDigits: number,
-    maximumSignificantDigits: number
+  minimumIntegerDigits: number,
+  minimumFractionDigits: number,
+  maximumFractionDigits: number,
+  minimumSignificantDigits: number,
+  maximumSignificantDigits: number
 };
 
 var relativeFormatPropTypes = {
-    style: oneOf(['best fit', 'numeric']),
-    units: oneOf(['second', 'minute', 'hour', 'day', 'month', 'year'])
+  style: oneOf(['best fit', 'numeric']),
+  units: oneOf(['second', 'minute', 'hour', 'day', 'month', 'year'])
 };
 
 var pluralFormatPropTypes = {
-    style: oneOf(['cardinal', 'ordinal'])
+  style: oneOf(['cardinal', 'ordinal'])
 };
 
 /*
@@ -49939,82 +49785,82 @@ file in the root directory of React's source tree.
 var intlConfigPropNames = Object.keys(intlConfigPropTypes);
 
 var ESCAPED_CHARS = {
-    '&': '&amp;',
-    '>': '&gt;',
-    '<': '&lt;',
-    '"': '&quot;',
-    '\'': '&#x27;'
+  '&': '&amp;',
+  '>': '&gt;',
+  '<': '&lt;',
+  '"': '&quot;',
+  "'": '&#x27;'
 };
 
 var UNSAFE_CHARS_REGEX = /[&><"']/g;
 
 function escape(str) {
-    return ('' + str).replace(UNSAFE_CHARS_REGEX, function (match) {
-        return ESCAPED_CHARS[match];
-    });
+  return ('' + str).replace(UNSAFE_CHARS_REGEX, function (match) {
+    return ESCAPED_CHARS[match];
+  });
 }
 
 function filterProps(props, whitelist) {
-    var defaults$$1 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var defaults$$1 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
-    return whitelist.reduce(function (filtered, name) {
-        if (props.hasOwnProperty(name)) {
-            filtered[name] = props[name];
-        } else if (defaults$$1.hasOwnProperty(name)) {
-            filtered[name] = defaults$$1[name];
-        }
+  return whitelist.reduce(function (filtered, name) {
+    if (props.hasOwnProperty(name)) {
+      filtered[name] = props[name];
+    } else if (defaults$$1.hasOwnProperty(name)) {
+      filtered[name] = defaults$$1[name];
+    }
 
-        return filtered;
-    }, {});
+    return filtered;
+  }, {});
 }
 
 function invariantIntlContext() {
-    var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-        intl = _ref.intl;
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      intl = _ref.intl;
 
-    invariant(intl, '[React Intl] Could not find required `intl` object. ' + '<IntlProvider> needs to exist in the component ancestry.');
+  invariant(intl, '[React Intl] Could not find required `intl` object. ' + '<IntlProvider> needs to exist in the component ancestry.');
 }
 
 function shallowEquals(objA, objB) {
-    if (objA === objB) {
-        return true;
-    }
-
-    if ((typeof objA === 'undefined' ? 'undefined' : _typeof(objA)) !== 'object' || objA === null || (typeof objB === 'undefined' ? 'undefined' : _typeof(objB)) !== 'object' || objB === null) {
-        return false;
-    }
-
-    var keysA = Object.keys(objA);
-    var keysB = Object.keys(objB);
-
-    if (keysA.length !== keysB.length) {
-        return false;
-    }
-
-    // Test for A's keys different from B.
-    var bHasOwnProperty = Object.prototype.hasOwnProperty.bind(objB);
-    for (var i = 0; i < keysA.length; i++) {
-        if (!bHasOwnProperty(keysA[i]) || objA[keysA[i]] !== objB[keysA[i]]) {
-            return false;
-        }
-    }
-
+  if (objA === objB) {
     return true;
+  }
+
+  if ((typeof objA === 'undefined' ? 'undefined' : _typeof(objA)) !== 'object' || objA === null || (typeof objB === 'undefined' ? 'undefined' : _typeof(objB)) !== 'object' || objB === null) {
+    return false;
+  }
+
+  var keysA = Object.keys(objA);
+  var keysB = Object.keys(objB);
+
+  if (keysA.length !== keysB.length) {
+    return false;
+  }
+
+  // Test for A's keys different from B.
+  var bHasOwnProperty = Object.prototype.hasOwnProperty.bind(objB);
+  for (var i = 0; i < keysA.length; i++) {
+    if (!bHasOwnProperty(keysA[i]) || objA[keysA[i]] !== objB[keysA[i]]) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 function shouldIntlComponentUpdate(_ref2, nextProps, nextState) {
-    var props = _ref2.props,
-        state = _ref2.state,
-        _ref2$context = _ref2.context,
-        context = _ref2$context === undefined ? {} : _ref2$context;
-    var nextContext = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-    var _context$intl = context.intl,
-        intl = _context$intl === undefined ? {} : _context$intl;
-    var _nextContext$intl = nextContext.intl,
-        nextIntl = _nextContext$intl === undefined ? {} : _nextContext$intl;
+  var props = _ref2.props,
+      state = _ref2.state,
+      _ref2$context = _ref2.context,
+      context = _ref2$context === undefined ? {} : _ref2$context;
+  var nextContext = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+  var _context$intl = context.intl,
+      intl = _context$intl === undefined ? {} : _context$intl;
+  var _nextContext$intl = nextContext.intl,
+      nextIntl = _nextContext$intl === undefined ? {} : _nextContext$intl;
 
 
-    return !shallowEquals(nextProps, props) || !shallowEquals(nextState, state) || !(nextIntl === intl || shallowEquals(filterProps(nextIntl, intlConfigPropNames), filterProps(intl, intlConfigPropNames)));
+  return !shallowEquals(nextProps, props) || !shallowEquals(nextState, state) || !(nextIntl === intl || shallowEquals(filterProps(nextIntl, intlConfigPropNames), filterProps(intl, intlConfigPropNames)));
 }
 
 /*
@@ -50027,54 +49873,54 @@ function shouldIntlComponentUpdate(_ref2, nextProps, nextState) {
 // https://github.com/rackt/react-redux
 
 function getDisplayName(Component$$1) {
-    return Component$$1.displayName || Component$$1.name || 'Component';
+  return Component$$1.displayName || Component$$1.name || 'Component';
 }
 
 function injectIntl(WrappedComponent) {
-    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var _options$intlPropName = options.intlPropName,
-        intlPropName = _options$intlPropName === undefined ? 'intl' : _options$intlPropName,
-        _options$withRef = options.withRef,
-        withRef = _options$withRef === undefined ? false : _options$withRef;
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var _options$intlPropName = options.intlPropName,
+      intlPropName = _options$intlPropName === undefined ? 'intl' : _options$intlPropName,
+      _options$withRef = options.withRef,
+      withRef = _options$withRef === undefined ? false : _options$withRef;
 
-    var InjectIntl = function (_Component) {
-        inherits(InjectIntl, _Component);
+  var InjectIntl = function (_Component) {
+    inherits(InjectIntl, _Component);
 
-        function InjectIntl(props, context) {
-            classCallCheck(this, InjectIntl);
+    function InjectIntl(props, context) {
+      classCallCheck(this, InjectIntl);
 
-            var _this = possibleConstructorReturn(this, (InjectIntl.__proto__ || Object.getPrototypeOf(InjectIntl)).call(this, props, context));
+      var _this = possibleConstructorReturn(this, (InjectIntl.__proto__ || Object.getPrototypeOf(InjectIntl)).call(this, props, context));
 
-            invariantIntlContext(context);
-            return _this;
-        }
+      invariantIntlContext(context);
+      return _this;
+    }
 
-        createClass(InjectIntl, [{
-            key: 'getWrappedInstance',
-            value: function getWrappedInstance() {
-                invariant(withRef, '[React Intl] To access the wrapped instance, ' + 'the `{withRef: true}` option must be set when calling: ' + '`injectIntl()`');
+    createClass(InjectIntl, [{
+      key: 'getWrappedInstance',
+      value: function getWrappedInstance() {
+        invariant(withRef, '[React Intl] To access the wrapped instance, ' + 'the `{withRef: true}` option must be set when calling: ' + '`injectIntl()`');
 
-                return this.refs.wrappedInstance;
-            }
-        }, {
-            key: 'render',
-            value: function render() {
-                return React__default.createElement(WrappedComponent, _extends({}, this.props, defineProperty({}, intlPropName, this.context.intl), {
-                    ref: withRef ? 'wrappedInstance' : null
-                }));
-            }
-        }]);
-        return InjectIntl;
-    }(React.Component);
-
-    InjectIntl.displayName = 'InjectIntl(' + getDisplayName(WrappedComponent) + ')';
-    InjectIntl.contextTypes = {
-        intl: intlShape
-    };
-    InjectIntl.WrappedComponent = WrappedComponent;
-
-
+        return this.refs.wrappedInstance;
+      }
+    }, {
+      key: 'render',
+      value: function render() {
+        return React__default.createElement(WrappedComponent, _extends({}, this.props, defineProperty({}, intlPropName, this.context.intl), {
+          ref: withRef ? 'wrappedInstance' : null
+        }));
+      }
+    }]);
     return InjectIntl;
+  }(React.Component);
+
+  InjectIntl.displayName = 'InjectIntl(' + getDisplayName(WrappedComponent) + ')';
+  InjectIntl.contextTypes = {
+    intl: intlShape
+  };
+  InjectIntl.WrappedComponent = WrappedComponent;
+
+
+  return InjectIntl;
 }
 
 /*
@@ -50098,25 +49944,25 @@ function defineMessages(messageDescriptors) {
 // This is a "hack" until a proper `intl-pluralformat` package is created.
 
 function resolveLocale(locales) {
-    // IntlMessageFormat#_resolveLocale() does not depend on `this`.
-    return IntlMessageFormat.prototype._resolveLocale(locales);
+  // IntlMessageFormat#_resolveLocale() does not depend on `this`.
+  return IntlMessageFormat.prototype._resolveLocale(locales);
 }
 
 function findPluralFunction(locale) {
-    // IntlMessageFormat#_findPluralFunction() does not depend on `this`.
-    return IntlMessageFormat.prototype._findPluralRuleFunction(locale);
+  // IntlMessageFormat#_findPluralFunction() does not depend on `this`.
+  return IntlMessageFormat.prototype._findPluralRuleFunction(locale);
 }
 
 var IntlPluralFormat = function IntlPluralFormat(locales) {
-    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    classCallCheck(this, IntlPluralFormat);
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  classCallCheck(this, IntlPluralFormat);
 
-    var useOrdinal = options.style === 'ordinal';
-    var pluralFn = findPluralFunction(resolveLocale(locales));
+  var useOrdinal = options.style === 'ordinal';
+  var pluralFn = findPluralFunction(resolveLocale(locales));
 
-    this.format = function (value) {
-        return pluralFn(value, useOrdinal);
-    };
+  this.format = function (value) {
+    return pluralFn(value, useOrdinal);
+  };
 };
 
 /*
@@ -50131,234 +49977,234 @@ var RELATIVE_FORMAT_OPTIONS = Object.keys(relativeFormatPropTypes);
 var PLURAL_FORMAT_OPTIONS = Object.keys(pluralFormatPropTypes);
 
 var RELATIVE_FORMAT_THRESHOLDS = {
-    second: 60, // seconds to minute
-    minute: 60, // minutes to hour
-    hour: 24, // hours to day
-    day: 30, // days to month
-    month: 12 };
+  second: 60, // seconds to minute
+  minute: 60, // minutes to hour
+  hour: 24, // hours to day
+  day: 30, // days to month
+  month: 12 // months to year
+};
 
 function updateRelativeFormatThresholds(newThresholds) {
-    var thresholds = IntlRelativeFormat.thresholds;
-    thresholds.second = newThresholds.second;
-    thresholds.minute = newThresholds.minute;
-    thresholds.hour = newThresholds.hour;
-    thresholds.day = newThresholds.day;
-    thresholds.month = newThresholds.month;
+  var thresholds = IntlRelativeFormat.thresholds;
+  thresholds.second = newThresholds.second;
+  thresholds.minute = newThresholds.minute;
+  thresholds.hour = newThresholds.hour;
+  thresholds.day = newThresholds.day;
+  thresholds.month = newThresholds.month;
 }
 
 function getNamedFormat(formats, type, name) {
-    var format = formats && formats[type] && formats[type][name];
-    if (format) {
-        return format;
-    }
+  var format = formats && formats[type] && formats[type][name];
+  if (format) {
+    return format;
+  }
 
-    if (process.env.NODE_ENV !== 'production') {
-        console.error('[React Intl] No ' + type + ' format named: ' + name);
-    }
+  if (process.env.NODE_ENV !== 'production') {
+    console.error('[React Intl] No ' + type + ' format named: ' + name);
+  }
 }
 
 function formatDate(config, state, value) {
-    var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-    var locale = config.locale,
-        formats = config.formats;
-    var format = options.format;
+  var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+  var locale = config.locale,
+      formats = config.formats;
+  var format = options.format;
 
 
-    var date = new Date(value);
-    var defaults$$1 = format && getNamedFormat(formats, 'date', format);
-    var filteredOptions = filterProps(options, DATE_TIME_FORMAT_OPTIONS, defaults$$1);
+  var date = new Date(value);
+  var defaults$$1 = format && getNamedFormat(formats, 'date', format);
+  var filteredOptions = filterProps(options, DATE_TIME_FORMAT_OPTIONS, defaults$$1);
 
-    try {
-        return state.getDateTimeFormat(locale, filteredOptions).format(date);
-    } catch (e) {
-        if (process.env.NODE_ENV !== 'production') {
-            console.error('[React Intl] Error formatting date.\n' + e);
-        }
+  try {
+    return state.getDateTimeFormat(locale, filteredOptions).format(date);
+  } catch (e) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.error('[React Intl] Error formatting date.\n' + e);
     }
+  }
 
-    return String(date);
+  return String(date);
 }
 
 function formatTime(config, state, value) {
-    var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-    var locale = config.locale,
-        formats = config.formats;
-    var format = options.format;
+  var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+  var locale = config.locale,
+      formats = config.formats;
+  var format = options.format;
 
 
-    var date = new Date(value);
-    var defaults$$1 = format && getNamedFormat(formats, 'time', format);
-    var filteredOptions = filterProps(options, DATE_TIME_FORMAT_OPTIONS, defaults$$1);
+  var date = new Date(value);
+  var defaults$$1 = format && getNamedFormat(formats, 'time', format);
+  var filteredOptions = filterProps(options, DATE_TIME_FORMAT_OPTIONS, defaults$$1);
 
-    if (!filteredOptions.hour && !filteredOptions.minute && !filteredOptions.second) {
-        // Add default formatting options if hour, minute, or second isn't defined.
-        filteredOptions = _extends({}, filteredOptions, { hour: 'numeric', minute: 'numeric' });
+  if (!filteredOptions.hour && !filteredOptions.minute && !filteredOptions.second) {
+    // Add default formatting options if hour, minute, or second isn't defined.
+    filteredOptions = _extends({}, filteredOptions, { hour: 'numeric', minute: 'numeric' });
+  }
+
+  try {
+    return state.getDateTimeFormat(locale, filteredOptions).format(date);
+  } catch (e) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.error('[React Intl] Error formatting time.\n' + e);
     }
+  }
 
-    try {
-        return state.getDateTimeFormat(locale, filteredOptions).format(date);
-    } catch (e) {
-        if (process.env.NODE_ENV !== 'production') {
-            console.error('[React Intl] Error formatting time.\n' + e);
-        }
-    }
-
-    return String(date);
+  return String(date);
 }
 
 function formatRelative(config, state, value) {
-    var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-    var locale = config.locale,
-        formats = config.formats;
-    var format = options.format;
+  var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+  var locale = config.locale,
+      formats = config.formats;
+  var format = options.format;
 
 
-    var date = new Date(value);
-    var now = new Date(options.now);
-    var defaults$$1 = format && getNamedFormat(formats, 'relative', format);
-    var filteredOptions = filterProps(options, RELATIVE_FORMAT_OPTIONS, defaults$$1);
+  var date = new Date(value);
+  var now = new Date(options.now);
+  var defaults$$1 = format && getNamedFormat(formats, 'relative', format);
+  var filteredOptions = filterProps(options, RELATIVE_FORMAT_OPTIONS, defaults$$1);
 
-    // Capture the current threshold values, then temporarily override them with
-    // specific values just for this render.
-    var oldThresholds = _extends({}, IntlRelativeFormat.thresholds);
-    updateRelativeFormatThresholds(RELATIVE_FORMAT_THRESHOLDS);
+  // Capture the current threshold values, then temporarily override them with
+  // specific values just for this render.
+  var oldThresholds = _extends({}, IntlRelativeFormat.thresholds);
+  updateRelativeFormatThresholds(RELATIVE_FORMAT_THRESHOLDS);
 
-    try {
-        return state.getRelativeFormat(locale, filteredOptions).format(date, {
-            now: isFinite(now) ? now : state.now()
-        });
-    } catch (e) {
-        if (process.env.NODE_ENV !== 'production') {
-            console.error('[React Intl] Error formatting relative time.\n' + e);
-        }
-    } finally {
-        updateRelativeFormatThresholds(oldThresholds);
+  try {
+    return state.getRelativeFormat(locale, filteredOptions).format(date, {
+      now: isFinite(now) ? now : state.now()
+    });
+  } catch (e) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.error('[React Intl] Error formatting relative time.\n' + e);
     }
+  } finally {
+    updateRelativeFormatThresholds(oldThresholds);
+  }
 
-    return String(date);
+  return String(date);
 }
 
 function formatNumber(config, state, value) {
-    var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-    var locale = config.locale,
-        formats = config.formats;
-    var format = options.format;
+  var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+  var locale = config.locale,
+      formats = config.formats;
+  var format = options.format;
 
 
-    var defaults$$1 = format && getNamedFormat(formats, 'number', format);
-    var filteredOptions = filterProps(options, NUMBER_FORMAT_OPTIONS, defaults$$1);
+  var defaults$$1 = format && getNamedFormat(formats, 'number', format);
+  var filteredOptions = filterProps(options, NUMBER_FORMAT_OPTIONS, defaults$$1);
 
-    try {
-        return state.getNumberFormat(locale, filteredOptions).format(value);
-    } catch (e) {
-        if (process.env.NODE_ENV !== 'production') {
-            console.error('[React Intl] Error formatting number.\n' + e);
-        }
+  try {
+    return state.getNumberFormat(locale, filteredOptions).format(value);
+  } catch (e) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.error('[React Intl] Error formatting number.\n' + e);
     }
+  }
 
-    return String(value);
+  return String(value);
 }
 
 function formatPlural(config, state, value) {
-    var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-    var locale = config.locale;
+  var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+  var locale = config.locale;
 
 
-    var filteredOptions = filterProps(options, PLURAL_FORMAT_OPTIONS);
+  var filteredOptions = filterProps(options, PLURAL_FORMAT_OPTIONS);
 
-    try {
-        return state.getPluralFormat(locale, filteredOptions).format(value);
-    } catch (e) {
-        if (process.env.NODE_ENV !== 'production') {
-            console.error('[React Intl] Error formatting plural.\n' + e);
-        }
+  try {
+    return state.getPluralFormat(locale, filteredOptions).format(value);
+  } catch (e) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.error('[React Intl] Error formatting plural.\n' + e);
     }
+  }
 
-    return 'other';
+  return 'other';
 }
 
 function formatMessage(config, state) {
-    var messageDescriptor = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-    var values = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-    var locale = config.locale,
-        formats = config.formats,
-        messages = config.messages,
-        defaultLocale = config.defaultLocale,
-        defaultFormats = config.defaultFormats;
-    var id = messageDescriptor.id,
-        defaultMessage = messageDescriptor.defaultMessage;
+  var messageDescriptor = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var values = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+  var locale = config.locale,
+      formats = config.formats,
+      messages = config.messages,
+      defaultLocale = config.defaultLocale,
+      defaultFormats = config.defaultFormats;
+  var id = messageDescriptor.id,
+      defaultMessage = messageDescriptor.defaultMessage;
 
-    // `id` is a required field of a Message Descriptor.
+  // `id` is a required field of a Message Descriptor.
 
-    invariant(id, '[React Intl] An `id` must be provided to format a message.');
+  invariant(id, '[React Intl] An `id` must be provided to format a message.');
 
-    var message = messages && messages[id];
-    var hasValues = Object.keys(values).length > 0;
+  var message = messages && messages[id];
+  var hasValues = Object.keys(values).length > 0;
 
-    // Avoid expensive message formatting for simple messages without values. In
-    // development messages will always be formatted in case of missing values.
-    if (!hasValues && process.env.NODE_ENV === 'production') {
-        return message || defaultMessage || id;
+  // Avoid expensive message formatting for simple messages without values. In
+  // development messages will always be formatted in case of missing values.
+  if (!hasValues && process.env.NODE_ENV === 'production') {
+    return message || defaultMessage || id;
+  }
+
+  var formattedMessage = void 0;
+
+  if (message) {
+    try {
+      var formatter = state.getMessageFormat(message, locale, formats);
+
+      formattedMessage = formatter.format(values);
+    } catch (e) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.error('[React Intl] Error formatting message: "' + id + '" for locale: "' + locale + '"' + (defaultMessage ? ', using default message as fallback.' : '') + ('\n' + e));
+      }
     }
-
-    var formattedMessage = void 0;
-
-    if (message) {
-        try {
-            var formatter = state.getMessageFormat(message, locale, formats);
-
-            formattedMessage = formatter.format(values);
-        } catch (e) {
-            if (process.env.NODE_ENV !== 'production') {
-                console.error('[React Intl] Error formatting message: "' + id + '" for locale: "' + locale + '"' + (defaultMessage ? ', using default message as fallback.' : '') + ('\n' + e));
-            }
-        }
-    } else {
-        if (process.env.NODE_ENV !== 'production') {
-            // This prevents warnings from littering the console in development
-            // when no `messages` are passed into the <IntlProvider> for the
-            // default locale, and a default message is in the source.
-            if (!defaultMessage || locale && locale.toLowerCase() !== defaultLocale.toLowerCase()) {
-
-                console.error('[React Intl] Missing message: "' + id + '" for locale: "' + locale + '"' + (defaultMessage ? ', using default message as fallback.' : ''));
-            }
-        }
+  } else {
+    if (process.env.NODE_ENV !== 'production') {
+      // This prevents warnings from littering the console in development
+      // when no `messages` are passed into the <IntlProvider> for the
+      // default locale, and a default message is in the source.
+      if (!defaultMessage || locale && locale.toLowerCase() !== defaultLocale.toLowerCase()) {
+        console.error('[React Intl] Missing message: "' + id + '" for locale: "' + locale + '"' + (defaultMessage ? ', using default message as fallback.' : ''));
+      }
     }
+  }
 
-    if (!formattedMessage && defaultMessage) {
-        try {
-            var _formatter = state.getMessageFormat(defaultMessage, defaultLocale, defaultFormats);
+  if (!formattedMessage && defaultMessage) {
+    try {
+      var _formatter = state.getMessageFormat(defaultMessage, defaultLocale, defaultFormats);
 
-            formattedMessage = _formatter.format(values);
-        } catch (e) {
-            if (process.env.NODE_ENV !== 'production') {
-                console.error('[React Intl] Error formatting the default message for: "' + id + '"' + ('\n' + e));
-            }
-        }
+      formattedMessage = _formatter.format(values);
+    } catch (e) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.error('[React Intl] Error formatting the default message for: "' + id + '"' + ('\n' + e));
+      }
     }
+  }
 
-    if (!formattedMessage) {
-        if (process.env.NODE_ENV !== 'production') {
-            console.error('[React Intl] Cannot format message: "' + id + '", ' + ('using message ' + (message || defaultMessage ? 'source' : 'id') + ' as fallback.'));
-        }
+  if (!formattedMessage) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.error('[React Intl] Cannot format message: "' + id + '", ' + ('using message ' + (message || defaultMessage ? 'source' : 'id') + ' as fallback.'));
     }
+  }
 
-    return formattedMessage || message || defaultMessage || id;
+  return formattedMessage || message || defaultMessage || id;
 }
 
 function formatHTMLMessage(config, state, messageDescriptor) {
-    var rawValues = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+  var rawValues = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
-    // Process all the values before they are used when formatting the ICU
-    // Message string. Since the formatted message might be injected via
-    // `innerHTML`, all String-based values need to be HTML-escaped.
-    var escapedValues = Object.keys(rawValues).reduce(function (escaped, name) {
-        var value = rawValues[name];
-        escaped[name] = typeof value === 'string' ? escape(value) : value;
-        return escaped;
-    }, {});
+  // Process all the values before they are used when formatting the ICU
+  // Message string. Since the formatted message might be injected via
+  // `innerHTML`, all String-based values need to be HTML-escaped.
+  var escapedValues = Object.keys(rawValues).reduce(function (escaped, name) {
+    var value = rawValues[name];
+    escaped[name] = typeof value === 'string' ? escape(value) : value;
+    return escaped;
+  }, {});
 
-    return formatMessage(config, state, messageDescriptor, escapedValues);
+  return formatMessage(config, state, messageDescriptor, escapedValues);
 }
 
 
@@ -50385,170 +50231,170 @@ var intlFormatPropNames = Object.keys(intlFormatPropTypes);
 // These are not a static property on the `IntlProvider` class so the intl
 // config values can be inherited from an <IntlProvider> ancestor.
 var defaultProps = {
-    formats: {},
-    messages: {},
-    textComponent: 'span',
+  formats: {},
+  messages: {},
+  textComponent: 'span',
 
-    defaultLocale: 'en',
-    defaultFormats: {}
+  defaultLocale: 'en',
+  defaultFormats: {}
 };
 
 var IntlProvider = function (_Component) {
-    inherits(IntlProvider, _Component);
+  inherits(IntlProvider, _Component);
 
-    function IntlProvider(props) {
-        var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-        classCallCheck(this, IntlProvider);
+  function IntlProvider(props) {
+    var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    classCallCheck(this, IntlProvider);
 
-        var _this = possibleConstructorReturn(this, (IntlProvider.__proto__ || Object.getPrototypeOf(IntlProvider)).call(this, props, context));
+    var _this = possibleConstructorReturn(this, (IntlProvider.__proto__ || Object.getPrototypeOf(IntlProvider)).call(this, props, context));
 
-        invariant(typeof Intl !== 'undefined', '[React Intl] The `Intl` APIs must be available in the runtime, ' + 'and do not appear to be built-in. An `Intl` polyfill should be loaded.\n' + 'See: http://formatjs.io/guides/runtime-environments/');
+    invariant(typeof Intl !== 'undefined', '[React Intl] The `Intl` APIs must be available in the runtime, ' + 'and do not appear to be built-in. An `Intl` polyfill should be loaded.\n' + 'See: http://formatjs.io/guides/runtime-environments/');
 
-        var intlContext = context.intl;
+    var intlContext = context.intl;
 
-        // Used to stabilize time when performing an initial rendering so that
-        // all relative times use the same reference "now" time.
+    // Used to stabilize time when performing an initial rendering so that
+    // all relative times use the same reference "now" time.
 
-        var initialNow = void 0;
-        if (isFinite(props.initialNow)) {
-            initialNow = Number(props.initialNow);
-        } else {
-            // When an `initialNow` isn't provided via `props`, look to see an
-            // <IntlProvider> exists in the ancestry and call its `now()`
-            // function to propagate its value for "now".
-            initialNow = intlContext ? intlContext.now() : Date.now();
-        }
-
-        // Creating `Intl*` formatters is expensive. If there's a parent
-        // `<IntlProvider>`, then its formatters will be used. Otherwise, this
-        // memoize the `Intl*` constructors and cache them for the lifecycle of
-        // this IntlProvider instance.
-
-        var _ref = intlContext || {},
-            _ref$formatters = _ref.formatters,
-            formatters = _ref$formatters === undefined ? {
-            getDateTimeFormat: memoizeIntlConstructor(Intl.DateTimeFormat),
-            getNumberFormat: memoizeIntlConstructor(Intl.NumberFormat),
-            getMessageFormat: memoizeIntlConstructor(IntlMessageFormat),
-            getRelativeFormat: memoizeIntlConstructor(IntlRelativeFormat),
-            getPluralFormat: memoizeIntlConstructor(IntlPluralFormat)
-        } : _ref$formatters;
-
-        _this.state = _extends({}, formatters, {
-
-            // Wrapper to provide stable "now" time for initial render.
-            now: function now() {
-                return _this._didDisplay ? Date.now() : initialNow;
-            }
-        });
-        return _this;
+    var initialNow = void 0;
+    if (isFinite(props.initialNow)) {
+      initialNow = Number(props.initialNow);
+    } else {
+      // When an `initialNow` isn't provided via `props`, look to see an
+      // <IntlProvider> exists in the ancestry and call its `now()`
+      // function to propagate its value for "now".
+      initialNow = intlContext ? intlContext.now() : Date.now();
     }
 
-    createClass(IntlProvider, [{
-        key: 'getConfig',
-        value: function getConfig() {
-            var intlContext = this.context.intl;
+    // Creating `Intl*` formatters is expensive. If there's a parent
+    // `<IntlProvider>`, then its formatters will be used. Otherwise, this
+    // memoize the `Intl*` constructors and cache them for the lifecycle of
+    // this IntlProvider instance.
 
-            // Build a whitelisted config object from `props`, defaults, and
-            // `context.intl`, if an <IntlProvider> exists in the ancestry.
+    var _ref = intlContext || {},
+        _ref$formatters = _ref.formatters,
+        formatters = _ref$formatters === undefined ? {
+      getDateTimeFormat: memoizeIntlConstructor(Intl.DateTimeFormat),
+      getNumberFormat: memoizeIntlConstructor(Intl.NumberFormat),
+      getMessageFormat: memoizeIntlConstructor(IntlMessageFormat),
+      getRelativeFormat: memoizeIntlConstructor(IntlRelativeFormat),
+      getPluralFormat: memoizeIntlConstructor(IntlPluralFormat)
+    } : _ref$formatters;
 
-            var config = filterProps(this.props, intlConfigPropNames$1, intlContext);
+    _this.state = _extends({}, formatters, {
 
-            // Apply default props. This must be applied last after the props have
-            // been resolved and inherited from any <IntlProvider> in the ancestry.
-            // This matches how React resolves `defaultProps`.
-            for (var propName in defaultProps) {
-                if (config[propName] === undefined) {
-                    config[propName] = defaultProps[propName];
-                }
-            }
+      // Wrapper to provide stable "now" time for initial render.
+      now: function now() {
+        return _this._didDisplay ? Date.now() : initialNow;
+      }
+    });
+    return _this;
+  }
 
-            if (!hasLocaleData(config.locale)) {
-                var _config = config,
-                    locale = _config.locale,
-                    defaultLocale = _config.defaultLocale,
-                    defaultFormats = _config.defaultFormats;
+  createClass(IntlProvider, [{
+    key: 'getConfig',
+    value: function getConfig() {
+      var intlContext = this.context.intl;
 
+      // Build a whitelisted config object from `props`, defaults, and
+      // `context.intl`, if an <IntlProvider> exists in the ancestry.
 
-                if (process.env.NODE_ENV !== 'production') {
-                    console.error('[React Intl] Missing locale data for locale: "' + locale + '". ' + ('Using default locale: "' + defaultLocale + '" as fallback.'));
-                }
+      var config = filterProps(this.props, intlConfigPropNames$1, intlContext);
 
-                // Since there's no registered locale data for `locale`, this will
-                // fallback to the `defaultLocale` to make sure things can render.
-                // The `messages` are overridden to the `defaultProps` empty object
-                // to maintain referential equality across re-renders. It's assumed
-                // each <FormattedMessage> contains a `defaultMessage` prop.
-                config = _extends({}, config, {
-                    locale: defaultLocale,
-                    formats: defaultFormats,
-                    messages: defaultProps.messages
-                });
-            }
-
-            return config;
+      // Apply default props. This must be applied last after the props have
+      // been resolved and inherited from any <IntlProvider> in the ancestry.
+      // This matches how React resolves `defaultProps`.
+      for (var propName in defaultProps) {
+        if (config[propName] === undefined) {
+          config[propName] = defaultProps[propName];
         }
-    }, {
-        key: 'getBoundFormatFns',
-        value: function getBoundFormatFns(config, state) {
-            return intlFormatPropNames.reduce(function (boundFormatFns, name) {
-                boundFormatFns[name] = format[name].bind(null, config, state);
-                return boundFormatFns;
-            }, {});
-        }
-    }, {
-        key: 'getChildContext',
-        value: function getChildContext() {
-            var config = this.getConfig();
+      }
 
-            // Bind intl factories and current config to the format functions.
-            var boundFormatFns = this.getBoundFormatFns(config, this.state);
-
-            var _state = this.state,
-                now = _state.now,
-                formatters = objectWithoutProperties(_state, ['now']);
+      if (!hasLocaleData(config.locale)) {
+        var _config = config,
+            locale = _config.locale,
+            defaultLocale = _config.defaultLocale,
+            defaultFormats = _config.defaultFormats;
 
 
-            return {
-                intl: _extends({}, config, boundFormatFns, {
-                    formatters: formatters,
-                    now: now
-                })
-            };
+        if (process.env.NODE_ENV !== 'production') {
+          console.error('[React Intl] Missing locale data for locale: "' + locale + '". ' + ('Using default locale: "' + defaultLocale + '" as fallback.'));
         }
-    }, {
-        key: 'shouldComponentUpdate',
-        value: function shouldComponentUpdate() {
-            for (var _len = arguments.length, next = Array(_len), _key = 0; _key < _len; _key++) {
-                next[_key] = arguments[_key];
-            }
 
-            return shouldIntlComponentUpdate.apply(undefined, [this].concat(next));
-        }
-    }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this._didDisplay = true;
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return React.Children.only(this.props.children);
-        }
-    }]);
-    return IntlProvider;
+        // Since there's no registered locale data for `locale`, this will
+        // fallback to the `defaultLocale` to make sure things can render.
+        // The `messages` are overridden to the `defaultProps` empty object
+        // to maintain referential equality across re-renders. It's assumed
+        // each <FormattedMessage> contains a `defaultMessage` prop.
+        config = _extends({}, config, {
+          locale: defaultLocale,
+          formats: defaultFormats,
+          messages: defaultProps.messages
+        });
+      }
+
+      return config;
+    }
+  }, {
+    key: 'getBoundFormatFns',
+    value: function getBoundFormatFns(config, state) {
+      return intlFormatPropNames.reduce(function (boundFormatFns, name) {
+        boundFormatFns[name] = format[name].bind(null, config, state);
+        return boundFormatFns;
+      }, {});
+    }
+  }, {
+    key: 'getChildContext',
+    value: function getChildContext() {
+      var config = this.getConfig();
+
+      // Bind intl factories and current config to the format functions.
+      var boundFormatFns = this.getBoundFormatFns(config, this.state);
+
+      var _state = this.state,
+          now = _state.now,
+          formatters = objectWithoutProperties(_state, ['now']);
+
+
+      return {
+        intl: _extends({}, config, boundFormatFns, {
+          formatters: formatters,
+          now: now
+        })
+      };
+    }
+  }, {
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate() {
+      for (var _len = arguments.length, next = Array(_len), _key = 0; _key < _len; _key++) {
+        next[_key] = arguments[_key];
+      }
+
+      return shouldIntlComponentUpdate.apply(undefined, [this].concat(next));
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this._didDisplay = true;
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return React.Children.only(this.props.children);
+    }
+  }]);
+  return IntlProvider;
 }(React.Component);
 
 IntlProvider.displayName = 'IntlProvider';
 IntlProvider.contextTypes = {
-    intl: intlShape
+  intl: intlShape
 };
 IntlProvider.childContextTypes = {
-    intl: intlShape.isRequired
+  intl: intlShape.isRequired
 };
 process.env.NODE_ENV !== "production" ? IntlProvider.propTypes = _extends({}, intlConfigPropTypes, {
-    children: PropTypes.element.isRequired,
-    initialNow: PropTypes.any
+  children: PropTypes.element.isRequired,
+  initialNow: PropTypes.any
 }) : void 0;
 
 /*
@@ -50558,61 +50404,61 @@ process.env.NODE_ENV !== "production" ? IntlProvider.propTypes = _extends({}, in
  */
 
 var FormattedDate = function (_Component) {
-    inherits(FormattedDate, _Component);
+  inherits(FormattedDate, _Component);
 
-    function FormattedDate(props, context) {
-        classCallCheck(this, FormattedDate);
+  function FormattedDate(props, context) {
+    classCallCheck(this, FormattedDate);
 
-        var _this = possibleConstructorReturn(this, (FormattedDate.__proto__ || Object.getPrototypeOf(FormattedDate)).call(this, props, context));
+    var _this = possibleConstructorReturn(this, (FormattedDate.__proto__ || Object.getPrototypeOf(FormattedDate)).call(this, props, context));
 
-        invariantIntlContext(context);
-        return _this;
+    invariantIntlContext(context);
+    return _this;
+  }
+
+  createClass(FormattedDate, [{
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate() {
+      for (var _len = arguments.length, next = Array(_len), _key = 0; _key < _len; _key++) {
+        next[_key] = arguments[_key];
+      }
+
+      return shouldIntlComponentUpdate.apply(undefined, [this].concat(next));
     }
-
-    createClass(FormattedDate, [{
-        key: 'shouldComponentUpdate',
-        value: function shouldComponentUpdate() {
-            for (var _len = arguments.length, next = Array(_len), _key = 0; _key < _len; _key++) {
-                next[_key] = arguments[_key];
-            }
-
-            return shouldIntlComponentUpdate.apply(undefined, [this].concat(next));
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _context$intl = this.context.intl,
-                formatDate = _context$intl.formatDate,
-                Text = _context$intl.textComponent;
-            var _props = this.props,
-                value = _props.value,
-                children = _props.children;
+  }, {
+    key: 'render',
+    value: function render() {
+      var _context$intl = this.context.intl,
+          formatDate = _context$intl.formatDate,
+          Text = _context$intl.textComponent;
+      var _props = this.props,
+          value = _props.value,
+          children = _props.children;
 
 
-            var formattedDate = formatDate(value, this.props);
+      var formattedDate = formatDate(value, this.props);
 
-            if (typeof children === 'function') {
-                return children(formattedDate);
-            }
+      if (typeof children === 'function') {
+        return children(formattedDate);
+      }
 
-            return React__default.createElement(
-                Text,
-                null,
-                formattedDate
-            );
-        }
-    }]);
-    return FormattedDate;
+      return React__default.createElement(
+        Text,
+        null,
+        formattedDate
+      );
+    }
+  }]);
+  return FormattedDate;
 }(React.Component);
 
 FormattedDate.displayName = 'FormattedDate';
 FormattedDate.contextTypes = {
-    intl: intlShape
+  intl: intlShape
 };
 process.env.NODE_ENV !== "production" ? FormattedDate.propTypes = _extends({}, dateTimeFormatPropTypes, {
-    value: PropTypes.any.isRequired,
-    format: PropTypes.string,
-    children: PropTypes.func
+  value: PropTypes.any.isRequired,
+  format: PropTypes.string,
+  children: PropTypes.func
 }) : void 0;
 
 /*
@@ -50622,61 +50468,61 @@ process.env.NODE_ENV !== "production" ? FormattedDate.propTypes = _extends({}, d
  */
 
 var FormattedTime = function (_Component) {
-    inherits(FormattedTime, _Component);
+  inherits(FormattedTime, _Component);
 
-    function FormattedTime(props, context) {
-        classCallCheck(this, FormattedTime);
+  function FormattedTime(props, context) {
+    classCallCheck(this, FormattedTime);
 
-        var _this = possibleConstructorReturn(this, (FormattedTime.__proto__ || Object.getPrototypeOf(FormattedTime)).call(this, props, context));
+    var _this = possibleConstructorReturn(this, (FormattedTime.__proto__ || Object.getPrototypeOf(FormattedTime)).call(this, props, context));
 
-        invariantIntlContext(context);
-        return _this;
+    invariantIntlContext(context);
+    return _this;
+  }
+
+  createClass(FormattedTime, [{
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate() {
+      for (var _len = arguments.length, next = Array(_len), _key = 0; _key < _len; _key++) {
+        next[_key] = arguments[_key];
+      }
+
+      return shouldIntlComponentUpdate.apply(undefined, [this].concat(next));
     }
-
-    createClass(FormattedTime, [{
-        key: 'shouldComponentUpdate',
-        value: function shouldComponentUpdate() {
-            for (var _len = arguments.length, next = Array(_len), _key = 0; _key < _len; _key++) {
-                next[_key] = arguments[_key];
-            }
-
-            return shouldIntlComponentUpdate.apply(undefined, [this].concat(next));
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _context$intl = this.context.intl,
-                formatTime = _context$intl.formatTime,
-                Text = _context$intl.textComponent;
-            var _props = this.props,
-                value = _props.value,
-                children = _props.children;
+  }, {
+    key: 'render',
+    value: function render() {
+      var _context$intl = this.context.intl,
+          formatTime = _context$intl.formatTime,
+          Text = _context$intl.textComponent;
+      var _props = this.props,
+          value = _props.value,
+          children = _props.children;
 
 
-            var formattedTime = formatTime(value, this.props);
+      var formattedTime = formatTime(value, this.props);
 
-            if (typeof children === 'function') {
-                return children(formattedTime);
-            }
+      if (typeof children === 'function') {
+        return children(formattedTime);
+      }
 
-            return React__default.createElement(
-                Text,
-                null,
-                formattedTime
-            );
-        }
-    }]);
-    return FormattedTime;
+      return React__default.createElement(
+        Text,
+        null,
+        formattedTime
+      );
+    }
+  }]);
+  return FormattedTime;
 }(React.Component);
 
 FormattedTime.displayName = 'FormattedTime';
 FormattedTime.contextTypes = {
-    intl: intlShape
+  intl: intlShape
 };
 process.env.NODE_ENV !== "production" ? FormattedTime.propTypes = _extends({}, dateTimeFormatPropTypes, {
-    value: PropTypes.any.isRequired,
-    format: PropTypes.string,
-    children: PropTypes.func
+  value: PropTypes.any.isRequired,
+  format: PropTypes.string,
+  children: PropTypes.func
 }) : void 0;
 
 /*
@@ -50695,179 +50541,179 @@ var DAY = 1000 * 60 * 60 * 24;
 var MAX_TIMER_DELAY = 2147483647;
 
 function selectUnits(delta) {
-    var absDelta = Math.abs(delta);
+  var absDelta = Math.abs(delta);
 
-    if (absDelta < MINUTE) {
-        return 'second';
-    }
+  if (absDelta < MINUTE) {
+    return 'second';
+  }
 
-    if (absDelta < HOUR) {
-        return 'minute';
-    }
+  if (absDelta < HOUR) {
+    return 'minute';
+  }
 
-    if (absDelta < DAY) {
-        return 'hour';
-    }
+  if (absDelta < DAY) {
+    return 'hour';
+  }
 
-    // The maximum scheduled delay will be measured in days since the maximum
-    // timer delay is less than the number of milliseconds in 25 days.
-    return 'day';
+  // The maximum scheduled delay will be measured in days since the maximum
+  // timer delay is less than the number of milliseconds in 25 days.
+  return 'day';
 }
 
 function getUnitDelay(units) {
-    switch (units) {
-        case 'second':
-            return SECOND;
-        case 'minute':
-            return MINUTE;
-        case 'hour':
-            return HOUR;
-        case 'day':
-            return DAY;
-        default:
-            return MAX_TIMER_DELAY;
-    }
+  switch (units) {
+    case 'second':
+      return SECOND;
+    case 'minute':
+      return MINUTE;
+    case 'hour':
+      return HOUR;
+    case 'day':
+      return DAY;
+    default:
+      return MAX_TIMER_DELAY;
+  }
 }
 
 function isSameDate(a, b) {
-    if (a === b) {
-        return true;
-    }
+  if (a === b) {
+    return true;
+  }
 
-    var aTime = new Date(a).getTime();
-    var bTime = new Date(b).getTime();
+  var aTime = new Date(a).getTime();
+  var bTime = new Date(b).getTime();
 
-    return isFinite(aTime) && isFinite(bTime) && aTime === bTime;
+  return isFinite(aTime) && isFinite(bTime) && aTime === bTime;
 }
 
 var FormattedRelative = function (_Component) {
-    inherits(FormattedRelative, _Component);
+  inherits(FormattedRelative, _Component);
 
-    function FormattedRelative(props, context) {
-        classCallCheck(this, FormattedRelative);
+  function FormattedRelative(props, context) {
+    classCallCheck(this, FormattedRelative);
 
-        var _this = possibleConstructorReturn(this, (FormattedRelative.__proto__ || Object.getPrototypeOf(FormattedRelative)).call(this, props, context));
+    var _this = possibleConstructorReturn(this, (FormattedRelative.__proto__ || Object.getPrototypeOf(FormattedRelative)).call(this, props, context));
 
-        invariantIntlContext(context);
+    invariantIntlContext(context);
 
-        var now = isFinite(props.initialNow) ? Number(props.initialNow) : context.intl.now();
+    var now = isFinite(props.initialNow) ? Number(props.initialNow) : context.intl.now();
 
-        // `now` is stored as state so that `render()` remains a function of
-        // props + state, instead of accessing `Date.now()` inside `render()`.
-        _this.state = { now: now };
-        return _this;
+    // `now` is stored as state so that `render()` remains a function of
+    // props + state, instead of accessing `Date.now()` inside `render()`.
+    _this.state = { now: now };
+    return _this;
+  }
+
+  createClass(FormattedRelative, [{
+    key: 'scheduleNextUpdate',
+    value: function scheduleNextUpdate(props, state) {
+      var _this2 = this;
+
+      // Cancel and pending update because we're scheduling a new update.
+      clearTimeout(this._timer);
+
+      var value = props.value,
+          units = props.units,
+          updateInterval = props.updateInterval;
+
+      var time = new Date(value).getTime();
+
+      // If the `updateInterval` is falsy, including `0` or we don't have a
+      // valid date, then auto updates have been turned off, so we bail and
+      // skip scheduling an update.
+      if (!updateInterval || !isFinite(time)) {
+        return;
+      }
+
+      var delta = time - state.now;
+      var unitDelay = getUnitDelay(units || selectUnits(delta));
+      var unitRemainder = Math.abs(delta % unitDelay);
+
+      // We want the largest possible timer delay which will still display
+      // accurate information while reducing unnecessary re-renders. The delay
+      // should be until the next "interesting" moment, like a tick from
+      // "1 minute ago" to "2 minutes ago" when the delta is 120,000ms.
+      var delay = delta < 0 ? Math.max(updateInterval, unitDelay - unitRemainder) : Math.max(updateInterval, unitRemainder);
+
+      this._timer = setTimeout(function () {
+        _this2.setState({ now: _this2.context.intl.now() });
+      }, delay);
     }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.scheduleNextUpdate(this.props, this.state);
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(_ref) {
+      var nextValue = _ref.value;
 
-    createClass(FormattedRelative, [{
-        key: 'scheduleNextUpdate',
-        value: function scheduleNextUpdate(props, state) {
-            var _this2 = this;
+      // When the `props.value` date changes, `state.now` needs to be updated,
+      // and the next update can be rescheduled.
+      if (!isSameDate(nextValue, this.props.value)) {
+        this.setState({ now: this.context.intl.now() });
+      }
+    }
+  }, {
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate() {
+      for (var _len = arguments.length, next = Array(_len), _key = 0; _key < _len; _key++) {
+        next[_key] = arguments[_key];
+      }
 
-            // Cancel and pending update because we're scheduling a new update.
-            clearTimeout(this._timer);
-
-            var value = props.value,
-                units = props.units,
-                updateInterval = props.updateInterval;
-
-            var time = new Date(value).getTime();
-
-            // If the `updateInterval` is falsy, including `0` or we don't have a
-            // valid date, then auto updates have been turned off, so we bail and
-            // skip scheduling an update.
-            if (!updateInterval || !isFinite(time)) {
-                return;
-            }
-
-            var delta = time - state.now;
-            var unitDelay = getUnitDelay(units || selectUnits(delta));
-            var unitRemainder = Math.abs(delta % unitDelay);
-
-            // We want the largest possible timer delay which will still display
-            // accurate information while reducing unnecessary re-renders. The delay
-            // should be until the next "interesting" moment, like a tick from
-            // "1 minute ago" to "2 minutes ago" when the delta is 120,000ms.
-            var delay = delta < 0 ? Math.max(updateInterval, unitDelay - unitRemainder) : Math.max(updateInterval, unitRemainder);
-
-            this._timer = setTimeout(function () {
-                _this2.setState({ now: _this2.context.intl.now() });
-            }, delay);
-        }
-    }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this.scheduleNextUpdate(this.props, this.state);
-        }
-    }, {
-        key: 'componentWillReceiveProps',
-        value: function componentWillReceiveProps(_ref) {
-            var nextValue = _ref.value;
-
-            // When the `props.value` date changes, `state.now` needs to be updated,
-            // and the next update can be rescheduled.
-            if (!isSameDate(nextValue, this.props.value)) {
-                this.setState({ now: this.context.intl.now() });
-            }
-        }
-    }, {
-        key: 'shouldComponentUpdate',
-        value: function shouldComponentUpdate() {
-            for (var _len = arguments.length, next = Array(_len), _key = 0; _key < _len; _key++) {
-                next[_key] = arguments[_key];
-            }
-
-            return shouldIntlComponentUpdate.apply(undefined, [this].concat(next));
-        }
-    }, {
-        key: 'componentWillUpdate',
-        value: function componentWillUpdate(nextProps, nextState) {
-            this.scheduleNextUpdate(nextProps, nextState);
-        }
-    }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            clearTimeout(this._timer);
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _context$intl = this.context.intl,
-                formatRelative = _context$intl.formatRelative,
-                Text = _context$intl.textComponent;
-            var _props = this.props,
-                value = _props.value,
-                children = _props.children;
+      return shouldIntlComponentUpdate.apply(undefined, [this].concat(next));
+    }
+  }, {
+    key: 'componentWillUpdate',
+    value: function componentWillUpdate(nextProps, nextState) {
+      this.scheduleNextUpdate(nextProps, nextState);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      clearTimeout(this._timer);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _context$intl = this.context.intl,
+          formatRelative = _context$intl.formatRelative,
+          Text = _context$intl.textComponent;
+      var _props = this.props,
+          value = _props.value,
+          children = _props.children;
 
 
-            var formattedRelative = formatRelative(value, _extends({}, this.props, this.state));
+      var formattedRelative = formatRelative(value, _extends({}, this.props, this.state));
 
-            if (typeof children === 'function') {
-                return children(formattedRelative);
-            }
+      if (typeof children === 'function') {
+        return children(formattedRelative);
+      }
 
-            return React__default.createElement(
-                Text,
-                null,
-                formattedRelative
-            );
-        }
-    }]);
-    return FormattedRelative;
+      return React__default.createElement(
+        Text,
+        null,
+        formattedRelative
+      );
+    }
+  }]);
+  return FormattedRelative;
 }(React.Component);
 
 FormattedRelative.displayName = 'FormattedRelative';
 FormattedRelative.contextTypes = {
-    intl: intlShape
+  intl: intlShape
 };
 FormattedRelative.defaultProps = {
-    updateInterval: 1000 * 10
+  updateInterval: 1000 * 10
 };
 process.env.NODE_ENV !== "production" ? FormattedRelative.propTypes = _extends({}, relativeFormatPropTypes, {
-    value: PropTypes.any.isRequired,
-    format: PropTypes.string,
-    updateInterval: PropTypes.number,
-    initialNow: PropTypes.any,
-    children: PropTypes.func
+  value: PropTypes.any.isRequired,
+  format: PropTypes.string,
+  updateInterval: PropTypes.number,
+  initialNow: PropTypes.any,
+  children: PropTypes.func
 }) : void 0;
 
 /*
@@ -50877,61 +50723,61 @@ process.env.NODE_ENV !== "production" ? FormattedRelative.propTypes = _extends({
  */
 
 var FormattedNumber = function (_Component) {
-    inherits(FormattedNumber, _Component);
+  inherits(FormattedNumber, _Component);
 
-    function FormattedNumber(props, context) {
-        classCallCheck(this, FormattedNumber);
+  function FormattedNumber(props, context) {
+    classCallCheck(this, FormattedNumber);
 
-        var _this = possibleConstructorReturn(this, (FormattedNumber.__proto__ || Object.getPrototypeOf(FormattedNumber)).call(this, props, context));
+    var _this = possibleConstructorReturn(this, (FormattedNumber.__proto__ || Object.getPrototypeOf(FormattedNumber)).call(this, props, context));
 
-        invariantIntlContext(context);
-        return _this;
+    invariantIntlContext(context);
+    return _this;
+  }
+
+  createClass(FormattedNumber, [{
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate() {
+      for (var _len = arguments.length, next = Array(_len), _key = 0; _key < _len; _key++) {
+        next[_key] = arguments[_key];
+      }
+
+      return shouldIntlComponentUpdate.apply(undefined, [this].concat(next));
     }
-
-    createClass(FormattedNumber, [{
-        key: 'shouldComponentUpdate',
-        value: function shouldComponentUpdate() {
-            for (var _len = arguments.length, next = Array(_len), _key = 0; _key < _len; _key++) {
-                next[_key] = arguments[_key];
-            }
-
-            return shouldIntlComponentUpdate.apply(undefined, [this].concat(next));
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _context$intl = this.context.intl,
-                formatNumber = _context$intl.formatNumber,
-                Text = _context$intl.textComponent;
-            var _props = this.props,
-                value = _props.value,
-                children = _props.children;
+  }, {
+    key: 'render',
+    value: function render() {
+      var _context$intl = this.context.intl,
+          formatNumber = _context$intl.formatNumber,
+          Text = _context$intl.textComponent;
+      var _props = this.props,
+          value = _props.value,
+          children = _props.children;
 
 
-            var formattedNumber = formatNumber(value, this.props);
+      var formattedNumber = formatNumber(value, this.props);
 
-            if (typeof children === 'function') {
-                return children(formattedNumber);
-            }
+      if (typeof children === 'function') {
+        return children(formattedNumber);
+      }
 
-            return React__default.createElement(
-                Text,
-                null,
-                formattedNumber
-            );
-        }
-    }]);
-    return FormattedNumber;
+      return React__default.createElement(
+        Text,
+        null,
+        formattedNumber
+      );
+    }
+  }]);
+  return FormattedNumber;
 }(React.Component);
 
 FormattedNumber.displayName = 'FormattedNumber';
 FormattedNumber.contextTypes = {
-    intl: intlShape
+  intl: intlShape
 };
 process.env.NODE_ENV !== "production" ? FormattedNumber.propTypes = _extends({}, numberFormatPropTypes, {
-    value: PropTypes.any.isRequired,
-    format: PropTypes.string,
-    children: PropTypes.func
+  value: PropTypes.any.isRequired,
+  format: PropTypes.string,
+  children: PropTypes.func
 }) : void 0;
 
 /*
@@ -50941,73 +50787,73 @@ process.env.NODE_ENV !== "production" ? FormattedNumber.propTypes = _extends({},
  */
 
 var FormattedPlural = function (_Component) {
-    inherits(FormattedPlural, _Component);
+  inherits(FormattedPlural, _Component);
 
-    function FormattedPlural(props, context) {
-        classCallCheck(this, FormattedPlural);
+  function FormattedPlural(props, context) {
+    classCallCheck(this, FormattedPlural);
 
-        var _this = possibleConstructorReturn(this, (FormattedPlural.__proto__ || Object.getPrototypeOf(FormattedPlural)).call(this, props, context));
+    var _this = possibleConstructorReturn(this, (FormattedPlural.__proto__ || Object.getPrototypeOf(FormattedPlural)).call(this, props, context));
 
-        invariantIntlContext(context);
-        return _this;
+    invariantIntlContext(context);
+    return _this;
+  }
+
+  createClass(FormattedPlural, [{
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate() {
+      for (var _len = arguments.length, next = Array(_len), _key = 0; _key < _len; _key++) {
+        next[_key] = arguments[_key];
+      }
+
+      return shouldIntlComponentUpdate.apply(undefined, [this].concat(next));
     }
-
-    createClass(FormattedPlural, [{
-        key: 'shouldComponentUpdate',
-        value: function shouldComponentUpdate() {
-            for (var _len = arguments.length, next = Array(_len), _key = 0; _key < _len; _key++) {
-                next[_key] = arguments[_key];
-            }
-
-            return shouldIntlComponentUpdate.apply(undefined, [this].concat(next));
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _context$intl = this.context.intl,
-                formatPlural = _context$intl.formatPlural,
-                Text = _context$intl.textComponent;
-            var _props = this.props,
-                value = _props.value,
-                other = _props.other,
-                children = _props.children;
+  }, {
+    key: 'render',
+    value: function render() {
+      var _context$intl = this.context.intl,
+          formatPlural = _context$intl.formatPlural,
+          Text = _context$intl.textComponent;
+      var _props = this.props,
+          value = _props.value,
+          other = _props.other,
+          children = _props.children;
 
 
-            var pluralCategory = formatPlural(value, this.props);
-            var formattedPlural = this.props[pluralCategory] || other;
+      var pluralCategory = formatPlural(value, this.props);
+      var formattedPlural = this.props[pluralCategory] || other;
 
-            if (typeof children === 'function') {
-                return children(formattedPlural);
-            }
+      if (typeof children === 'function') {
+        return children(formattedPlural);
+      }
 
-            return React__default.createElement(
-                Text,
-                null,
-                formattedPlural
-            );
-        }
-    }]);
-    return FormattedPlural;
+      return React__default.createElement(
+        Text,
+        null,
+        formattedPlural
+      );
+    }
+  }]);
+  return FormattedPlural;
 }(React.Component);
 
 FormattedPlural.displayName = 'FormattedPlural';
 FormattedPlural.contextTypes = {
-    intl: intlShape
+  intl: intlShape
 };
 FormattedPlural.defaultProps = {
-    style: 'cardinal'
+  style: 'cardinal'
 };
 process.env.NODE_ENV !== "production" ? FormattedPlural.propTypes = _extends({}, pluralFormatPropTypes, {
-    value: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
 
-    other: PropTypes.node.isRequired,
-    zero: PropTypes.node,
-    one: PropTypes.node,
-    two: PropTypes.node,
-    few: PropTypes.node,
-    many: PropTypes.node,
+  other: PropTypes.node.isRequired,
+  zero: PropTypes.node,
+  one: PropTypes.node,
+  two: PropTypes.node,
+  few: PropTypes.node,
+  many: PropTypes.node,
 
-    children: PropTypes.func
+  children: PropTypes.func
 }) : void 0;
 
 /*
@@ -51017,142 +50863,142 @@ process.env.NODE_ENV !== "production" ? FormattedPlural.propTypes = _extends({},
  */
 
 var FormattedMessage = function (_Component) {
-    inherits(FormattedMessage, _Component);
+  inherits(FormattedMessage, _Component);
 
-    function FormattedMessage(props, context) {
-        classCallCheck(this, FormattedMessage);
+  function FormattedMessage(props, context) {
+    classCallCheck(this, FormattedMessage);
 
-        var _this = possibleConstructorReturn(this, (FormattedMessage.__proto__ || Object.getPrototypeOf(FormattedMessage)).call(this, props, context));
+    var _this = possibleConstructorReturn(this, (FormattedMessage.__proto__ || Object.getPrototypeOf(FormattedMessage)).call(this, props, context));
 
-        invariantIntlContext(context);
-        return _this;
+    invariantIntlContext(context);
+    return _this;
+  }
+
+  createClass(FormattedMessage, [{
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate(nextProps) {
+      var values = this.props.values;
+      var nextValues = nextProps.values;
+
+
+      if (!shallowEquals(nextValues, values)) {
+        return true;
+      }
+
+      // Since `values` has already been checked, we know they're not
+      // different, so the current `values` are carried over so the shallow
+      // equals comparison on the other props isn't affected by the `values`.
+      var nextPropsToCheck = _extends({}, nextProps, {
+        values: values
+      });
+
+      for (var _len = arguments.length, next = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        next[_key - 1] = arguments[_key];
+      }
+
+      return shouldIntlComponentUpdate.apply(undefined, [this, nextPropsToCheck].concat(next));
     }
-
-    createClass(FormattedMessage, [{
-        key: 'shouldComponentUpdate',
-        value: function shouldComponentUpdate(nextProps) {
-            var values = this.props.values;
-            var nextValues = nextProps.values;
-
-
-            if (!shallowEquals(nextValues, values)) {
-                return true;
-            }
-
-            // Since `values` has already been checked, we know they're not
-            // different, so the current `values` are carried over so the shallow
-            // equals comparison on the other props isn't affected by the `values`.
-            var nextPropsToCheck = _extends({}, nextProps, {
-                values: values
-            });
-
-            for (var _len = arguments.length, next = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-                next[_key - 1] = arguments[_key];
-            }
-
-            return shouldIntlComponentUpdate.apply(undefined, [this, nextPropsToCheck].concat(next));
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _context$intl = this.context.intl,
-                formatMessage = _context$intl.formatMessage,
-                Text = _context$intl.textComponent;
-            var _props = this.props,
-                id = _props.id,
-                description = _props.description,
-                defaultMessage = _props.defaultMessage,
-                values = _props.values,
-                _props$tagName = _props.tagName,
-                Component$$1 = _props$tagName === undefined ? Text : _props$tagName,
-                children = _props.children;
+  }, {
+    key: 'render',
+    value: function render() {
+      var _context$intl = this.context.intl,
+          formatMessage = _context$intl.formatMessage,
+          Text = _context$intl.textComponent;
+      var _props = this.props,
+          id = _props.id,
+          description = _props.description,
+          defaultMessage = _props.defaultMessage,
+          values = _props.values,
+          _props$tagName = _props.tagName,
+          Component$$1 = _props$tagName === undefined ? Text : _props$tagName,
+          children = _props.children;
 
 
-            var tokenDelimiter = void 0;
-            var tokenizedValues = void 0;
-            var elements = void 0;
+      var tokenDelimiter = void 0;
+      var tokenizedValues = void 0;
+      var elements = void 0;
 
-            var hasValues = values && Object.keys(values).length > 0;
-            if (hasValues) {
-                // Creates a token with a random UID that should not be guessable or
-                // conflict with other parts of the `message` string.
-                var uid = Math.floor(Math.random() * 0x10000000000).toString(16);
+      var hasValues = values && Object.keys(values).length > 0;
+      if (hasValues) {
+        // Creates a token with a random UID that should not be guessable or
+        // conflict with other parts of the `message` string.
+        var uid = Math.floor(Math.random() * 0x10000000000).toString(16);
 
-                var generateToken = function () {
-                    var counter = 0;
-                    return function () {
-                        return 'ELEMENT-' + uid + '-' + (counter += 1);
-                    };
-                }();
+        var generateToken = function () {
+          var counter = 0;
+          return function () {
+            return 'ELEMENT-' + uid + '-' + (counter += 1);
+          };
+        }();
 
-                // Splitting with a delimiter to support IE8. When using a regex
-                // with a capture group IE8 does not include the capture group in
-                // the resulting array.
-                tokenDelimiter = '@__' + uid + '__@';
-                tokenizedValues = {};
-                elements = {};
+        // Splitting with a delimiter to support IE8. When using a regex
+        // with a capture group IE8 does not include the capture group in
+        // the resulting array.
+        tokenDelimiter = '@__' + uid + '__@';
+        tokenizedValues = {};
+        elements = {};
 
-                // Iterates over the `props` to keep track of any React Element
-                // values so they can be represented by the `token` as a placeholder
-                // when the `message` is formatted. This allows the formatted
-                // message to then be broken-up into parts with references to the
-                // React Elements inserted back in.
-                Object.keys(values).forEach(function (name) {
-                    var value = values[name];
+        // Iterates over the `props` to keep track of any React Element
+        // values so they can be represented by the `token` as a placeholder
+        // when the `message` is formatted. This allows the formatted
+        // message to then be broken-up into parts with references to the
+        // React Elements inserted back in.
+        Object.keys(values).forEach(function (name) {
+          var value = values[name];
 
-                    if (React.isValidElement(value)) {
-                        var token = generateToken();
-                        tokenizedValues[name] = tokenDelimiter + token + tokenDelimiter;
-                        elements[token] = value;
-                    } else {
-                        tokenizedValues[name] = value;
-                    }
-                });
-            }
+          if (React.isValidElement(value)) {
+            var token = generateToken();
+            tokenizedValues[name] = tokenDelimiter + token + tokenDelimiter;
+            elements[token] = value;
+          } else {
+            tokenizedValues[name] = value;
+          }
+        });
+      }
 
-            var descriptor = { id: id, description: description, defaultMessage: defaultMessage };
-            var formattedMessage = formatMessage(descriptor, tokenizedValues || values);
+      var descriptor = { id: id, description: description, defaultMessage: defaultMessage };
+      var formattedMessage = formatMessage(descriptor, tokenizedValues || values);
 
-            var nodes = void 0;
+      var nodes = void 0;
 
-            var hasElements = elements && Object.keys(elements).length > 0;
-            if (hasElements) {
-                // Split the message into parts so the React Element values captured
-                // above can be inserted back into the rendered message. This
-                // approach allows messages to render with React Elements while
-                // keeping React's virtual diffing working properly.
-                nodes = formattedMessage.split(tokenDelimiter).filter(function (part) {
-                    return !!part;
-                }).map(function (part) {
-                    return elements[part] || part;
-                });
-            } else {
-                nodes = [formattedMessage];
-            }
+      var hasElements = elements && Object.keys(elements).length > 0;
+      if (hasElements) {
+        // Split the message into parts so the React Element values captured
+        // above can be inserted back into the rendered message. This
+        // approach allows messages to render with React Elements while
+        // keeping React's virtual diffing working properly.
+        nodes = formattedMessage.split(tokenDelimiter).filter(function (part) {
+          return !!part;
+        }).map(function (part) {
+          return elements[part] || part;
+        });
+      } else {
+        nodes = [formattedMessage];
+      }
 
-            if (typeof children === 'function') {
-                return children.apply(undefined, toConsumableArray(nodes));
-            }
+      if (typeof children === 'function') {
+        return children.apply(undefined, toConsumableArray(nodes));
+      }
 
-            // Needs to use `createElement()` instead of JSX, otherwise React will
-            // warn about a missing `key` prop with rich-text message formatting.
-            return React.createElement.apply(undefined, [Component$$1, null].concat(toConsumableArray(nodes)));
-        }
-    }]);
-    return FormattedMessage;
+      // Needs to use `createElement()` instead of JSX, otherwise React will
+      // warn about a missing `key` prop with rich-text message formatting.
+      return React.createElement.apply(undefined, [Component$$1, null].concat(toConsumableArray(nodes)));
+    }
+  }]);
+  return FormattedMessage;
 }(React.Component);
 
 FormattedMessage.displayName = 'FormattedMessage';
 FormattedMessage.contextTypes = {
-    intl: intlShape
+  intl: intlShape
 };
 FormattedMessage.defaultProps = {
-    values: {}
+  values: {}
 };
 process.env.NODE_ENV !== "production" ? FormattedMessage.propTypes = _extends({}, messageDescriptorPropTypes, {
-    values: PropTypes.object,
-    tagName: PropTypes.string,
-    children: PropTypes.func
+  values: PropTypes.object,
+  tagName: PropTypes.string,
+  children: PropTypes.func
 }) : void 0;
 
 /*
@@ -51162,90 +51008,90 @@ process.env.NODE_ENV !== "production" ? FormattedMessage.propTypes = _extends({}
  */
 
 var FormattedHTMLMessage = function (_Component) {
-    inherits(FormattedHTMLMessage, _Component);
+  inherits(FormattedHTMLMessage, _Component);
 
-    function FormattedHTMLMessage(props, context) {
-        classCallCheck(this, FormattedHTMLMessage);
+  function FormattedHTMLMessage(props, context) {
+    classCallCheck(this, FormattedHTMLMessage);
 
-        var _this = possibleConstructorReturn(this, (FormattedHTMLMessage.__proto__ || Object.getPrototypeOf(FormattedHTMLMessage)).call(this, props, context));
+    var _this = possibleConstructorReturn(this, (FormattedHTMLMessage.__proto__ || Object.getPrototypeOf(FormattedHTMLMessage)).call(this, props, context));
 
-        invariantIntlContext(context);
-        return _this;
+    invariantIntlContext(context);
+    return _this;
+  }
+
+  createClass(FormattedHTMLMessage, [{
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate(nextProps) {
+      var values = this.props.values;
+      var nextValues = nextProps.values;
+
+
+      if (!shallowEquals(nextValues, values)) {
+        return true;
+      }
+
+      // Since `values` has already been checked, we know they're not
+      // different, so the current `values` are carried over so the shallow
+      // equals comparison on the other props isn't affected by the `values`.
+      var nextPropsToCheck = _extends({}, nextProps, {
+        values: values
+      });
+
+      for (var _len = arguments.length, next = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        next[_key - 1] = arguments[_key];
+      }
+
+      return shouldIntlComponentUpdate.apply(undefined, [this, nextPropsToCheck].concat(next));
     }
-
-    createClass(FormattedHTMLMessage, [{
-        key: 'shouldComponentUpdate',
-        value: function shouldComponentUpdate(nextProps) {
-            var values = this.props.values;
-            var nextValues = nextProps.values;
-
-
-            if (!shallowEquals(nextValues, values)) {
-                return true;
-            }
-
-            // Since `values` has already been checked, we know they're not
-            // different, so the current `values` are carried over so the shallow
-            // equals comparison on the other props isn't affected by the `values`.
-            var nextPropsToCheck = _extends({}, nextProps, {
-                values: values
-            });
-
-            for (var _len = arguments.length, next = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-                next[_key - 1] = arguments[_key];
-            }
-
-            return shouldIntlComponentUpdate.apply(undefined, [this, nextPropsToCheck].concat(next));
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _context$intl = this.context.intl,
-                formatHTMLMessage = _context$intl.formatHTMLMessage,
-                Text = _context$intl.textComponent;
-            var _props = this.props,
-                id = _props.id,
-                description = _props.description,
-                defaultMessage = _props.defaultMessage,
-                rawValues = _props.values,
-                _props$tagName = _props.tagName,
-                Component$$1 = _props$tagName === undefined ? Text : _props$tagName,
-                children = _props.children;
+  }, {
+    key: 'render',
+    value: function render() {
+      var _context$intl = this.context.intl,
+          formatHTMLMessage = _context$intl.formatHTMLMessage,
+          Text = _context$intl.textComponent;
+      var _props = this.props,
+          id = _props.id,
+          description = _props.description,
+          defaultMessage = _props.defaultMessage,
+          rawValues = _props.values,
+          _props$tagName = _props.tagName,
+          Component$$1 = _props$tagName === undefined ? Text : _props$tagName,
+          children = _props.children;
 
 
-            var descriptor = { id: id, description: description, defaultMessage: defaultMessage };
-            var formattedHTMLMessage = formatHTMLMessage(descriptor, rawValues);
+      var descriptor = { id: id, description: description, defaultMessage: defaultMessage };
+      var formattedHTMLMessage = formatHTMLMessage(descriptor, rawValues);
 
-            if (typeof children === 'function') {
-                return children(formattedHTMLMessage);
-            }
+      if (typeof children === 'function') {
+        return children(formattedHTMLMessage);
+      }
 
-            // Since the message presumably has HTML in it, we need to set
-            // `innerHTML` in order for it to be rendered and not escaped by React.
-            // To be safe, all string prop values were escaped when formatting the
-            // message. It is assumed that the message is not UGC, and came from the
-            // developer making it more like a template.
-            //
-            // Note: There's a perf impact of using this component since there's no
-            // way for React to do its virtual DOM diffing.
-            var html = { __html: formattedHTMLMessage };
-            return React__default.createElement(Component$$1, { dangerouslySetInnerHTML: html });
-        }
-    }]);
-    return FormattedHTMLMessage;
+      // Since the message presumably has HTML in it, we need to set
+      // `innerHTML` in order for it to be rendered and not escaped by React.
+      // To be safe, all string prop values were escaped when formatting the
+      // message. It is assumed that the message is not UGC, and came from the
+      // developer making it more like a template.
+      //
+      // Note: There's a perf impact of using this component since there's no
+      // way for React to do its virtual DOM diffing.
+      var html = { __html: formattedHTMLMessage };
+      return React__default.createElement(Component$$1, { dangerouslySetInnerHTML: html });
+    }
+  }]);
+  return FormattedHTMLMessage;
 }(React.Component);
 
 FormattedHTMLMessage.displayName = 'FormattedHTMLMessage';
 FormattedHTMLMessage.contextTypes = {
-    intl: intlShape
+  intl: intlShape
 };
 FormattedHTMLMessage.defaultProps = {
-    values: {}
+  values: {}
 };
 process.env.NODE_ENV !== "production" ? FormattedHTMLMessage.propTypes = _extends({}, messageDescriptorPropTypes, {
-    values: PropTypes.object,
-    tagName: PropTypes.string,
-    children: PropTypes.func
+  values: PropTypes.object,
+  tagName: PropTypes.string,
+  children: PropTypes.func
 }) : void 0;
 
 /*
@@ -51279,7 +51125,7 @@ exports.FormattedHTMLMessage = FormattedHTMLMessage;
 
 }).call(this,require('_process'))
 },{"../locale-data/index.js":10,"_process":11,"intl-format-cache":73,"intl-messageformat":78,"intl-relativeformat":85,"invariant":91,"prop-types":111,"react":310}],261:[function(require,module,exports){
-!function(e,a){"object"==typeof exports&&"undefined"!=typeof module?module.exports=a():"function"==typeof define&&define.amd?define(a):(e.ReactIntlLocaleData=e.ReactIntlLocaleData||{},e.ReactIntlLocaleData.en=a())}(this,function(){"use strict";var e=[{locale:"en",pluralRuleFunction:function(e,a){var n=String(e).split("."),l=!n[1],o=Number(n[0])==e,t=o&&n[0].slice(-1),r=o&&n[0].slice(-2);return a?1==t&&11!=r?"one":2==t&&12!=r?"two":3==t&&13!=r?"few":"other":1==e&&l?"one":"other"},fields:{year:{displayName:"year",relative:{0:"this year",1:"next year","-1":"last year"},relativeTime:{future:{one:"in {0} year",other:"in {0} years"},past:{one:"{0} year ago",other:"{0} years ago"}}},month:{displayName:"month",relative:{0:"this month",1:"next month","-1":"last month"},relativeTime:{future:{one:"in {0} month",other:"in {0} months"},past:{one:"{0} month ago",other:"{0} months ago"}}},day:{displayName:"day",relative:{0:"today",1:"tomorrow","-1":"yesterday"},relativeTime:{future:{one:"in {0} day",other:"in {0} days"},past:{one:"{0} day ago",other:"{0} days ago"}}},hour:{displayName:"hour",relativeTime:{future:{one:"in {0} hour",other:"in {0} hours"},past:{one:"{0} hour ago",other:"{0} hours ago"}}},minute:{displayName:"minute",relativeTime:{future:{one:"in {0} minute",other:"in {0} minutes"},past:{one:"{0} minute ago",other:"{0} minutes ago"}}},second:{displayName:"second",relative:{0:"now"},relativeTime:{future:{one:"in {0} second",other:"in {0} seconds"},past:{one:"{0} second ago",other:"{0} seconds ago"}}}}},{locale:"en-001",parentLocale:"en"},{locale:"en-150",parentLocale:"en-001"},{locale:"en-AG",parentLocale:"en-001"},{locale:"en-AI",parentLocale:"en-001"},{locale:"en-AS",parentLocale:"en"},{locale:"en-AT",parentLocale:"en-150"},{locale:"en-AU",parentLocale:"en-001"},{locale:"en-BB",parentLocale:"en-001"},{locale:"en-BE",parentLocale:"en-001"},{locale:"en-BI",parentLocale:"en"},{locale:"en-BM",parentLocale:"en-001"},{locale:"en-BS",parentLocale:"en-001"},{locale:"en-BW",parentLocale:"en-001"},{locale:"en-BZ",parentLocale:"en-001"},{locale:"en-CA",parentLocale:"en-001"},{locale:"en-CC",parentLocale:"en-001"},{locale:"en-CH",parentLocale:"en-150"},{locale:"en-CK",parentLocale:"en-001"},{locale:"en-CM",parentLocale:"en-001"},{locale:"en-CX",parentLocale:"en-001"},{locale:"en-CY",parentLocale:"en-001"},{locale:"en-DE",parentLocale:"en-150"},{locale:"en-DG",parentLocale:"en-001"},{locale:"en-DK",parentLocale:"en-150"},{locale:"en-DM",parentLocale:"en-001"},{locale:"en-Dsrt",pluralRuleFunction:function(e,a){return"other"},fields:{year:{displayName:"Year",relative:{0:"this year",1:"next year","-1":"last year"},relativeTime:{future:{other:"+{0} y"},past:{other:"-{0} y"}}},month:{displayName:"Month",relative:{0:"this month",1:"next month","-1":"last month"},relativeTime:{future:{other:"+{0} m"},past:{other:"-{0} m"}}},day:{displayName:"Day",relative:{0:"today",1:"tomorrow","-1":"yesterday"},relativeTime:{future:{other:"+{0} d"},past:{other:"-{0} d"}}},hour:{displayName:"Hour",relativeTime:{future:{other:"+{0} h"},past:{other:"-{0} h"}}},minute:{displayName:"Minute",relativeTime:{future:{other:"+{0} min"},past:{other:"-{0} min"}}},second:{displayName:"Second",relative:{0:"now"},relativeTime:{future:{other:"+{0} s"},past:{other:"-{0} s"}}}}},{locale:"en-ER",parentLocale:"en-001"},{locale:"en-FI",parentLocale:"en-150"},{locale:"en-FJ",parentLocale:"en-001"},{locale:"en-FK",parentLocale:"en-001"},{locale:"en-FM",parentLocale:"en-001"},{locale:"en-GB",parentLocale:"en-001"},{locale:"en-GD",parentLocale:"en-001"},{locale:"en-GG",parentLocale:"en-001"},{locale:"en-GH",parentLocale:"en-001"},{locale:"en-GI",parentLocale:"en-001"},{locale:"en-GM",parentLocale:"en-001"},{locale:"en-GU",parentLocale:"en"},{locale:"en-GY",parentLocale:"en-001"},{locale:"en-HK",parentLocale:"en-001"},{locale:"en-IE",parentLocale:"en-001"},{locale:"en-IL",parentLocale:"en-001"},{locale:"en-IM",parentLocale:"en-001"},{locale:"en-IN",parentLocale:"en-001"},{locale:"en-IO",parentLocale:"en-001"},{locale:"en-JE",parentLocale:"en-001"},{locale:"en-JM",parentLocale:"en-001"},{locale:"en-KE",parentLocale:"en-001"},{locale:"en-KI",parentLocale:"en-001"},{locale:"en-KN",parentLocale:"en-001"},{locale:"en-KY",parentLocale:"en-001"},{locale:"en-LC",parentLocale:"en-001"},{locale:"en-LR",parentLocale:"en-001"},{locale:"en-LS",parentLocale:"en-001"},{locale:"en-MG",parentLocale:"en-001"},{locale:"en-MH",parentLocale:"en"},{locale:"en-MO",parentLocale:"en-001"},{locale:"en-MP",parentLocale:"en"},{locale:"en-MS",parentLocale:"en-001"},{locale:"en-MT",parentLocale:"en-001"},{locale:"en-MU",parentLocale:"en-001"},{locale:"en-MW",parentLocale:"en-001"},{locale:"en-MY",parentLocale:"en-001"},{locale:"en-NA",parentLocale:"en-001"},{locale:"en-NF",parentLocale:"en-001"},{locale:"en-NG",parentLocale:"en-001"},{locale:"en-NL",parentLocale:"en-150"},{locale:"en-NR",parentLocale:"en-001"},{locale:"en-NU",parentLocale:"en-001"},{locale:"en-NZ",parentLocale:"en-001"},{locale:"en-PG",parentLocale:"en-001"},{locale:"en-PH",parentLocale:"en-001"},{locale:"en-PK",parentLocale:"en-001"},{locale:"en-PN",parentLocale:"en-001"},{locale:"en-PR",parentLocale:"en"},{locale:"en-PW",parentLocale:"en-001"},{locale:"en-RW",parentLocale:"en-001"},{locale:"en-SB",parentLocale:"en-001"},{locale:"en-SC",parentLocale:"en-001"},{locale:"en-SD",parentLocale:"en-001"},{locale:"en-SE",parentLocale:"en-150"},{locale:"en-SG",parentLocale:"en-001"},{locale:"en-SH",parentLocale:"en-001"},{locale:"en-SI",parentLocale:"en-150"},{locale:"en-SL",parentLocale:"en-001"},{locale:"en-SS",parentLocale:"en-001"},{locale:"en-SX",parentLocale:"en-001"},{locale:"en-SZ",parentLocale:"en-001"},{locale:"en-Shaw",pluralRuleFunction:function(e,a){return"other"},fields:{year:{displayName:"Year",relative:{0:"this year",1:"next year","-1":"last year"},relativeTime:{future:{other:"+{0} y"},past:{other:"-{0} y"}}},month:{displayName:"Month",relative:{0:"this month",1:"next month","-1":"last month"},relativeTime:{future:{other:"+{0} m"},past:{other:"-{0} m"}}},day:{displayName:"Day",relative:{0:"today",1:"tomorrow","-1":"yesterday"},relativeTime:{future:{other:"+{0} d"},past:{other:"-{0} d"}}},hour:{displayName:"Hour",relativeTime:{future:{other:"+{0} h"},past:{other:"-{0} h"}}},minute:{displayName:"Minute",relativeTime:{future:{other:"+{0} min"},past:{other:"-{0} min"}}},second:{displayName:"Second",relative:{0:"now"},relativeTime:{future:{other:"+{0} s"},past:{other:"-{0} s"}}}}},{locale:"en-TC",parentLocale:"en-001"},{locale:"en-TK",parentLocale:"en-001"},{locale:"en-TO",parentLocale:"en-001"},{locale:"en-TT",parentLocale:"en-001"},{locale:"en-TV",parentLocale:"en-001"},{locale:"en-TZ",parentLocale:"en-001"},{locale:"en-UG",parentLocale:"en-001"},{locale:"en-UM",parentLocale:"en"},{locale:"en-US",parentLocale:"en"},{locale:"en-VC",parentLocale:"en-001"},{locale:"en-VG",parentLocale:"en-001"},{locale:"en-VI",parentLocale:"en"},{locale:"en-VU",parentLocale:"en-001"},{locale:"en-WS",parentLocale:"en-001"},{locale:"en-ZA",parentLocale:"en-001"},{locale:"en-ZM",parentLocale:"en-001"},{locale:"en-ZW",parentLocale:"en-001"}];return e});
+!function(e,a){"object"==typeof exports&&"undefined"!=typeof module?module.exports=a():"function"==typeof define&&define.amd?define(a):(e.ReactIntlLocaleData=e.ReactIntlLocaleData||{},e.ReactIntlLocaleData.en=a())}(this,function(){"use strict";return[{locale:"en",pluralRuleFunction:function(e,a){var n=String(e).split("."),l=!n[1],o=Number(n[0])==e,t=o&&n[0].slice(-1),r=o&&n[0].slice(-2);return a?1==t&&11!=r?"one":2==t&&12!=r?"two":3==t&&13!=r?"few":"other":1==e&&l?"one":"other"},fields:{year:{displayName:"year",relative:{0:"this year",1:"next year","-1":"last year"},relativeTime:{future:{one:"in {0} year",other:"in {0} years"},past:{one:"{0} year ago",other:"{0} years ago"}}},month:{displayName:"month",relative:{0:"this month",1:"next month","-1":"last month"},relativeTime:{future:{one:"in {0} month",other:"in {0} months"},past:{one:"{0} month ago",other:"{0} months ago"}}},day:{displayName:"day",relative:{0:"today",1:"tomorrow","-1":"yesterday"},relativeTime:{future:{one:"in {0} day",other:"in {0} days"},past:{one:"{0} day ago",other:"{0} days ago"}}},hour:{displayName:"hour",relative:{0:"this hour"},relativeTime:{future:{one:"in {0} hour",other:"in {0} hours"},past:{one:"{0} hour ago",other:"{0} hours ago"}}},minute:{displayName:"minute",relative:{0:"this minute"},relativeTime:{future:{one:"in {0} minute",other:"in {0} minutes"},past:{one:"{0} minute ago",other:"{0} minutes ago"}}},second:{displayName:"second",relative:{0:"now"},relativeTime:{future:{one:"in {0} second",other:"in {0} seconds"},past:{one:"{0} second ago",other:"{0} seconds ago"}}}}},{locale:"en-001",parentLocale:"en"},{locale:"en-150",parentLocale:"en-001"},{locale:"en-AG",parentLocale:"en-001"},{locale:"en-AI",parentLocale:"en-001"},{locale:"en-AS",parentLocale:"en"},{locale:"en-AT",parentLocale:"en-150"},{locale:"en-AU",parentLocale:"en-001"},{locale:"en-BB",parentLocale:"en-001"},{locale:"en-BE",parentLocale:"en-001"},{locale:"en-BI",parentLocale:"en"},{locale:"en-BM",parentLocale:"en-001"},{locale:"en-BS",parentLocale:"en-001"},{locale:"en-BW",parentLocale:"en-001"},{locale:"en-BZ",parentLocale:"en-001"},{locale:"en-CA",parentLocale:"en-001"},{locale:"en-CC",parentLocale:"en-001"},{locale:"en-CH",parentLocale:"en-150"},{locale:"en-CK",parentLocale:"en-001"},{locale:"en-CM",parentLocale:"en-001"},{locale:"en-CX",parentLocale:"en-001"},{locale:"en-CY",parentLocale:"en-001"},{locale:"en-DE",parentLocale:"en-150"},{locale:"en-DG",parentLocale:"en-001"},{locale:"en-DK",parentLocale:"en-150"},{locale:"en-DM",parentLocale:"en-001"},{locale:"en-Dsrt",pluralRuleFunction:function(e,a){return"other"},fields:{year:{displayName:"Year",relative:{0:"this year",1:"next year","-1":"last year"},relativeTime:{future:{other:"+{0} y"},past:{other:"-{0} y"}}},month:{displayName:"Month",relative:{0:"this month",1:"next month","-1":"last month"},relativeTime:{future:{other:"+{0} m"},past:{other:"-{0} m"}}},day:{displayName:"Day",relative:{0:"today",1:"tomorrow","-1":"yesterday"},relativeTime:{future:{other:"+{0} d"},past:{other:"-{0} d"}}},hour:{displayName:"Hour",relative:{0:"this hour"},relativeTime:{future:{other:"+{0} h"},past:{other:"-{0} h"}}},minute:{displayName:"Minute",relative:{0:"this minute"},relativeTime:{future:{other:"+{0} min"},past:{other:"-{0} min"}}},second:{displayName:"Second",relative:{0:"now"},relativeTime:{future:{other:"+{0} s"},past:{other:"-{0} s"}}}}},{locale:"en-ER",parentLocale:"en-001"},{locale:"en-FI",parentLocale:"en-150"},{locale:"en-FJ",parentLocale:"en-001"},{locale:"en-FK",parentLocale:"en-001"},{locale:"en-FM",parentLocale:"en-001"},{locale:"en-GB",parentLocale:"en-001"},{locale:"en-GD",parentLocale:"en-001"},{locale:"en-GG",parentLocale:"en-001"},{locale:"en-GH",parentLocale:"en-001"},{locale:"en-GI",parentLocale:"en-001"},{locale:"en-GM",parentLocale:"en-001"},{locale:"en-GU",parentLocale:"en"},{locale:"en-GY",parentLocale:"en-001"},{locale:"en-HK",parentLocale:"en-001"},{locale:"en-IE",parentLocale:"en-001"},{locale:"en-IL",parentLocale:"en-001"},{locale:"en-IM",parentLocale:"en-001"},{locale:"en-IN",parentLocale:"en-001"},{locale:"en-IO",parentLocale:"en-001"},{locale:"en-JE",parentLocale:"en-001"},{locale:"en-JM",parentLocale:"en-001"},{locale:"en-KE",parentLocale:"en-001"},{locale:"en-KI",parentLocale:"en-001"},{locale:"en-KN",parentLocale:"en-001"},{locale:"en-KY",parentLocale:"en-001"},{locale:"en-LC",parentLocale:"en-001"},{locale:"en-LR",parentLocale:"en-001"},{locale:"en-LS",parentLocale:"en-001"},{locale:"en-MG",parentLocale:"en-001"},{locale:"en-MH",parentLocale:"en"},{locale:"en-MO",parentLocale:"en-001"},{locale:"en-MP",parentLocale:"en"},{locale:"en-MS",parentLocale:"en-001"},{locale:"en-MT",parentLocale:"en-001"},{locale:"en-MU",parentLocale:"en-001"},{locale:"en-MW",parentLocale:"en-001"},{locale:"en-MY",parentLocale:"en-001"},{locale:"en-NA",parentLocale:"en-001"},{locale:"en-NF",parentLocale:"en-001"},{locale:"en-NG",parentLocale:"en-001"},{locale:"en-NL",parentLocale:"en-150"},{locale:"en-NR",parentLocale:"en-001"},{locale:"en-NU",parentLocale:"en-001"},{locale:"en-NZ",parentLocale:"en-001"},{locale:"en-PG",parentLocale:"en-001"},{locale:"en-PH",parentLocale:"en-001"},{locale:"en-PK",parentLocale:"en-001"},{locale:"en-PN",parentLocale:"en-001"},{locale:"en-PR",parentLocale:"en"},{locale:"en-PW",parentLocale:"en-001"},{locale:"en-RW",parentLocale:"en-001"},{locale:"en-SB",parentLocale:"en-001"},{locale:"en-SC",parentLocale:"en-001"},{locale:"en-SD",parentLocale:"en-001"},{locale:"en-SE",parentLocale:"en-150"},{locale:"en-SG",parentLocale:"en-001"},{locale:"en-SH",parentLocale:"en-001"},{locale:"en-SI",parentLocale:"en-150"},{locale:"en-SL",parentLocale:"en-001"},{locale:"en-SS",parentLocale:"en-001"},{locale:"en-SX",parentLocale:"en-001"},{locale:"en-SZ",parentLocale:"en-001"},{locale:"en-Shaw",pluralRuleFunction:function(e,a){return"other"},fields:{year:{displayName:"Year",relative:{0:"this year",1:"next year","-1":"last year"},relativeTime:{future:{other:"+{0} y"},past:{other:"-{0} y"}}},month:{displayName:"Month",relative:{0:"this month",1:"next month","-1":"last month"},relativeTime:{future:{other:"+{0} m"},past:{other:"-{0} m"}}},day:{displayName:"Day",relative:{0:"today",1:"tomorrow","-1":"yesterday"},relativeTime:{future:{other:"+{0} d"},past:{other:"-{0} d"}}},hour:{displayName:"Hour",relative:{0:"this hour"},relativeTime:{future:{other:"+{0} h"},past:{other:"-{0} h"}}},minute:{displayName:"Minute",relative:{0:"this minute"},relativeTime:{future:{other:"+{0} min"},past:{other:"-{0} min"}}},second:{displayName:"Second",relative:{0:"now"},relativeTime:{future:{other:"+{0} s"},past:{other:"-{0} s"}}}}},{locale:"en-TC",parentLocale:"en-001"},{locale:"en-TK",parentLocale:"en-001"},{locale:"en-TO",parentLocale:"en-001"},{locale:"en-TT",parentLocale:"en-001"},{locale:"en-TV",parentLocale:"en-001"},{locale:"en-TZ",parentLocale:"en-001"},{locale:"en-UG",parentLocale:"en-001"},{locale:"en-UM",parentLocale:"en"},{locale:"en-US",parentLocale:"en"},{locale:"en-VC",parentLocale:"en-001"},{locale:"en-VG",parentLocale:"en-001"},{locale:"en-VI",parentLocale:"en"},{locale:"en-VU",parentLocale:"en-001"},{locale:"en-WS",parentLocale:"en-001"},{locale:"en-ZA",parentLocale:"en-001"},{locale:"en-ZM",parentLocale:"en-001"},{locale:"en-ZW",parentLocale:"en-001"}]});
 
 },{}],262:[function(require,module,exports){
 'use strict';
@@ -51363,7 +51209,6 @@ function createProvider() {
     children: _propTypes2.default.element.isRequired
   };
   Provider.childContextTypes = (_Provider$childContex = {}, _Provider$childContex[storeKey] = _PropTypes.storeShape.isRequired, _Provider$childContex[subscriptionKey] = _PropTypes.subscriptionShape, _Provider$childContex);
-  Provider.displayName = 'Provider';
 
   return Provider;
 }
@@ -51598,7 +51443,7 @@ selectorFactory) {
       Connect.prototype.notifyNestedSubsOnComponentDidUpdate = function notifyNestedSubsOnComponentDidUpdate() {
         // `componentDidUpdate` is conditionally implemented when `onStateChange` determines it
         // needs to notify nested subs. Once called, it unimplements itself until further state
-        // changes occur. Doing it this way vs having a permanent `componentDidMount` that does
+        // changes occur. Doing it this way vs having a permanent `componentDidUpdate` that does
         // a boolean check every time avoids an extra method call most of the time, resulting
         // in some perf boost.
         this.componentDidUpdate = undefined;
@@ -51644,14 +51489,31 @@ selectorFactory) {
 
     if ("production" !== 'production') {
       Connect.prototype.componentWillUpdate = function componentWillUpdate() {
+        var _this2 = this;
+
         // We are hot reloading!
         if (this.version !== version) {
           this.version = version;
           this.initSelector();
 
-          if (this.subscription) this.subscription.tryUnsubscribe();
+          // If any connected descendants don't hot reload (and resubscribe in the process), their
+          // listeners will be lost when we unsubscribe. Unfortunately, by copying over all
+          // listeners, this does mean that the old versions of connected descendants will still be
+          // notified of state changes; however, their onStateChange function is a no-op so this
+          // isn't a huge deal.
+          var oldListeners = [];
+
+          if (this.subscription) {
+            oldListeners = this.subscription.listeners.get();
+            this.subscription.tryUnsubscribe();
+          }
           this.initSubscription();
-          if (shouldHandleStateChanges) this.subscription.trySubscribe();
+          if (shouldHandleStateChanges) {
+            this.subscription.trySubscribe();
+            oldListeners.forEach(function (listener) {
+              return _this2.subscription.listeners.subscribe(listener);
+            });
+          }
         }
       };
     }
@@ -52197,6 +52059,9 @@ function createListenerCollection() {
         listeners[i]();
       }
     },
+    get: function get() {
+      return next;
+    },
     subscribe: function subscribe(listener) {
       var isSubscribed = true;
       if (next === current) next = current.slice();
@@ -52362,9 +52227,6 @@ var ScrollLock = createClass({
 		scrollTarget: PropTypes.object,
 		preventContentJumping: PropTypes.bool
 	},
-	defaultProps: {
-		preventContentJumping: true
-	},
 	componentDidMount: function () {
 		if (!canUseDom()) return;
 
@@ -52407,6 +52269,10 @@ var ScrollLock = createClass({
 		return null;
 	}
 });
+
+ScrollLock.defaultProps = {
+ preventContentJumping: true
+}
 
 function preventTouchMove (e) {
 	e.preventDefault();
@@ -52560,7 +52426,7 @@ var ReactSuperSelect = function (_React$Component) {
     };
 
     // force control instance context in all internal class functions
-    (0, _lodash.bindAll)(_this, ['toggleDropdown', '_ariaGetActiveDescendentId', '_ariaGetListId', '_arrestScroll', '_broadcastChange', '_buildInitialValue', '_clearSearchString', '_clearSelection', '_closeOnKeypress', '_configureDataSource', '_defaultSearchFilter', '_deselectAction', '_fetchDataViaAjax', '_fetchNextPage', '_filterDataBySearchString', '_findArrayOfOptionDataObjectsByValue', '_focusCurrentFocusedId', '_focusDOMOption', '_focusRemovalButtons', '_focusTrigger', '_generateValueDisplay', '_getAjaxErrorMarkup', '_getDataSource', '_getDropdownContent', '_getFocusedOptionKey', '_getGroupHeadingMarkup', '_getNoResultsMarkup', '_getNormalDisplayMarkup', '_getLoadingMarkup', '_getOptionIndexFromTarget', '_getOptionsMarkup', '_getOptionValueFromDataAttr', '_getPagingLi', '_getSearchContent', '_getTagsDisplayMarkup', '_getTagMarkup', '_getTagRemoveIndex', '_getTemplatedOptions', '_handleDocumentClick', '_handleKeyDown', '_handleSearch', '_isCurrentlySelected', '_isMultiSelect', '_isUserSearchTypingEvent', '_mapDataToOptionsMarkup', '_moveFocusDown', '_moveFocusUp', '_needsAjaxFetch', '_onDownKey', '_onEndKey', '_onEnterKey', '_onEscKey', '_onHomeKey', '_onMouseMove', '_onUpKey', '_pageFetchingComplete', '_removeAllOptionsInOptionIdRange', '_removeSelectedOptionByValue', '_removeTagKeyPress', '_removeTagClick', '_selectAllOptionsInOptionIdRange', '_selectAllOptionsToLastUserSelectedOption', '_selectFocusedOption', '_selectItemByValues', '_selectItemOnOptionClick', '_setFocusIdToSearch', '_setFocusOnOpen', '_setFocusToTagRemovalIfPresent', '_updateFocusedId']);
+    (0, _lodash.bindAll)(_this, ['toggleDropdown', '_ariaGetActiveDescendentId', '_ariaGetListId', '_arrestScroll', '_broadcastChange', '_buildInitialValue', '_clearSearchString', '_clearSelection', '_closeOnKeypress', '_configureDataSource', '_defaultSearchFilter', '_deselectAction', '_fetchDataViaAjax', '_fetchNextPage', '_filterDataBySearchString', '_findArrayOfOptionDataObjectsByValue', '_focusCurrentFocusedId', '_focusDOMOption', '_focusRemovalButtons', '_focusTrigger', '_generateValueDisplay', '_getAjaxErrorMarkup', '_getDataSource', '_getDropdownContent', '_getFocusedOptionKey', '_getGroupHeadingMarkup', '_getNoResultsMarkup', '_getNormalDisplayMarkup', '_getLoadingMarkup', '_getOptionIndexFromTarget', '_getOptionsMarkup', '_getOptionValueFromDataAttr', '_getPagingLi', '_getSearchContent', '_getTagsDisplayMarkup', '_getTagMarkup', '_getTagRemoveIndex', '_getTemplatedOptions', '_getTypeSafeOptionValue', '_handleDocumentClick', '_handleKeyDown', '_handleSearch', '_isCurrentlySelected', '_isMultiSelect', '_isUserSearchTypingEvent', '_mapDataToOptionsMarkup', '_moveFocusDown', '_moveFocusUp', '_needsAjaxFetch', '_onDownKey', '_onEndKey', '_onEnterKey', '_onEscKey', '_onHomeKey', '_onMouseMove', '_onUpKey', '_pageFetchingComplete', '_removeAllOptionsInOptionIdRange', '_removeSelectedOptionByValue', '_removeTagKeyPress', '_removeTagClick', '_selectAllOptionsInOptionIdRange', '_selectAllOptionsToLastUserSelectedOption', '_selectFocusedOption', '_selectItemByValues', '_selectItemOnOptionClick', '_setFocusIdToSearch', '_setFocusOnOpen', '_setFocusToTagRemovalIfPresent', '_updateFocusedId']);
     return _this;
   }
 
@@ -53200,17 +53066,28 @@ var ReactSuperSelect = function (_React$Component) {
   ReactSuperSelect.prototype._getNoResultsMarkup = function _getNoResultsMarkup() {
     var _this10 = this;
 
-    var noResultsString = this.props.noResultsString ? this.props.noResultsString : this.props.noResultsString;
-    return _react2.default.createElement(
-      'li',
-      { className: 'r-ss-dropdown-option', tabIndex: '-1' },
-      _react2.default.createElement(
-        'i',
+    var noResultsMarkup = _react2.default.createElement(
+      'i',
+      { ref: function ref(c) {
+          _this10._rssDOM.noResults = c;
+        } },
+      this.props.noResultsString
+    );
+
+    if (!(0, _lodash.isString)(this.props.noResultsString)) {
+      noResultsMarkup = _react2.default.createElement(
+        'div',
         { ref: function ref(c) {
             _this10._rssDOM.noResults = c;
           } },
-        noResultsString
-      )
+        this.props.noResultsString
+      );
+    }
+
+    return _react2.default.createElement(
+      'li',
+      { className: 'r-ss-dropdown-option', tabIndex: '-1' },
+      noResultsMarkup
     );
   };
 
@@ -53293,15 +53170,12 @@ var ReactSuperSelect = function (_React$Component) {
   };
 
   // get the data-option-value attribute for an option node
-  // convert to numeric (data-attrs cast to strings) if:
-  // the conversion does not alter the string representation's value
 
 
   ReactSuperSelect.prototype._getOptionValueFromDataAttr = function _getOptionValueFromDataAttr(optionNode) {
     var optionValue = optionNode.getAttribute('data-option-value');
 
-    optionValue = +optionValue + "" === optionValue ? +optionValue : optionValue;
-    return optionValue;
+    return this._getTypeSafeOptionValue(optionValue);
   };
 
   // render a list item with a loading indicator.  Shown while **pageDataFetch** or **ajaxDataFetch** functions run
@@ -53446,6 +53320,14 @@ var ReactSuperSelect = function (_React$Component) {
     }
 
     return options;
+  };
+
+  // convert to numeric (data-attrs cast to strings) if
+  // the conversion does not alter the string representation's value
+
+
+  ReactSuperSelect.prototype._getTypeSafeOptionValue = function _getTypeSafeOptionValue(optionValue) {
+    return +optionValue + "" === optionValue ? +optionValue : optionValue;
   };
 
   // close control on document click outside of the control itself
@@ -53851,7 +53733,7 @@ var ReactSuperSelect = function (_React$Component) {
     }
 
     var optionsToSelect = (0, _lodash.reduce)(this.state.data, function (memo, opt) {
-      if ((0, _lodash.includes)(valuePropsToSelect, opt[_this21.state.valueKey])) {
+      if ((0, _lodash.includes)(valuePropsToSelect, _this21._getTypeSafeOptionValue(opt[_this21.state.valueKey]))) {
         if (!opt.disabled) {
           memo.push(opt);
         }
@@ -54233,8 +54115,9 @@ ReactSuperSelect.propTypes = {
   // **clearSelectionsLabelString** (String) *optional* - (Used in conjunction with the **searchable** option) This string will be used as an aria-label for the clear search button
   clearSearchLabelString: _propTypes2.default.string,
 
-  // **noResultsString** (String) *optional* - A string value which will be displayed when your dropdown shows no results.  (i.e. dataSource is an empty collection, or ajaxDataFetch returns an empty collection)
-  noResultsString: _propTypes2.default.string,
+  // **noResultsString** (String | Element) *optional* - A string or react element which will be displayed when your dropdown shows no results.  (i.e. dataSource is an empty collection, or ajaxDataFetch returns an empty collection)
+  noResultsString: _propTypes2.default.oneOfType([// any
+  _propTypes2.default.string, _propTypes2.default.element]),
 
   // **placeholder** (String) *optional* - This string value will be displayed in the main display area of your control when the user has no selected values
   placeholder: _propTypes2.default.string,
@@ -54991,12 +54874,10 @@ arguments[4][136][0].apply(exports,arguments)
 arguments[4][138][0].apply(exports,arguments)
 },{"./reactProdInvariant":308,"dup":138,"fbjs/lib/invariant":38}],287:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -55123,12 +55004,10 @@ if ("production" !== 'production') {
 module.exports = React;
 },{"./ReactBaseClasses":288,"./ReactChildren":289,"./ReactDOMFactories":292,"./ReactElement":293,"./ReactElementValidator":295,"./ReactPropTypes":298,"./ReactVersion":300,"./canDefineProperty":301,"./createClass":303,"./lowPriorityWarning":306,"./onlyChild":307,"object-assign":105}],288:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -55266,12 +55145,10 @@ module.exports = {
 };
 },{"./ReactNoopUpdateQueue":296,"./canDefineProperty":301,"./lowPriorityWarning":306,"./reactProdInvariant":308,"fbjs/lib/emptyObject":31,"fbjs/lib/invariant":38,"object-assign":105}],289:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -55457,12 +55334,10 @@ var ReactChildren = {
 module.exports = ReactChildren;
 },{"./PooledClass":286,"./ReactElement":293,"./traverseAllChildren":309,"fbjs/lib/emptyFunction":30}],290:[function(require,module,exports){
 /**
- * Copyright 2016-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2016-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -55836,12 +55711,10 @@ var ReactComponentTreeHook = {
 module.exports = ReactComponentTreeHook;
 },{"./ReactCurrentOwner":291,"./reactProdInvariant":308,"fbjs/lib/invariant":38,"fbjs/lib/warning":45}],291:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -55865,12 +55738,10 @@ var ReactCurrentOwner = {
 module.exports = ReactCurrentOwner;
 },{}],292:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -56034,12 +55905,10 @@ var ReactDOMFactories = {
 module.exports = ReactDOMFactories;
 },{"./ReactElement":293,"./ReactElementValidator":295}],293:[function(require,module,exports){
 /**
- * Copyright 2014-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2014-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -56377,12 +56246,10 @@ module.exports = ReactElement;
 arguments[4][165][0].apply(exports,arguments)
 },{"dup":165}],295:[function(require,module,exports){
 /**
- * Copyright 2014-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2014-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -56632,12 +56499,10 @@ var ReactElementValidator = {
 module.exports = ReactElementValidator;
 },{"./ReactComponentTreeHook":290,"./ReactCurrentOwner":291,"./ReactElement":293,"./canDefineProperty":301,"./checkReactTypeSpec":302,"./getIteratorFn":304,"./lowPriorityWarning":306,"fbjs/lib/warning":45}],296:[function(require,module,exports){
 /**
- * Copyright 2015-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -56729,12 +56594,10 @@ module.exports = ReactNoopUpdateQueue;
 arguments[4][183][0].apply(exports,arguments)
 },{"dup":183}],298:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -56752,12 +56615,10 @@ arguments[4][184][0].apply(exports,arguments)
 arguments[4][192][0].apply(exports,arguments)
 },{"dup":192}],301:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -56779,12 +56640,10 @@ module.exports = canDefineProperty;
 },{}],302:[function(require,module,exports){
 (function (process){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -56867,12 +56726,10 @@ module.exports = checkReactTypeSpec;
 }).call(this,require('_process'))
 },{"./ReactComponentTreeHook":290,"./ReactPropTypeLocationNames":297,"./ReactPropTypesSecret":299,"./reactProdInvariant":308,"_process":11,"fbjs/lib/invariant":38,"fbjs/lib/warning":45}],303:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -56892,12 +56749,10 @@ module.exports = factory(Component, isValidElement, ReactNoopUpdateQueue);
 arguments[4][225][0].apply(exports,arguments)
 },{"dup":225}],305:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * 
  */
@@ -56913,12 +56768,10 @@ function getNextDebugID() {
 module.exports = getNextDebugID;
 },{}],306:[function(require,module,exports){
 /**
- * Copyright 2014-2015, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2014-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -56978,12 +56831,10 @@ if ("production" !== 'production') {
 module.exports = lowPriorityWarning;
 },{}],307:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 'use strict';
@@ -57018,12 +56869,10 @@ module.exports = onlyChild;
 arguments[4][234][0].apply(exports,arguments)
 },{"dup":234}],309:[function(require,module,exports){
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -57827,19 +57676,22 @@ function warning(message) {
 },{}],318:[function(require,module,exports){
 'use strict';
 
-var isAbsolute = function isAbsolute(pathname) {
+exports.__esModule = true;
+function isAbsolute(pathname) {
   return pathname.charAt(0) === '/';
-};
+}
 
 // About 1.5x faster than the two-arg version of Array#splice()
-var spliceOne = function spliceOne(list, index) {
+function spliceOne(list, index) {
   for (var i = index, k = i + 1, n = list.length; k < n; i += 1, k += 1) {
     list[i] = list[k];
-  }list.pop();
-};
+  }
+
+  list.pop();
+}
 
 // This implementation is based heavily on node's url.parse
-var resolvePathname = function resolvePathname(to) {
+function resolvePathname(to) {
   var from = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
   var toParts = to && to.split('/') || [];
@@ -57892,9 +57744,10 @@ var resolvePathname = function resolvePathname(to) {
   if (hasTrailingSlash && result.substr(-1) !== '/') result += '/';
 
   return result;
-};
+}
 
-module.exports = resolvePathname;
+exports.default = resolvePathname;
+module.exports = exports['default'];
 },{}],319:[function(require,module,exports){
 module.exports = require('./lib/index');
 
@@ -59568,14 +59421,16 @@ exports.__esModule = true;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var valueEqual = function valueEqual(a, b) {
+function valueEqual(a, b) {
   if (a === b) return true;
 
   if (a == null || b == null) return false;
 
-  if (Array.isArray(a)) return Array.isArray(b) && a.length === b.length && a.every(function (item, index) {
-    return valueEqual(item, b[index]);
-  });
+  if (Array.isArray(a)) {
+    return Array.isArray(b) && a.length === b.length && a.every(function (item, index) {
+      return valueEqual(item, b[index]);
+    });
+  }
 
   var aType = typeof a === 'undefined' ? 'undefined' : _typeof(a);
   var bType = typeof b === 'undefined' ? 'undefined' : _typeof(b);
@@ -59599,9 +59454,10 @@ var valueEqual = function valueEqual(a, b) {
   }
 
   return false;
-};
+}
 
 exports.default = valueEqual;
+module.exports = exports['default'];
 },{}],326:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -59931,17 +59787,17 @@ function extend() {
 },{}],329:[function(require,module,exports){
 module.exports={
   "name": "react-filteredlist",
-  "version": "1.14.9", 
+  "version": "1.16.6",
   "description": "FilteredList",
   "main": "lib/FilteredList.js",
   "author": "Adam Gedney",
-  "homepage":"https://github.com/OlympusatDevelopment/react-filteredlist",
+  "homepage": "https://github.com/OlympusatDevelopment/react-filteredlist",
   "repository": {
     "type": "git",
-    "url":"git@github.com:OlympusatDevelopment/react-filteredlist.git"
+    "url": "git@github.com:OlympusatDevelopment/react-filteredlist.git"
   },
   "bugs": {
-    "url":"https://github.com/OlympusatDevelopment/react-filteredlist/issues"
+    "url": "https://github.com/OlympusatDevelopment/react-filteredlist/issues"
   },
   "dependencies": {
     "bluebird": "^3.5.0",
@@ -60025,7 +59881,6 @@ module.exports={
     "transform-object-assign"
   ]
 }
-
 },{}],330:[function(require,module,exports){
 (function (global){
 'use strict';
@@ -60284,7 +60139,7 @@ var UPDATE_VIEW_PROPS = exports.UPDATE_VIEW_PROPS = 'dl/UPDATE_VIEW_PROPS';
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -60324,87 +60179,86 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var ColumnSelector = function (_Component) {
-    _inherits(ColumnSelector, _Component);
+  _inherits(ColumnSelector, _Component);
 
-    // eslint-disable-line react/prefer-stateless-function
-    function ColumnSelector(props) {
-        _classCallCheck(this, ColumnSelector);
+  // eslint-disable-line react/prefer-stateless-function
+  function ColumnSelector(props) {
+    _classCallCheck(this, ColumnSelector);
 
-        return _possibleConstructorReturn(this, (ColumnSelector.__proto__ || Object.getPrototypeOf(ColumnSelector)).call(this, props));
+    return _possibleConstructorReturn(this, (ColumnSelector.__proto__ || Object.getPrototypeOf(ColumnSelector)).call(this, props));
+  }
+
+  _createClass(ColumnSelector, [{
+    key: 'onChecked',
+    value: function onChecked(e, prop) {
+      var checked = e.target.checked,
+          viewId = this.props.selectedView.id;
+      //viewProp = {
+      //    key:prop,
+      //    label:utils.propToTitleCase(prop),
+      //    hasCopy:false,// Assume false for these advanced settings
+      //    isDate:prop.toLowerCase().indexOf('date') > -1,// Best guess. Looks for prop names that have date
+      //    width:'125px'// @todo need to find a way to safely generate widths when props are added to the view. Could use property keys length as a divisor
+      //};
+
+      this.props.updateViewProps({ prop: prop, checked: checked, viewId: viewId });
     }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
 
-    _createClass(ColumnSelector, [{
-        key: 'onChecked',
-        value: function onChecked(e, prop) {
-            var checked = e.target.checked,
-                viewId = this.props.selectedView.id;
-            //viewProp = {
-            //    key:prop,
-            //    label:utils.propToTitleCase(prop),
-            //    hasCopy:false,// Assume false for these advanced settings
-            //    isDate:prop.toLowerCase().indexOf('date') > -1,// Best guess. Looks for prop names that have date
-            //    width:'125px'// @todo need to find a way to safely generate widths when props are added to the view. Could use property keys length as a divisor
-            //};
+      var _props = this.props,
+          currentViewProps = _props.currentViewProps,
+          config = _props.config,
+          item = _props.item,
+          selectedView = _props.selectedView;
 
-            this.props.updateViewProps({ prop: prop, checked: checked, viewId: viewId });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
+      var availableProps = currentViewProps.map(function (prop) {
+        return prop.key;
+      });
+      return _react2.default.createElement(
+        'div',
+        { className: 'dl__columnSelector' },
+        _react2.default.createElement(
+          'h4',
+          null,
+          'Show'
+        ),
+        availableProps.map(function (prop) {
+          var propObject = _underscore2.default.findWhere(currentViewProps, { key: prop }) || {};
 
-            var _props = this.props,
-                currentViewProps = _props.currentViewProps,
-                config = _props.config,
-                item = _props.item,
-                selectedView = _props.selectedView;
+          return _react2.default.createElement(
+            'span',
+            { key: prop, 'data-key': prop },
+            _react2.default.createElement(
+              _Checkbox2.default,
+              { onChecked: _this2.onChecked.bind(_this2), id: prop, checked: propObject.display, onChange: function onChange() {} },
+              ' '
+            ),
+            _utils2.default.propToTitleCase(prop)
+          );
+        })
+      );
+    }
+  }]);
 
-            var availableProps = currentViewProps.map(function (prop) {
-                return prop.key;
-            });
-
-            return _react2.default.createElement(
-                'div',
-                { className: 'dl__columnSelector' },
-                _react2.default.createElement(
-                    'h4',
-                    null,
-                    'Show'
-                ),
-                availableProps.map(function (prop) {
-                    var propObject = _underscore2.default.findWhere(selectedView.props, { key: prop }) || {};
-
-                    return _react2.default.createElement(
-                        'span',
-                        { key: prop, 'data-key': prop },
-                        _react2.default.createElement(
-                            _Checkbox2.default,
-                            { onChecked: _this2.onChecked.bind(_this2), id: prop, checked: propObject.display, onChange: function onChange() {} },
-                            ' '
-                        ),
-                        _utils2.default.propToTitleCase(prop)
-                    );
-                })
-            );
-        }
-    }]);
-
-    return ColumnSelector;
+  return ColumnSelector;
 }(_react.Component);
 
 //Which part of the Redux global state does our component want to receive as props?
 
 
 function mapStateToProps(state, ownProps) {
-    return {
-        config: state.app.config,
-        force: state.app.force,
-        columnSelector: state.columnSelector
-    };
+  return {
+    config: state.app.config,
+    force: state.app.force,
+    columnSelector: state.columnSelector
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)(ColumnSelectorActions, dispatch);
+  return (0, _redux.bindActionCreators)(ColumnSelectorActions, dispatch);
 }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ColumnSelector);
@@ -60440,7 +60294,7 @@ var UPDATE_WORKSPACE = exports.UPDATE_WORKSPACE = 'dl/UPDATE_WORKSPACE';
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -60472,108 +60326,109 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var CustomItem = function (_Component) {
-    _inherits(CustomItem, _Component);
+  _inherits(CustomItem, _Component);
 
-    function CustomItem(props) {
-        _classCallCheck(this, CustomItem);
+  function CustomItem(props) {
+    _classCallCheck(this, CustomItem);
 
-        var _this = _possibleConstructorReturn(this, (CustomItem.__proto__ || Object.getPrototypeOf(CustomItem)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (CustomItem.__proto__ || Object.getPrototypeOf(CustomItem)).call(this, props));
 
-        _this.state = {
-            imgIsOpen: false,
-            currentImage: 0
-        };
-        return _this;
+    _this.state = {
+      imgIsOpen: false,
+      currentImage: 0
+    };
+    return _this;
+  }
+
+  _createClass(CustomItem, [{
+    key: 'onChecked',
+    value: function onChecked(e) {
+      var _props = this.props,
+          updateWorkspace = _props.updateWorkspace,
+          item = _props.item,
+          config = _props.config,
+          workspaceItems = _props.workspaceItems,
+          state = e.target.checked,
+          workspaceAction = state ? 'add' : 'remove';
+
+
+      if (state) {
+        updateWorkspace({
+          Item: config.hooks.onCheck({ item: item, workspaceItems: workspaceItems }),
+          workspaceAction: workspaceAction
+        });
+      } else {
+        updateWorkspace({
+          Item: config.hooks.onUnCheck({ item: item, workspaceItems: workspaceItems }),
+          workspaceAction: workspaceAction
+        });
+      }
     }
+  }, {
+    key: 'onLinkClick',
+    value: function onLinkClick(e) {
+      // Prevent linking when the copy icon is clicked
+      if (e.target.classList.contains('dl__featuredImg')) {
+        e.preventDefault();
+      }
+    }
+  }, {
+    key: 'makeCustomItem',
+    value: function makeCustomItem(item, selectedView, CustomDisplayItem, props, parentProps, preferencedProps) {
+      var check = selectedView.enableRowChecks ? _react2.default.createElement(
+        'span',
+        { style: { width: '33px' }, className: 'dl__customItemCheck' },
+        _react2.default.createElement(
+          _Checkbox2.default,
+          { onChecked: this.onChecked.bind(this), id: item[selectedView.itemIdProp] },
+          ' '
+        )
+      ) : '';
 
-    _createClass(CustomItem, [{
-        key: 'onChecked',
-        value: function onChecked(e) {
-            var _props = this.props,
-                updateWorkspace = _props.updateWorkspace,
-                item = _props.item,
-                config = _props.config,
-                workspaceItems = _props.workspaceItems,
-                state = e.target.checked,
-                workspaceAction = state ? 'add' : 'remove';
+      return _react2.default.createElement(
+        'div',
+        { className: 'dl__customItemInner' },
+        check,
+        _react2.default.createElement(CustomDisplayItem, { preferencedProps: preferencedProps, item: item, selectedView: selectedView, parentProps: parentProps })
+      );
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props2 = this.props,
+          item = _props2.item,
+          selectedView = _props2.selectedView,
+          CustomDisplayItem = _props2.CustomDisplayItem,
+          parentProps = _props2.parentProps,
+          preferencedProps = _props2.preferencedProps;
 
+      var props = selectedView.props,
+          customItem = this.makeCustomItem(item, selectedView, CustomDisplayItem, props, parentProps, preferencedProps);
 
-            if (state) {
-                updateWorkspace({
-                    Item: config.hooks.onCheck({ item: item, workspaceItems: workspaceItems }),
-                    workspaceAction: workspaceAction
-                });
-            } else {
-                updateWorkspace({
-                    Item: config.hooks.onUnCheck({ item: item, workspaceItems: workspaceItems }),
-                    workspaceAction: workspaceAction
-                });
-            }
-        }
-    }, {
-        key: 'onLinkClick',
-        value: function onLinkClick(e) {
-            // Prevent linking when the copy icon is clicked
-            if (e.target.classList.contains('dl__featuredImg')) {
-                e.preventDefault();
-            }
-        }
-    }, {
-        key: 'makeCustomItem',
-        value: function makeCustomItem(item, selectedView, CustomDisplayItem, props, parentProps) {
-            var check = selectedView.enableRowChecks ? _react2.default.createElement(
-                'span',
-                { style: { width: '33px' }, className: 'dl__customItemCheck' },
-                _react2.default.createElement(
-                    _Checkbox2.default,
-                    { onChecked: this.onChecked.bind(this), id: item[selectedView.itemIdProp] },
-                    ' '
-                )
-            ) : '';
+      return _react2.default.createElement(
+        'div',
+        { className: 'dl__customItem' },
+        customItem
+      );
+    }
+  }]);
 
-            return _react2.default.createElement(
-                'div',
-                { className: 'dl__customItemInner' },
-                check,
-                _react2.default.createElement(CustomDisplayItem, { item: item, selectedView: selectedView, parentProps: parentProps })
-            );
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _props2 = this.props,
-                item = _props2.item,
-                selectedView = _props2.selectedView,
-                CustomDisplayItem = _props2.CustomDisplayItem,
-                parentProps = _props2.parentProps;
-
-            var props = selectedView.props,
-                customItem = this.makeCustomItem(item, selectedView, CustomDisplayItem, props, parentProps);
-
-            return _react2.default.createElement(
-                'div',
-                { className: 'dl__customItem' },
-                customItem
-            );
-        }
-    }]);
-
-    return CustomItem;
+  return CustomItem;
 }(_react.Component);
 
 //Which part of the Redux global state does our component want to receive as props?
 
 
 function mapStateToProps(state, ownProps) {
-    return {
-        config: state.app.config,
-        workspaceItems: state.app.workspaceItems,
-        force: state.app.force
-    };
+  return {
+    config: state.app.config,
+    workspaceItems: state.app.workspaceItems,
+    force: state.app.force
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)(CustomItemActions, dispatch);
+  return (0, _redux.bindActionCreators)(CustomItemActions, dispatch);
 }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(CustomItem);
@@ -61729,7 +61584,7 @@ var FILTER_CHANGE = exports.FILTER_CHANGE = 'dl/FILTER_CHANGE';
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -61771,199 +61626,199 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var ListHeader = function (_Component) {
-    _inherits(ListHeader, _Component);
+  _inherits(ListHeader, _Component);
 
-    // eslint-disable-line react/prefer-stateless-function
-    function ListHeader(props) {
-        _classCallCheck(this, ListHeader);
+  // eslint-disable-line react/prefer-stateless-function
+  function ListHeader(props) {
+    _classCallCheck(this, ListHeader);
 
-        var _this = _possibleConstructorReturn(this, (ListHeader.__proto__ || Object.getPrototypeOf(ListHeader)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (ListHeader.__proto__ || Object.getPrototypeOf(ListHeader)).call(this, props));
 
-        _this.state = {
-            showColumnSelector: false,
-            showDetachedSort: false,
-            sortAsc: {}
-        };
+    _this.state = {
+      showColumnSelector: false,
+      showDetachedSort: false,
+      sortAsc: {}
+    };
 
-        _this.onSettingsClick = _this.onSettingsClick.bind(_this);
-        return _this;
+    _this.onSettingsClick = _this.onSettingsClick.bind(_this);
+    return _this;
+  }
+
+  _createClass(ListHeader, [{
+    key: 'toggleSort',
+    value: function toggleSort(e) {
+      var _props = this.props,
+          selectedView = _props.selectedView,
+          filterChange = _props.filterChange,
+          elem = e.currentTarget,
+          cls = 'dl__listHeader--sort--desc',
+          key = e.currentTarget.getAttribute('data-key');
+
+
+      if (selectedView.enableListSort) {
+
+        // if(elem.classList.contains(cls)){
+        if (this.state.sortAsc[key]) {
+          elem.classList.remove(cls);
+
+          filterChange({
+            id: 'sort-' + key,
+            view: selectedView.id,
+            value: 'DESC'
+          });
+
+          this.setState({ sortAsc: _defineProperty({}, key, false) });
+        } else {
+          elem.classList.add(cls);
+
+          filterChange({
+            id: 'sort-' + key,
+            view: selectedView.id,
+            value: 'ASC'
+          });
+
+          this.setState({ sortAsc: _defineProperty({}, key, true) });
+        }
+      }
     }
+  }, {
+    key: 'onSettingsClick',
+    value: function onSettingsClick() {
+      this.setState({ showColumnSelector: !this.state.showColumnSelector });
+    }
+  }, {
+    key: 'onChecked',
+    value: function onChecked(e) {
+      var _props2 = this.props,
+          Items = _props2.Items,
+          config = _props2.config,
+          workspaceItems = _props2.workspaceItems,
+          updateWorkspace = _props2.updateWorkspace,
+          selectAll = e.target.checked,
+          workspaceAction = selectAll ? 'add' : 'remove';
 
-    _createClass(ListHeader, [{
-        key: 'toggleSort',
-        value: function toggleSort(e) {
-            var _props = this.props,
-                selectedView = _props.selectedView,
-                filterChange = _props.filterChange,
-                elem = e.currentTarget,
-                cls = 'dl__listHeader--sort--desc',
-                key = e.currentTarget.getAttribute('data-key');
 
+      [].concat(_toConsumableArray(document.querySelectorAll('.dl__listRow'))).forEach(function (row) {
+        var check = row.getElementsByTagName('input')[0];
 
-            if (selectedView.enableListSort) {
-
-                // if(elem.classList.contains(cls)){
-                if (this.state.sortAsc[key]) {
-                    elem.classList.remove(cls);
-
-                    filterChange({
-                        id: 'sort-' + key,
-                        view: selectedView.id,
-                        value: 'DESC'
-                    });
-
-                    this.setState({ sortAsc: _defineProperty({}, key, false) });
-                } else {
-                    elem.classList.add(cls);
-
-                    filterChange({
-                        id: 'sort-' + key,
-                        view: selectedView.id,
-                        value: 'ASC'
-                    });
-
-                    this.setState({ sortAsc: _defineProperty({}, key, true) });
-                }
-            }
+        if (check.type == "checkbox") {
+          check.checked = selectAll;
         }
-    }, {
-        key: 'onSettingsClick',
-        value: function onSettingsClick() {
-            this.setState({ showColumnSelector: !this.state.showColumnSelector });
-        }
-    }, {
-        key: 'onChecked',
-        value: function onChecked(e) {
-            var _props2 = this.props,
-                Items = _props2.Items,
-                config = _props2.config,
-                workspaceItems = _props2.workspaceItems,
-                updateWorkspace = _props2.updateWorkspace,
-                selectAll = e.target.checked,
-                workspaceAction = selectAll ? 'add' : 'remove';
+      });
 
+      if (selectAll) {
+        Items.forEach(function (item) {
+          updateWorkspace({
+            Item: config.hooks.onCheck({ item: item, workspaceItems: workspaceItems }),
+            workspaceAction: workspaceAction
+          });
+        });
+      } else {
+        Items.forEach(function (item) {
+          updateWorkspace({
+            Item: config.hooks.onUnCheck({ item: item, workspaceItems: workspaceItems }),
+            workspaceAction: workspaceAction
+          });
+        });
+      }
+    }
+  }, {
+    key: 'makeDetachedSort',
+    value: function makeDetachedSort(props) {
+      // props = the sortable items
+      return _react2.default.createElement(
+        'div',
+        { className: 'dl__detachedSort' },
+        'detached sort'
+      );
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
 
-            [].concat(_toConsumableArray(document.querySelectorAll('.dl__listRow'))).forEach(function (row) {
-                var check = row.getElementsByTagName('input')[0];
+      var _props3 = this.props,
+          selectedView = _props3.selectedView,
+          config = _props3.config,
+          item = _props3.item;
 
-                if (check.type == "checkbox") {
-                    check.checked = selectAll;
-                }
-            });
+      var props = selectedView.props;
+      var settingsIcon = selectedView.showListSettings ? _react2.default.createElement(
+        'span',
+        { className: 'dl__listHeader-listSettings', onClick: this.onSettingsClick },
+        ' '
+      ) : '',
+          columnSelector = this.state.showColumnSelector ? _react2.default.createElement(
+        _ColumnSelector2.default,
+        { selectedView: selectedView, currentViewProps: props, item: item },
+        ' '
+      ) : '',
+          check = selectedView.enableRowChecks ? _react2.default.createElement(
+        'span',
+        { key: -1, style: { width: '33px' }, className: 'dl__listHeader-item' },
+        _react2.default.createElement(
+          _Checkbox2.default,
+          { onChecked: this.onChecked.bind(this), id: 'dl-select-all' },
+          ' '
+        )
+      ) : '',
+          classNames = config.pinPagination ? 'dl__pinPagination dl__listHeader' : 'dl__listHeader',
+          sortIcon = selectedView.enableListSort && selectedView.detachSort ? _react2.default.createElement(
+        'span',
+        { className: 'dl__listHeader-listSort', onClick: function onClick() {
+            return _this2.setState({ showDetachedSort: !_this2.state.showDetachedSort });
+          } },
+        ' '
+      ) : '',
+          detachedSort = this.state.showDetachedSort || selectedView.alwaysShowDetachedSort ? this.makeDetachedSort(props) : '';
 
-            if (selectAll) {
-                Items.forEach(function (item) {
-                    updateWorkspace({
-                        Item: config.hooks.onCheck({ item: item, workspaceItems: workspaceItems }),
-                        workspaceAction: workspaceAction
-                    });
-                });
-            } else {
-                Items.forEach(function (item) {
-                    updateWorkspace({
-                        Item: config.hooks.onUnCheck({ item: item, workspaceItems: workspaceItems }),
-                        workspaceAction: workspaceAction
-                    });
-                });
-            }
-        }
-    }, {
-        key: 'makeDetachedSort',
-        value: function makeDetachedSort(props) {
-            // props = the sortable items
+      return _react2.default.createElement(
+        'div',
+        { className: classNames, style: _extends({}, selectedView.listHeaderStyles) },
+        check,
+        props.map(function (prop) {
+          var sortClasses = selectedView.enableListSort && !selectedView.detachSort && prop.isSortable ? _this2.state.sortAsc[prop.key] ? 'dl__listHeader--sort' : 'dl__listHeader--sort dl__listHeader--sort--desc' : _this2.state.sortAsc[prop.key] ? 'dl__listHeader--sort dl__listHeader--sort--disabled' : 'dl__listHeader--sort dl__listHeader--sort--disabled dl__listHeader--sort--desc';
+
+          if (prop.display) {
             return _react2.default.createElement(
-                'div',
-                { className: 'dl__detachedSort' },
-                'detached sort'
+              'span',
+              { key: Math.random() * 100000, 'data-key': prop.key, style: _extends({}, _extends({}, { width: prop.width }, selectedView.listHeaderItemStyles)), className: 'dl__listHeader-item', onClick: _this2.toggleSort.bind(_this2) },
+              prop.label,
+              ' ',
+              _react2.default.createElement(
+                'span',
+                { className: sortClasses },
+                ' '
+              )
             );
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
+          }
+        }),
+        settingsIcon,
+        sortIcon,
+        columnSelector,
+        detachedSort
+      );
+    }
+  }]);
 
-            var _props3 = this.props,
-                selectedView = _props3.selectedView,
-                config = _props3.config,
-                item = _props3.item;
-
-            var props = selectedView.props,
-                settingsIcon = selectedView.showListSettings ? _react2.default.createElement(
-                'span',
-                { className: 'dl__listHeader-listSettings', onClick: this.onSettingsClick },
-                ' '
-            ) : '',
-                columnSelector = this.state.showColumnSelector ? _react2.default.createElement(
-                _ColumnSelector2.default,
-                { selectedView: selectedView, currentViewProps: props, item: item },
-                ' '
-            ) : '',
-                check = selectedView.enableRowChecks ? _react2.default.createElement(
-                'span',
-                { key: -1, style: { width: '33px' }, className: 'dl__listHeader-item' },
-                _react2.default.createElement(
-                    _Checkbox2.default,
-                    { onChecked: this.onChecked.bind(this), id: 'dl-select-all' },
-                    ' '
-                )
-            ) : '',
-                classNames = config.pinPagination ? 'dl__pinPagination dl__listHeader' : 'dl__listHeader',
-                sortIcon = selectedView.enableListSort && selectedView.detachSort ? _react2.default.createElement(
-                'span',
-                { className: 'dl__listHeader-listSort', onClick: function onClick() {
-                        return _this2.setState({ showDetachedSort: !_this2.state.showDetachedSort });
-                    } },
-                ' '
-            ) : '',
-                detachedSort = this.state.showDetachedSort || selectedView.alwaysShowDetachedSort ? this.makeDetachedSort(props) : '';
-
-            return _react2.default.createElement(
-                'div',
-                { className: classNames, style: _extends({}, selectedView.listHeaderStyles) },
-                check,
-                props.map(function (prop) {
-                    var sortClasses = selectedView.enableListSort && !selectedView.detachSort && prop.isSortable ? _this2.state.sortAsc[prop.key] ? 'dl__listHeader--sort' : 'dl__listHeader--sort dl__listHeader--sort--desc' : _this2.state.sortAsc[prop.key] ? 'dl__listHeader--sort dl__listHeader--sort--disabled' : 'dl__listHeader--sort dl__listHeader--sort--disabled dl__listHeader--sort--desc';
-
-                    if (prop.display) {
-                        return _react2.default.createElement(
-                            'span',
-                            { key: Math.random() * 100000, 'data-key': prop.key, style: _extends({}, _extends({}, { width: prop.width }, selectedView.listHeaderItemStyles)), className: 'dl__listHeader-item', onClick: _this2.toggleSort.bind(_this2) },
-                            prop.label,
-                            ' ',
-                            _react2.default.createElement(
-                                'span',
-                                { className: sortClasses },
-                                ' '
-                            )
-                        );
-                    }
-                }),
-                settingsIcon,
-                sortIcon,
-                columnSelector,
-                detachedSort
-            );
-        }
-    }]);
-
-    return ListHeader;
+  return ListHeader;
 }(_react.Component);
 
 //Which part of the Redux global state does our component want to receive as props?
 
 
 function mapStateToProps(state, ownProps) {
-    return {
-        config: state.app.config,
-        force: state.app.force,
-        listHeader: state.listHeader,
-        Items: state.app.Items,
-        workspaceItems: state.app.workspaceItems
-    };
+  return {
+    config: state.app.config,
+    force: state.app.force,
+    listHeader: state.listHeader,
+    Items: state.app.Items,
+    workspaceItems: state.app.workspaceItems
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)(ListHeaderActions, dispatch);
+  return (0, _redux.bindActionCreators)(ListHeaderActions, dispatch);
 }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ListHeader);
@@ -61995,7 +61850,7 @@ var DEFAULT_LOCALE = exports.DEFAULT_LOCALE = 'en';
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -62035,63 +61890,63 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var ListRow = function (_Component) {
-    _inherits(ListRow, _Component);
+  _inherits(ListRow, _Component);
 
-    // eslint-disable-line react/prefer-stateless-function
-    function ListRow(props) {
-        _classCallCheck(this, ListRow);
+  // eslint-disable-line react/prefer-stateless-function
+  function ListRow(props) {
+    _classCallCheck(this, ListRow);
 
-        return _possibleConstructorReturn(this, (ListRow.__proto__ || Object.getPrototypeOf(ListRow)).call(this, props));
+    return _possibleConstructorReturn(this, (ListRow.__proto__ || Object.getPrototypeOf(ListRow)).call(this, props));
+  }
+
+  _createClass(ListRow, [{
+    key: 'makeListItem',
+    value: function makeListItem(item, selectedView, props) {
+      switch (selectedView.displayType) {
+        case 'custom':
+          var CustomDisplayItem = selectedView.customDisplayTypeComponent;
+
+          return _react2.default.createElement(_CustomItem2.default, { CustomDisplayItem: CustomDisplayItem, item: item, selectedView: selectedView, parentProps: props });
+        case 'display':
+          return _react2.default.createElement(_DisplayItem2.default, { item: item, selectedView: selectedView });
+        case 'text':
+        default:
+          return _react2.default.createElement(_TextItem2.default, { item: item, selectedView: selectedView });
+      }
     }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          config = _props.config,
+          item = _props.item,
+          selectedView = _props.selectedView;
 
-    _createClass(ListRow, [{
-        key: 'makeListItem',
-        value: function makeListItem(item, selectedView, props) {
-            switch (selectedView.displayType) {
-                case 'custom':
-                    var CustomDisplayItem = selectedView.customDisplayTypeComponent;
+      var listItem = this.makeListItem(item, selectedView, this.props);
 
-                    return _react2.default.createElement(_CustomItem2.default, { CustomDisplayItem: CustomDisplayItem, item: item, selectedView: selectedView, parentProps: props });
-                case 'display':
-                    return _react2.default.createElement(_DisplayItem2.default, { item: item, selectedView: selectedView });
-                case 'text':
-                default:
-                    return _react2.default.createElement(_TextItem2.default, { item: item, selectedView: selectedView });
-            }
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _props = this.props,
-                config = _props.config,
-                item = _props.item,
-                selectedView = _props.selectedView;
+      return _react2.default.createElement(
+        'li',
+        { className: 'dl__listRow' },
+        listItem
+      );
+    }
+  }]);
 
-            var listItem = this.makeListItem(item, selectedView, this.props);
-
-            return _react2.default.createElement(
-                'li',
-                { className: 'dl__listRow' },
-                listItem
-            );
-        }
-    }]);
-
-    return ListRow;
+  return ListRow;
 }(_react.Component);
 
 //Which part of the Redux global state does our component want to receive as props?
 
 
 function mapStateToProps(state, ownProps) {
-    return {
-        config: state.app.config,
-        listRow: state.listRow
-    };
+  return {
+    config: state.app.config,
+    listRow: state.listRow
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)(ListRowActions, dispatch);
+  return (0, _redux.bindActionCreators)(ListRowActions, dispatch);
 }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ListRow);
@@ -62549,7 +62404,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -62587,146 +62442,154 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var SaveFilterset = function (_Component) {
-    _inherits(SaveFilterset, _Component);
+  _inherits(SaveFilterset, _Component);
 
-    // eslint-disable-line react/prefer-stateless-function
-    function SaveFilterset(props) {
-        _classCallCheck(this, SaveFilterset);
+  // eslint-disable-line react/prefer-stateless-function
+  function SaveFilterset(props) {
+    _classCallCheck(this, SaveFilterset);
 
-        var _this = _possibleConstructorReturn(this, (SaveFilterset.__proto__ || Object.getPrototypeOf(SaveFilterset)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (SaveFilterset.__proto__ || Object.getPrototypeOf(SaveFilterset)).call(this, props));
 
-        _this.state = {
-            showDeleteSelect: false,
-            selectValue: {
-                name: 'Make Your Selection',
-                filterset: '' //@todo read the url on load and set this initial state to the currently run query string if it matches one of the user's saved filtersets
-            }
-        };
-        return _this;
+    _this.state = {
+      force: 0,
+      showDeleteSelect: false,
+      selectValue: {
+        name: 'Make Your Selection',
+        filterset: '' //@todo read the url on load and set this initial state to the currently run query string if it matches one of the user's saved filtersets
+      }
+    };
+    return _this;
+  }
+
+  _createClass(SaveFilterset, [{
+    key: 'toggleDeleteInterface',
+    value: function toggleDeleteInterface() {
+      this.setState({ showDeleteSelect: !this.state.showDeleteSelect });
     }
+  }, {
+    key: 'formSubmit',
+    value: function formSubmit(e) {
+      e.preventDefault();
 
-    _createClass(SaveFilterset, [{
-        key: 'toggleDeleteInterface',
-        value: function toggleDeleteInterface() {
-            this.setState({ showDeleteSelect: !this.state.showDeleteSelect });
-        }
-    }, {
-        key: 'formSubmit',
-        value: function formSubmit(e) {
-            e.preventDefault();
+      if (this.props.config.hooks.onSaveFilterset) {
+        this.props.config.hooks.onSaveFilterset({
+          name: e.target.getElementsByClassName("filterset.name")[0].value,
+          queryString: window.location.href,
+          queryObject: this.props.app.queryObject
+        });
+      }
 
-            if (this.props.config.hooks.onSaveFilterset) {
-                this.props.config.hooks.onSaveFilterset({
-                    name: e.target.getElementsByClassName("filterset.name")[0].value,
-                    queryString: window.location.href,
-                    queryObject: this.props.app.queryObject
-                });
-            }
-        }
-    }, {
-        key: 'onSavedFiltersChange',
-        value: function onSavedFiltersChange(data) {
-            if (data) {
-                window.location.href = data.filterset;
-                this.setState({ selectValue: data });
-            }
-        }
-    }, {
-        key: 'onSavedFiltersDelete',
-        value: function onSavedFiltersDelete(data) {
-            if (data && this.props.config.hooks.onDeleteFilterset) {
-                this.props.config.hooks.onDeleteFilterset(data);
+      // Refresh the page in order to ensure saved data has propogated the system 
+      // and can be included in the options list. react-super-select caches the component 
+      // click and doesn't refresh the ajax call to populate options.
+      setTimeout(function () {
+        window.location.href = window.location.href;
+      }, 1000);
+    }
+  }, {
+    key: 'onSavedFiltersChange',
+    value: function onSavedFiltersChange(data) {
+      if (data) {
+        window.location.href = data.filterset;
+        this.setState({ selectValue: data });
+      }
+    }
+  }, {
+    key: 'onSavedFiltersDelete',
+    value: function onSavedFiltersDelete(data) {
+      if (data && this.props.config.hooks.onDeleteFilterset) {
+        this.props.config.hooks.onDeleteFilterset(data);
 
-                this.setState({ showDeleteSelect: false });
-            }
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _props = this.props,
-                selectedView = _props.selectedView,
-                config = _props.config,
-                self = this,
-                showDeleteSelect = this.state.showDeleteSelect ? _react2.default.createElement(_reactSuperSelect2.default, {
-                ajaxDataFetch: selectedView.usersSavedFiltersets || { then: function then() {
-                        return [];
-                    } },
-                optionLabelKey: 'name',
-                optionValueKey: 'filterset',
-                placeholder: 'Make Your Selection',
-                initialValue: self.state.selectValue,
-                onChange: self.onSavedFiltersDelete.bind(self),
-                onOpenDropdown: function onOpenDropdown() {},
-                onCloseDropdown: function onCloseDropdown() {},
-                searchable: false
-            }) : '';
+        this.setState({ showDeleteSelect: false });
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          selectedView = _props.selectedView,
+          config = _props.config,
+          self = this,
+          showDeleteSelect = this.state.showDeleteSelect ? _react2.default.createElement(_reactSuperSelect2.default, {
+        ajaxDataFetch: selectedView.usersSavedFiltersets || { then: function then() {
+            return [];
+          } },
+        optionLabelKey: 'name',
+        optionValueKey: 'filterset',
+        placeholder: 'Make Your Selection',
+        initialValue: self.state.selectValue,
+        onChange: self.onSavedFiltersDelete.bind(self),
+        onOpenDropdown: function onOpenDropdown() {},
+        onCloseDropdown: function onCloseDropdown() {},
+        searchable: false
+      }) : '';
 
 
-            return _react2.default.createElement(
-                'div',
-                { className: 'dl__saveFilterset' },
-                _react2.default.createElement(
-                    'div',
-                    { className: 'dl__saveFiltersetForm' },
-                    _react2.default.createElement(
-                        'form',
-                        { onSubmit: this.formSubmit.bind(this) },
-                        _react2.default.createElement(
-                            'label',
-                            null,
-                            _react2.default.createElement(_reactIntl.FormattedMessage, _messages2.default.inputLabel),
-                            _react2.default.createElement('input', { type: 'text', className: 'filterset.name', placeholder: _messages2.default.inputPlaceholder.defaultMessage }),
-                            _react2.default.createElement('input', { type: 'submit', value: _messages2.default.formSubmitValue.defaultMessage })
-                        )
-                    )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'dl__saveFiltersetDelete' },
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'dl__saveFiltersetDeleteButton', onClick: this.toggleDeleteInterface.bind(this) },
-                        _react2.default.createElement(_reactIntl.FormattedMessage, _messages2.default.deleteFilterset)
-                    ),
-                    showDeleteSelect
-                ),
-                _react2.default.createElement(
-                    'label',
-                    null,
-                    _react2.default.createElement(_reactIntl.FormattedMessage, _messages2.default.selectLabel),
-                    _react2.default.createElement(_reactSuperSelect2.default, {
-                        ajaxDataFetch: selectedView.usersSavedFiltersets || { then: function then() {
-                                return [];
-                            } },
-                        optionLabelKey: 'name',
-                        optionValueKey: 'filterset',
-                        placeholder: 'Make Your Selection',
-                        initialValue: self.state.selectValue,
-                        onChange: self.onSavedFiltersChange.bind(self),
-                        onOpenDropdown: function onOpenDropdown() {},
-                        onCloseDropdown: function onCloseDropdown() {},
-                        searchable: false
-                    })
-                )
-            );
-        }
-    }]);
+      return _react2.default.createElement(
+        'div',
+        { className: 'dl__saveFilterset' },
+        _react2.default.createElement(
+          'div',
+          { className: 'dl__saveFiltersetForm' },
+          _react2.default.createElement(
+            'form',
+            { onSubmit: this.formSubmit.bind(this) },
+            _react2.default.createElement(
+              'label',
+              null,
+              _react2.default.createElement(_reactIntl.FormattedMessage, _messages2.default.inputLabel),
+              _react2.default.createElement('input', { type: 'text', className: 'filterset.name', placeholder: _messages2.default.inputPlaceholder.defaultMessage }),
+              _react2.default.createElement('input', { type: 'submit', value: _messages2.default.formSubmitValue.defaultMessage })
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'dl__saveFiltersetDelete' },
+          _react2.default.createElement(
+            'span',
+            { className: 'dl__saveFiltersetDeleteButton', onClick: this.toggleDeleteInterface.bind(this) },
+            _react2.default.createElement(_reactIntl.FormattedMessage, _messages2.default.deleteFilterset)
+          ),
+          showDeleteSelect
+        ),
+        _react2.default.createElement(
+          'label',
+          null,
+          _react2.default.createElement(_reactIntl.FormattedMessage, _messages2.default.selectLabel),
+          _react2.default.createElement(_reactSuperSelect2.default, {
+            ajaxDataFetch: selectedView.usersSavedFiltersets || { then: function then() {
+                return [];
+              } },
+            optionLabelKey: 'name',
+            optionValueKey: 'filterset',
+            placeholder: 'Make Your Selection',
+            initialValue: self.state.selectValue,
+            onChange: self.onSavedFiltersChange.bind(self),
+            onOpenDropdown: function onOpenDropdown() {},
+            onCloseDropdown: function onCloseDropdown() {},
+            searchable: false
+          })
+        )
+      );
+    }
+  }]);
 
-    return SaveFilterset;
+  return SaveFilterset;
 }(_react.Component);
 
 //Which part of the Redux global state does our component want to receive as props?
 
 
 function mapStateToProps(state, ownProps) {
-    return {
-        config: state.app.config,
-        app: state.app
-    };
+  return {
+    config: state.app.config,
+    app: state.app
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)(SaveFiltersetActions, dispatch);
+  return (0, _redux.bindActionCreators)(SaveFiltersetActions, dispatch);
 }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(SaveFilterset);
@@ -62808,7 +62671,7 @@ var UPDATE_SEARCH_INPUT = exports.UPDATE_SEARCH_INPUT = 'dl/UPDATE_SEARCH_INPUT'
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -62836,110 +62699,110 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Search = function (_Component) {
-    _inherits(Search, _Component);
+  _inherits(Search, _Component);
 
-    // eslint-disable-line react/prefer-stateless-function
-    function Search(props) {
-        _classCallCheck(this, Search);
+  // eslint-disable-line react/prefer-stateless-function
+  function Search(props) {
+    _classCallCheck(this, Search);
 
-        return _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this));
+    return _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this));
+  }
+
+  _createClass(Search, [{
+    key: 'onSearchSubmit',
+    value: function onSearchSubmit(e) {
+      e.preventDefault();
+      var _props = this.props,
+          options = _props.options,
+          filterChange = _props.filterChange,
+          input = document.getElementById('dl-search--' + options.id);
+
+
+      filterChange({
+        id: 'search',
+        view: options.id,
+        value: input.value
+      });
     }
+  }, {
+    key: 'onSearchClear',
+    value: function onSearchClear(e) {
+      e.preventDefault();
 
-    _createClass(Search, [{
-        key: 'onSearchSubmit',
-        value: function onSearchSubmit(e) {
-            e.preventDefault();
-            var _props = this.props,
-                options = _props.options,
-                filterChange = _props.filterChange,
-                input = document.getElementById('dl-search--' + options.id);
-
-
-            filterChange({
-                id: 'search',
-                view: options.id,
-                value: input.value
-            });
-        }
-    }, {
-        key: 'onSearchClear',
-        value: function onSearchClear(e) {
-            e.preventDefault();
-
-            this.props.filterChange({
-                id: 'search',
-                view: this.props.options.id,
-                value: null
-            });
-        }
-    }, {
-        key: 'bindSearch',
-        value: function bindSearch(e) {
-            var _props2 = this.props,
-                options = _props2.options,
-                filterChange = _props2.filterChange,
-                updateSearch = _props2.updateSearch,
-                input = document.getElementById('dl-search--' + options.id);
+      this.props.filterChange({
+        id: 'search',
+        view: this.props.options.id,
+        value: null
+      });
+    }
+  }, {
+    key: 'bindSearch',
+    value: function bindSearch(e) {
+      var _props2 = this.props,
+          options = _props2.options,
+          filterChange = _props2.filterChange,
+          updateSearch = _props2.updateSearch,
+          input = document.getElementById('dl-search--' + options.id);
 
 
-            updateSearch({
-                id: 'search',
-                view: options.id,
-                value: input.value
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _props3 = this.props,
-                options = _props3.options,
-                config = _props3.config,
-                search = _props3.search,
-                addons = _props3.addons; //options are the current view options
+      updateSearch({
+        id: 'search',
+        view: options.id,
+        value: input.value
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props3 = this.props,
+          options = _props3.options,
+          config = _props3.config,
+          search = _props3.search,
+          addons = _props3.addons; //options are the current view options
 
-            var a = addons.map(function (addon) {
-                return addon.id === 'search' ? addon : false;
-            })[0];
-            var val = a ? decodeURIComponent(a.value) : '',
-                searchVal = val == 'null' ? '' : val,
-                searchButton = options.searchButton || {};
+      var a = addons.map(function (addon) {
+        return addon.id === 'search' ? addon : false;
+      })[0];
+      var val = a ? decodeURIComponent(a.value) : '';
+      var searchVal = val == 'null' || val == null ? '' : val;
+      var searchButton = options.searchButton || {};
 
-            return _react2.default.createElement(
-                'div',
-                { className: 'dl__search' },
-                _react2.default.createElement(
-                    'form',
-                    { onSubmit: this.onSearchSubmit.bind(this) },
-                    _react2.default.createElement('input', { id: 'dl-search--' + options.id, className: 'dl__searchInput', autoFocus: true, type: 'text', name: 'dl-search', placeholder: 'Search', value: searchVal, onChange: this.bindSearch.bind(this) }),
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'dl__searchClearButton', onClick: this.onSearchClear.bind(this) },
-                        ' '
-                    ),
-                    _react2.default.createElement('input', { type: 'submit', value: 'Search', style: { background: searchButton.background, color: searchButton.text } })
-                )
-            );
-        }
-    }]);
+      return _react2.default.createElement(
+        'div',
+        { className: 'dl__search' },
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.onSearchSubmit.bind(this) },
+          _react2.default.createElement('input', { id: 'dl-search--' + options.id, className: 'dl__searchInput', autoFocus: true, type: 'text', name: 'dl-search', placeholder: 'Search', value: searchVal, onChange: this.bindSearch.bind(this) }),
+          _react2.default.createElement(
+            'span',
+            { className: 'dl__searchClearButton', onClick: this.onSearchClear.bind(this) },
+            ' '
+          ),
+          _react2.default.createElement('input', { type: 'submit', value: 'Search', style: { background: searchButton.background, color: searchButton.text } })
+        )
+      );
+    }
+  }]);
 
-    return Search;
+  return Search;
 }(_react.Component);
 
 //Which part of the Redux global state does our component want to receive as props?
 
 
 function mapStateToProps(state, ownProps) {
-    return {
-        config: state.app.config,
-        search: state.search,
-        forceSearch: state.app.forceSearch,
-        force: state.app.force,
-        addons: state.app.selectedView.addons
-    };
+  return {
+    config: state.app.config,
+    search: state.search,
+    forceSearch: state.app.forceSearch,
+    force: state.app.force,
+    addons: state.app.selectedView.addons
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)(SearchActions, dispatch);
+  return (0, _redux.bindActionCreators)(SearchActions, dispatch);
 }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Search);
@@ -63017,6 +62880,7 @@ var SortItem = exports.SortItem = function (_Component) {
             return _react2.default.createElement(
                 'li',
                 { className: 'dl__sortItem', onClick: this.onSortClick },
+                _react2.default.createElement('span', null),
                 _react2.default.createElement(
                     'span',
                     null,
@@ -63159,9 +63023,10 @@ var TextItem = function (_Component) {
 
             var _props2 = this.props,
                 item = _props2.item,
-                selectedView = _props2.selectedView;
+                selectedView = _props2.selectedView,
+                preferencedProps = _props2.preferencedProps;
 
-            var props = selectedView.props,
+            var props = preferencedProps,
                 check = selectedView.enableRowChecks ? _react2.default.createElement(
                 'span',
                 { key: -1, style: { width: '33px' }, className: 'dl__textItem-item' },
@@ -63734,38 +63599,66 @@ var App = function (_Component) {
           paginationParams = _underscore2.default.pick(_utils.queries.parseParms(_utils.queries.readQueryStringFromURL()), ['skip', 'take', 'page']),
           nonPaginationParams = Object.keys(_underscore2.default.omit(_utils.queries.parseParms(_utils.queries.readQueryStringFromURL()), ['skip', 'take', 'page', ""]));
 
-      // // Set the config as soon as we get it
-
-
       appInit({ config: dataListConfig });
 
+      /**
+       * Check the hooks for onInit
+       */
       if (dataListConfig.hooks && dataListConfig.hooks.onInit) {
-        dataListConfig.hooks.onInit(app);
+
+        /**
+         * One last config check. Set the config as soon as we get it but allow a 
+         * preferences object to be passed in.
+         */
+        var onInit = dataListConfig.hooks.onInit(app, dataListConfig);
+
+        /**
+         * do a fn exists check. If a return fn wasn't passed then onInit wil be 
+         * undefined and we can move on, otherwise let's pass along the preferences here.
+         */
+        if (onInit) {
+          onInit(function () {
+            var preferences = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+            appInit({ preferences: preferences });
+            _initNext();
+          });
+        } else {
+          _initNext();
+        }
+      } else {
+        _initNext();
       }
 
-      // Cast the incoming values to int
-      var pagination = {
-        skip: (paginationParams.skip || 0) * 1,
-        take: (paginationParams.take || app.pagination.take) * 1,
-        page: (paginationParams.page || 1) * 1,
-        id: 'dl__items__' + dataListConfig.id
-      };
+      // Encapuslated to allow async nexting
+      function _initNext() {
 
-      appInit({
-        pagination: pagination
-      }); // Set the initial pagination from query string read
+        // Cast the incoming values to int
+        var pagination = {
+          skip: (paginationParams.skip || 0) * 1,
+          take: (paginationParams.take || app.pagination.take) * 1,
+          page: (paginationParams.page || 1) * 1,
+          id: 'dl__items__' + dataListConfig.id
+        };
 
-      // Add the pagination listener
-      self._initPaginationChangeListener();
+        appInit({
+          pagination: pagination
+        }); // Set the initial pagination from query string read
 
-      // If the config option was set to allow run of query string on render & if there is a string in the url
-      // Filter out pagination params & the view param from our filter query string detection
-      // if((dataListConfig.runQueryStringURLOnRender && nonPaginationParams.length > 0)) {
-      self._applyQueryStringToFilters({ props: props, self: self, pagination: pagination });
-      // }else{
-      // @todo This is wiping out the pagination data on load
-      // filterChange([]);//triggers an empty load to load the default dataset. No filters were in url or the config prevents running filter queries
-      // }
+        // Add the pagination listener
+        self._initPaginationChangeListener();
+
+        /** 
+        * If the config option was set to allow run of query string on render & if there is a string in the url
+        * Filter out pagination params & the view param from our filter query string detection
+        */
+        //if((dataListConfig.runQueryStringURLOnRender && nonPaginationParams.length > 0)) {
+        self._applyQueryStringToFilters({ props: props, self: self, pagination: pagination });
+        // }else{
+        // @todo This is wiping out the pagination data on load
+        // filterChange([]);//triggers an empty load to load the default dataset. No filters were in url or the config prevents running filter queries
+        // }
+      }
     }
 
     /**
@@ -64100,7 +63993,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -64127,298 +64020,335 @@ var visitor = {};
  * @type {boolean}
  */
 var config = {
-    defaultView: '',
-    views: [{
-        id: '',
-        paginationTake: 0
+  defaultView: '',
+  views: [{
+    id: '',
+    paginationTake: 0
 
-    }]
+  }]
 };
 
 var initialState = {
-    config: config,
-    views: [],
-    selectedView: {}, //Must be an empty object by default
-    queryString: '', // the current query string based on filter value
-    queryObject: {},
-    sortBy: '', // a sortBy Value,
-    filters: [], // Contains all applied filters
-    pagination: {
-        skip: 0,
-        take: 100,
-        page: 1,
-        total: 0 },
-    dataSources: {},
-    Items: [],
-    workspaceItems: [],
-    showLoading: false
+  config: config,
+  views: [],
+  preferences: [], // {view:'catalog': data: {props:[]} Get's potentially populated in the onInit hook or anywhere else. Keys are dot notation
+  overridePreferences: {
+    props: false
+  },
+  selectedView: {}, //Must be an empty object by default
+  queryString: '', // the current query string based on filter value
+  queryObject: {},
+  sortBy: '', // a sortBy Value,
+  filters: [], // Contains all applied filters
+  pagination: {
+    skip: 0,
+    take: 100,
+    page: 1,
+    total: 0
+  },
+  dataSources: {},
+  Items: [],
+  workspaceItems: [],
+  showLoading: false
 };
 
 function appReducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-    var action = arguments[1];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments[1];
 
-    var _state = _extends({}, state),
-        _data = action.data;
+  var _state = _extends({}, state),
+      _data = action.data;
 
-    switch (action.type) {
+  switch (action.type) {
 
-        case _constants.ON_APP_INIT:
+    case _constants.ON_APP_INIT:
 
-            /**
-             * NOTE: INIT sets up the state object.
-             * It gets called multiple times from multiple places in order to
-             * build the state objects data conditionally
-             */
-            if (_data.hasOwnProperty('config')) {
-                config = _data.config;
-                _state.config = _data.config;
+      /**
+       * NOTE: INIT sets up the state object.
+       * It gets called multiple times from multiple places in order to
+       * build the state objects data conditionally
+       */
+      if (_data.hasOwnProperty('config')) {
+        config = _data.config;
+        _state.config = _data.config;
 
-                if (config.hasOwnProperty('googleAnalyticsUAId') && config.googleAnalyticsUAId) {}
-                // visitor = ua(config.googleAnalyticsUAId);
+        if (config.hasOwnProperty('googleAnalyticsUAId') && config.googleAnalyticsUAId) {}
+        // visitor = ua(config.googleAnalyticsUAId);
 
 
-                // Set pagination options
-                _state.pagination = {
-                    skip: 0,
-                    take: config.views.filter(function (view) {
-                        var viewQueryParam = _utils.queries.getViewParamFromURL(); // Get the view from the url or from the set default if not defined
-                        return viewQueryParam ? view.id === viewQueryParam : view.id === config.defaultView || true; // falls back to any view in case the default wasn't set
-                    })[0].paginationTake,
-                    page: 1,
-                    total: 0
-                };
+        // Set pagination options
+        _state.pagination = {
+          skip: 0,
+          take: config.views.filter(function (view) {
+            var viewQueryParam = _utils.queries.getViewParamFromURL(); // Get the view from the url or from the set default if not defined
+            return viewQueryParam ? view.id === viewQueryParam : view.id === config.defaultView || true; // falls back to any view in case the default wasn't set
+          })[0].paginationTake,
+          page: 1,
+          total: 0
+        };
 
-                //Set the selected view
-                _state.selectedView = _extends({}, _data.config.views.filter(function (view) {
-                    var viewQueryParam = _utils.queries.getViewParamFromURL(); // Get the view from the url or from the set default if not defined
-                    return viewQueryParam ? view.id === viewQueryParam : view.id === _data.config.defaultView || true; // falls back to any view in case the default wasn't set
-                })[0], { addons: [] });
+        //Set the selected view
+        _state.selectedView = _extends({}, _data.config.views.filter(function (view) {
+          var viewQueryParam = _utils.queries.getViewParamFromURL(); // Get the view from the url or from the set default if not defined
+          return viewQueryParam ? view.id === viewQueryParam : view.id === _data.config.defaultView || true; // falls back to any view in case the default wasn't set
+        })[0], { addons: [] });
 
-                _state.views = _data.config.views;
-            }
+        _state.views = _data.config.views;
+      }
 
-            if (_data.hasOwnProperty('pagination')) {
-                _data.pagination.take = _state.selectedView.paginationTake;
-                _state.pagination = _data.pagination;
-            }
+      if (_data.hasOwnProperty('pagination')) {
+        _data.pagination.take = _state.selectedView.paginationTake;
+        _state.pagination = _data.pagination;
+      }
 
-            // Get the initial query string and object
-            if (_data.hasOwnProperty('queryString')) {
-                _state.queryString = _data.queryString;
-            } else if (_data.hasOwnProperty('queryObject')) {
-                _state.queryObject = _data.queryObject;
-            }
+      // Get the initial query string and object
+      if (_data.hasOwnProperty('queryString')) {
+        _state.queryString = _data.queryString;
+      } else if (_data.hasOwnProperty('queryObject')) {
+        _state.queryObject = _data.queryObject;
+      }
 
-            _state.showLoading = true;
-            _state.Items = [];
+      _state.showLoading = true;
+      _state.Items = [];
 
-            // HOOK @todo should allow returning new state from hook
-            if (_state.config && _state.config.hooks && _state.config.hooks.onStateUpdate) {
-                _state.config.hooks.onStateUpdate(_state);
-            }
+      /**
+      * Allow injection of preferences for use throughout the app
+      */
+      if (_data.hasOwnProperty('preferences')) {
+        _state.preferences = _data.preferences;
+        _state = applyPreferences(_state);
+      }
 
-            return _state;
+      // HOOK @todo should allow returning new state from hook
+      if (_state.config && _state.config.hooks && _state.config.hooks.onStateUpdate) {
+        _state.config.hooks.onStateUpdate(_state);
+      }
 
-        case _constants.UPDATE_CURRENT_TAB:
-            _utils.queries.clearURLQueryString();
+      return _state;
 
-            _state.selectedView = _state.views.filter(function (view) {
-                return view.id === _data;
-            })[0];
-            _state.selectedView.addons = [];
-            _state.views = makeViews(_state, { view: _data, id: '*', value: null });
-            _state.queryString = null;
-            _state.queryObject = {};
-            _state.force = Math.random() * 10000000;
-            _state = _extends({}, _state, makeQuery(_state, _state.selectedView.addons));
-            _state.showLoading = true;
-            _state.pagination = {
-                skip: 0,
-                take: _state.selectedView.paginationTake,
-                page: 1,
-                total: 0
-            };
-            _state.Items = [];
+    case _constants.UPDATE_CURRENT_TAB:
+      _utils.queries.clearURLQueryString();
 
-            // Clear sorting
-            //@todo make sort readable in url. Right now sort get resets on load and is not linkable. Not enough time to program it.
-            [].concat(_toConsumableArray(document.getElementsByClassName('dl__listHeader--sort'))).forEach(function (node) {
-                node.classList.remove('dl__listHeader--sort--desc');
-            });
+      _state.selectedView = _state.views.filter(function (view) {
+        return view.id === _data;
+      })[0];
+      _state.selectedView.addons = [];
+      _state.views = makeViews(_state, { view: _data, id: '*', value: null });
+      _state.queryString = null;
+      _state.queryObject = {};
+      _state.force = Math.random() * 10000000;
+      _state = _extends({}, _state, makeQuery(_state, _state.selectedView.addons));
+      _state.showLoading = true;
+      _state.pagination = {
+        skip: 0,
+        take: _state.selectedView.paginationTake,
+        page: 1,
+        total: 0
+      };
+      _state.Items = [];
 
-            runFilters(_state, _state.selectedView);
-            _state.config.hooks.onStateUpdate(_state);
+      // Clear sorting
+      //@todo make sort readable in url. Right now sort get resets on load and is not linkable. Not enough time to program it.
+      [].concat(_toConsumableArray(document.getElementsByClassName('dl__listHeader--sort'))).forEach(function (node) {
+        node.classList.remove('dl__listHeader--sort--desc');
+      });
 
-            return _state;
+      runFilters(_state, _state.selectedView);
 
-        case _constants.UPDATE_ITEMS:
-            _state.Items = _data.Items;
-            _state.pagination.total = _data.count;
-            _state.force = Math.random() * 10000000;
-            _state.showLoading = false;
-            _state.config.hooks.onStateUpdate(_state);
+      /**
+      * Allow for a synchronous fetch of preferences. Does not support async at this stage
+      */
+      if (_state.config.hooks.onGetPreferences) {
+        _state.preferences = _state.config.hooks.onGetPreferences();
+        _state = applyPreferences(_state);
+      }
 
-            return _state;
+      _state.config.hooks.onStateUpdate(_state);
 
-        case _constants.UPDATE_VIEW_PROPS:
+      return _state;
 
-            // 1. find the prop in our current view props
-            // 2. set the prop.display to the checked val true/false
-            // 3. force a render down the tree
-            //prop,checked,viewId
-            _state.views = [].concat(_toConsumableArray(_state.views.map(function (view) {
-                if (view.id === _data.viewId) {
-                    view.props.forEach(function (prop) {
-                        if (prop.key === _data.prop) {
-                            prop.display = _data.checked;
-                        }
-                    });
-                }
+    case _constants.UPDATE_ITEMS:
+      _state.Items = _data.Items;
+      _state.pagination.total = _data.count;
+      _state.force = Math.random() * 10000000;
+      _state.showLoading = false;
+      _state.config.hooks.onStateUpdate(_state);
 
-                return view;
-            })));
+      return _state;
 
-            /**
-             * Important for forcing a rerender when mutating nested state. Redux won't see nested changes.
-             * Make sure to include force in the mapStateToProps in the component to force the rerender
-             * @type {number}
-             */
-            _state.force = Math.random() * 10000000;
-            _state.config.hooks.onStateUpdate(_state);
+    case _constants.UPDATE_VIEW_PROPS:
 
-            return _extends({}, _state);
+      // 1. find the prop in our current view props
+      // 2. set the prop.display to the checked val true/false
+      // 3. force a render down the tree
+      _state.selectedView.props = _state.selectedView.props.map(function (prop) {
+        if (prop.key === _data.prop) {
+          prop.display = _data.checked;
+        }
 
-        case _constants.FILTER_CHANGE:
-            var isBatchUpdate = _underscore2.default.isArray(_data);
+        return prop;
+      });
 
-            // Only clear on fresh filter runs, not paginated filter runs
-            // Compare the pagination and filters in the current state with the incoming request to determine 
-            // if this should be flagged as a fresh filter run. If fresh, reset pagination
-            var isFirstPageLoad = false;
-            var currentSetFilters = _state.selectedView.filterGroups.reduce(function (sum, filterGroup) {
-                if (!!filterGroup.filters) {
-                    return sum.concat(filterGroup.filters.filter(function (fltr) {
-                        return fltr.value !== null ? fltr.id : false;
-                    }).map(function (fltr) {
-                        return fltr.id;
-                    }));
-                }
-            }, []);
+      /**
+       * Important for forcing a rerender when mutating nested state. Redux won't see nested changes.
+       * Make sure to include force in the mapStateToProps in the component to force the rerender
+       * @type {number}
+       */
+      _state.force = Math.random() * 10000000;
+      _state.config.hooks.onStateUpdate(_state);
 
-            var currentFilterId = isBatchUpdate ? _data.reduce(function (sum, filter) {
-                return sum.concat(filter.id);
-            }, []) : [_data.id];
+      // Run the on Update hook
+      if (_state.config.hooks.onViewPropChange) {
+        _state.config.hooks.onViewPropChange({
+          prop: _data.prop,
+          checked: _data.checked,
+          viewId: _data.viewId,
+          selectedView: _state.selectedView
+        });
+      }
 
-            var isNewFilterRun = currentSetFilters.length !== currentFilterId.length;
+      console.log('ON view prop change', _state.selectedView.props, _data);
 
-            var firstTime = localStorage.getItem("first_load");
-            if (!firstTime) {
-                localStorage.setItem("first_load", "1");
-                isFirstPageLoad = true;
-            }
+      // Override preferences because the user indicated they wanted to change the default/preferenced set of visible props
+      // _state.overridePreferences.props = true;
 
-            if (!isFirstPageLoad && isNewFilterRun) {
-                _state.pagination = {
-                    skip: 0,
-                    take: _state.selectedView.paginationTake || 100,
-                    page: 1,
-                    total: 0
-                };
+      return _state;
 
-                _state.selectedView.clearPaginationQueryString = true; // Fresh request. No need for pagination to linger
-            }
+    case _constants.FILTER_CHANGE:
+      var isBatchUpdate = _underscore2.default.isArray(_data);
 
-            /**
-             * Batch updating is possible to minimize rerenders down the tree
-             * Used by the runQueryStringURLOnRender initialization in App/index.js
-             */
-            if (isBatchUpdate) {
-                _data.forEach(function (filterChange) {
-                    //[{id,view,value}]
-                    _state.views = makeViews(_state, filterChange);
+      // Only clear on fresh filter runs, not paginated filter runs
+      // Compare the pagination and filters in the current state with the incoming request to determine 
+      // if this should be flagged as a fresh filter run. If fresh, reset pagination
+      var isFirstPageLoad = false;
+      var currentSetFilters = _state.selectedView.filterGroups.reduce(function (sum, filterGroup) {
+        if (!!filterGroup.filters) {
+          return sum.concat(filterGroup.filters.filter(function (fltr) {
+            return fltr.value !== null ? fltr.id : false;
+          }).map(function (fltr) {
+            return fltr.id;
+          }));
+        }
+      }, []);
 
-                    // Add the search filter as a filter addon
-                    if (filterChange.id === 'search' || filterChange.id.indexOf('sort-') > -1) {
-                        _state.selectedView.addons = _utils.collections.replaceItem(_state.selectedView.addons, filterChange, 'id');
-                    }
-                });
-            } else {
-                //id,view,value
-                _state.views = makeViews(_state, _data);
+      var currentFilterId = isBatchUpdate ? _data.reduce(function (sum, filter) {
+        return sum.concat(filter.id);
+      }, []) : [_data.id];
 
-                // Add the search filter as a filter addon
-                if (_data.id === 'search' || _data.id.indexOf('sort-') > -1) {
-                    _state.selectedView.addons = _utils.collections.replaceItem(_state.selectedView.addons, _data, 'id');
-                }
-            }
+      var isNewFilterRun = currentSetFilters.length !== currentFilterId.length;
 
-            _state.queryObject = {};
-            _state.Items = [];
+      var firstTime = localStorage.getItem("first_load");
+      if (!firstTime) {
+        localStorage.setItem("first_load", "1");
+        isFirstPageLoad = true;
+      }
 
-            _state = _extends({}, _state, makeQuery(_state, _state.selectedView.addons));
-            runFilters(_state, _state.selectedView);
+      if (!isFirstPageLoad && isNewFilterRun) {
+        _state.pagination = {
+          skip: 0,
+          take: _state.selectedView.paginationTake || 100,
+          page: 1,
+          total: 0
+        };
 
-            _state.showLoading = true;
-            _state.force = Math.random() * 10000000;
-            _state.config.hooks.onStateUpdate(_state);
+        _state.selectedView.clearPaginationQueryString = true; // Fresh request. No need for pagination to linger
+      }
 
-            return _state;
+      /**
+       * Batch updating is possible to minimize rerenders down the tree
+       * Used by the runQueryStringURLOnRender initialization in App/index.js
+       */
+      if (isBatchUpdate) {
+        _data.forEach(function (filterChange) {
+          //[{id,view,value}]
+          _state.views = makeViews(_state, filterChange);
 
-        case _constants.RESET_FILTERS:
+          // Add the search filter as a filter addon
+          if (filterChange.id === 'search' || filterChange.id.indexOf('sort-') > -1) {
+            _state.selectedView.addons = _utils.collections.replaceItem(_state.selectedView.addons, filterChange, 'id');
+          }
+        });
+      } else {
+        //id,view,value
+        _state.views = makeViews(_state, _data);
 
-            _state.views = makeViews(_state, { view: '*', id: '*', value: null });
-            _state.queryString = null;
-            _state.queryObject = {};
-            _state.showLoading = true;
-            _state.Items = [];
-            _state.force = Math.random() * 10000000;
-            //@todo need to run through items in addons and set their values to null
+        // Add the search filter as a filter addon
+        if (_data.id === 'search' || _data.id.indexOf('sort-') > -1) {
+          _state.selectedView.addons = _utils.collections.replaceItem(_state.selectedView.addons, _data, 'id');
+        }
+      }
 
-            // Clear sorting
-            //@todo make sort readable in url. Right now sort get resets on load and is not linkable. Not enough time to program it.
-            [].concat(_toConsumableArray(document.getElementsByClassName('dl__listHeader--sort'))).forEach(function (node) {
-                node.classList.remove('dl__listHeader--sort--desc');
-            });
+      _state.queryObject = {};
+      _state.Items = [];
 
-            runFilters(_state, _state.selectedView);
-            _state.config.hooks.onStateUpdate(_state);
+      _state = _extends({}, _state, makeQuery(_state, _state.selectedView.addons));
+      runFilters(_state, _state.selectedView);
 
-            return _state;
+      _state.showLoading = true;
+      _state.force = Math.random() * 10000000;
+      _state.config.hooks.onStateUpdate(_state);
 
-        case _constants.UPDATE_SEARCH_INPUT:
+      return _state;
 
-            _state.selectedView.addons = _utils.collections.replaceItem(_state.selectedView.addons, _data, 'id');
-            _state = _extends({}, _state, makeQuery(_state, [_data])); //update the queryObject and queryString
+    case _constants.RESET_FILTERS:
 
-            _state.forceSearch = Math.random() * 10000000;
-            _state.config.hooks.onStateUpdate(_state);
+      _state.views = makeViews(_state, { view: '*', id: '*', value: null });
+      _state.queryString = null;
+      _state.queryObject = {};
+      _state.showLoading = true;
+      _state.Items = [];
+      _state.force = Math.random() * 10000000;
+      //@todo need to run through items in addons and set their values to null
 
-            return _state;
+      //Clear the search addon value
+      _state.selectedView.addons = _state.selectedView.addons.map(function (addon) {
+        return addon.id == 'search' ? _extends({}, addon, { value: null }) : addon;
+      });
 
-        case _constants.UPDATE_PAGINATION:
-            _state.pagination = _data.pagination;
-            _state.config.hooks.onStateUpdate(_state);
+      // Clear sorting
+      //@todo make sort readable in url. Right now sort get resets on load and is not linkable. Not enough time to program it.
+      [].concat(_toConsumableArray(document.getElementsByClassName('dl__listHeader--sort'))).forEach(function (node) {
+        node.classList.remove('dl__listHeader--sort--desc');
+      });
 
-            return _state;
+      runFilters(_state, _state.selectedView);
+      _state.config.hooks.onStateUpdate(_state);
 
-        case _constants.UPDATE_WORKSPACE:
-            switch (_data.workspaceAction) {
-                case 'add':
-                case 'update':
-                    _state.workspaceItems = _utils.collections.replaceItem(_state.workspaceItems, _data.Item, _state.selectedView.itemIdProp);
-                    break;
-                case 'remove':
-                    _state.workspaceItems = _utils.collections.removeItem(_state.workspaceItems, _data.Item, _state.selectedView.itemIdProp);
-                    break;
-            }
-            _state.config.hooks.onStateUpdate(_state);
+      return _state;
 
-            return _state;
+    case _constants.UPDATE_SEARCH_INPUT:
 
-        default:
-            return _state;
-    }
+      _state.selectedView.addons = _utils.collections.replaceItem(_state.selectedView.addons, _data, 'id');
+      _state = _extends({}, _state, makeQuery(_state, [_data])); //update the queryObject and queryString
+
+      _state.forceSearch = Math.random() * 10000000;
+      _state.config.hooks.onStateUpdate(_state);
+
+      return _state;
+
+    case _constants.UPDATE_PAGINATION:
+      _state.pagination = _data.pagination;
+      _state.config.hooks.onStateUpdate(_state);
+
+      return _state;
+
+    case _constants.UPDATE_WORKSPACE:
+      switch (_data.workspaceAction) {
+        case 'add':
+        case 'update':
+          _state.workspaceItems = _utils.collections.replaceItem(_state.workspaceItems, _data.Item, _state.selectedView.itemIdProp);
+          break;
+        case 'remove':
+          _state.workspaceItems = _utils.collections.removeItem(_state.workspaceItems, _data.Item, _state.selectedView.itemIdProp);
+          break;
+      }
+      _state.config.hooks.onStateUpdate(_state);
+
+      return _state;
+
+    default:
+      return _state;
+  }
 }
 
 exports.default = appReducer;
@@ -64428,28 +64358,28 @@ exports.default = appReducer;
  */
 
 function makeQuery(_state) {
-    var addons = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var addons = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
 
-    var pseudoFilters = [].concat(_toConsumableArray(addons), [{
-        id: 'view',
-        value: _state.selectedView.id,
-        view: _state.selectedView.id
-    }]),
+  var pseudoFilters = [].concat(_toConsumableArray(addons), [{
+    id: 'view',
+    value: _state.selectedView.id,
+    view: _state.selectedView.id
+  }]),
 
-    // Create a new array of all the filters from the current view, excluding null or undefined values
-    filters = _underscore2.default.chain(_state.selectedView.filterGroups.map(function (group) {
-        return group.filters;
-    })).flatten().map(function (filter) {
-        return typeof filter.value !== 'undefined' || filter.range && (filter.range.start !== null || filter.range.end !== null) ? filter : false;
-    }).compact().value(),
-        queryObject = _extends({}, _state.queryObject, _utils.queries.makeQueryObject(filters.concat(pseudoFilters)));
+  // Create a new array of all the filters from the current view, excluding null or undefined values
+  filters = _underscore2.default.chain(_state.selectedView.filterGroups.map(function (group) {
+    return group.filters;
+  })).flatten().map(function (filter) {
+    return typeof filter.value !== 'undefined' || filter.range && (filter.range.start !== null || filter.range.end !== null) ? filter : false;
+  }).compact().value(),
+      queryObject = _extends({}, _state.queryObject, _utils.queries.makeQueryObject(filters.concat(pseudoFilters)));
 
-    return {
-        queryObject: _underscore2.default.omit(queryObject, function (v, k) {
-            return v === null;
-        }), // Clean it after we've updated the query string
-        queryString: _utils.queries.makeQueryString(queryObject)
-    };
+  return {
+    queryObject: _underscore2.default.omit(queryObject, function (v, k) {
+      return v === null;
+    }), // Clean it after we've updated the query string
+    queryString: _utils.queries.makeQueryString(queryObject)
+  };
 }
 
 /**
@@ -64459,26 +64389,26 @@ function makeQuery(_state) {
  * @param options
  */
 function runFilters(_state, options) {
-    _utils.queries.writeQueryStringToURL(_state.queryString, options);
-    _utils.filters.run(_state, options); // The response calls a render method that handles where we render to utils/filter._render
+  _utils.queries.writeQueryStringToURL(_state.queryString, options);
+  _utils.filters.run(_state, options); // The response calls a render method that handles where we render to utils/filter._render
 }
 
 /**
  * Displays the filters' loading icon
  */
 function showLoadingIcon() {
-    $('#filterSort__loading').addClass('filterSort__loading--show');
+  $('#filterSort__loading').addClass('filterSort__loading--show');
 
-    setTimeout(function () {
-        hideLoadingIcon();
-    }, 1000);
+  setTimeout(function () {
+    hideLoadingIcon();
+  }, 1000);
 }
 
 /**
  * Hides the filters' loading icon
  */
 function hideLoadingIcon() {
-    $('#filterSort__loading').removeClass('filterSort__loading--show');
+  $('#filterSort__loading').removeClass('filterSort__loading--show');
 }
 
 /**
@@ -64488,32 +64418,68 @@ function hideLoadingIcon() {
  * @returns {Array}
  */
 function makeViews(_state, filterChange) {
-    return [].concat(_toConsumableArray(_state.views.map(function (view) {
-        if (view.id === filterChange.view || filterChange.view === '*') {
-            view.filterGroups.forEach(function (filterGroup) {
-                filterGroup.filters.forEach(function (filter) {
-                    if (filter.type === 'range') {
-                        var id = filterChange.id.split('--');
+  return [].concat(_toConsumableArray(_state.views.map(function (view) {
+    if (view.id === filterChange.view || filterChange.view === '*') {
+      view.filterGroups.forEach(function (filterGroup) {
+        filterGroup.filters.forEach(function (filter) {
+          if (filter.type === 'range') {
+            var id = filterChange.id.split('--');
 
-                        if (filter.id === id[0]) {
-                            filter.range[id[1]] = filterChange.value;
-                        }
+            if (filter.id === id[0]) {
+              filter.range[id[1]] = filterChange.value;
+            }
 
-                        if (filterChange.id === '*') {
-                            filter.range.start = filterChange.value;
-                            filter.range.end = filterChange.value;
-                        }
-                    } else {
-                        if (filter.id === filterChange.id || filterChange.id === '*') {
-                            filter.value = filterChange.value;
-                        }
-                    }
-                });
-            });
-        }
+            if (filterChange.id === '*') {
+              filter.range.start = filterChange.value;
+              filter.range.end = filterChange.value;
+            }
+          } else {
+            if (filter.id === filterChange.id || filterChange.id === '*') {
+              filter.value = filterChange.value;
+            }
+          }
+        });
+      });
+    }
 
-        return view;
-    })));
+    return view;
+  })));
+}
+
+/**
+ * Apply any preferences being passed in. Called at the end of the INIT action. Must return state
+ */
+function applyPreferences(state) {
+
+  /**
+   * Apply the props preferences being passed in for rendering view props
+   */
+  state.selectedView.props = mergePropsAndPreferences(state.selectedView, state.preferences);
+  return state;
+}
+
+/** 
+* Reduce preferences to only the selected view for the "props" key.
+* Run that over the config props to see if we need to make any changes.
+* Return the adjusted config props for use in rendering.
+* @todo see how this plays with dynamically changed props...
+*/
+function mergePropsAndPreferences(selectedView) {
+  var preferences = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+  var propsPreferences = preferences ? preferences.filter(function (pref) {
+    return pref && pref.view === selectedView.id && pref.data.props;
+  }).reduce(function (acc, curr) {
+    return acc.concat(curr.data.props);
+  }, []) : [];
+
+  return selectedView.props.map(function (prop) {
+    var propPref = propsPreferences.filter(function (pref) {
+      return pref.key === prop.key;
+    });
+
+    return propPref ? _extends({}, prop, propPref[0]) : prop;
+  });
 }
 
 },{"../../utils":402,"./constants":377,"underscore":324}],380:[function(require,module,exports){
@@ -64542,7 +64508,7 @@ var DEFAULT_LOCALE = exports.DEFAULT_LOCALE = 'en';
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -64586,139 +64552,186 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var DataList = function (_Component) {
-    _inherits(DataList, _Component);
+  _inherits(DataList, _Component);
 
-    // eslint-disable-line react/prefer-stateless-function
-    function DataList(props) {
-        _classCallCheck(this, DataList);
+  // eslint-disable-line react/prefer-stateless-function
+  function DataList(props) {
+    _classCallCheck(this, DataList);
 
-        var _this = _possibleConstructorReturn(this, (DataList.__proto__ || Object.getPrototypeOf(DataList)).call(this, props));
+    // this.state = {
+    //   // preferencedProps: this.mergePropsAndPreferences(props.selectedView, props.preferences)
+    //   preferencedProps: props.selectedView.props
+    // };
 
-        _this.makeLoading = _this.makeLoading.bind(_this);
-        _this.makeContentPlaceholderLoading = _this.makeContentPlaceholderLoading.bind(_this);
-        return _this;
+    var _this = _possibleConstructorReturn(this, (DataList.__proto__ || Object.getPrototypeOf(DataList)).call(this, props));
+
+    _this.makeLoading = _this.makeLoading.bind(_this);
+    _this.makeContentPlaceholderLoading = _this.makeContentPlaceholderLoading.bind(_this);
+    return _this;
+  }
+
+  _createClass(DataList, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextprops) {
+      /** This enables a default view props visibility to be set by user preferences, 
+       * but it will be overriden when the UPDATE_VIEW_PROPS in the app reducer runs 
+       * signifying the user overrode initial preferences.
+       * */
+      // if(nextprops.overridePropsPrefs){
+      // this.setState({
+      //     preferencedProps: nextprops.selectedView.props
+      //   });
+      // }
+    }
+  }, {
+    key: 'makeDataList',
+    value: function makeDataList(Items, selectedView) {
+      return Items.map(function (item, i) {
+        return _react2.default.createElement(
+          _ListRow2.default,
+          { key: i, item: item, selectedView: selectedView },
+          ' '
+        );
+      });
+    }
+  }, {
+    key: 'makeNoResults',
+    value: function makeNoResults(noResultsMessage) {
+      var message = noResultsMessage ? noResultsMessage : "No Results Found...";
+
+      return _react2.default.createElement(
+        'li',
+        { className: 'dl__dataList--noResults' },
+        _react2.default.createElement(
+          'h1',
+          null,
+          message
+        )
+      );
+    }
+  }, {
+    key: 'makeLoading',
+    value: function makeLoading() {
+      return _react2.default.createElement(
+        'li',
+        { className: 'dl__dataList--loading' },
+        _react2.default.createElement(
+          'h1',
+          null,
+          'Loading...'
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          ' '
+        )
+      );
+    }
+  }, {
+    key: 'makeContentPlaceholderLoading',
+    value: function makeContentPlaceholderLoading(Placeholder, total) {
+      var placeholders = [];
+
+      for (var i = 0; i < total; i++) {
+        placeholders.push(_react2.default.createElement(Placeholder, { key: Math.random() * 1000 + i }));
+      }
+
+      return placeholders;
     }
 
-    _createClass(DataList, [{
-        key: 'makeDataList',
-        value: function makeDataList(Items, selectedView) {
-            return Items.map(function (item, i) {
-                return _react2.default.createElement(
-                    _ListRow2.default,
-                    { key: i, item: item, selectedView: selectedView },
-                    ' '
-                );
-            });
-        }
-    }, {
-        key: 'makeNoResults',
-        value: function makeNoResults(noResultsMessage) {
-            var message = noResultsMessage ? noResultsMessage : "No Results Found...";
+    /** 
+    * Reduce preferences to only the selected view for the "props" key.
+    * Run that over the config props to see if we need to make any changes.
+    * Return the adjusted config props for use in rendering.
+    * @todo see how this plays with dynamically changed props...
+    */
+    // mergePropsAndPreferences(selectedView, preferences) {
+    //   const propsPreferences = preferences
+    //     .filter(pref =>
+    //       pref.view === selectedView.id && pref.data.props
+    //     ).reduce((acc, curr) =>
+    //       acc.concat(curr.data.props)
+    //     , []);
 
-            return _react2.default.createElement(
-                'li',
-                { className: 'dl__dataList--noResults' },
-                _react2.default.createElement(
-                    'h1',
-                    null,
-                    message
-                )
-            );
-        }
-    }, {
-        key: 'makeLoading',
-        value: function makeLoading() {
-            return _react2.default.createElement(
-                'li',
-                { className: 'dl__dataList--loading' },
-                _react2.default.createElement(
-                    'h1',
-                    null,
-                    'Loading...'
-                ),
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    ' '
-                )
-            );
-        }
-    }, {
-        key: 'makeContentPlaceholderLoading',
-        value: function makeContentPlaceholderLoading(Placeholder, total) {
-            var placeholders = [];
+    //   return selectedView.props
+    //     .map(prop => {
+    //       const propPref = propsPreferences
+    //         .filter(pref => {
+    //           return pref.key === prop.key;
+    //         });
 
-            for (var i = 0; i < total; i++) {
-                placeholders.push(_react2.default.createElement(Placeholder, { key: Math.random() * 1000 + i }));
-            }
+    //       return propPref ? { ...prop, ...propPref[0] } : prop
+    //     });
+    // }
 
-            return placeholders;
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _props = this.props,
-                config = _props.config,
-                selectedView = _props.selectedView,
-                _props$Items = _props.Items,
-                Items = _props$Items === undefined ? [] : _props$Items,
-                showLoading = _props.showLoading,
-                width = _props.width,
-                listItems = showLoading ? selectedView.customContentPlaceholder ? this.makeContentPlaceholderLoading(selectedView.customContentPlaceholder, selectedView.customContentPlaceholderAmount) : this.makeLoading() : Items && Items.length > 0 ? this.makeDataList(Items, selectedView) : this.makeNoResults(selectedView.noResultsMessage),
-                classNames = config.pinPagination ? 'dl__dataList dl__pinPagination' : 'dl__dataList',
-                listHeader = selectedView.showListHeader ? _react2.default.createElement(
-                _ListHeader2.default,
-                { selectedView: selectedView, item: Items[0] },
-                ' '
-            ) : '',
-                pagination = Items && Items.length > 0 ? _react2.default.createElement(
-                _Pagination2.default,
-                { bottom: config.dataList.paginationBottomPosition },
-                ' '
-            ) : '';
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          config = _props.config,
+          selectedView = _props.selectedView,
+          _props$Items = _props.Items,
+          Items = _props$Items === undefined ? [] : _props$Items,
+          showLoading = _props.showLoading,
+          width = _props.width,
+          preferences = _props.preferences;
 
+      var listItems = showLoading ? selectedView.customContentPlaceholder ? this.makeContentPlaceholderLoading(selectedView.customContentPlaceholder, selectedView.customContentPlaceholderAmount) : this.makeLoading() : Items && Items.length > 0 ? this.makeDataList(Items, selectedView) : this.makeNoResults(selectedView.noResultsMessage),
+          classNames = config.pinPagination ? 'dl__dataList dl__pinPagination' : 'dl__dataList',
+          listHeader = selectedView.showListHeader ? _react2.default.createElement(
+        _ListHeader2.default,
+        { selectedView: selectedView, item: Items[0] },
+        ' '
+      ) : '',
+          pagination = Items && Items.length > 0 ? _react2.default.createElement(
+        _Pagination2.default,
+        { bottom: config.dataList.paginationBottomPosition },
+        ' '
+      ) : '';
 
-            return _react2.default.createElement(
-                'div',
-                { className: classNames, style: { height: config.dataList.height, width: width } },
-                listHeader,
-                _react2.default.createElement(
-                    'div',
-                    { className: 'dl__dataListWrapper', style: { overflowY: config.dataList.overflowY } },
-                    _react2.default.createElement(
-                        'ul',
-                        { className: 'dl__dataList-list' },
-                        listItems
-                    )
-                ),
-                pagination,
-                _react2.default.createElement(
-                    _ListFooter2.default,
-                    null,
-                    ' '
-                )
-            );
-        }
-    }]);
+      return _react2.default.createElement(
+        'div',
+        { className: classNames, style: { height: config.dataList.height, width: width } },
+        listHeader,
+        _react2.default.createElement(
+          'div',
+          { className: 'dl__dataListWrapper', style: { overflowY: config.dataList.overflowY } },
+          _react2.default.createElement(
+            'ul',
+            { className: 'dl__dataList-list' },
+            listItems
+          )
+        ),
+        pagination,
+        _react2.default.createElement(
+          _ListFooter2.default,
+          null,
+          ' '
+        )
+      );
+    }
+  }]);
 
-    return DataList;
+  return DataList;
 }(_react.Component);
 
 //Which part of the Redux global state does our component want to receive as props?
 
 
 function mapStateToProps(state, ownProps) {
-    return {
-        config: state.app.config,
-        selectedView: state.app.selectedView,
-        force: state.app.force,
-        dataList: state.dataList,
-        showLoading: state.app.showLoading
-    };
+  return {
+    config: state.app.config,
+    selectedView: state.app.selectedView,
+    force: state.app.force,
+    dataList: state.dataList,
+    showLoading: state.app.showLoading,
+    preferences: state.app.preferences,
+    overridePropsPrefs: state.app.overridePreferences.props
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)(DataListActions, dispatch);
+  return (0, _redux.bindActionCreators)(DataListActions, dispatch);
 }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(DataList);
