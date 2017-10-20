@@ -160,6 +160,15 @@ function appReducer(state = initialState, action) {
       });
 
       runFilters(_state, _state.selectedView);
+
+      /**
+      * Allow for a synchronous fetch of preferences. Does not support async at this stage
+      */
+      if(_state.config.hooks.onGetPreferences){
+        _state.preferences = _state.config.hooks.onGetPreferences();
+        _state = applyPreferences(_state);
+      }
+    
       _state.config.hooks.onStateUpdate(_state);
 
       return _state;
@@ -178,19 +187,6 @@ function appReducer(state = initialState, action) {
       // 1. find the prop in our current view props
       // 2. set the prop.display to the checked val true/false
       // 3. force a render down the tree
-      //prop,checked,viewId
-      // _state.views = [..._state.views.map(view => {
-      //   if (view.id === _data.viewId) {
-      //     view.props.forEach(prop => {
-      //       if (prop.key === _data.prop) {
-      //         prop.display = _data.checked;
-      //       }
-      //     });
-      //   }
-
-      //   return view;
-      // })];
-
       _state.selectedView.props = _state.selectedView.props
         .map(prop => {
           if (prop.key === _data.prop) {
@@ -471,7 +467,6 @@ function applyPreferences(state) {
    * Apply the props preferences being passed in for rendering view props
    */
   state.selectedView.props = mergePropsAndPreferences(state.selectedView, state.preferences);
-  console.log('Modified state preferences on init', state.selectedView.props);
   return state;
 }
 
@@ -484,7 +479,7 @@ function applyPreferences(state) {
 function mergePropsAndPreferences(selectedView, preferences = []) {
   const propsPreferences = preferences
     ? preferences
-      .filter(pref => pref.view === selectedView.id && pref.data.props)
+      .filter(pref => pref && pref.view === selectedView.id && pref.data.props)
       .reduce((acc, curr) => acc.concat(curr.data.props), [])
     : [];
 
