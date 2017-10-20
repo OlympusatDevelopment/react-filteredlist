@@ -9,6 +9,10 @@ import CustomItem from '../CustomItem';
 class ListRow extends Component { // eslint-disable-line react/prefer-stateless-function
     constructor(props) {
         super(props)
+
+        this.state = {
+            renderDropdown: false
+        }
     }
 
     makeListItem(item,selectedView,props){
@@ -25,13 +29,32 @@ class ListRow extends Component { // eslint-disable-line react/prefer-stateless-
         }
     }
 
+    /**
+     * Renders dropdown on chevron click
+     * @param {Event} e 
+     */
+    onChevronClick(e) {
+        e.preventDefault();
+
+        this.setState({renderDropdown:!this.state.renderDropdown})
+        return false;
+    }
+
     render() {
         const {config,item,selectedView} = this.props;
         const listItem = this.makeListItem(item,selectedView,this.props);
+        const DropdownComponent = selectedView.rowDropdownComponent; // Component for dropdown details
+        const dropdownClassList = selectedView.dropdownClassList;
 
         return (
-            <li className="dl__listRow">
+            <li className={`dl__listRow ${selectedView.enableRowDropdown ? dropdownClassList : ''}`}>
+                {selectedView.enableRowDropdown &&
+                    <span onClick={e=>{this.onChevronClick(e)}} className={`chevron--open-${this.state.renderDropdown}`}></span>
+                }
                 {listItem}
+                {selectedView.enableRowDropdown && this.state.renderDropdown &&               
+                    <DropdownComponent item={item} selectedView={selectedView} />
+                }
             </li>
         );
     }

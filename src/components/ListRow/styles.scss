@@ -9,3 +9,43 @@
 	cursor: pointer;
   }
 }
+
+.dl__dropdownRow {
+  margin-left: 25px;
+
+  &.dl__listRow {
+    padding-left: 0;
+  }
+
+  span.chevron--open-false,
+  span.chevron--open-true {
+    float:left;
+    height: 37px;
+    width:50px;
+    z-index: 999;
+    position: absolute;
+    left: 0;    
+    padding-left: 8px;    
+  
+    &:before {
+      font-family: 'FontAwesome';
+      font-size:12px;
+      z-index: 999;      
+      top: 9px;
+      left: 0px;
+      position: relative;
+    }
+  }
+
+  span.chevron--open-true {
+    &:before {
+      left: -4px;      
+      content: $fa-var-chevron-down;          
+    }
+  }
+  span.chevron--open-false {
+    &:before {
+      content: $fa-var-chevron-right;          
+    }
+  }
+}

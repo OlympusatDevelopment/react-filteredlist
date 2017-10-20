@@ -9,6 +9,7 @@ import graphql from './graphql';
 
 // import {GOOGLE_UA_ID} from '../../config';
 // import utils from '../../';
+console.log('LINKED');
  
 export default {
     id : 'main',//Must be unique if more than one list is displayed on a page
