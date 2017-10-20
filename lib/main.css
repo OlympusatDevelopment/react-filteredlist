@@ -4350,6 +4350,33 @@ code {
     background: #fafafa;
     cursor: pointer; }
 
+.dl__dropdownRow {
+  margin-left: 25px; }
+  .dl__dropdownRow.dl__listRow {
+    padding-left: 0; }
+  .dl__dropdownRow span.chevron--open-false,
+  .dl__dropdownRow span.chevron--open-true {
+    float: left;
+    height: 37px;
+    width: 50px;
+    z-index: 999;
+    position: absolute;
+    left: 0;
+    padding-left: 8px; }
+    .dl__dropdownRow span.chevron--open-false:before,
+    .dl__dropdownRow span.chevron--open-true:before {
+      font-family: 'FontAwesome';
+      font-size: 12px;
+      z-index: 999;
+      top: 9px;
+      left: 0px;
+      position: relative; }
+  .dl__dropdownRow span.chevron--open-true:before {
+    left: -4px;
+    content: ""; }
+  .dl__dropdownRow span.chevron--open-false:before {
+    content: ""; }
+
 .dl__textItem {
   position: relative; }
   .dl__textItem a {

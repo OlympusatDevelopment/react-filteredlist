@@ -1,0 +1,17 @@
+.exportIcon{
+    width: 37px;
+    height: 37px;
+    vertical-align: middle;
+    float: right;
+    text-align: center;
+    font-size: 14px;
+    padding-top: 10px;
+    border: 1px solid #efefef;
+    border-top: none;
+    border-bottom: none; 
+
+    &:hover{
+        background: #efefef;
+        cursor: pointer;
+    }
+}
