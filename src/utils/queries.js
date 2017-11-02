@@ -297,9 +297,7 @@ function makeXHRRequest(_state,options){
             const caller = proxy || xhr;
 
             // Before request hook
-            let requestData = _state.config.hooks.beforeXHR 
-                    ? _state.config.hooks.beforeXHR(_state,opts) 
-                        : {data: _state, xhrOptions: opts};
+            let requestData = {data: _state, xhrOptions: opts};
 
             // Add the body if this is a post request
             if(options.api.method.toLowerCase() === 'post'){
@@ -321,10 +319,15 @@ function makeXHRRequest(_state,options){
                 }
             }
 
+            // Before request hook
+            let hookedData = _state.config.hooks.beforeXHR 
+            ? _state.config.hooks.beforeXHR(_state,opts,requestData) 
+                : requestData;
+
             //console.log('XHR RESPONSE',result,requestData.xhrOptions);
            
             // Finally : Make our xhr call using either the xhr lib or our proxy
-            caller(requestData.xhrOptions,(err,res,body)=>{
+            caller(hookedData.xhrOptions,(err,res,body)=>{
                 if(err){ 
                     reject(_state.config.hooks.onXHRFail ? _state.config.hooks.onXHRFail(err,body) : body);
                     return false;
