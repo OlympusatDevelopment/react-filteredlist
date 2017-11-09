@@ -26,7 +26,6 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
   }
 
   onSelectChange(data) {
-    debugger;
     const self = this,
       { options, selectedView, filterChange } = this.props,
       value = data ? data[options.options.key] : null;
@@ -172,7 +171,6 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
         break;
       case 'select':
       default:
-      debugger;
         let val = null;
         let defaults = self.props.selectedView.filterDefaults ? self.props.selectedView.filterDefaults() : {};
         try { defaults = JSON.parse(defaults) }
