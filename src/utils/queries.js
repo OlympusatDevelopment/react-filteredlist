@@ -325,20 +325,25 @@ function makeXHRRequest(_state,options){
                 : requestData;
 
             //console.log('XHR RESPONSE',result,requestData.xhrOptions);
+
+            // Before request hook
+            let hookedData = _state.config.hooks.beforeXHR 
+            ? _state.config.hooks.beforeXHR(_state,opts,requestData) 
+                : requestData;
            
             // Finally : Make our xhr call using either the xhr lib or our proxy
             caller(hookedData.xhrOptions,(err,res,body)=>{
                 if(err){ 
                     reject(_state.config.hooks.onXHRFail ? _state.config.hooks.onXHRFail(err,body) : body);
                     return false;
-                }
+                } 
 
                 let result = body;
                 try{ 
                     result = JSON.parse(body)
                 }catch(e){}
 
-                //console.log('XHR RESPONSE',result,requestData.xhrOptions);
+                //console.log('XHR RESPONSE',result,hookedData.xhrOptions);
                 if(_state.config.hooks.onXHRSuccess){
                     _state.config.hooks.onXHRSuccess(result,resolve,reject);
                 }else{

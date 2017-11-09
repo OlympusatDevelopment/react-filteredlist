@@ -59718,7 +59718,7 @@ function extend() {
 },{}],329:[function(require,module,exports){
 module.exports={
   "name": "react-filteredlist",
-  "version": "1.16.6",
+  "version": "1.17.1",
   "description": "FilteredList",
   "main": "lib/FilteredList.js",
   "author": "Adam Gedney",
@@ -61850,6 +61850,7 @@ var ListRow = function (_Component) {
                     return _react2.default.createElement(_TextItem2.default, { item: item, selectedView: selectedView });
             }
         }
+<<<<<<< HEAD
 
         /**
          * Renders dropdown on chevron click
@@ -61878,6 +61879,36 @@ var ListRow = function (_Component) {
             var DropdownComponent = selectedView.rowDropdownComponent; // Component for dropdown details
             var dropdownClassList = selectedView.dropdownClassList;
 
+=======
+
+        /**
+         * Renders dropdown on chevron click
+         * @param {Event} e 
+         */
+
+    }, {
+        key: 'onChevronClick',
+        value: function onChevronClick(e) {
+            e.preventDefault();
+
+            this.setState({ renderDropdown: !this.state.renderDropdown });
+            return false;
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var _props = this.props,
+                config = _props.config,
+                item = _props.item,
+                selectedView = _props.selectedView;
+
+            var listItem = this.makeListItem(item, selectedView, this.props);
+            var DropdownComponent = selectedView.rowDropdownComponent; // Component for dropdown details
+            var dropdownClassList = selectedView.dropdownClassList;
+
+>>>>>>> upstream/master
             return _react2.default.createElement(
                 'li',
                 { className: 'dl__listRow ' + (selectedView.enableRowDropdown ? dropdownClassList : '') },
@@ -65939,6 +65970,9 @@ function makeXHRRequest(_state, options) {
 
             //console.log('XHR RESPONSE',result,requestData.xhrOptions);
 
+            // Before request hook
+            var hookedData = _state.config.hooks.beforeXHR ? _state.config.hooks.beforeXHR(_state, opts, requestData) : requestData;
+
             // Finally : Make our xhr call using either the xhr lib or our proxy
             caller(hookedData.xhrOptions, function (err, res, body) {
                 if (err) {
@@ -65951,7 +65985,7 @@ function makeXHRRequest(_state, options) {
                     result = JSON.parse(body);
                 } catch (e) {}
 
-                //console.log('XHR RESPONSE',result,requestData.xhrOptions);
+                //console.log('XHR RESPONSE',result,hookedData.xhrOptions);
                 if (_state.config.hooks.onXHRSuccess) {
                     _state.config.hooks.onXHRSuccess(result, resolve, reject);
                 } else {
