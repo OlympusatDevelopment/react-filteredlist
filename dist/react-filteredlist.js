@@ -59787,7 +59787,7 @@ function extend() {
 },{}],329:[function(require,module,exports){
 module.exports={
   "name": "react-filteredlist",
-  "version": "1.16.6",
+  "version": "1.17.1",
   "description": "FilteredList",
   "main": "lib/FilteredList.js",
   "author": "Adam Gedney",
@@ -61850,7 +61850,7 @@ var DEFAULT_LOCALE = exports.DEFAULT_LOCALE = 'en';
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -61890,63 +61890,90 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var ListRow = function (_Component) {
-  _inherits(ListRow, _Component);
+    _inherits(ListRow, _Component);
 
-  // eslint-disable-line react/prefer-stateless-function
-  function ListRow(props) {
-    _classCallCheck(this, ListRow);
+    // eslint-disable-line react/prefer-stateless-function
+    function ListRow(props) {
+        _classCallCheck(this, ListRow);
 
-    return _possibleConstructorReturn(this, (ListRow.__proto__ || Object.getPrototypeOf(ListRow)).call(this, props));
-  }
+        var _this = _possibleConstructorReturn(this, (ListRow.__proto__ || Object.getPrototypeOf(ListRow)).call(this, props));
 
-  _createClass(ListRow, [{
-    key: 'makeListItem',
-    value: function makeListItem(item, selectedView, props) {
-      switch (selectedView.displayType) {
-        case 'custom':
-          var CustomDisplayItem = selectedView.customDisplayTypeComponent;
-
-          return _react2.default.createElement(_CustomItem2.default, { CustomDisplayItem: CustomDisplayItem, item: item, selectedView: selectedView, parentProps: props });
-        case 'display':
-          return _react2.default.createElement(_DisplayItem2.default, { item: item, selectedView: selectedView });
-        case 'text':
-        default:
-          return _react2.default.createElement(_TextItem2.default, { item: item, selectedView: selectedView });
-      }
+        _this.state = {
+            renderDropdown: false
+        };
+        return _this;
     }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          config = _props.config,
-          item = _props.item,
-          selectedView = _props.selectedView;
 
-      var listItem = this.makeListItem(item, selectedView, this.props);
+    _createClass(ListRow, [{
+        key: 'makeListItem',
+        value: function makeListItem(item, selectedView, props) {
+            switch (selectedView.displayType) {
+                case 'custom':
+                    var CustomDisplayItem = selectedView.customDisplayTypeComponent;
 
-      return _react2.default.createElement(
-        'li',
-        { className: 'dl__listRow' },
-        listItem
-      );
-    }
-  }]);
+                    return _react2.default.createElement(_CustomItem2.default, { CustomDisplayItem: CustomDisplayItem, item: item, selectedView: selectedView, parentProps: props });
+                case 'display':
+                    return _react2.default.createElement(_DisplayItem2.default, { item: item, selectedView: selectedView });
+                case 'text':
+                default:
+                    return _react2.default.createElement(_TextItem2.default, { item: item, selectedView: selectedView });
+            }
+        }
 
-  return ListRow;
+        /**
+         * Renders dropdown on chevron click
+         * @param {Event} e 
+         */
+
+    }, {
+        key: 'onChevronClick',
+        value: function onChevronClick(e) {
+            e.preventDefault();
+
+            this.setState({ renderDropdown: !this.state.renderDropdown });
+            return false;
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var _props = this.props,
+                config = _props.config,
+                item = _props.item,
+                selectedView = _props.selectedView;
+
+            var listItem = this.makeListItem(item, selectedView, this.props);
+            var DropdownComponent = selectedView.rowDropdownComponent; // Component for dropdown details
+            var dropdownClassList = selectedView.dropdownClassList;
+
+            return _react2.default.createElement(
+                'li',
+                { className: 'dl__listRow ' + (selectedView.enableRowDropdown ? dropdownClassList : '') },
+                selectedView.enableRowDropdown && _react2.default.createElement('span', { onClick: function onClick(e) {
+                        _this2.onChevronClick(e);
+                    }, className: 'chevron--open-' + this.state.renderDropdown }),
+                listItem,
+                selectedView.enableRowDropdown && this.state.renderDropdown && _react2.default.createElement(DropdownComponent, { item: item, selectedView: selectedView })
+            );
+        }
+    }]);
+
+    return ListRow;
 }(_react.Component);
 
 //Which part of the Redux global state does our component want to receive as props?
 
 
 function mapStateToProps(state, ownProps) {
-  return {
-    config: state.app.config,
-    listRow: state.listRow
-  };
+    return {
+        config: state.app.config,
+        listRow: state.listRow
+    };
 }
 
 function mapDispatchToProps(dispatch) {
-  return (0, _redux.bindActionCreators)(ListRowActions, dispatch);
+    return (0, _redux.bindActionCreators)(ListRowActions, dispatch);
 }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ListRow);
@@ -65954,7 +65981,7 @@ function makeXHRRequest(_state, options) {
             var caller = proxy || _xhr2.default;
 
             // Before request hook
-            var requestData = _state.config.hooks.beforeXHR ? _state.config.hooks.beforeXHR(_state, opts) : { data: _state, xhrOptions: opts };
+            var requestData = { data: _state, xhrOptions: opts };
 
             // Add the body if this is a post request
             if (options.api.method.toLowerCase() === 'post') {
@@ -65978,8 +66005,11 @@ function makeXHRRequest(_state, options) {
 
             //console.log('XHR RESPONSE',result,requestData.xhrOptions);
 
+            // Before request hook
+            var hookedData = _state.config.hooks.beforeXHR ? _state.config.hooks.beforeXHR(_state, opts, requestData) : requestData;
+
             // Finally : Make our xhr call using either the xhr lib or our proxy
-            caller(requestData.xhrOptions, function (err, res, body) {
+            caller(hookedData.xhrOptions, function (err, res, body) {
                 if (err) {
                     reject(_state.config.hooks.onXHRFail ? _state.config.hooks.onXHRFail(err, body) : body);
                     return false;
@@ -65990,7 +66020,7 @@ function makeXHRRequest(_state, options) {
                     result = JSON.parse(body);
                 } catch (e) {}
 
-                //console.log('XHR RESPONSE',result,requestData.xhrOptions);
+                //console.log('XHR RESPONSE',result,hookedData.xhrOptions);
                 if (_state.config.hooks.onXHRSuccess) {
                     _state.config.hooks.onXHRSuccess(result, resolve, reject);
                 } else {
