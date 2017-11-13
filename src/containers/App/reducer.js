@@ -59,7 +59,7 @@ const initialState = {
 
 function appReducer(state = initialState, action) {
   let _state = Object.assign({}, state),
-    _data = action.data;
+    _data = action.data;    
 
   switch (action.type) {
 
@@ -179,7 +179,6 @@ function appReducer(state = initialState, action) {
       _state.force = Math.random() * 10000000;
       _state.showLoading = false;
       _state.config.hooks.onStateUpdate(_state);
-
       return _state;
 
     case UPDATE_VIEW_PROPS:

@@ -26,10 +26,19 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
   }
 
   onSelectChange(data) {
+        
     const self = this,
-      { options, selectedView, filterChange } = this.props,
-      value = data ? data[options.options.key] : null;
+    { options, selectedView, filterChange } = this.props,
+    value = (data && Array.isArray(data)) ? 
+              (Array.isArray(data[0].entityUUID)  ? data[0].entityUUID :
+                data.map(obj=> {
+                  console.log('OBJECT',obj);
+                  return obj[options.options.key];
+              })) : 
+            (data ? data[options.options.key] : null);    
 
+    console.log('ON SELECT CHANGE', value, data, Array.isArray(data),options.options.key);
+      
     filterChange({
       id: options.id,
       view: selectedView.id,
@@ -202,7 +211,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
               searchable={false}
             />
           );
-        } else {
+        } else {          
           return (
             <Select
               ajaxDataFetch={options.options.getOptions || []}
