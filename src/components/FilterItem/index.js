@@ -26,16 +26,15 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
   }
 
   onSelectChange(data) {
-        
     const self = this,
     { options, selectedView, filterChange } = this.props,
     value = (data && Array.isArray(data)) ? 
-              (Array.isArray(data[0].entityUUID)  ? data[0].entityUUID :
+              // (Array.isArray(data[0].entityUUID)  ? data[0].entityUUID :
                 data.map(obj=> {
                   console.log('OBJECT',obj);
                   return obj[options.options.key];
-              })) : 
-            (data ? data[options.options.key] : null);    
+              }) : 
+            (data ? [data[options.options.key]] : null);    
 
     console.log('ON SELECT CHANGE', value, data, Array.isArray(data),options.options.key);
       
@@ -196,22 +195,27 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
 
         // If a value exist via a query string run or state update, set the component initial val, otherwise leave blank to display the placeholder
         if (self.props.options.value) {
+          console.log('SELECT',self.props.options, options.options)
           return (
             <Select
               ajaxDataFetch={options.options.getOptions || []}
               optionLabelKey={options.options.value}
               optionValueKey={options.options.key}
               multiple={options.multi}
-              initialValue={{
-                [options.options.key]: self.props.options.value,
-                [options.options.value]: val ? val[options.options.value] : null
-              }}
+              initialValue={Array.isArray(self.props.options.value) ? self.props.options.value.forEach(v => {return { 
+                [options.options.key]: v,
+                [options.options.value]: v ? v[options.options.value] : null}}
+                ) : 
+                { [options.options.key]: self.props.options.value,
+                  [options.options.value]: val ? val[options.options.value] : null
+                }
+              }
               placeholder="Make Your Selections"
               onChange={(data) => self.onSelectChange(data)}
               searchable={false}
             />
           );
-        } else {          
+        } else {       
           return (
             <Select
               ajaxDataFetch={options.options.getOptions || []}
