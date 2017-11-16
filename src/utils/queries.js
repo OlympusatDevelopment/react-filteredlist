@@ -24,11 +24,12 @@ function makeQueryString(queryObject){
                 tmp_query ='';
 
             // Handle array values by using key name as attribute and each value separately
-            if (_.isArray(value)) {
-                value.forEach(val=> {
-                    tmp_query = `${tmp_query}&${attribute}=${val}`;
-                });
-            } else if(value.hasOwnProperty('start') && value.hasOwnProperty('end')){
+            // if (_.isArray(value)) {
+            //     value.forEach(val=> {
+            //         tmp_query = `${tmp_query}&${attribute}=${val}`;
+            //     });
+            // } else 
+            if(value.hasOwnProperty('start') && value.hasOwnProperty('end')){
                 tmp_query = `${attribute}--start=${value.start}&${attribute}--end=${value.end}`;
             }else {
                 tmp_query = `${attribute}=${value}`;
@@ -189,12 +190,11 @@ function makeQueryObjectFromQueryString(str){
     let queryString = decodeURI(str).split("&"),
         queryParams = {},
         segment,value,key;
-
+    
     for(var i=0;i<queryString.length;i++){
         segment = queryString[i].split('=');
         key = segment[0];
         value = segment[1] && segment[1].charAt(0) === '[' ? decodeURIComponent(segment[1]) : segment[1];
-
         // Handle sort params nested object
         if(key && key.indexOf('sort-')>-1){
             if(!queryParams.hasOwnProperty('sort')){
@@ -204,22 +204,20 @@ function makeQueryObjectFromQueryString(str){
             queryParams.sort[key.split('sort-')[1]] = value;
 
         }else{//Filter params
-
             if(key && queryParams.hasOwnProperty(key)){
                 if(_.isArray(queryParams[key])){
-                    queryParams[key].push(value);// Add the new value
+                    queryParams[key].push([value]);// Add the new value
                 }else{
                     queryParams[key] = [queryParams[key]];// Extract the string value and transform to an array
-                    queryParams[key].push(value);//Add the new value
+                    queryParams[key].push([value]);//Add the new value
                 }
             }else{
                 if(key){
-                    queryParams[key] = value;// First run, add the string
+                    queryParams[key] = value.split(",");// First run, add the string
                 }
             }
         }
     }
-
     return queryParams;
 }
 
@@ -325,7 +323,7 @@ function makeXHRRequest(_state,options){
                 : requestData;
 
             //console.log('XHR RESPONSE',result,requestData.xhrOptions);
-            
+           
             // Finally : Make our xhr call using either the xhr lib or our proxy
             caller(hookedData.xhrOptions,(err,res,body)=>{
                 if(err){ 
