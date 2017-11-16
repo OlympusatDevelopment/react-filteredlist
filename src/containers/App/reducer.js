@@ -268,6 +268,7 @@ function appReducer(state = initialState, action) {
        * Used by the runQueryStringURLOnRender initialization in App/index.js
        */
       if (isBatchUpdate) {
+        
         _data.forEach(filterChange => {
           //[{id,view,value}]
           _state.views = makeViews(_state, filterChange);
@@ -375,16 +376,18 @@ function makeQuery(_state, addons = []) {
       value: _state.selectedView.id,
       view: _state.selectedView.id
     }
-  ],
+  ];
     // Create a new array of all the filters from the current view, excluding null or undefined values
-    filters = _.chain(_state.selectedView.filterGroups.map(group => group.filters))
+    const filters = _.chain(_state.selectedView.filterGroups
+      .map(group => group.filters))
       .flatten()
       .map(filter => {
         return (typeof filter.value !== 'undefined' || (filter.range && (filter.range.start !== null || filter.range.end !== null))) ? filter : false;
       })
       .compact()
-      .value(),
-    queryObject = Object.assign({}, _state.queryObject, queries.makeQueryObject(filters.concat(pseudoFilters)));
+      .value();
+
+    const queryObject = Object.assign({}, _state.queryObject, queries.makeQueryObject(filters.concat(pseudoFilters)));
 
   return {
     queryObject: _.omit(queryObject, (v, k) => v === null),// Clean it after we've updated the query string
@@ -430,7 +433,10 @@ function hideLoadingIcon() {
  */
 function makeViews(_state, filterChange) {
   return [..._state.views.map(view => {
-    if (view.id === filterChange.view || filterChange.view === '*') {
+    // Handle passed in view ids as an array.
+    const filterChangeViewId = Array.isArray(filterChange.view) ? filterChange.view[0] : filterChange.view;
+
+    if (view.id === filterChangeViewId || filterChangeViewId === '*') {
       view.filterGroups.forEach(filterGroup => {
         filterGroup.filters.forEach(filter => {
           if (filter.type === 'range') {

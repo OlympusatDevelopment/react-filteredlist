@@ -23,6 +23,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
     this.makeFilter = this.makeFilter.bind(this);
     this.onSelectChange = this.onSelectChange.bind(this);
     this.onSortClick = this.onSortClick.bind(this);
+    this.makeSelectInitialValue = this.makeSelectInitialValue.bind(this);
   }
 
   onSelectChange(data) {
@@ -35,8 +36,6 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
                   return obj[options.options.key];
               }) : 
             (data ? [data[options.options.key]] : null);    
-
-    console.log('ON SELECT CHANGE', value, data, Array.isArray(data),options.options.key);
       
     filterChange({
       id: options.id,
@@ -195,27 +194,19 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
 
         // If a value exist via a query string run or state update, set the component initial val, otherwise leave blank to display the placeholder
         if (self.props.options.value) {
-          console.log('SELECT',self.props.options, options.options)
           return (
             <Select
               ajaxDataFetch={options.options.getOptions || []}
               optionLabelKey={options.options.value}
               optionValueKey={options.options.key}
               multiple={options.multi}
-              initialValue={Array.isArray(self.props.options.value) ? self.props.options.value.forEach(v => {return { 
-                [options.options.key]: v,
-                [options.options.value]: v ? v[options.options.value] : null}}
-                ) : 
-                { [options.options.key]: self.props.options.value,
-                  [options.options.value]: val ? val[options.options.value] : null
-                }
-              }
+              initialValue={this.makeSelectInitialValue(options,defaults)}
               placeholder="Make Your Selections"
               onChange={(data) => self.onSelectChange(data)}
               searchable={false}
             />
           );
-        } else {       
+        } else {           
           return (
             <Select
               ajaxDataFetch={options.options.getOptions || []}
@@ -229,6 +220,31 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
           );
         }
     }
+  }
+
+  /**
+   * Makes the select components initial values based on either an incoming array of ids or a collection
+   * @param {*} options 
+   */
+  makeSelectInitialValue(options,defaults){
+    const self = this;
+   
+    const initVals  =  Array.isArray(self.props.options.value) ? self.props.options.value.map(v => {
+      const defaultsExtract = defaults[self.props.options.id].filter(def=>{
+        return def[options.options.key] === v;
+      })[0];
+
+      return { 
+        [options.options.key]: v, // entityUUID
+        [options.options.value]: defaultsExtract[options.options.value]}} // entityValue
+      ) : { 
+        [options.options.key]: self.props.options.value,
+        [options.options.value]: val ? val[options.options.value] : null
+      }
+
+      console.log('INIT VALS', initVals);
+
+      return initVals;
   }
 
   render() {

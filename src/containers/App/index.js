@@ -149,15 +149,17 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
       delete nonPaginationParams.view;// Internal use only, no more need to have it included
 
       _.mapObject(nonPaginationParams, (value, key) => {
-        if (_.isArray(value)) {
-          value.forEach(val => {
-            filterChangeBatch.push({
-              id: key,
-              view: viewId,
-              value: val
-            });
-          });
-        } else if (_.isObject(value) && key === 'sort') {
+        // Took this out to support csv values in query params vals. Our use case was the networks multiselect filter.
+        // if (_.isArray(value)) 
+          // value.forEach(val => {
+          //   filterChangeBatch.push({
+          //     id: key,
+          //     view: viewId,
+          //     value: val
+          //   });
+          // });
+        // } else 
+        if (_.isObject(value) && key === 'sort') {
           args.self._sortDispatcher(Object.assign(args, { sort: value }));
         } else {// Handle the sort object
           filterChangeBatch.push({
