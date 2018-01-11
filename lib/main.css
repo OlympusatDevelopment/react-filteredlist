@@ -237,8 +237,8 @@ code {
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url("//netdna.bootstrapcdn.com/font-awesome/4.2.0/fonts/fontawesome-webfont.eot?v=4.2.0");
-  src: url("//netdna.bootstrapcdn.com/font-awesome/4.2.0/fonts/fontawesome-webfont.eot?#iefix&v=4.2.0") format("embedded-opentype"), url("//netdna.bootstrapcdn.com/font-awesome/4.2.0/fonts/fontawesome-webfont.woff?v=4.2.0") format("woff"), url("//netdna.bootstrapcdn.com/font-awesome/4.2.0/fonts/fontawesome-webfont.ttf?v=4.2.0") format("truetype"), url("//netdna.bootstrapcdn.com/font-awesome/4.2.0/fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular") format("svg");
+  src: url("//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css/fontawesome-webfont.eot?v=4.2.0");
+  src: url("//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css/fontawesome-webfont.eot?#iefix&v=4.2.0") format("embedded-opentype"), url("//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css/fontawesome-webfont.woff?v=4.2.0") format("woff"), url("//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css/fontawesome-webfont.ttf?v=4.2.0") format("truetype"), url("//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -4814,7 +4814,7 @@ code {
   width: 82%;
   float: left;
   position: relative;
-  overflow-x: hidden; }
+  padding: 9px 9px 129px !important; }
   @media (max-width: 1199px) {
     .dl__dataList {
       width: 100%; } }

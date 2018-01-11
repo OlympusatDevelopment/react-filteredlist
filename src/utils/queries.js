@@ -322,7 +322,7 @@ function makeXHRRequest(_state,options){
             ? _state.config.hooks.beforeXHR(_state,opts,requestData) 
                 : requestData;
 
-            //console.log('XHR RESPONSE',result,requestData.xhrOptions);
+            console.log('XHR BEFORE CALLER',hookedData, requestData,options);
            
             // Finally : Make our xhr call using either the xhr lib or our proxy
             caller(hookedData.xhrOptions,(err,res,body)=>{
