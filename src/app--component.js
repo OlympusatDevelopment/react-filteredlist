@@ -35,19 +35,19 @@ const initialState = {};
 const store = configureStore(initialState);
 
 class DataList extends Component {
-    constructor(){
-        super();
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    render () {
-        return (
-            <Provider store={store}>
-                <LanguageProvider locale='en' messages={translationMessages}>
-                    <App dataListConfig={this.props.config}> </App>
-                </LanguageProvider>
-            </Provider>
-        );
-    }
+  render() {
+    return (
+      <Provider store={store} parentStore={this.props.config.parentStore}>
+        <LanguageProvider locale='en' messages={translationMessages}>
+          <App dataListConfig={this.props.config}> </App>
+        </LanguageProvider>
+      </Provider>
+    );
+  }
 }
 
 export default DataList;
