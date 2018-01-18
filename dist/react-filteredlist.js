@@ -59787,7 +59787,7 @@ function extend() {
 },{}],329:[function(require,module,exports){
 module.exports={
   "name": "react-filteredlist",
-  "version": "1.19.1",
+  "version": "1.19.3",
   "description": "FilteredList",
   "main": "lib/FilteredList.js",
   "author": "Adam Gedney",
@@ -61424,12 +61424,12 @@ var FilterItem = function (_Component) {
         var _ref2;
 
         var defaultsExtract = defaults[self.props.options.id].filter(function (def) {
-          return def[options.options.key] === v;
+          return def[options.options.key] == v;
         })[0];
 
         return _ref2 = {}, _defineProperty(_ref2, options.options.key, v), _defineProperty(_ref2, options.options.value, defaultsExtract[options.options.value]), _ref2;
-      } // entityValue
-      ) : (_ref3 = {}, _defineProperty(_ref3, options.options.key, self.props.options.value), _defineProperty(_ref3, options.options.value, val ? val[options.options.value] : null), _ref3);
+      }) // entityValue 
+      : (_ref3 = {}, _defineProperty(_ref3, options.options.key, self.props.options.value), _defineProperty(_ref3, options.options.value, val ? val[options.options.value] : null), _ref3);
 
       console.log('INIT VALS', initVals);
 
