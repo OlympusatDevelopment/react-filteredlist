@@ -244,8 +244,6 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
         [options.options.value]: val ? val[options.options.value] : null
       }
 
-    console.log('INIT VALS', initVals);
-
     return initVals;
   }
 
