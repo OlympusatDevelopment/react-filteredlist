@@ -151,13 +151,13 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
       _.mapObject(nonPaginationParams, (value, key) => {
         // Took this out to support csv values in query params vals. Our use case was the networks multiselect filter.
         // if (_.isArray(value)) 
-          // value.forEach(val => {
-          //   filterChangeBatch.push({
-          //     id: key,
-          //     view: viewId,
-          //     value: val
-          //   });
-          // });
+        // value.forEach(val => {
+        //   filterChangeBatch.push({
+        //     id: key,
+        //     view: viewId,
+        //     value: val
+        //   });
+        // });
         // } else 
         if (_.isObject(value) && key === 'sort') {
           args.self._sortDispatcher(Object.assign(args, { sort: value }));
@@ -299,8 +299,13 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
    * @private
    */
   _initRenderer() {
-    const { updateItems } = this.props;
+    const { updateItems, dataListConfig } = this.props;
     const elem = document;
+
+    // ENtry point for pushes originating from the parent app. pushDispatch
+    if (dataListConfig && dataListConfig.hooks && dataListConfig.hooks.pushDispatch) {
+      dataListConfig.hooks.pushDispatch(updateItems);
+    }
 
     elem.addEventListener('renderToStore', function (e) {
       updateItems({
