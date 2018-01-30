@@ -59787,7 +59787,7 @@ function extend() {
 },{}],329:[function(require,module,exports){
 module.exports={
   "name": "react-filteredlist",
-  "version": "1.20.0",
+  "version": "1.20.3",
   "description": "FilteredList",
   "main": "lib/FilteredList.js",
   "author": "Adam Gedney",
@@ -63954,6 +63954,7 @@ var App = function (_Component) {
 
       // ENtry point for pushes originating from the parent app. pushDispatch
       if (dataListConfig && dataListConfig.hooks && dataListConfig.hooks.pushDispatch) {
+        console.log('PUSH DISPATCHER', dataListConfig.hooks.pushDispatch, updateItems);
         dataListConfig.hooks.pushDispatch(updateItems);
       }
 

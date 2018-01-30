@@ -304,6 +304,7 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
 
     // ENtry point for pushes originating from the parent app. pushDispatch
     if (dataListConfig && dataListConfig.hooks && dataListConfig.hooks.pushDispatch) {
+      console.log('PUSH DISPATCHER', dataListConfig.hooks.pushDispatch, updateItems);
       dataListConfig.hooks.pushDispatch(updateItems);
     }
 
