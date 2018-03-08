@@ -8,6 +8,7 @@
   
 ## Views
 Views are higher level filters & datalist pairs that run independent of eachother. They are **rendered as tabs** above the filters sidebar when more than one view is present. Essentially they are sub instances of the entire component within the component.
+
 | Property | Type | Default | Possible Values | Description |
 |:---|:---|:---|:---|:---|
 | id | string | '' | ''| The UNIQUE id of the view. |
@@ -67,9 +68,6 @@ These are props objects that configure how default row text components display d
 
 Available item properties to the row. Also controls which props are visible by default or which are configurable in the column settings
 
-*`before` is a hook to transform the value (mostly for mapping) before rendering to the screen
-*`display` lets the datalist know that it should display that column on load. If it's false, it will not dipslay on load but will still be available to the column settings interface
-
 | Property | Type | Default | Possible Values | Description |
 |:---|:---|:---|:---|:---|
 | key | string | '' | | |
@@ -79,8 +77,8 @@ Available item properties to the row. Also controls which props are visible by d
 | isDate | boolean | `false` | `true`,`false`| |
 | isSortable | boolean | `false` | `true`,`false`| |
 | width | string |  | | |
-| display | boolean | `false` | `true`,`false`| |
-| before | function |  | | |
+| display | boolean | `false` | `true`,`false`| Lets the datalist know that it should display that column on load. If it's false, it will not dipslay on load but will still be available to the column settings interface. |
+| before | function |  | | A hook to transform the value (mostly for mapping) before rendering to the screen. If not using it, please set it like this until a default can be built in: `before :(val,item)=>val` @todo add default function check|
 
 
 ## Filter Groups
