@@ -1,60 +1,116 @@
-//Todo: fill this in with component options
+# React Filteredlist
 
+
+## Datalist
 | Property | Type | Default | Description |
 |:---|:---|:---|:---|
 | addLabelText | string | 'Add "{label}"?' | text to display when `allowCreate` is true |
-  arrowRenderer | func | undefined | Renders a custom drop-down arrow to be shown in the right-hand side of the select: `arrowRenderer({ onMouseDown, isOpen })` |
-| autoBlur | bool | false | Blurs the input element after a selection has been made. Handy for lowering the keyboard on mobile devices |
-| autofocus | bool | undefined | autofocus the component on mount |
-| autoload | bool | true | whether to auto-load the default async options set |
-| autosize | bool | true | If enabled, the input will expand as the length of its value increases |
-| backspaceRemoves | bool | true | whether pressing backspace removes the last item when there is no input value |
-| backspaceToRemoveMessage | string | 'Press backspace to remove {last label}' | prompt shown in input when at least one option in a multiselect is shown, set to '' to clear |
-| cache | bool | true | enables the options cache for `asyncOptions` (default: `true`) |
-| className | string | undefined | className for the outer element |
-| clearable | bool | true | should it be possible to reset value |
-| clearAllText | string | 'Clear all' | title for the "clear" control when `multi` is true |
-| clearRenderer | func | undefined | Renders a custom clear to be shown in the right-hand side of the select when clearable true: `clearRenderer()` |
-| clearValueText | string | 'Clear value' | title for the "clear" control |
-| resetValue | any | null | value to use when you clear the control |
-| deleteRemoves | bool | true | whether pressing delete key removes the last item when there is no input value |
-| delimiter | string | ',' | delimiter to use to join multiple values |
-| disabled | bool | false | whether the Select is disabled or not |
-| filterOption | func | undefined | method to filter a single option: `function(option, filterString)` |
-| filterOptions | func | undefined | method to filter the options array: `function([options], filterString, [values])` |
-| ignoreAccents | bool | true | whether to strip accents when filtering |
-| ignoreCase | bool | true | whether to perform case-insensitive filtering |
-| inputProps | object | {} | custom attributes for the Input (in the Select-control) e.g: `{'data-foo': 'bar'}` |
-| isLoading | bool | false | whether the Select is loading externally or not (such as options being loaded) |
-| joinValues | bool | false | join multiple values into a single hidden input using the `delimiter` |
-| labelKey | string | 'label' | the option property to use for the label |
-| loadOptions | func | undefined | function that returns a promise or calls a callback with the options: `function(input, [callback])` |
-| matchPos | string | 'any' | (any, start) match the start or entire string when filtering |
-| matchProp | string | 'any' | (any, label, value) which option property to filter on |
-| menuBuffer | number | 0 | buffer of px between the base of the dropdown and the viewport to shift if menu doesnt fit in viewport |
-| menuRenderer | func | undefined | Renders a custom menu with options; accepts the following named parameters: `menuRenderer({ focusedOption, focusOption, options, selectValue, valueArray })` |
-| multi | bool | undefined | multi-value input |
-| name | string | undefined | field name, for hidden `<input />` tag |
-| noResultsText | string | 'No results found' | placeholder displayed when there are no matching search results or a falsy value to hide it (can also be a react component) |
-| onBlur | func | undefined | onBlur handler: `function(event) {}` |
-| onBlurResetsInput | bool | true | whether to clear input on blur or not |
-| onChange | func | undefined | onChange handler: `function(newValue) {}` |
-| onClose | func | undefined | handler for when the menu closes: `function () {}` |
-| onCloseResetsInput | bool | true | whether to clear input when closing the menu through the arrow |
-| onFocus | func | undefined | onFocus handler: `function(event) {}` |
-| onInputChange | func | undefined | onInputChange handler: `function(inputValue) {}` |
-| onInputKeyDown | func | undefined | input keyDown handler; call `event.preventDefault()` to override default `Select` behavior: `function(event) {}` |
-| onOpen | func | undefined | handler for when the menu opens: `function () {}` |
-| onValueClick | func | undefined | onClick handler for value labels: `function (value, event) {}` |
-| openOnFocus | bool | false | open the options menu when the input gets focus (requires searchable = true) |
-| optionRenderer | func | undefined | function which returns a custom way to render the options in the menu |
-| options | array | undefined | array of options |
-| placeholder | string\|node | 'Select ...' | field placeholder, displayed when there's no value |
-| scrollMenuIntoView | bool | true | whether the viewport will shift to display the entire menu when engaged |
-| searchable | bool | true | whether to enable searching feature or not |
-| searchPromptText | string\|node | 'Type to search' | label to prompt for search input |
-| loadingPlaceholder | string\|node | 'Loading...' | label to prompt for loading search result |
-| tabSelectsValue | bool | true | whether to select the currently focused value when the `[tab]` key is pressed |
-| value | any | undefined | initial field value |
-| valueKey | string | 'value' | the option property to use for the value |
-| valueRenderer | func | undefined | function which returns a custom way to render the value selected `function (option) {}` |
+  
+## Views
+| Property | Type | Default | Description |
+|:---|:---|:---|:---|
+| addLabelText | string | 'Add "{label}"?' | text to display when `allowCreate` is true |
+
+## Filter Groups
+| Property | Type | Default | Description |
+|:---|:---|:---|:---|
+| addLabelText | string | 'Add "{label}"?' | text to display when `allowCreate` is true |
+
+## Filters
+| Property | Type | Default | Possible Values | Description |
+|:---|:---|:---|:---|:---|
+| id | string | '' | NA | The id of the filter. Must be UNIQUE. |
+| type | string | 'select' | 'select', 'range', 'checkbox', 'search', 'sort' | This determines what type of filter item will be rendered. ***Special NOTE:*** Search type is a special filter that will render a search box where anything input will be passed as the value of a search filter property on the final object. The sort type is also special. It enables a sort toggle & request for the specified id/prop property. |
+| prop | string | '' | NA | Essentially the same as id. Just match this to the id until the api changes, then we'll handle that by default. |
+| label | string | '' | NA |  The filter item's Label property. THis displays to the user above the filter item.|
+| value | string/null/undefined | null | [{},{},{}] | Use this to set a default value. Value must be null or undefined to be excluded. (Filters recognize boolean true/false. An collection matching the select filter type can be passed to pre-populate the value. |
+| multiple | boolean | `false` | `true`,`false` | For select filter types, this allows the select to be a multi select when set to `true`|
+| options | object | {} |  {},falsy | ***For 'select' & 'checkbox' type only:*** The select type filter item's options handling. This takes care of property matching items so they can fill the value of the options element. |
+| options.key | string | '' |  NA | This is the select box options item's key(property) to use for the option element's value property. |
+| options.value | string | '' | NA | This is the select box options item's Label/Text to use in the option item's display. |
+| options.getOptions | function/null/undefined | NA |  NA | This function must return a promise if using it for a select box and a collection if using it for a checkbox. It should return a collection to populate the select item's options. The items should have the properties specified in the key/value mapping above. |
+| range | object | {} | {},falsy | ***For 'range' type only:*** Range type settings and defualts. |
+| range.start | UNIX timestamp | null | UNIX timestamp, null | Sets the start time value for the range calendar in seconds.  |
+| range.end | UNIX timestamp | null | UNIX timestamp, null | Sets the end time value for the range calendar in seconds.  |
+
+### Examples
+#### Select filter type
+```
+export default {
+  id: 'countries',
+  type:'select',
+  prop: 'countries',
+  label: 'Countries',
+  value:null,
+  multiple : true,
+  options : {
+      key : 'myPropId',
+      value : 'myPropValue',
+      getOptions : new Promise((resolve,reject)=>{
+        resolve([
+          {myPropId : 1, myPropValue: "Canada"},
+          {myPropId : 2, myPropValue: "United States"},
+          {myPropId : 3, myPropValue: "Mexico"}
+        ]);
+      })
+  },
+};
+```
+
+#### Range filter type
+```
+export default {
+    id: 'dateAvailable',
+    type:'range',
+    prop: 'dateAvailable',
+    label: 'Dates Available',
+    range:{
+        start: 1520355600000 || null,
+        end: 1520355600000 || null,
+    }
+};
+```
+
+#### Checkbox filter type
+```
+export default {
+    id: filterKey,
+    type:'checkbox',
+    prop: filterKey,
+    label: 'Rights Type', 
+    value:null,
+    multiple : true,
+    options : {
+        key : 'externalId',
+        value : 'entityValue',
+        getOptions : ()=>[
+            {externalId:'true',entityValue:'Exclusive'},
+            {externalId:'false',entityValue:'Non-Exclusive'}
+        ]
+    }
+};
+```
+
+#### Search filter type
+```
+export default {
+    id: 'search',
+    type:'search',
+    prop: 'search',
+    label: 'Search',
+    value:null,
+};
+```
+
+#### Sort filter type
+```
+export default {
+    id: filterKey,
+    type:'sort',
+    prop: filterKey,
+    label: '',
+    value:null
+};
+```
+
+## Hooks

@@ -150,6 +150,7 @@ module.exports = function (gulp, config) {
 		}
 
 		if (config.example.scss) {
+      console.log('SCSS');
 			return gulp.src(config.example.src + '/' + config.example.scss)
 				.pipe(sass())
 				.pipe(gulp.dest(config.example.dist))
@@ -189,7 +190,6 @@ module.exports = function (gulp, config) {
 		}
 
 		if (config.component.scss && config.component.scss.path) {
-			console.log('PATH ',config.component.scss.path + '/**/*.scss');
 			watchCss.push(config.component.scss.path + '/**/*.scss');
 		}
 

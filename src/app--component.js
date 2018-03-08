@@ -44,7 +44,7 @@ class DataList extends Component {
       <Provider store={store} parentStore={this.props.config.parentStore}>
         <LanguageProvider locale='en' messages={translationMessages}>
           <App dataListConfig={this.props.config}> </App>
-        </LanguageProvider>
+        </LanguageProvider> 
       </Provider>
     );
   }
