@@ -70,18 +70,18 @@ Available item properties to the row. Also controls which props are visible by d
 
 | Property | Type | Default | Possible Values | Description |
 |:---|:---|:---|:---|:---|
-| key | string | '' | | |
-| label | string | '' | | |
-| mapTo | string | '' | | |
-| hasCopy | boolean | `false` | `true`,`false`| |
-| isDate | boolean | `false` | `true`,`false`| |
-| isSortable | boolean | `false` | `true`,`false`| |
+| key | string | '' | '' | The key/property name of the property to display from the item being rendered as a row. This is the column data essentially. |
+| label | string | '' | '' | The column name. |
+| mapTo | object | falsy | falsy, {} | Takes an object that it will use as a map to map item property names from one key to another. If the custom component you're using to render rows requires a certain schema and your item has a different schema, you can map property to property here.|
+| hasCopy | boolean | `false` | `true`,`false`| Switch on the "copy to clipboard" icon/feature for the particular cell data. |
+| isDate | boolean | `false` | `true`,`false`| If you're passing in a date, switching this will convert the date timestamp to a human readable date.|
+| isSortable | boolean | `false` | `true`,`false`| Switch whether or not to allow the user to sort|
 | width | string |  | | |
 | display | boolean | `false` | `true`,`false`| Lets the datalist know that it should display that column on load. If it's false, it will not dipslay on load but will still be available to the column settings interface. |
 | before | function |  | | A hook to transform the value (mostly for mapping) before rendering to the screen. If not using it, please set it like this until a default can be built in: `before :(val,item)=>val` @todo add default function check|
 
 
-## Filter Groups
+## Filter Groups 
 Filter groups are objects that have group configuration properties and a collection of filters. ***Take note*** of the 'filterset' id option. If 'filterset' is the filter group's id, then a user save filters group is renders that provides an interface for allowin the user to create, list, and delete saved filtersets.
 
 | Property | Type | Default | Possible Values | Description |
