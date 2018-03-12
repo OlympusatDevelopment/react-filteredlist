@@ -1,11 +1,154 @@
 # React Filteredlist
+A very versatile Datalist component with filtering. It is very configurable with many hooks for utilizing the component's behaviors.
+More specific documentation to come.
 
+
+## Dependencies
+
+Uses the universal-analytics package to track filtering
+https://www.npmjs.com/package/universal-analytics
+
+
+## Demo & Examples
+
+To build the examples locally, run:
+
+```
+npm install
+npm start
+```
+
+Then open [`localhost:8000`](http://localhost:8000) in a browser.
+
+
+## Installation
+
+The easiest way to use react-filteredlist is to install it from NPM and include it in your own React build process (using [Browserify](http://browserify.org), [Webpack](http://webpack.github.io/), etc).
+
+You can also use the standalone build by including `dist/react-filteredlist.js` in your page. If you use this, make sure you have already included React, and it is available as a global variable.
+
+```
+npm i -S react-filteredlist
+```
+
+
+## Usage
+
+It's important that you import the stylesheet either in your Javascript or in a script tag in the head of your document. Please note, your relative path may be different. Most likely...
+
+```
+var FilteredList = require('react-filteredlist');
+import "../../../../node_modules/react-filteredlist/lib/main.css";
+
+<FilteredList config={dataListConfig} />
+```
+
+__Or in ES6__
+
+```
+import FilteredList from 'react-filteredlist';
+import "../../../../node_modules/react-filteredlist/lib/main.css";
+
+<FilteredList config={dataListConfig} />
+```
+
+
+
+# Getting started
+
+  * [Top level configuration](#top-level-configuration)
+  * [Datalist](#datalist)
+  * [Views](#views)
+  * [View Props](#view-props)
+  * [Filter Groups](#filter-groups)
+    * [Special user filterset group](#special-user-filterset-group)
+  * [Filters](#filters)
+    * [Select filter type](#select-filter-type)
+    * [Range filter type](#range-filter-type)
+    * [Checkbox filter type](#checkbox-filter-type)
+    * [Search filter type](#search-filter-type)
+    * [Sort filter type](#sort-filter-type)
+  * [Hooks](#hooks)
+  * [Complete Example](#complete-example)
+    * [Example suggested folder structure](#example-suggested-folder-structure)
+
+
+
+
+## Top level configuration
+This (in the example folder structure this is the top-level index.js file) is the entrypoint for pulling together all the datalist, views, filter groups, and fitlers configs.
+
+| Property | Type | Default | Possible Values | Description |
+|:---|:---|:---|:---|:---|
+| id | string | '' | ''| The UNIQUE id of the filteredlist component. |
+| selector | string | '' | ''| Currently not used. @todo program in the custom selector option for the entire component. |
+| parentStore | string | falsy | false, [Redux Store] | The parent application's Redux store can be passed in here. |
+| defaultView | string | '' | ''| The UNIQUE id of the view. |
+| writeQueryStringToURL | boolean | `false` | `true`,`false` | If true, the queries will be converted to query string params and written to the url. |
+| runQueryStringURLOnRender | boolean | `false` | `true`,`false` | If true, when a filters query string is present in the url, the component will attempt to run it. This is necessary for sharing and in general for tracking internal state. |
+| showFilters | boolean | `false` | `true`,`false` | If false, the filters sidebar willbe hidden. |
+| filtersLabel | string | '' | ''| A label for the filters sidebar. |
+| pinPagination | boolean | `false` | `true`,`false` | If true, the pagination compnent will be position fixed to the bottom of the datalist. |
+| notify | function |  |  | Accepts a function that gets passed 3 parameters (message, type, position). Use this to either console.log your notifications or pass them to the app's notification system, e.g. noty |
+| header | object | undefined | undefined,object | Header options container. |
+| header.title | string | '' | ''| A title for the entire component. |
+| footer | object | undefined | undefined,object | Currently not used but could contain footer specific options in the future. |
+| googleAnalyticsUAId | string | '' | ''| Pass it a Google Analytics id to start sending custom events on filter actions and row clicks to Google Analytics. |
+|  |  |  | | |
+| dataList | object | undefined | undefined,object | The datalist config object gets passed in here. |
+| views | array | undefined | undefined,array | The views config objects array gets passed in here. |
+| hooks | object | undefined | undefined,object | The hooks config object gets passed in here. |
+| graphql | object | undefined | undefined,object | LEGACY. Currently not used. @todo: remove. The graphql config object gets passed in here. |
+
+#### Example
+```
+import dataList from './dataList';
+import views from './views';
+import hooks from './hooks';
+import graphql from './graphql';
+
+import { GOOGLE_UA_ID } from '../../config';
+import utils from '../../';
+
+export default {
+  id: 'main',
+  selector: '',
+  parentStore: false,
+  defaultView: 'buyer',
+  writeQueryStringToURL: true,
+  runQueryStringURLOnRender: true,
+  showFilters: true,
+  filtersLabel: '',
+  pinPagination: true,
+  notify: (message, type, position) => { utils.notify({ message, level: type, position: 'tr' }); },
+  header: {
+    title: ''
+  },
+  footer: {},
+  googleAnalyticsUAId: GOOGLE_UA_ID,
+  dataList,
+  views,
+  hooks,
+  graphql
+}
+```
 
 ## Datalist
-| Property | Type | Default | Description |
-|:---|:---|:---|:---|
-| addLabelText | string | 'Add "{label}"?' | text to display when `allowCreate` is true |
+Some basic properties for the datalist. Most of the datalist props are controlled by the view, specifically. These properties apply across views. Honestly, these should really be reprogrammed to exist in the index.js file or vice-versa. @todo
+| Property | Type | Default | Possible Values | Description |
+|:---|:---|:---|:---|:---|
+| height| string | undefined | '100%','200px'| Takes a stringified css height value with units. Controls the overall height of the filteredlist component. |
+| paginationBottomPosition| string | '' | '36px','5%'| Takes a stringified css value with units. Controls where near the bottom pagination controls sit. |
   
+#### Example
+```
+export default {
+  height: '600px',
+  paginationBottomPosition: '36px',
+}
+```
+
+
 ## Views
 Views are higher level filters & datalist pairs that run independent of eachother. They are **rendered as tabs** above the filters sidebar when more than one view is present. Essentially they are sub instances of the entire component within the component.
 
@@ -13,10 +156,10 @@ Views are higher level filters & datalist pairs that run independent of eachothe
 |:---|:---|:---|:---|:---|
 | id | string | '' | ''| The UNIQUE id of the view. |
 | label | string | '' | ''| The display name for the view. Used by the tabs. |
-| enableRowChecks | boolean | `false` | `true`,`false`| This switch shows the row checks (thus enabling the checked items queue functionality) on the built in 'display' and 'text' displayTypes.|
-| writeQueryStringToURL | boolean | `false` | `true`,`false`| This switch controls if the filter query object can be written to the url for re-running the current state on page reload or share.|
-| displayType | string | '' | 'text','display', 'custom'| Controls what to render on each of the datalist line item rows. Types: text [simple line item], display [image & details line item], or custom [Provide a React component to the customDisplayTypeComponent prop below and it will receive the row item in its props]|
-| customDisplayTypeComponent | React component | undefined | undefined, React component| See the displayType property description for why this is used.|
+| enableRowChecks | boolean | `false` | `true`,`false` | This switch shows the row checks (thus enabling the checked items queue functionality) on the built in 'display' and 'text' displayTypes.|
+| writeQueryStringToURL | boolean | `false` | `true`,`false` | This switch controls if the filter query object can be written to the url for re-running the current state on page reload or share.|
+| displayType | string | '' | 'text','display', 'custom'| Controls what to render on each of the datalist line item rows. Types: text [simple line item], display [image & details line item], or custom [Provide a React component to the customDisplayTypeComponent prop below and it will receive the row item in its props] |
+| customDisplayTypeComponent | React component | undefined | undefined, React component| See the displayType property description for why this is used. |
 | customContentPlaceholder | React component | '' | ''| Used for displaying a content placeholder component instead of a loading gif while the user waits for item data to load and populate the rows.|
 | customContentPlaceholderAmount | int | undefined | undefined,int | Sets the number of content placeholder rows to render while loading data.|
 | enableGalleryLightbox | boolean | `false` | `true`,`false`| Controls showing lightbox of the row image in the built-in display component when the user clicks the image. |
@@ -63,6 +206,96 @@ Views are higher level filters & datalist pairs that run independent of eachothe
 | searchButton.background | string | '' | ''| Accepts a hex string to set the background color of the search button. |
 | searchButton.text | string | '' | ''| Accepts a hex string to set the color of the search button text. |
 
+#### Example
+```
+import versionMetadata from '../filterGroups/version-metadata';
+import versionContentType from '../filterGroups/version-contentType';
+import versionRightsType from '../filterGroups/version-rightsType';
+import userFiltersets from '../filterGroups/userFiltersets';
+import sorting from '../filterGroups/sorting';
+
+import search from '../filters/search';
+import mapDictionary from '../maps';
+import config from '../../config';
+import { ENDPOINT_OFFERS } from '../../../config';
+
+import DisplayItem from '../components/DisplayItem';
+import ContentPlaceholder from '../components/ContentPlaceholder';
+import filterDefaults from '../../../defaults';
+import ExportIcon from '../components/ExportIcon';//icon component
+
+export default {
+  id: 'buyer',
+  label: 'Buyer',
+  enableRowChecks: false,
+  writeQueryStringToURL: true,
+  displayType: 'custom',
+
+  customDisplayTypeComponent: DisplayItem,
+  customContentPlaceholder: ContentPlaceholder,
+  customContentPlaceholderAmount: 20,
+
+  enableGalleryLightbox: true,
+  showTabsHeader: false,
+  showTabs: false,
+  showListHeader: false,
+  showSearch: true,
+  enableListSort: false,
+  showListSettings: false,
+  showResetFiltersButton: true,
+  showSaveFiltersInterface: true,
+
+  infoDisplaySettings: {
+    showIconStrip: true,
+    showShareLink: true,
+    showPaginationData: true,
+    iconComponents: [ExportIcon]
+  },
+  filterGroups: [versionMetadata, sorting, userFiltersets],//versionRightsType,
+  filterDefaults,
+  itemIdProp: 'entityUUID',
+  listEntityTypes: ['olyplat-entity-catalog'],
+  renderTo: 'store',
+  api: {
+    type: 'rest',
+    url: ENDPOINT_OFFERS,
+    method: 'POST',
+    xhrProxy: ({ uri, body }, cb) => {
+        axios(uri, body)
+          .then(res => {
+            b(null, res, res);
+          })
+          .catch(err => {
+            cb(err, null, null);
+          });
+    },
+    token: (() => localStorage.getItem('id_token'))(),
+    onTokenNeedsRefresh: cb => {cb();}
+  },
+  paginationTake: 25,
+  link: {
+    row: item => `https://mysite.com/item/${item.externalId}`,
+    target: ''//use '' or '_blank'
+  },
+  noResultsMessage: "No items found",
+  usersSavedFiltersets: () => new Promise((resolve, reject) => {
+    //Do some stuff with the data, like storing it in your api, then resolve the promise.
+  }),//returns a promise .
+  props: [
+   //See the view props object below for the contents of this array.
+   // There should be one props object for each column displayed
+  ],
+  addons: [
+    search
+    // Use a filter object here
+  ],
+  searchButton: {
+    background: '#4db3d7',
+    text: '#fff'
+  }
+};
+```
+
 ## View Props
 These are props objects that configure how default row text components display data.
 
@@ -75,10 +308,25 @@ Available item properties to the row. Also controls which props are visible by d
 | mapTo | object | falsy | falsy, {} | Takes an object that it will use as a map to map item property names from one key to another. If the custom component you're using to render rows requires a certain schema and your item has a different schema, you can map property to property here.|
 | hasCopy | boolean | `false` | `true`,`false`| Switch on the "copy to clipboard" icon/feature for the particular cell data. |
 | isDate | boolean | `false` | `true`,`false`| If you're passing in a date, switching this will convert the date timestamp to a human readable date.|
-| isSortable | boolean | `false` | `true`,`false`| Switch whether or not to allow the user to sort|
-| width | string |  | | |
+| isSortable | boolean | `false` | `true`,`false`| Switch whether or not to allow the user to be able to sort this property from the list header column name interface. |
+| width | string | '' | '11px', '100%' | A stringified css value to determine the column width on the default text. |
 | display | boolean | `false` | `true`,`false`| Lets the datalist know that it should display that column on load. If it's false, it will not dipslay on load but will still be available to the column settings interface. |
 | before | function |  | | A hook to transform the value (mostly for mapping) before rendering to the screen. If not using it, please set it like this until a default can be built in: `before :(val,item)=>val` @todo add default function check|
+
+#### Example
+```
+{
+  key:'createdDate',
+  label:'Created',
+  mapTo : {"cardToOffer":"createdDate", "someProp":"alias"},
+  hasCopy:false,
+  isDate: true,
+  isSortable : true,
+  width:'12%',
+  display: true,
+  before :(val,item)=>val
+},
+```
 
 
 ## Filter Groups 
@@ -230,3 +478,206 @@ export default {
 ```
 
 ## Hooks
+The hooks are powerful. At different points in time throughout the lifecycle of the filteredlist component and on different actions the hooks are triggered. USe them to trigger actions in the parent app or to mutate data before sending requests to your apis. All hooks are just functions that get passed certain parameters and sometimes expect a response.
+
+| Property | Type | Return schema | Parameters | Description |
+|:---|:---|:---|:---|:---|
+| beforeXHR | function | {data, xhrOptions} | (data, xhrOptions, requestData) | Hook gets called just before the xhr request. It passes through the entire xhr params & the request body data raw. |
+| onXHRSuccess | function | `resolve({Items:[{}],total:1})`,`resolve("some error message")` | (body,resolve,reject) |  Hook gets called when the xhr request returns successfully. A Promise is passed in the argument, it must be resolved. It's here that you can mutate data received from the api, then return wither an error message or an object of Items and the total.|
+| onXHRFail | function | body | (err,body) | Hook gets called when the xhr request kicks back an error |
+| onCheck | function | item | ({item,workspaceItems}) | Hook for picking up check events. Note: You have access to all items currently in the workspace, but you must only return the item being mutated. Warning: a select all command will run this hook once for each item as it builds the workspaceItems list |
+| onUnCheck | function | NA | ({item,workspaceItems}) | Hook for picking up check events. Note: You have access to all items currently in the workspace, but you must only return the item being mutated. Warning: a select all command will run this hook once for each item as it empties the workspaceItems list |
+| onStateUpdate | function | NA | (state) | Hook gets called whenever the main application state gets updated. Useful for getting the filters' current queryObject or queryString. Pagination can also be read here as well as the current Selected View |
+| onInit | function | NA | (app) | Hook used to know when the app is initialized. |
+| onSaveFilterset | function | NA | ({name,queryString,queryObject}) | Hook gets called when the user opted to save their filter set. |
+| onDeleteFilterset | function | NA | ({name,filterset}) | Hook gets called when the user opted to delete their saved their filter set |
+| pushDispatch | function | ({Items: [{}],count: 1}) | NA | See the note below on the push dispatcher. |
+
+
+### Push dispatch hook
+This is a special "hook" used to push data structures directly to the internal Redux store. When the puser callback is triggered an internal dispatch is run. This is an experimental feature for connecting websocket data to the fitleredlist. See below example for some boilerplate code using Rxjs subscriptions.
+
+#### Example
+```
+let pusher = () => { };
+
+export default cb => {
+  pusher = cb;
+}
+
+window.Oly.$tream
+  .subscribe(data => {
+    if (data.hasOwnProperty('data') && data.data.offers) {
+      console.log('PUSHER', data.data.offers);
+      pusher({
+        Items: data.data.offers.items,
+        count: data.data.offers.total
+      })
+    }
+  });
+```
+
+# Complete Example
+## Putting it all together: Complete configuration object example
+Does not contain the imports, just the final structure example. It's wise to split this up into folders using ES6 imports and exports, for manageability.
+
+#### Example suggested folder structure
+```
+filteredlistConfig
+  index.js
+  dataList.js
+  /_utils
+    index.js
+  /components
+    index.js
+    DisplayComponent.js
+  /filterGroups
+    index.js
+    sorting.js
+    datesFiltergroup.js
+  /filters
+    index.js
+    createdDate.js
+    search.js
+    genres.js
+  /hooks
+    index.js
+    beforeXHR.js
+    ...etc
+  /views
+    index.js
+    primary.js
+    secondary.js
+  
+```
+
+
+#### Example complete configuration object
+```
+  export default {
+  id: 'main',
+  selector: '',
+  parentStore: false,
+  defaultView: 'buyer',
+  writeQueryStringToURL: true,
+  runQueryStringURLOnRender: true,
+  showFilters: true,
+  filtersLabel: '',
+  pinPagination: true,
+  notify: (message, type, position) => { utils.notify({ message, level: type, position: 'tr' }); },
+  header: {
+    title: ''
+  },
+  footer: {},
+  googleAnalyticsUAId: GOOGLE_UA_ID,
+  dataList:{
+    height: undefined,
+    paginationBottomPosition: '36px'
+  },
+  views: [
+    {
+      id: 'buyer',
+      label: 'Buyer',
+      enableRowChecks: false,
+      writeQueryStringToURL: true,
+      displayType: 'custom',
+
+      customDisplayTypeComponent: DisplayItem,
+      customContentPlaceholder: ContentPlaceholder,
+      customContentPlaceholderAmount: 20,
+
+      enableGalleryLightbox: true,
+      showTabsHeader: false,
+      showTabs: false,
+      showListHeader: false,
+      showSearch: true,
+      enableListSort: false,
+      showListSettings: false,
+      showResetFiltersButton: true,
+      showSaveFiltersInterface: true,
+
+      infoDisplaySettings: {
+        showIconStrip: true,
+        showShareLink: true,
+        showPaginationData: true,
+        iconComponents: [ExportIcon]
+      },
+      filterGroups: [
+        {
+          id:'sorting',
+          label : 'Sort by',
+          defaultOpen: false,
+          accordian:{ 
+              color:{
+                  background: 'transparent',
+                  text:'#98999a'
+              }
+          },
+          filters:[ 
+            {
+              id: "sort-createdDate",
+              type:'sort',
+              prop: sort-createdDate,
+              label: '',
+              value:null
+            } 
+          ]
+        }
+      ],
+      filterDefaults,
+      itemIdProp: 'entityUUID',
+      listEntityTypes: ['olyplat-entity-catalog'],
+      renderTo: 'store',
+      api: {
+        type: 'rest',
+        url: ENDPOINT_OFFERS,
+        method: 'POST',
+        xhrProxy: ({ uri, body }, cb) => {
+            axios(uri, body)
+              .then(res => {
+                b(null, res, res);
+              })
+              .catch(err => {
+                cb(err, null, null);
+              });
+        },
+        token: (() => localStorage.getItem('id_token'))(),
+        onTokenNeedsRefresh: cb => {cb();}
+      },
+      paginationTake: 25,
+      link: {
+        row: item => `https://mysite.com/item/${item.externalId}`,
+        target: ''//use '' or '_blank'
+      },
+      noResultsMessage: "No items found",
+      usersSavedFiltersets: () => new Promise((resolve, reject) => {
+        //Do some stuff with the data, like storing it in your api, then resolve the promise.
+        resolve();
+      }),//returns a promise .
+      props: [
+      //See the view props object below for the contents of this array.
+      // There should be one props object for each column displayed
+      ],
+      addons: [
+        search
+        // Use a filter object here
+      ],
+      searchButton: {
+        background: '#4db3d7',
+        text: '#fff'
+      }
+    }
+  ],
+  hooks: {
+    beforeXHR: (data, xhrOptions, requestData) => ({data, xhrOptions}),
+    onXHRSuccess: (body,resolve,reject)=>({Items:[], total:0}),
+    onXHRFail: (err,body)=>body,
+    onCheck: ({item,workspaceItems})=>item,
+    onUnCheck: ({item,workspaceItems})=>item,
+    onStateUpdate: state => {},
+    onInit: app=>{},
+    onSaveFilterset: ({name,queryString,queryObject})=>{},
+    onDeleteFilterset: ({name,filterset})=>{},
+    pushDispatch: cb => { cb(); }
+  }}
+```
