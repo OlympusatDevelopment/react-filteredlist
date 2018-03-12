@@ -55,17 +55,17 @@ class DisplayItem extends Component { // eslint-disable-line react/prefer-statel
     makeLightboxImages(item){
         let images = [];
 
-        if(item.assets && item.assets.artwork.length > 0){
-            images.push(...item.assets.artwork.map(art=>{return {src:art.url,caption:art.filename};}));
+        if(item.images && item.images.length > 0){
+            images.push(...item.images.map(art=>{return {src:art.url,caption:art.caption};}));
         }
 
-        if(item.assets && item.assets.still.length > 0){
-            images.push(...item.assets.still.map(art=>{return {src:art.url,caption:art.filename};}));
-        }
+        // if(item.assets && item.assets.still.length > 0){
+        //     images.push(...item.assets.still.map(art=>{return {src:art.url,caption:art.filename};}));
+        // }
 
-        if(item.assets && item.assets.video.length > 0){
-            images.push(...item.assets.video.map(art=>{return {src:art.url,caption:art.filename};}));
-        }
+        // if(item.assets && item.assets.video.length > 0){
+        //     images.push(...item.assets.video.map(art=>{return {src:art.url,caption:art.filename};}));
+        // }
 
         if(images.length === 0){
             //images = [{src:require(`/lib/images/no-image-available.png`)}];
@@ -92,7 +92,7 @@ class DisplayItem extends Component { // eslint-disable-line react/prefer-statel
             seasons = item.entityType === 'olyplat-entity-series' ? (<p style={{fontSize:'18px'}}>Seasons: 1 - 3</p>) : (<span style={{height:'21px', display:'inline-block'}}> </span>),
 
             etProp = props.filter(prop=>prop.key === 'entityType'),
-            etPropHooked = etProp ? etProp[0].before(item.entityType) : false,
+            etPropHooked = etProp && etProp[0] ? etProp[0].before(item.entityType) : false,
             entityType = etPropHooked ?  etPropHooked.charAt(0).toUpperCase() + etPropHooked.slice(1) : '',//COnnect to the prop hook in the view props
 
             artwork = item.assets && item.assets.artwork.length > 0 ? item.assets.artwork[0].url  : false,

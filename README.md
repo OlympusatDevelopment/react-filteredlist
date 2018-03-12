@@ -83,7 +83,7 @@ This (in the example folder structure this is the top-level index.js file) is th
 | id | string | '' | ''| The UNIQUE id of the filteredlist component. |
 | selector | string | '' | ''| Currently not used. @todo program in the custom selector option for the entire component. |
 | parentStore | string | falsy | false, [Redux Store] | The parent application's Redux store can be passed in here. |
-| defaultView | string | '' | ''| The UNIQUE id of the view. |
+| defaultView | string | '' | ''| The UNIQUE id of the view to use by default. Matches the view's id property. |
 | writeQueryStringToURL | boolean | `false` | `true`,`false` | If true, the queries will be converted to query string params and written to the url. |
 | runQueryStringURLOnRender | boolean | `false` | `true`,`false` | If true, when a filters query string is present in the url, the component will attempt to run it. This is necessary for sharing and in general for tracking internal state. |
 | showFilters | boolean | `false` | `true`,`false` | If false, the filters sidebar willbe hidden. |
@@ -158,7 +158,7 @@ Views are higher level filters & datalist pairs that run independent of eachothe
 | label | string | '' | ''| The display name for the view. Used by the tabs. |
 | enableRowChecks | boolean | `false` | `true`,`false` | This switch shows the row checks (thus enabling the checked items queue functionality) on the built in 'display' and 'text' displayTypes.|
 | writeQueryStringToURL | boolean | `false` | `true`,`false` | This switch controls if the filter query object can be written to the url for re-running the current state on page reload or share.|
-| displayType | string | '' | 'text','display', 'custom'| Controls what to render on each of the datalist line item rows. Types: text [simple line item], display [image & details line item], or custom [Provide a React component to the customDisplayTypeComponent prop below and it will receive the row item in its props] |
+| displayType | string | '' | 'text','display', 'custom'| Controls what to render on each of the datalist line item rows. Types: text [simple line item], display [image & details line item. Expects an array of image objects to exist. images:[{src: 'http://fillmurray.com/200/300',caption: "Bill Murray"}], or custom [Provide a React component to the customDisplayTypeComponent prop below and it will receive the row item in its props] |
 | customDisplayTypeComponent | React component | undefined | undefined, React component| See the displayType property description for why this is used. |
 | customContentPlaceholder | React component | '' | ''| Used for displaying a content placeholder component instead of a loading gif while the user waits for item data to load and populate the rows.|
 | customContentPlaceholderAmount | int | undefined | undefined,int | Sets the number of content placeholder rows to render while loading data.|
@@ -325,7 +325,7 @@ Available item properties to the row. Also controls which props are visible by d
   width:'12%',
   display: true,
   before :(val,item)=>val
-},
+}
 ```
 
 

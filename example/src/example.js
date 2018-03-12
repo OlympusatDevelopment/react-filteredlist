@@ -2,7 +2,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var FilteredList = require('react-filteredlist').default;
 
-import config from './market';   
+// import config from './market';   
+import config from './exampleConfigSimple.js';   
 
 class App extends React.Component{ 
 	render () { 

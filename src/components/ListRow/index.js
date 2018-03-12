@@ -20,12 +20,12 @@ class ListRow extends Component { // eslint-disable-line react/prefer-stateless-
             case 'custom':
                 const CustomDisplayItem = selectedView.customDisplayTypeComponent;
 
-                return (<CustomItem CustomDisplayItem={CustomDisplayItem} item={item} selectedView={selectedView} parentProps={props}/>);
+                return (<CustomItem CustomDisplayItem={CustomDisplayItem} item={item} selectedView={selectedView} parentProps={props} preferencedProps={props.preferencedProps}/>);
             case 'display':
-                return (<DisplayItem item={item} selectedView={selectedView} />);
+                return (<DisplayItem item={item} selectedView={selectedView} preferencedProps={props.preferencedProps}/>);
             case 'text':
             default:
-                return (<TextItem item={item} selectedView={selectedView} />);
+                return (<TextItem item={item} selectedView={selectedView} preferencedProps={props.preferencedProps}/>);
         }
     }
     

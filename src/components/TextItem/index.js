@@ -49,6 +49,7 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
     }
 
     render() {
+      console.log(this.props);
         const {item,selectedView, preferencedProps} = this.props;
         const props = preferencedProps,
             check = selectedView.enableRowChecks ? (
