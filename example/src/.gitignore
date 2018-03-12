@@ -4,3 +4,4 @@
 # Dependency directory
 node_modules
 dataListConfig/config.js
+config.js

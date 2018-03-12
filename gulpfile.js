@@ -62,14 +62,13 @@ var taskConfig = {
 		src: 'example/src',
 		dist: 'example/dist',
 		files: [
-			'index.html',
-			'standalone.html'
+			'index.html'
 		],
 		scripts: [
 			'example.js'
 		],
 		scss: [
-			'main.scss'
+			'example.scss'
 		]
 	}
 

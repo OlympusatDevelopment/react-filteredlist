@@ -28,15 +28,15 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
 
   onSelectChange(data) {
     const self = this,
-    { options, selectedView, filterChange } = this.props,
-    value = (data && Array.isArray(data)) ? 
-              // (Array.isArray(data[0].entityUUID)  ? data[0].entityUUID :
-                data.map(obj=> {
-                  console.log('OBJECT',obj);
-                  return obj[options.options.key];
-              }) : 
-            (data ? [data[options.options.key]] : null);    
-      
+      { options, selectedView, filterChange } = this.props,
+      value = (data && Array.isArray(data)) ?
+        // (Array.isArray(data[0].entityUUID)  ? data[0].entityUUID :
+        data.map(obj => {
+          console.log('OBJECT', obj);
+          return obj[options.options.key];
+        }) :
+        (data ? [data[options.options.key]] : null);
+
     filterChange({
       id: options.id,
       view: selectedView.id,
@@ -200,13 +200,13 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
               optionLabelKey={options.options.value}
               optionValueKey={options.options.key}
               multiple={options.multi}
-              initialValue={this.makeSelectInitialValue(options,defaults)}
+              initialValue={this.makeSelectInitialValue(options, defaults)}
               placeholder="Make Your Selections"
               onChange={(data) => self.onSelectChange(data)}
               searchable={false}
             />
           );
-        } else {           
+        } else {
           return (
             <Select
               ajaxDataFetch={options.options.getOptions || []}
@@ -226,25 +226,25 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
    * Makes the select components initial values based on either an incoming array of ids or a collection
    * @param {*} options 
    */
-  makeSelectInitialValue(options,defaults){
+  makeSelectInitialValue(options, defaults) {
     const self = this;
-   
-    const initVals  =  Array.isArray(self.props.options.value) ? self.props.options.value.map(v => {
-      const defaultsExtract = defaults[self.props.options.id].filter(def=>{
-        return def[options.options.key] === v;
-      })[0];
 
-      return { 
-        [options.options.key]: v, // entityUUID
-        [options.options.value]: defaultsExtract[options.options.value]}} // entityValue
-      ) : { 
+    const initVals = Array.isArray(self.props.options.value)
+      ? self.props.options.value.map(v => {
+        const defaultsExtract = defaults[self.props.options.id]
+          .filter(def => def[options.options.key] == v)[0];
+
+        return {
+          [options.options.key]: v, // entityUUID
+          [options.options.value]: defaultsExtract[options.options.value]
+        }
+      })// entityValue 
+      : {
         [options.options.key]: self.props.options.value,
         [options.options.value]: val ? val[options.options.value] : null
       }
 
-      console.log('INIT VALS', initVals);
-
-      return initVals;
+    return initVals;
   }
 
   render() {

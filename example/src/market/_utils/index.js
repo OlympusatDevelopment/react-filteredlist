@@ -2,7 +2,7 @@ import xhr from 'xhr';
 import Promise from 'bluebird';
 import _ from 'underscore';
 
-import config from '../config';
+import config from '../config'; 
 
 export default {
     convertUNIXToHumanDate(UNIX_timestamp,withoutTime){

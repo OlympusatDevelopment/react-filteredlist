@@ -67,8 +67,8 @@ export default {
         /**
          * set to false to make non-tokened requests
          */
-        // token:localStorage.getItem(config.tokenLocalStorageKey)
-        token:(()=>window.OlyAuth.getToken())()
+        token:localStorage.getItem(config.tokenLocalStorageKey)
+        // token:(()=>window.OlyAuth.getToken())()
     },
 
     paginationTake : 20,// Amount to take for our pages

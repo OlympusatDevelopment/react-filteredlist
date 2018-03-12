@@ -7,7 +7,7 @@ import views from './views';
 import hooks from './hooks';
 import graphql from './graphql';
 
-import {GOOGLE_UA_ID} from '../../config';
+import {GOOGLE_UA_ID} from './config';
 
 export default {
     id : 'main',//Must be unique if more than one list is displayed on a page

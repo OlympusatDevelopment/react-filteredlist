@@ -1,14 +1,15 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var FilteredList = require('react-filteredlist');
+var FilteredList = require('react-filteredlist').default;
 
-import config from './dataListConfig';
+import config from './market';   
 
-class App extends React.Component{
-	render () {
-		return (
+class App extends React.Component{ 
+	render () { 
+    console.log(FilteredList);
+		return ( 
 			<div>
-				<FilteredList config={config}/> 
+				<FilteredList config={config}/>
 			</div>
 		);
 	}

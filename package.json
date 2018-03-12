@@ -1,6 +1,6 @@
 {
   "name": "react-filteredlist",
-  "version": "1.18.2",
+  "version": "1.20.3",
   "description": "FilteredList",
   "main": "lib/FilteredList.js",
   "author": "Adam Gedney",
@@ -75,7 +75,7 @@
   },
   "scripts": {
     "build": "gulp clean && NODE_ENV=production gulp build",
-    "examples": "gulp dev:server",
+    "examples": "gulp dev",
     "lint": "eslint ./; true",
     "publish:site": "NODE_ENV=production gulp publish:examples",
     "release": "NODE_ENV=production gulp release",
