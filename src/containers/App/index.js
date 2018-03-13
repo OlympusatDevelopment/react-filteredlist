@@ -341,7 +341,7 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
           {filtersToggle}
           {filters}
           <DataList Items={app.Items} width={width}> </DataList>
-        </div>
+        </div> 
         <Footer> </Footer>
       </div>
     );
@@ -351,10 +351,6 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
     const { config: { selector }, app } = this.props,
       classNames = `dl ${selector}`,
       appBody = Object.keys(app.selectedView).length > 0 ? (this.makeAppBody(app)) : '';//Delay render until config is loaded
-
-      window.addEventListener('message', function(e){
-       console.log(e, e.data);
-      }, false);
 
     return (
       <div className={classNames} >

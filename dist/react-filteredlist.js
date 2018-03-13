@@ -59787,7 +59787,7 @@ function extend() {
 },{}],329:[function(require,module,exports){
 module.exports={
   "name": "react-filteredlist",
-  "version": "1.20.3",
+  "version": "1.20.5",
   "description": "FilteredList",
   "main": "lib/FilteredList.js",
   "author": "Adam Gedney",
@@ -64023,10 +64023,6 @@ var App = function (_Component) {
           classNames = 'dl ' + selector,
           appBody = Object.keys(app.selectedView).length > 0 ? this.makeAppBody(app) : ''; //Delay render until config is loaded
 
-      window.addEventListener('message', function (e) {
-        console.log(e, e.data);
-      }, false);
-
       return _react2.default.createElement(
         'div',
         { className: classNames },
@@ -64188,7 +64184,6 @@ function appReducer() {
 
       // HOOK @todo should allow returning new state from hook
       if (_state.config && _state.config.hooks && _state.config.hooks.onStateUpdate) {
-        window.parent.postMessage(JSON.stringify(_state), '*');
         _state.config.hooks.onStateUpdate(_state);
       }
 
