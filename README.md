@@ -79,7 +79,7 @@ import "../../../../node_modules/react-filteredlist/lib/main.css";
 
 
 ## Top level configuration
-This (in the example folder structure this is the top-level index.js file) is the entrypoint for pulling together all the datalist, views, filter groups, and fitlers configs.
+This (in the example folder structure this is the top-level index.js file) is the entrypoint for pulling together all the datalist, views, filter groups, and filters configs.
 
 | Property | Type | Default | Possible Values | Description |
 |:---|:---|:---|:---|:---|
@@ -137,7 +137,9 @@ export default {
 ```
 
 ## Datalist
-Some basic properties for the datalist. Most of the datalist props are controlled by the view, specifically. These properties apply across views. Honestly, these should really be reprogrammed to exist in the index.js file or vice-versa. @todo
+Some basic properties for the datalist. Most of the datalist props are controlled by the view, specifically. These properties apply across views. Honestly, these should really be reprogrammed to exist in the index.js file or vice-versa.
+
+
 | Property | Type | Default | Possible Values | Description |
 |:---|:---|:---|:---|:---|
 | height| string | undefined | '100%','200px'| Takes a stringified css height value with units. Controls the overall height of the filteredlist component. |
