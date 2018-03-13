@@ -82,6 +82,8 @@ import "../../../../node_modules/react-filteredlist/lib/main.css";
 <FilteredList config={dataListConfig} />
 ```
 
+
+
 # Getting Started
 
 ## Top level configuration
