@@ -87,6 +87,8 @@ import "../../../../node_modules/react-filteredlist/lib/main.css";
 # Documentation
 
 ## Top level configuration
+See that `dataListConfig` being passed into the config prop on the component usage in the above example? That is essentially a large object. At the end of the docs, you will find an [example](#complete-example) of a basic config object. What follows are the details for building that config object in a more advanced way.
+
 This (in the example folder structure this is the top-level index.js file) is the entrypoint for pulling together all the datalist, views, filter groups, and filters configs.
 
 | Property | Type | Default | Possible Values | Description |
