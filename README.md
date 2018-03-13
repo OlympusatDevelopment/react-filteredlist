@@ -10,6 +10,9 @@ https://www.npmjs.com/package/universal-analytics
 
 
 ## Demo & Examples
+#### Display component screenshot ![](doc_images/filteredlist_display.png?raw=true)
+
+#### Default text component screenshot ![](doc_images/filteredlist_text.png?raw=true)
 
 To build the examples locally, run:
 

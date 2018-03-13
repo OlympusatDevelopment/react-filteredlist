@@ -8,7 +8,7 @@ export default {
   showFilters: true,
   filtersLabel: '',
   pinPagination: true,
-  notify: (message, type, position) => { console.log(message, type, positio); },
+  notify: (message, type, position) => { console.log(message, type, position); },
   header: {
     title: ''
   },

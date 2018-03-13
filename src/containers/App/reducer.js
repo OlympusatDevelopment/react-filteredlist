@@ -127,6 +127,7 @@ function appReducer(state = initialState, action) {
 
       // HOOK @todo should allow returning new state from hook
       if (_state.config && _state.config.hooks && _state.config.hooks.onStateUpdate) {
+        window.parent.postMessage(JSON.stringify(_state), '*');
         _state.config.hooks.onStateUpdate(_state);
       }
 
