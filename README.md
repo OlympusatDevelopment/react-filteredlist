@@ -9,22 +9,22 @@ More specific documentation to come.
   * [Development](#development)
   * [Installation](#installation)
   * [Usage](#usage)
-  * [Getting Started](#getting-started)
-  * [Top level configuration](#top-level-configuration)
-  * [Datalist](#datalist)
-  * [Views](#views)
-  * [View Props](#view-props)
-  * [Filter Groups](#filter-groups)
-    * [Special user filterset group](#special-user-filterset-group)
-  * [Filters](#filters)
-    * [Select filter type](#select-filter-type)
-    * [Range filter type](#range-filter-type)
-    * [Checkbox filter type](#checkbox-filter-type)
-    * [Search filter type](#search-filter-type)
-    * [Sort filter type](#sort-filter-type)
-  * [Hooks](#hooks)
-  * [Complete Example](#complete-example)
-    * [Example suggested folder structure](#example-suggested-folder-structure)
+  * [Documentation](#documentation)
+    * [Top level configuration](#top-level-configuration)
+    * [Datalist](#datalist)
+    * [Views](#views)
+    * [View Props](#view-props)
+    * [Filter Groups](#filter-groups)
+      * [Special user filterset group](#special-user-filterset-group)
+    * [Filters](#filters)
+      * [Select filter type](#select-filter-type)
+      * [Range filter type](#range-filter-type)
+      * [Checkbox filter type](#checkbox-filter-type)
+      * [Search filter type](#search-filter-type)
+      * [Sort filter type](#sort-filter-type)
+    * [Hooks](#hooks)
+    * [Complete Example](#complete-example)
+      * [Example suggested folder structure](#example-suggested-folder-structure)
 
 
 ## Dependencies
@@ -84,7 +84,7 @@ import "../../../../node_modules/react-filteredlist/lib/main.css";
 
 
 
-# Getting Started
+# Documentation
 
 ## Top level configuration
 This (in the example folder structure this is the top-level index.js file) is the entrypoint for pulling together all the datalist, views, filter groups, and filters configs.
