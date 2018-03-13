@@ -39,7 +39,7 @@ https://www.npmjs.com/package/universal-analytics
 #### Filteredlist w/ default text component screenshot ![](doc_images/filteredlist_text.png?raw=true)
 
 
-# Development
+## Development
 
 To build the examples locally, run:
 
