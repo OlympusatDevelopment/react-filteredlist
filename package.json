@@ -76,6 +76,7 @@
   "scripts": {
     "build": "gulp clean && NODE_ENV=production gulp build",
     "examples": "gulp dev",
+    "deploy:examples": "aws s3 sync ./example/dist s3://react.filteredlist.demo --acl public-read --exclude .DS_Store --profile oly_demo --delete",    
     "lint": "eslint ./; true",
     "publish:site": "NODE_ENV=production gulp publish:examples",
     "release": "NODE_ENV=production gulp release",

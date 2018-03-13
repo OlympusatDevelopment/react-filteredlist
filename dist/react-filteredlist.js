@@ -59862,7 +59862,8 @@ module.exports={
   },
   "scripts": {
     "build": "gulp clean && NODE_ENV=production gulp build",
-    "examples": "gulp dev:server",
+    "examples": "gulp dev",
+    "deploy:examples": "aws s3 sync ./example/dist s3://react.filteredlist.demo --acl public-read --exclude .DS_Store --profile oly_demo --delete",    
     "lint": "eslint ./; true",
     "publish:site": "NODE_ENV=production gulp publish:examples",
     "release": "NODE_ENV=production gulp release",
@@ -60553,29 +60554,21 @@ var DisplayItem = function (_Component) {
         value: function makeLightboxImages(item) {
             var images = [];
 
-            if (item.assets && item.assets.artwork.length > 0) {
+            if (item.images && item.images.length > 0) {
                 var _images;
 
-                (_images = images).push.apply(_images, _toConsumableArray(item.assets.artwork.map(function (art) {
-                    return { src: art.url, caption: art.filename };
+                (_images = images).push.apply(_images, _toConsumableArray(item.images.map(function (art) {
+                    return { src: art.url, caption: art.caption };
                 })));
             }
 
-            if (item.assets && item.assets.still.length > 0) {
-                var _images2;
+            // if(item.assets && item.assets.still.length > 0){
+            //     images.push(...item.assets.still.map(art=>{return {src:art.url,caption:art.filename};}));
+            // }
 
-                (_images2 = images).push.apply(_images2, _toConsumableArray(item.assets.still.map(function (art) {
-                    return { src: art.url, caption: art.filename };
-                })));
-            }
-
-            if (item.assets && item.assets.video.length > 0) {
-                var _images3;
-
-                (_images3 = images).push.apply(_images3, _toConsumableArray(item.assets.video.map(function (art) {
-                    return { src: art.url, caption: art.filename };
-                })));
-            }
+            // if(item.assets && item.assets.video.length > 0){
+            //     images.push(...item.assets.video.map(art=>{return {src:art.url,caption:art.filename};}));
+            // }
 
             if (images.length === 0) {
                 //images = [{src:require(`/lib/images/no-image-available.png`)}];
@@ -60665,7 +60658,7 @@ var DisplayItem = function (_Component) {
                 etProp = props.filter(function (prop) {
                 return prop.key === 'entityType';
             }),
-                etPropHooked = etProp ? etProp[0].before(item.entityType) : false,
+                etPropHooked = etProp && etProp[0] ? etProp[0].before(item.entityType) : false,
                 entityType = etPropHooked ? etPropHooked.charAt(0).toUpperCase() + etPropHooked.slice(1) : '',
                 //COnnect to the prop hook in the view props
 
@@ -61943,12 +61936,12 @@ var ListRow = function (_Component) {
                 case 'custom':
                     var CustomDisplayItem = selectedView.customDisplayTypeComponent;
 
-                    return _react2.default.createElement(_CustomItem2.default, { CustomDisplayItem: CustomDisplayItem, item: item, selectedView: selectedView, parentProps: props });
+                    return _react2.default.createElement(_CustomItem2.default, { CustomDisplayItem: CustomDisplayItem, item: item, selectedView: selectedView, parentProps: props, preferencedProps: props.preferencedProps });
                 case 'display':
-                    return _react2.default.createElement(_DisplayItem2.default, { item: item, selectedView: selectedView });
+                    return _react2.default.createElement(_DisplayItem2.default, { item: item, selectedView: selectedView, preferencedProps: props.preferencedProps });
                 case 'text':
                 default:
-                    return _react2.default.createElement(_TextItem2.default, { item: item, selectedView: selectedView });
+                    return _react2.default.createElement(_TextItem2.default, { item: item, selectedView: selectedView, preferencedProps: props.preferencedProps });
             }
         }
 
@@ -63080,6 +63073,7 @@ var TextItem = function (_Component) {
         value: function render() {
             var _this2 = this;
 
+            console.log(this.props);
             var _props2 = this.props,
                 item = _props2.item,
                 selectedView = _props2.selectedView,
@@ -64029,6 +64023,10 @@ var App = function (_Component) {
           classNames = 'dl ' + selector,
           appBody = Object.keys(app.selectedView).length > 0 ? this.makeAppBody(app) : ''; //Delay render until config is loaded
 
+      window.addEventListener('message', function (e) {
+        console.log(e, e.data);
+      }, false);
+
       return _react2.default.createElement(
         'div',
         { className: classNames },
@@ -64190,6 +64188,7 @@ function appReducer() {
 
       // HOOK @todo should allow returning new state from hook
       if (_state.config && _state.config.hooks && _state.config.hooks.onStateUpdate) {
+        window.parent.postMessage(JSON.stringify(_state), '*');
         _state.config.hooks.onStateUpdate(_state);
       }
 
@@ -64661,7 +64660,7 @@ var DataList = function (_Component) {
       return Items.map(function (item, i) {
         return _react2.default.createElement(
           _ListRow2.default,
-          { key: i, item: item, selectedView: selectedView },
+          { key: i, item: item, selectedView: selectedView, preferencedProps: selectedView.props },
           ' '
         );
       });
