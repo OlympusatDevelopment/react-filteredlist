@@ -271,7 +271,7 @@ class Pagination extends Component {
                     <div className="dl__pagination__indicator">
                         <span>Page&nbsp;</span>
                         <form id="dl__pagination__pageForm" onSubmit={this.handleSubmit.bind(this)}>
-                            <input type="text" id="dl__pagination__currentPage" value={this.state.currentPage} onChange={this.handleInputChange.bind(this)} onBlur={this.handleBlur.bind(this)}/>
+                            <input data-lpignore="true" type="text" id="dl__pagination__currentPage" value={this.state.currentPage} onChange={this.handleInputChange.bind(this)} onBlur={this.handleBlur.bind(this)}/>
                         </form>
                         <span>&nbsp;of</span>
                         <span>{this.state.totalPages || 'loading...'}</span>
