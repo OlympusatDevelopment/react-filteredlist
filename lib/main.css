@@ -4927,7 +4927,8 @@ figure[class^="figure"] div[class^="footer"] {
   .dl__filters .dl__viewTabs {
     width: 100%;
     background: #333;
-    height: 33px; }
+    height: 33px;
+    padding-left: 2px; }
   .dl__filters .dl__viewTab {
     padding: 6px;
     border-top-left-radius: 3px;
