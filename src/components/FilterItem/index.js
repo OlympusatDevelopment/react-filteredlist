@@ -17,13 +17,22 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
     super(props)
     this.state = {
       focusedInput: null,
-      lastFocusedInput: null
+      lastFocusedInput: null,
+      FilterComponent: ''
     };
 
     this.makeFilter = this.makeFilter.bind(this);
     this.onSelectChange = this.onSelectChange.bind(this);
     this.onSortClick = this.onSortClick.bind(this);
     this.makeSelectInitialValue = this.makeSelectInitialValue.bind(this);
+  }
+
+  componentWillMount(){
+    let self = this;
+    this.makeFilter(this.props.options)
+      .then(FilterComponent => {
+          self.setState({FilterComponent});
+      });
   }
 
   onSelectChange(data) {
@@ -132,94 +141,110 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
   }
 
   makeFilter(options) {
-    const self = this,
-      selectValue = {
-        label: 'test',
-        value: self.props.options.value
-      };
+    const self = this;
+    return new Promise((resolve, reject) => {
+      const selectValue = {
+          label: 'test',
+          value: self.props.options.value
+        };
 
-    switch (self.props.options.type) {
-      case 'range':
-        return [
-          (<span key={Math.random() * 100000} className="dl__filterItemRangeClear"><a href="#" onClick={self.onRangeReset.bind(self)}>reset</a></span>),
-          (<DateRangePicker
-            key={Math.random() * 100000}
-            startDate={options.range.start ? moment(options.range.start * 1) : moment()} // .momentObj or null,
-            endDate={options.range.end ? moment(options.range.end * 1) : moment()} // .momentObj or null,
-            onDatesChange={self.onRangeChange.bind(self)} // .func.isRequired,
-            focusedInput={self.state.focusedInput} // .oneOf([START_DATE, END_DATE]) or null,
-            onFocusChange={self.onRangeFocusChange.bind(self)} // .func.isRequired,
-            isOutsideRange={() => false}
-          />)];
-      case 'checkbox':
-        let vals = [...decodeURIComponent(self.props.options.value)];
+      switch (self.props.options.type) {
+        case 'range':
+          resolve([
+            (<span key={Math.random() * 100000} className="dl__filterItemRangeClear"><a href="#" onClick={self.onRangeReset.bind(self)}>reset</a></span>),
+            (<DateRangePicker
+              key={Math.random() * 100000}
+              startDate={options.range.start ? moment(options.range.start * 1) : moment()} // .momentObj or null,
+              endDate={options.range.end ? moment(options.range.end * 1) : moment()} // .momentObj or null,
+              onDatesChange={self.onRangeChange.bind(self)} // .func.isRequired,
+              focusedInput={self.state.focusedInput} // .oneOf([START_DATE, END_DATE]) or null,
+              onFocusChange={self.onRangeFocusChange.bind(self)} // .func.isRequired,
+              isOutsideRange={() => false}
+            />)]);
+          break;
+        case 'checkbox':
+          let vals = [...decodeURIComponent(self.props.options.value)];
 
-        // Handle reading url values @todo: fix the read later when we get more time
-        if (vals[0] === "[" || (vals[0] === "n" && vals[1] === "u")) {
-          vals = vals.join('');
-        }
-
-        try {
-          vals = JSON.parse(vals);
-        } catch (e) { }
-
-        vals = vals === 'null' ? null : vals;
-
-        //@todo .need to spend some time looking at why this component won't render checked values if the first render had no values.
-        return (<CheckboxGroup name={options.id} values={vals} onChange={this.handleCheckboxChange.bind(this, options)}>
-          <div className="dl__filterItemCheckbox">{
-            options.options.getOptions().map(option => {
-              return (<label key={Math.random() * 10000}><Checkbox value={option[options.options.key]} />{option[options.options.value]}</label>);
-            })
-          }</div>
-        </CheckboxGroup>);
-      case 'sort':
-        return (<SortItem options={self.props.options} onClick={this.onSortClick} />);
-        break;
-      case 'select':
-      default:
-        let val = null;
-        let defaults = self.props.selectedView.filterDefaults ? self.props.selectedView.filterDefaults() : {};
-        try { defaults = JSON.parse(defaults) }
-        catch (e) { }
-
-        // Decipher what set of defaults are to be used in the component options list
-        if (defaults) {
-          if (options.options && options.options.defaultsKey) {
-            val = defaults[options.options.defaultsKey] ? defaults[options.options.defaultsKey].filter(item => item[options.options.key] == self.props.options.value)[0] : null;
-          } else {
-            val = defaults[options.id] ? defaults[options.id].filter(item => item[options.options.key] == self.props.options.value)[0] : null;
+          // Handle reading url values @todo: fix the read later when we get more time
+          if (vals[0] === "[" || (vals[0] === "n" && vals[1] === "u")) {
+            vals = vals.join('');
           }
-        }
 
-        // If a value exist via a query string run or state update, set the component initial val, otherwise leave blank to display the placeholder
-        if (self.props.options.value) {
-          return (
-            <Select
-              ajaxDataFetch={options.options.getOptions || []}
-              optionLabelKey={options.options.value}
-              optionValueKey={options.options.key}
-              multiple={options.multi}
-              initialValue={this.makeSelectInitialValue(options, defaults)}
-              placeholder="Make Your Selections"
-              onChange={(data) => self.onSelectChange(data)}
-              searchable={false}
-            />
-          );
-        } else {
-          return (
-            <Select
-              ajaxDataFetch={options.options.getOptions || []}
-              optionLabelKey={options.options.value}
-              optionValueKey={options.options.key}
-              multiple={options.multi}
-              placeholder="Make Your Selections"
-              onChange={(data) => self.onSelectChange(data)}
-              searchable={false}
-            />
-          );
-        }
-    }
+          try {
+            vals = JSON.parse(vals);
+          } catch (e) { }
+
+          vals = vals === 'null' ? null : vals;
+
+          //@todo .need to spend some time looking at why this component won't render checked values if the first render had no values.
+          resolve (<CheckboxGroup name={options.id} values={vals} onChange={this.handleCheckboxChange.bind(this, options)}>
+            <div className="dl__filterItemCheckbox">{
+              options.options.getOptions().map(option => {
+                return (<label key={Math.random() * 10000}><Checkbox value={option[options.options.key]} />{option[options.options.value]}</label>);
+              })
+            }</div>
+          </CheckboxGroup>);
+          break;
+        case 'sort':
+          resolve (<SortItem options={self.props.options} onClick={this.onSortClick} />);
+          break;
+        case 'select':
+        default:
+          let val = null;
+          let defaults = self.props.selectedView.filterDefaults ? self.props.selectedView.filterDefaults() : false;
+          try { defaults = JSON.parse(defaults) }
+          catch (e) { }
+
+            if(!defaults){
+                options.options.getOptions()
+                    .then(asyncDefaults => {
+                        defaults = asyncDefaults;
+                        resume();
+                    });
+            } else {
+                resume();
+            }
+          // Decipher what set of defaults are to be used in the component options list
+          // Most likely LEGACY
+          // if (defaults) {
+          //   if (options.options && options.options.defaultsKey) {
+          //     val = defaults[options.options.defaultsKey] ? defaults[options.options.defaultsKey].filter(item => item[options.options.key] == self.props.options.value)[0] : null;
+          //   } else {
+          //     val = defaults[options.id] ? defaults[options.id].filter(item => item[options.options.key] == self.props.options.value)[0] : null;
+          //   }
+          // }
+
+      }
+      function resume() {
+          // If a value exist via a query string run or state update, set the component initial val, otherwise leave blank to display the placeholder
+          if (self.props.options.value) {
+              resolve (
+                  <Select
+                      ajaxDataFetch={options.options.getOptions || []}
+                      optionLabelKey={options.options.value}
+                      optionValueKey={options.options.key}
+                      multiple={options.multi}
+                      initialValue={this.makeSelectInitialValue(options, defaults)}
+                      placeholder="Make Your Selections"
+                      onChange={(data) => self.onSelectChange(data)}
+                      searchable={false}
+                  />
+              );
+          } else {
+              resolve (
+                  <Select
+                      ajaxDataFetch={options.options.getOptions || []}
+                      optionLabelKey={options.options.value}
+                      optionValueKey={options.options.key}
+                      multiple={options.multi}
+                      placeholder="Make Your Selections"
+                      onChange={(data) => self.onSelectChange(data)}
+                      searchable={false}
+                  />
+              );
+          }
+      }
+    });
   }
 
   /**
@@ -229,33 +254,32 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
   makeSelectInitialValue(options, defaults) {
     const self = this;
 
-    const initVals = Array.isArray(self.props.options.value)
-      ? self.props.options.value.map(v => {
+    console.log('RFL OPTIONS', self.props.options.value, defaults);
+    const initVals = self.props.options.value.map(v => {
+        // Props option id has to match a key that's in the defaults
         const defaultsExtract = defaults[self.props.options.id]
           .filter(def => def[options.options.key] == v)[0];
+
 
         return {
           [options.options.key]: v, // entityUUID
           [options.options.value]: defaultsExtract[options.options.value]
         }
-      })// entityValue 
-      : {
-        [options.options.key]: self.props.options.value,
-        [options.options.value]: val ? val[options.options.value] : null
-      }
+      });// entityValue
+
+      console.log(initVals);
 
     return initVals;
   }
 
   render() {
-    const { options, config, selectedView } = this.props,
-      filter = this.makeFilter(options);
-    const classNames = `dl__filterItem ${options.id}`
+    const { options, config, selectedView } = this.props;
+    const classNames = `dl__filterItem ${options.id}`;
 
     return (
       <div className={classNames}>
         <label htmlFor={options.id}>{options.label}</label>
-        {filter}
+        {this.state.FilterComponent}
       </div>
     );
   }

@@ -1,4 +1,4 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.FilteredList = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.FilteredList = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw (f.code="MODULE_NOT_FOUND", f)}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -4616,7 +4616,7 @@ function hasArrayNature(obj) {
     // not null/false
     !!obj && (
     // arrays are objects, NodeLists are functions in Safari
-    typeof obj == 'object' || typeof obj == 'function') &&
+    (typeof obj == 'object' || typeof obj == 'function')) &&
     // quacks like an array
     'length' in obj &&
     // not window
@@ -4625,11 +4625,10 @@ function hasArrayNature(obj) {
     // a 'select' element has 'length' and 'item' properties on IE8
     typeof obj.nodeType != 'number' && (
     // a real array
-    Array.isArray(obj) ||
+    (Array.isArray(obj) ||
     // arguments
-    'callee' in obj ||
-    // HTMLCollection/NodeList
-    'item' in obj)
+    'callee' in obj || // HTMLCollection/NodeList
+    'item' in obj))
   );
 }
 
@@ -12049,13 +12048,12 @@ module.exports = isPlainObject;
         if ((inherited || hasOwnProperty.call(value, key)) &&
             !(skipIndexes && (
                // Safari 9 has enumerable `arguments.length` in strict mode.
-               key == 'length' ||
+               (key == 'length' ||
                // Node.js 0.10 has enumerable non-index properties on buffers.
                (isBuff && (key == 'offset' || key == 'parent')) ||
                // PhantomJS 2 has enumerable non-index properties on typed arrays.
-               (isType && (key == 'buffer' || key == 'byteLength' || key == 'byteOffset')) ||
-               // Skip index properties.
-               isIndex(key, length)
+               (isType && (key == 'buffer' || key == 'byteLength' || key == 'byteOffset')) || // Skip index properties.
+               isIndex(key, length))
             ))) {
           result.push(key);
         }
@@ -37389,7 +37387,7 @@ var ReactCompositeComponent = {
     }
     !(
     // TODO: An `isValidNode` function would probably be more appropriate
-    renderedElement === null || renderedElement === false || React.isValidElement(renderedElement)) ? "production" !== 'production' ? invariant(false, '%s.render(): A valid React element (or null) must be returned. You may have returned undefined, an array or some other invalid object.', this.getName() || 'ReactCompositeComponent') : _prodInvariant('109', this.getName() || 'ReactCompositeComponent') : void 0;
+    (renderedElement === null || renderedElement === false || React.isValidElement(renderedElement))) ? "production" !== 'production' ? invariant(false, '%s.render(): A valid React element (or null) must be returned. You may have returned undefined, an array or some other invalid object.', this.getName() || 'ReactCompositeComponent') : _prodInvariant('109', this.getName() || 'ReactCompositeComponent') : void 0;
 
     return renderedElement;
   },
@@ -66092,5 +66090,5 @@ exports.default = {
 };
 
 }).call(this,require("buffer").Buffer)
-},{"bluebird":undefined,"buffer":12,"history/createBrowserHistory":51,"underscore":324,"xhr":327}]},{},[330])(330)
+},{"bluebird":undefined,"buffer":12,"history/createBrowserHistory":51,"underscore":324,"xhr":327}]},{},[330])(330);
 });
