@@ -3233,6 +3233,7 @@ code {
   color: red;
   float: left;
   clear: both;
+  margin-top: 9px;
   padding-left: 18px;
   position: relative;
   width: 100%;
@@ -3243,8 +3244,8 @@ code {
     content: "";
     position: absolute;
     font-family: FontAwesome;
-    top: 0;
-    right: 66px;
+    top: 1px;
+    right: 74px;
     bottom: 0;
     left: auto;
     width: 18px;
@@ -4345,6 +4346,7 @@ code {
 .dl__listRow {
   border-bottom: 1px solid #efefef;
   padding-left: 6px;
+  list-style-type: none;
   white-space: nowrap; }
   .dl__listRow:hover {
     background: #fafafa;
@@ -4441,7 +4443,7 @@ code {
     border-right: none;
     margin: 0;
     position: relative;
-    top: 1px; }
+    top: 0; }
     .dl__search input[type="text"]::-webkit-input-placeholder {
       color: #5e5e5e; }
     .dl__search input[type="text"]:-moz-placeholder {
@@ -4576,7 +4578,7 @@ code {
     color: #fff; }
   .dl__listHeader-listSettings, .dl__listHeader-listSort {
     position: absolute;
-    right: 18px;
+    right: 39px;
     top: 9px;
     width: 33px;
     height: 33px;
@@ -4644,7 +4646,7 @@ code {
   position: absolute;
   right: 36px;
   top: 21px;
-  z-index: 3;
+  z-index: 101;
   padding: 18px 9px 18px 9px;
   border-radius: 3px;
   background: #fff;
@@ -4814,7 +4816,7 @@ code {
   width: 82%;
   float: left;
   position: relative;
-  padding: 9px 9px 129px !important; }
+  padding: 0 0 129px; }
   @media (max-width: 1199px) {
     .dl__dataList {
       width: 100%; } }
@@ -4830,9 +4832,11 @@ code {
         border-top: 1px solid #efefef; } }
   .dl__dataList-list {
     margin: 0;
-    min-height: 500px; }
+    min-height: 500px;
+    padding-left: 0; }
   .dl__dataList--noResults, .dl__dataList--loading {
-    min-height: 100%; }
+    min-height: 100%;
+    list-style-type: none; }
     .dl__dataList--noResults h1, .dl__dataList--noResults h3, .dl__dataList--loading h1, .dl__dataList--loading h3 {
       text-align: center;
       color: #444444; }

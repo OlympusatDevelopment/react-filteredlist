@@ -6,9 +6,7 @@
     width: 82%;
     float: left;
     position: relative;
-
-    // overflow-x: hidden;
-    padding: 9px 9px 129px !important;
+    padding: 0 0 129px;
 
     @include break(md-lg) {
         width: 100%;
@@ -39,11 +37,13 @@
     &-list { //ul
         margin: 0;
         min-height: 500px;
+        padding-left: 0; 
     }
 
     &--noResults,
     &--loading {
         min-height: 100%;
+        list-style-type: none;
 
         h1, h3 {
             text-align: center;
