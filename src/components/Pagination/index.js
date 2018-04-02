@@ -147,7 +147,7 @@ class Pagination extends Component {
 
     handleSubmit(e){
         e.preventDefault();
-        const page = document.getElementById('dl__pagination__currentPage').value,
+        const page = document.getElementById('dl__pagination--search').value,
               calculatedSkip = page === 1 ? 0 : page * (this.state.pagination.take) - this.state.pagination.take,
               event = {
                   skip:calculatedSkip,
@@ -271,7 +271,7 @@ class Pagination extends Component {
                     <div className="dl__pagination__indicator">
                         <span>Page&nbsp;</span>
                         <form id="dl__pagination__pageForm" onSubmit={this.handleSubmit.bind(this)}>
-                            <input data-lpignore="true" type="text" id="dl__pagination__currentPage" value={this.state.currentPage} onChange={this.handleInputChange.bind(this)} onBlur={this.handleBlur.bind(this)}/>
+                            <input data-lpignore="true" className="dl__pagination--search" type="text" id="dl__pagination--search" value={this.state.currentPage} onChange={this.handleInputChange.bind(this)} onBlur={this.handleBlur.bind(this)}/>
                         </form>
                         <span>&nbsp;of</span>
                         <span>{this.state.totalPages || 'loading...'}</span>
