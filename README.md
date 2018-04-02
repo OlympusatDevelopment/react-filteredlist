@@ -323,6 +323,7 @@ Available item properties to the row. Also controls which props are visible by d
 | mapTo | object | falsy | falsy, {} | Takes an object that it will use as a map to map item property names from one key to another. If the custom component you're using to render rows requires a certain schema and your item has a different schema, you can map property to property here.|
 | hasCopy | boolean | `false` | `true`,`false`| Switch on the "copy to clipboard" icon/feature for the particular cell data. |
 | isDate | boolean | `false` | `true`,`false`| If you're passing in a date, switching this will convert the date timestamp to a human readable date.|
+| isImage | boolean | `false` | `true`,`false`| Use this to tell the component we need to render the value as an image. This is useful for rendering a logo or user profile image in the cell.|
 | isSortable | boolean | `false` | `true`,`false`| Switch whether or not to allow the user to be able to sort this property from the list header column name interface. |
 | width | string | '' | '11px', '100%' | A stringified css value to determine the column width on the default text. |
 | display | boolean | `false` | `true`,`false`| Lets the datalist know that it should display that column on load. If it's false, it will not dipslay on load but will still be available to the column settings interface. |

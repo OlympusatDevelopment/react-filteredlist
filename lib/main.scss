@@ -4388,7 +4388,8 @@ code {
     line-height: 33px;
     position: relative;
     z-index: 1;
-    overflow: hidden; }
+    overflow: hidden;
+    width: 100%; }
     .dl__textItem-item--copy {
       position: relative;
       z-index: 2;
@@ -4403,6 +4404,9 @@ code {
       .dl__textItem-item--copy:hover {
         cursor: pointer;
         opacity: 0.7; }
+  .dl__textItemImage {
+    max-height: 24px;
+    padding-left: 3px; }
 
 .dl__search {
   width: 100%;
