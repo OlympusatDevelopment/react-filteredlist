@@ -56,11 +56,11 @@
 
 	&--with-caret{
 	  &:before{
-		top: 18px
+		  top: 18px
 	  }
 	  &:after{
-		top: 20px;
-		transform:none;
+		  top: 20px;
+		  transform:none;
 	  }
 	}
   }
@@ -79,5 +79,46 @@
         width: 50%;
         float: left;
       }
+  }
+}
+
+.dr {
+  &__wrapper {
+    display: flex;
+    justify-content: flex-start;
+    border: 1px solid #999;
+    border-radius: 2px;
+    width: 100%;
+    padding: .25rem;
+
+    > div {
+      > input {
+        width: 100%;
+
+        &:focus {
+          background: #8EEAE2;
+        }
+      }
+    }
+
+    .react-datepicker__input-container{
+      height: 21px;
+    }
+  }
+
+  &__datePicker {
+      float:left;
+      display: inline-block;
+      height: auto;
+      min-height: 25px;
+      vertical-align: middle;
+      width: 100%;
+  }
+
+	&__divider svg {
+		vertical-align: middle !important;
+		fill: #565a5c !important;
+		height: 24px !important;
+		width: 24px !important;
   }
 }
