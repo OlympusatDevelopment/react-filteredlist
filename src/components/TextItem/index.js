@@ -78,7 +78,7 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
                 : this.renderHTML(hookedVal, prop);
 
               const copyIcon = prop.hasCopy
-                ? (<span className="dl__textItem-item--copy" onClick={this.copyToClipboard.bind(this, parsedVal)}> </span>)
+                ? (<span className="dl__textItem-item--copy" onClick={this.copyToClipboard.bind(this, hookedVal)}> </span>)
                 : '';
 
               if (prop.display) {

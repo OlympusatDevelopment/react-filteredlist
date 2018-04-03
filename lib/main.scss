@@ -3988,14 +3988,14 @@ code {
   text-align: center; }
 
 .dl__filterGroup {
+  height: 33px;
+  position: relative;
+  overflow: hidden;
   -webkit-transition-duration: 0.7s;
   -moz-transition-duration: 0.7s;
   -o-transition-duration: 0.7s;
   -ms-transition-duration: 0.7s;
-  transition-duration: 0.7s;
-  height: 33px;
-  position: relative;
-  overflow: hidden; }
+  transition-duration: 0.7s; }
   .dl__filterGroup:after {
     content: "";
     font-family: FontAwesome;
@@ -4011,13 +4011,13 @@ code {
   .dl__filterGroup:hover {
     cursor: pointer; }
   .dl__filterGroup--open {
+    height: auto;
+    overflow: visible;
     -webkit-transition-duration: 0.7s;
     -moz-transition-duration: 0.7s;
     -o-transition-duration: 0.7s;
     -ms-transition-duration: 0.7s;
-    transition-duration: 0.7s;
-    height: auto;
-    overflow: visible; }
+    transition-duration: 0.7s; }
     .dl__filterGroup--open:after {
       transform: rotate(90deg);
       -webkit-transition-duration: 0.3;
@@ -4036,17 +4036,6 @@ code {
   .dl__filterGroupFilters {
     padding: 6px;
     padding-bottom: 24px; }
-  .dl__filterGroup[data-issingle="true"] {
-    height: auto;
-    overflow: visible; }
-    .dl__filterGroup[data-issingle="true"] .dl__filterGroup:after {
-      content: ''; }
-    .dl__filterGroup[data-issingle="true"] .dl__filterGroupLabel {
-      background: none;
-      color: #333;
-      border-bottom: 1px solid #efefef;
-      font-size: 14px;
-      font-weight: 100; }
 
 .dl__filterItem {
   position: relative; }
@@ -4065,7 +4054,8 @@ code {
     display: inline-block; }
     .dl__filterItemRangeClear a {
       color: #b30000;
-      text-decoration: underline; }
+      text-decoration: underline !important;
+      font-size: 12px; }
   .dl__filterItem .DateRangePicker {
     width: 100%; }
     .dl__filterItem .DateRangePicker__picker {
@@ -4126,7 +4116,8 @@ code {
   vertical-align: middle !important;
   fill: #565a5c !important;
   height: 24px !important;
-  width: 24px !important; }
+  width: 18px !important;
+  margin: 0 3px; }
 
 .dl__listRow {
   border-bottom: 1px solid #efefef;
