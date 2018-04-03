@@ -90,6 +90,8 @@
     border-radius: 2px;
     width: 100%;
     padding: .25rem;
+    position: relative;
+    z-index: 101;
 
     > div {
       > input {
