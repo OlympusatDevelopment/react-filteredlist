@@ -81,6 +81,16 @@
         float: left;
       }
   }
+
+  &Radio{
+    label{
+      padding-top: 0;
+      display: inline-block;
+      margin-right: 9px;
+      font-size: 12px;
+      opacity: 0.7;
+    }
+  }
 }
 
 .dr {

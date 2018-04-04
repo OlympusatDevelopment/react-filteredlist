@@ -1,6 +1,6 @@
 {
   "name": "react-filteredlist",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "FilteredList",
   "main": "lib/FilteredList.js",
   "author": "Adam Gedney",
@@ -26,6 +26,7 @@
     "react-dom": "^16.2.0",
     "react-images": "^0.5.4",
     "react-intl": "^2.3.0",
+    "react-radio-group": "^3.0.3",
     "react-redux": "^5.0.5",
     "react-scrolllock": "^2.0.1",
     "react-super-select": "^1.0.4",

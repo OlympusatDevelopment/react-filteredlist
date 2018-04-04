@@ -11,6 +11,7 @@ import moment from 'moment';
 import DatePicker from 'react-datepicker';
 
 import { CheckboxGroup, Checkbox } from 'react-checkbox-group';
+import {RadioGroup, Radio} from 'react-radio-group';
 import { SortItem } from '../SortItem';
 
 class FilterItem extends Component { // eslint-disable-line react/prefer-stateless-function
@@ -152,6 +153,16 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
     });
   }
 
+  handleRadioChange(options, value) {
+    const { selectedView, filterChange } = this.props;
+
+    filterChange({
+      id: options.id,
+      view: selectedView.id,
+      value
+    });
+  }
+
   makeFilter(options) {
     const self = this,
       selectValue = {
@@ -216,6 +227,26 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
         </CheckboxGroup>);
       case 'sort':
         return (<SortItem options={self.props.options} onClick={this.onSortClick} />);
+        break;
+      case 'radio':
+        const Radios = options.options.getOptions()
+          .map(option => {
+            return (
+              <label>
+                <Radio value={option[options.options.key]} />
+                {option[options.options.value]}
+              </label>
+            )
+          });
+    
+        return (<RadioGroup
+                  className="dl__filterItemRadio" 
+                  name={options.label}
+                  selectedValue={this.state.selectedValue}
+                  onChange={this.handleRadioChange.bind(this, options)}>
+                  {Radios}
+                </RadioGroup>
+              );
         break;
       case 'select':
       default:
