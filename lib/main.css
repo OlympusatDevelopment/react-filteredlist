@@ -4102,8 +4102,7 @@ code {
   border-radius: 2px;
   width: 100%;
   padding: .25rem;
-  position: relative;
-  z-index: 101; }
+  position: relative; }
   .dr__wrapper > div > input {
     width: 100%; }
     .dr__wrapper > div > input:focus {
