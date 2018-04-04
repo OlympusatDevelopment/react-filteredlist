@@ -22,7 +22,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
       lastFocusedInput: null,
       startDate: null,
       endDate: null,
-      radioValue: props.options.value ? (props.options.value[0] || props.options.value) : undefined
+      radioValue: Array.isArray(props.options.value) ? props.options.value[0] : props.options.value
     };
 
     this.makeFilter = this.makeFilter.bind(this);
@@ -33,6 +33,13 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
   }
 
   componentWillReceiveProps(nextProps) {
+   
+    if (nextProps.options.type === "radio") {
+      this.setState({radioValue: Array.isArray(nextProps.options.value) ? nextProps.options.value[0] : nextProps.options.value});
+
+      console.log("ST", this.state.radioValue, nextProps.options.value);
+    }
+
     if(nextProps.options.range) {
       const dateRange = nextProps.options.range;
       if(dateRange.start) {
