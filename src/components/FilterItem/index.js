@@ -21,7 +21,8 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
       focusedInput: null,
       lastFocusedInput: null,
       startDate: null,
-      endDate: null
+      endDate: null,
+      radioValue: props.options.value ? (props.options.value[0] || props.options.value) : undefined
     };
 
     this.makeFilter = this.makeFilter.bind(this);
@@ -161,14 +162,17 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
       view: selectedView.id,
       value
     });
+
+    this.setState({radioValue: value});
   }
 
   makeFilter(options) {
-    const self = this,
-      selectValue = {
-        label: 'test',
-        value: self.props.options.value
-      };
+    const self = this;
+    const _opts = options.options ? options.options.getOptions() : [];
+    const selectValue = {
+      label: 'test',
+      value: self.props.options.value
+    };
 
     switch (self.props.options.type) {
       case 'range':
@@ -220,7 +224,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
         //@todo .need to spend some time looking at why this component won't render checked values if the first render had no values.
         return (<CheckboxGroup name={options.id} values={vals} onChange={this.handleCheckboxChange.bind(this, options)}>
           <div className="dl__filterItemCheckbox">{
-            options.options.getOptions().map(option => {
+            _opts.map(option => {
               return (<label key={Math.random() * 10000}><Checkbox value={option[options.options.key]} />{option[options.options.value]}</label>);
             })
           }</div>
@@ -229,20 +233,20 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
         return (<SortItem options={self.props.options} onClick={this.onSortClick} />);
         break;
       case 'radio':
-        const Radios = options.options.getOptions()
+        const Radios = _opts
           .map(option => {
             return (
-              <label>
+              <label key={Math.random() * 100}>
                 <Radio value={option[options.options.key]} />
                 {option[options.options.value]}
               </label>
             )
           });
-    
+
         return (<RadioGroup
                   className="dl__filterItemRadio" 
                   name={options.label}
-                  selectedValue={this.state.selectedValue}
+                  selectedValue={this.state.radioValue}
                   onChange={this.handleRadioChange.bind(this, options)}>
                   {Radios}
                 </RadioGroup>
