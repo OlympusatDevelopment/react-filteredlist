@@ -53223,7 +53223,7 @@ function extend() {
 },{}],381:[function(require,module,exports){
 module.exports={
   "name": "react-filteredlist",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "FilteredList",
   "main": "lib/FilteredList.js",
   "author": "Adam Gedney",
@@ -57178,7 +57178,6 @@ var App = function (_Component) {
   _createClass(App, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextState) {
-      console.log("componentWillRecieveProps", nextState);
       if (nextState.pushDispatch.Items && nextState.pushDispatch.Items !== lastItemUpdate) {
         lastItemUpdate = nextState.pushDispatch.Items;
 

@@ -35,14 +35,13 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
   }
 
   componentWillReceiveProps(nextState){
-    console.log("componentWillRecieveProps", nextState);
     if(nextState.pushDispatch.Items && nextState.pushDispatch.Items !== lastItemUpdate){
       lastItemUpdate = nextState.pushDispatch.Items;
-      
+
       this.props.updateItems({
         Items: nextState.pushDispatch.Items,
         count: nextState.pushDispatch.count
-      });
+      }); 
     }
   }
 
