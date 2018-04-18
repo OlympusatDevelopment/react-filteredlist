@@ -4050,11 +4050,11 @@ code {
     height: 18px;
     text-align: right;
     position: absolute;
-    right: 7px;
+    right: 24px;
     top: 10px;
     display: inline-block; }
     .dl__filterItemRangeClear a {
-      color: #b30000;
+      color: rgba(255, 0, 0, 0.6);
       text-decoration: underline !important;
       font-size: 12px; }
   .dl__filterItem .DateRangePicker {
@@ -4098,17 +4098,19 @@ code {
 .dr__wrapper {
   display: flex;
   justify-content: flex-start;
-  border: 1px solid #999;
   border-radius: 2px;
   width: 100%;
-  padding: .25rem;
-  position: relative; }
+  padding: 3px 9px;
+  position: relative;
+  background: #fbfbfb; }
   .dr__wrapper > div > input {
     width: 100%; }
     .dr__wrapper > div > input:focus {
       background: #8EEAE2; }
   .dr__wrapper .react-datepicker__input-container {
     height: 21px; }
+    .dr__wrapper .react-datepicker__input-container input {
+      padding-left: 12px; }
 
 .dr__datePicker {
   float: left;

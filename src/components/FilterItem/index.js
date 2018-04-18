@@ -36,8 +36,6 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
    
     if (nextProps.options.type === "radio") {
       this.setState({radioValue: Array.isArray(nextProps.options.value) ? nextProps.options.value[0] : nextProps.options.value});
-
-      console.log("ST", this.state.radioValue, nextProps.options.value);
     }
 
     if(nextProps.options.range) {

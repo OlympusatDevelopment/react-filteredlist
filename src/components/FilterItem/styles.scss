@@ -14,12 +14,12 @@
 	height: 18px;
 	text-align :right;
 	position: absolute;
-	right: 7px;
+	right: 24px;
 	top: 10px;
 	display: inline-block;
 
 	a{
-	  color: darken($color-danger,15%);
+	  color: rgba($color-danger,0.6);
     text-decoration: underline !important;
     font-size: 12px;
 	}
@@ -97,11 +97,13 @@
   &__wrapper {
     display: flex;
     justify-content: flex-start;
-    border: 1px solid #999;
+    // border: 1px solid #999;
     border-radius: 2px;
     width: 100%;
-    padding: .25rem;
+    padding: 3px 9px;
     position: relative;
+    background: #fbfbfb;
+    // padding-left: 15px;
     // z-index: 101;
 
     > div {
@@ -116,6 +118,10 @@
 
     .react-datepicker__input-container{
       height: 21px;
+
+      input{
+        padding-left: 12px;
+      }
     }
   }
 

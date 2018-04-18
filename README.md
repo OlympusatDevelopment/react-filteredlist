@@ -69,11 +69,13 @@ It's important that you import the stylesheet either in your Javascript or in a 
 
 See that `dataListConfig` being passed into the config prop on the component usage in the below example? That is essentially a large object. At the end of the docs, you will find an [example](#complete-example) of a basic config object. Pop it in there and you should see a simple list running. What follows after this section are the details for building that config object in a more advanced way.
 
+**Note:** The `pushDispatch={Items: users.items, count: users.totalCount}` prop is optional. If it's provided and passed data, then the list and pagination will prefer the data here for list rendering over incoming data via other sources. This behavior mimicks the pushDispatch hook for using socket based data pushes into the component. This prop is useful for when you want a record of your list items to come from your parent application's store. This way changes in the parent store will be propagated to the list. This is useful for orm based store structures.
+
 ```
 var FilteredList = require('react-filteredlist');
 import "../../../../node_modules/react-filteredlist/lib/main.css";
 
-<FilteredList config={dataListConfig} />
+<FilteredList config={dataListConfig} pushDispatch={Items: users.items, count: users.totalCount}/>
 ```
 
 __Or in ES6__
@@ -82,7 +84,7 @@ __Or in ES6__
 import FilteredList from 'react-filteredlist';
 import "../../../../node_modules/react-filteredlist/lib/main.css";
 
-<FilteredList config={dataListConfig} />
+<FilteredList config={dataListConfig} pushDispatch={Items: users.items, count: users.totalCount}/>
 ```
 
 
