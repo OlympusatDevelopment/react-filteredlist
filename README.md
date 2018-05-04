@@ -18,6 +18,7 @@ More specific documentation to come.
       * [Special user filterset group](#special-user-filterset-group)
     * [Filters](#filters)
       * [Select filter type](#select-filter-type)
+      * [Radio filter type](#radio-filter-type)
       * [Range filter type](#range-filter-type)
       * [Checkbox filter type](#checkbox-filter-type)
       * [Search filter type](#search-filter-type)
@@ -68,11 +69,13 @@ It's important that you import the stylesheet either in your Javascript or in a 
 
 See that `dataListConfig` being passed into the config prop on the component usage in the below example? That is essentially a large object. At the end of the docs, you will find an [example](#complete-example) of a basic config object. Pop it in there and you should see a simple list running. What follows after this section are the details for building that config object in a more advanced way.
 
+**Note:** The `pushDispatch={Items: users.items, count: users.totalCount}` prop is optional. If it's provided and passed data, then the list and pagination will prefer the data here for list rendering over incoming data via other sources. This behavior mimicks the pushDispatch hook for using socket based data pushes into the component. This prop is useful for when you want a record of your list items to come from your parent application's store. This way changes in the parent store will be propagated to the list. This is useful for orm based store structures.
+
 ```
 var FilteredList = require('react-filteredlist');
 import "../../../../node_modules/react-filteredlist/lib/main.css";
 
-<FilteredList config={dataListConfig} />
+<FilteredList config={dataListConfig} pushDispatch={Items: users.items, count: users.totalCount}/>
 ```
 
 __Or in ES6__
@@ -81,7 +84,7 @@ __Or in ES6__
 import FilteredList from 'react-filteredlist';
 import "../../../../node_modules/react-filteredlist/lib/main.css";
 
-<FilteredList config={dataListConfig} />
+<FilteredList config={dataListConfig} pushDispatch={Items: users.items, count: users.totalCount}/>
 ```
 
 
@@ -323,6 +326,7 @@ Available item properties to the row. Also controls which props are visible by d
 | mapTo | object | falsy | falsy, {} | Takes an object that it will use as a map to map item property names from one key to another. If the custom component you're using to render rows requires a certain schema and your item has a different schema, you can map property to property here.|
 | hasCopy | boolean | `false` | `true`,`false`| Switch on the "copy to clipboard" icon/feature for the particular cell data. |
 | isDate | boolean | `false` | `true`,`false`| If you're passing in a date, switching this will convert the date timestamp to a human readable date.|
+| isImage | boolean | `false` | `true`,`false`| Use this to tell the component we need to render the value as an image. This is useful for rendering a logo or user profile image in the cell.|
 | isSortable | boolean | `false` | `true`,`false`| Switch whether or not to allow the user to be able to sort this property from the list header column name interface. |
 | width | string | '' | '11px', '100%' | A stringified css value to determine the column width on the default text. |
 | display | boolean | `false` | `true`,`false`| Lets the datalist know that it should display that column on load. If it's false, it will not dipslay on load but will still be available to the column settings interface. |
@@ -399,15 +403,15 @@ Used to take action on the dataset. Primary items used in building a query objec
 | Property | Type | Default | Possible Values | Description |
 |:---|:---|:---|:---|:---|
 | id | string | '' | NA | The id of the filter. Must be UNIQUE. |
-| type | string | 'select' | 'select', 'range', 'checkbox', 'search', 'sort' | This determines what type of filter item will be rendered. ***Special NOTE:*** Search type is a special filter that will render a search box where anything input will be passed as the value of a search filter property on the final object. The sort type is also special. It enables a sort toggle & request for the specified id/prop property. |
+| type | string | 'select' | 'select', 'range', 'checkbox', 'radio', 'search', 'sort' | This determines what type of filter item will be rendered. ***Special NOTE:*** Search type is a special filter that will render a search box where anything input will be passed as the value of a search filter property on the final object. The sort type is also special. It enables a sort toggle & request for the specified id/prop property. Also of note, the select type options.getOptions function needs to return a Promise. The rest just return the data they need. |
 | prop | string | '' | NA | Essentially the same as id. Just match this to the id until the api changes, then we'll handle that by default. |
 | label | string | '' | NA |  The filter item's Label property. THis displays to the user above the filter item.|
-| value | string/null/undefined | null | [{},{},{}] | Use this to set a default value. Value must be null or undefined to be excluded. (Filters recognize boolean true/false. An collection matching the select filter type can be passed to pre-populate the value. |
+| value | array/null/undefined | null | [{},{},{}] | Use this to set a default value. Value must be an array of objects (matching options), null or undefined to be excluded. (Filters recognize boolean true/false. An collection matching the select filter type can be passed to pre-populate the value. |
 | multiple | boolean | `false` | `true`,`false` | For select filter types, this allows the select to be a multi select when set to `true`|
 | options | object | {} |  {},falsy | ***For 'select' & 'checkbox' type only:*** The select type filter item's options handling. This takes care of property matching items so they can fill the value of the options element. |
 | options.key | string | '' |  NA | This is the select box options item's key(property) to use for the option element's value property. |
 | options.value | string | '' | NA | This is the select box options item's Label/Text to use in the option item's display. |
-| options.getOptions | function/null/undefined | NA |  NA | This function must return a promise if using it for a select box and a collection if using it for a checkbox. It should return a collection to populate the select item's options. The items should have the properties specified in the key/value mapping above. |
+| options.getOptions | function/null/undefined | Promise, return |  NA | **This function must return a promise if using it for a select box** and a collection if using it for a checkbox or range. It should return a collection to populate the select item's options. The items should have the properties specified in the key/value mapping above. |
 | range | object | {} | {},falsy | ***For 'range' type only:*** Range type settings and defualts. |
 | range.start | UNIX timestamp | null | UNIX timestamp, null | Sets the start time value for the range calendar in seconds.  |
 | range.end | UNIX timestamp | null | UNIX timestamp, null | Sets the end time value for the range calendar in seconds.  |
@@ -456,7 +460,7 @@ export default {
     id: filterKey,
     type:'checkbox',
     prop: filterKey,
-    label: 'Rights Type', 
+    label: 'Checkbox Example', 
     value:null,
     multiple : true,
     options : {
@@ -465,6 +469,26 @@ export default {
         getOptions : ()=>[
             {externalId:'true',entityValue:'Exclusive'},
             {externalId:'false',entityValue:'Non-Exclusive'}
+        ]
+    }
+};
+```
+
+#### Radio filter type
+```
+export default {
+    id: "isActive",
+    type:'radio',
+    prop: "isActive",
+    label: 'Active', 
+    value:null,
+    multiple : true,
+    options : {
+        key : 'id',
+        value : 'label',
+        getOptions : ()=>[
+            {id:'true',label:'Yes'},
+            {id:'false',label:'No'}
         ]
     }
 };
