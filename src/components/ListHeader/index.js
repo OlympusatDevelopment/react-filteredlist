@@ -56,7 +56,7 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
   }
 
   onChecked(e) {
-    const { Items, config, workspaceItems, updateWorkspace } = this.props,
+    const { Items, config, workspace, updateWorkspace } = this.props,
       selectAll = e.target.checked,
       workspaceAction = selectAll ? 'add' : 'remove';
 
@@ -71,14 +71,14 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
     if (selectAll) {
       Items.forEach(item => {
         updateWorkspace({
-          Item: config.hooks.onCheck({ item, workspaceItems }),
+          Item: config.hooks.onCheck({ item, workspace }),
           workspaceAction
         });
       });
     } else {
       Items.forEach(item => {
         updateWorkspace({
-          Item: config.hooks.onUnCheck({ item, workspaceItems }),
+          Item: config.hooks.onUnCheck({ item, workspace }),
           workspaceAction
         });
       });
@@ -135,7 +135,7 @@ function mapStateToProps(state, ownProps) {
     force: state.app.force,
     listHeader: state.listHeader,
     Items: state.app.Items,
-    workspaceItems: state.app.workspaceItems
+    workspace: state.app.workspace
   };
 }
 

@@ -27,21 +27,23 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
   }
 
   onChecked(e) {
-    const { updateWorkspace, item, config, workspaceItems } = this.props,
+    const { updateWorkspace, item, config, workspace } = this.props,
       state = e.target.checked,
       workspaceAction = state ? 'add' : 'remove';
 
-    if (state) {
-      updateWorkspace({
-        Item: config.hooks.onCheck({ item, workspaceItems }),
-        workspaceAction
-      });
-    } else {
-      updateWorkspace({
-        Item: config.hooks.onUnCheck({ item, workspaceItems }),
-        workspaceAction
-      });
-    }
+      if (state) {
+          updateWorkspace({
+              Item: item,
+              workspace,
+              workspaceAction
+          });
+      } else {
+          updateWorkspace({
+              Item: item,
+              workspace,
+              workspaceAction
+          });
+      }
   }
 
   renderHTML(html, prop) {
@@ -101,7 +103,7 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 function mapStateToProps(state, ownProps) {
   return {
     config: state.app.config,
-    workspaceItems: state.app.workspaceItems,
+    workspace: state.app.workspace,
     force: state.app.force,
   };
 }

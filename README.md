@@ -9,6 +9,7 @@ More specific documentation to come.
   * [Development](#development)
   * [Installation](#installation)
   * [Usage](#usage)
+  * [Breaking Changes](#breaking-changes)
   * [Documentation](#documentation)
     * [Top level configuration](#top-level-configuration)
     * [Datalist](#datalist)
@@ -86,8 +87,13 @@ import "../../../../node_modules/react-filteredlist/lib/main.css";
 
 <FilteredList config={dataListConfig} pushDispatch={Items: users.items, count: users.totalCount}/>
 ```
+# Breaking Changes
 
-
+    1. OnCheck hook arg is has been updated to {item: {}, items: [], checkedItems: [], action: checked/unchecked}
+    
+This change gives visiblity to an array of items with a state of checked (checkedItems), the action on the item performed(add, update, remove) 
+    and the list of items mutated state. 
+ 
 
 # Documentation
 

@@ -53,7 +53,12 @@ const initialState = {
   },
   dataSources: {},
   Items: [],
-  workspaceItems: [],
+  // workspace: {},
+  workspace: {
+    checkedItems: [],
+    actions: null,
+    item: {}
+  },
   showLoading: false
 };
 
@@ -348,10 +353,27 @@ function appReducer(state = initialState, action) {
       switch (_data.workspaceAction) {
         case 'add':
         case 'update':
-          _state.workspaceItems = collections.replaceItem(_state.workspaceItems, _data.Item, _state.selectedView.itemIdProp);
+          _state.workspace = {
+            checkedItems: collections.replaceItem(_state.workspace.checkedItems, _data.Item, _state.selectedView.itemIdProp),
+              action: _data.workspaceAction,
+              item: _data.Item
+          }
+
+          if(_state.config.hooks.onCheck) {
+              _state.config.hooks.onCheck(_state.workspace);
+          }
           break;
         case 'remove':
-          _state.workspaceItems = collections.removeItem(_state.workspaceItems, _data.Item, _state.selectedView.itemIdProp);
+
+            _state.workspace = {
+                checkedItems: collections.removeItem(_state.workspace.checkedItems, _data.Item, _state.selectedView.itemIdProp),
+                action: _data.workspaceAction,
+                item: _data.Item
+            }
+
+            if(_state.config.hooks.onUnCheck) {
+                _state.config.hooks.onUnCheck(_state.workspace);
+            }
           break;
       }
       _state.config.hooks.onStateUpdate(_state);
