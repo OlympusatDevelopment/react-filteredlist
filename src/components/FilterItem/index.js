@@ -199,10 +199,10 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
                         options.options.getOptions()
                             .then(asyncDefaults => {
                                 defaults = asyncDefaults;
-                                resume();
+                                resume(defaults);
                             });
                     } else {
-                        resume();
+                        resume(defaults);
                     }
                 // Decipher what set of defaults are to be used in the component options list
                 // Most likely LEGACY
@@ -215,12 +215,11 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
                 // }
 
             }
-            function resume() {
+            function resume(defaults) {
                 // If a value exist via a query string run or state update, set the component initial val, otherwise leave blank to display the placeholder
                 if (self.props.options.value) {
                     resolve (
                         <Select
-                            ajaxDataFetch={options.options.getOptions || []}
                             optionLabelKey={options.options.value}
                             optionValueKey={options.options.key}
                             multiple={options.multi}
@@ -228,18 +227,19 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
                             placeholder="Make Your Selections"
                             onChange={(data) => self.onSelectChange(data)}
                             searchable={false}
+                            dataSource={defaults}
                         />
                     );
                 } else {
                     resolve (
                         <Select
-                            ajaxDataFetch={options.options.getOptions || []}
                             optionLabelKey={options.options.value}
                             optionValueKey={options.options.key}
                             multiple={options.multi}
                             placeholder="Make Your Selections"
                             onChange={(data) => self.onSelectChange(data)}
                             searchable={false}
+                            dataSource={defaults}
                         />
                     );
                 }
