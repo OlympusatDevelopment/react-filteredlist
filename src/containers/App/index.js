@@ -17,6 +17,8 @@ window.onbeforeunload = function (e) {
   localStorage.removeItem("first_load", "1");
 };
 
+let lastItemUpdate;
+
 class App extends Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -29,6 +31,17 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
 
     this.state = {
       toggleFilter: false
+    }
+  }
+
+  componentWillReceiveProps(nextState){
+    if(nextState.pushDispatch.Items && nextState.pushDispatch.Items !== lastItemUpdate){
+      lastItemUpdate = nextState.pushDispatch.Items;
+
+      this.props.updateItems({
+        Items: nextState.pushDispatch.Items,
+        count: nextState.pushDispatch.count
+      }); 
     }
   }
 
@@ -302,9 +315,8 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
     const { updateItems, dataListConfig } = this.props;
     const elem = document;
 
-    // ENtry point for pushes originating from the parent app. pushDispatch
+    // ENtry point for list data pushes originating from the parent app.
     if (dataListConfig && dataListConfig.hooks && dataListConfig.hooks.pushDispatch) {
-      console.log('PUSH DISPATCHER', dataListConfig.hooks.pushDispatch, updateItems);
       dataListConfig.hooks.pushDispatch(updateItems);
     }
 
@@ -340,7 +352,7 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
         <div className="dl__container" >
           {filtersToggle}
           {filters}
-          <DataList Items={app.Items} width={width}> </DataList>
+          <DataList Items={this.props.pushDispatch.Items || app.Items} width={width}> </DataList>
         </div> 
         <Footer> </Footer>
       </div>

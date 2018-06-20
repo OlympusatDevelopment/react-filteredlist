@@ -41,10 +41,10 @@
 	color: $color-text-primary;
 	z-index: 2;
 	border: 1px solid #ccc;
-    border-right: none;
-    margin: 0;
-    position: relative;
-    top: 1px;
+  border-right: none;
+  margin: 0;
+  position: relative;
+  top: 0;
 
 	&:focus{
 	  //border-color: $color-base-blue !important;

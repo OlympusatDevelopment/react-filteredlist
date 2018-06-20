@@ -6,7 +6,7 @@ console.log(`react-filteredlist | version ${pjson.version}`);
 
 class FilteredList extends React.Component{
 	render () {
-		return (<DataList config={this.props.config}/>); 
+		return (<DataList config={this.props.config} pushDispatch={this.props.pushDispatch}/>); 
 	}
 }
 

@@ -14,19 +14,23 @@ class CustomItem extends Component {
     };
   }
 
+
+
   onChecked(e) {
-    const { updateWorkspace, item, config, workspaceItems } = this.props,
+    const { updateWorkspace, item, config, workspace } = this.props,
       state = e.target.checked,
       workspaceAction = state ? 'add' : 'remove';
 
     if (state) {
       updateWorkspace({
-        Item: config.hooks.onCheck({ item, workspaceItems }),
+        Item: item,
+        workspace,
         workspaceAction
       });
     } else {
       updateWorkspace({
-        Item: config.hooks.onUnCheck({ item, workspaceItems }),
+        Item: item,
+        workspace,
         workspaceAction
       });
     }
@@ -68,7 +72,7 @@ class CustomItem extends Component {
 function mapStateToProps(state, ownProps) {
   return {
     config: state.app.config,
-    workspaceItems: state.app.workspaceItems,
+    workspace: state.app.workspace,
     force: state.app.force,
   };
 }

@@ -20,19 +20,21 @@
   //margin: 4px 0;
   float: left;
   clear: both;
+  margin-top: 9px;
   //margin-left: 9px;
   padding-left: 18px;
   position: relative;
   width: 100%;
-    line-height: 33px;
-    text-align: right;
-    padding-right: 6px;
+  line-height: 33px;
+  text-align: right;
+  padding-right: 6px;
+  border: none;
 
   &:after{
-	@include faPseudo($fa-var-trash-o,0,66px,0,auto);
-	width: 18px;
-	font-size: 14px;
-	line-height: 33px;
+    @include faPseudo($fa-var-trash-o,1px,74px,0,auto);
+    width: 18px;
+    font-size: 14px;
+    line-height: 33px;
     text-decoration: none;
   }
 
