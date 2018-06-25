@@ -11,6 +11,7 @@ import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'rea
 
 import { CheckboxGroup, Checkbox } from 'react-checkbox-group';
 import { SortItem } from '../SortItem';
+import AutoCompleteSelect from '../AutoCompleteSelect';
 
 class FilterItem extends Component { // eslint-disable-line react/prefer-stateless-function
     constructor(props) {
@@ -187,6 +188,11 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
                     break;
                 case 'sort':
                     resolve (<SortItem options={self.props.options} onClick={this.onSortClick} />);
+                    break;
+                case 'autocomplete':
+                    resolve(<AutoCompleteSelect
+                        initialValues={[{id: 1, label: 'tag'}]}
+                        {...options} />);
                     break;
                 case 'select':
                 default:
