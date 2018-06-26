@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as FilterItemActions from './actions';
-import { collections, queries, filters } from '../../utils';
 // import Select from 'react-select';
 import Select from 'react-super-select';
 import moment from 'moment';
-import _ from 'underscore';
 import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
 
 import { CheckboxGroup, Checkbox } from 'react-checkbox-group';
@@ -36,13 +34,22 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
             });
     }
 
+    componentWillReceiveProps(nextProps){
+        let self = this;
+        if(nextProps !== this.props) {
+            this.makeFilter(this.props.options)
+                .then(FilterComponent => {
+                    self.setState({FilterComponent});
+                });
+        }
+    }
+
     onSelectChange(data) {
         const self = this,
             { options, selectedView, filterChange } = this.props,
             value = (data && Array.isArray(data)) ?
                 // (Array.isArray(data[0].entityUUID)  ? data[0].entityUUID :
                 data.map(obj => {
-                    console.log('OBJECT', obj);
                     return obj[options.options.key];
                 }) :
                 (data ? [data[options.options.key]] : null);
@@ -191,7 +198,9 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
                     break;
                 case 'autocomplete':
                     resolve(<AutoCompleteSelect
-                        initialValues={[{id: 1, label: 'tag'}]}
+                        onSelectChange={self.onSelectChange}
+                        initalValues={options.value}
+                        placeholder={options && options.placeholder ? options.placeholder : null}
                         {...options} />);
                     break;
                 case 'select':
@@ -222,6 +231,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
 
             }
             function resume(defaults) {
+
                 // If a value exist via a query string run or state update, set the component initial val, otherwise leave blank to display the placeholder
                 if (self.props.options.value) {
                     resolve (
@@ -229,7 +239,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
                             optionLabelKey={options.options.value}
                             optionValueKey={options.options.key}
                             multiple={options.multi}
-                            initialValue={this.makeSelectInitialValue(options, defaults)}
+                            initialValue={self.makeSelectInitialValue(options, defaults)}
                             placeholder="Make Your Selections"
                             onChange={(data) => self.onSelectChange(data)}
                             searchable={false}
@@ -263,12 +273,13 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
         console.log('RFL OPTIONS', self.props.options.value, defaults);
         const initVals = self.props.options.value.map(v => {
             // Props option id has to match a key that's in the defaults
-            const defaultsExtract = defaults[self.props.options.id]
+            const defaultsExtract = (defaults[self.props.options.id] || [])
                 .filter(def => def[options.options.key] == v)[0];
 
             return {
                 [options.options.key]: v, // entityUUID
-                [options.options.value]: defaultsExtract[options.options.value]};
+                [options.options.value]: (defaultsExtract ? defaultsExtract[options.options.value] : null)
+            };
 
         });// entityValue
 

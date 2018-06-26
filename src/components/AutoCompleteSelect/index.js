@@ -12,19 +12,27 @@ class AutoCompleteSelect extends Component{
         this.state = {
             items: [],
             loading: false,
-            value: []
+            values: []
         };
     }
 
-    componentDidMount() {
-        const {initialValues} = this.props;
-        if (initialValues) {
-            this.setState({items: initialValues});
+    componentWillReceiveProps(nextProps) {
+        if(nextProps !== this.props) {
+            const { initalValues, options } = nextProps;
+            const items = initalValues && Array.isArray(initalValues) ? initalValues.map(v => { return {[options.key]: v, [options.value]: v }; }) : [];
+            if (initalValues && items && Array.isArray(items)) {
+                this.setState({values: initalValues, items: items});
+            }
         }
     }
 
-    componentWillUnmount() {
-        this.setState({ options: [] });
+    onSelectChange = (data) => {
+        const {options, onSelectChange} = this.props;
+
+        const formattedData = (data && Array.isArray(data) ?
+        data.map(d => {return {[options.key]: d} ;}) : null);
+
+        onSelectChange(formattedData);
     }
 
     onSearch = (query) => {
@@ -36,7 +44,6 @@ class AutoCompleteSelect extends Component{
             });
             options.getOptions(query)
                 .then((items) => {
-                    console.log(items);
                     this.setState({
                         loading: false,
                         items: items
@@ -51,15 +58,15 @@ class AutoCompleteSelect extends Component{
         }
     }
 
-
     render() {
-        const { items } = this.state;
-        const { options } = this.props;
-        console.log(this.state.selected)
-        return (<Select style={{width: '100%'}} clearable={true} size={'large'} value={this.state.value} multiple={true} filterable={true} remote={true} remoteMethod={this.onSearch} loading={this.state.loading}>
+        const { items, values } = this.state;
+        const { placeholder, options } = this.props;
+
+        return (<Select onChange={this.onSelectChange} placeholder={placeholder} style={{width: '100%'}} clearable={true} size={'large'} value={values} multiple={true}
+                        filterable={true} remote={true} remoteMethod={this.onSearch} loading={this.state.loading}>
             {
                 items && items.map(el => {
-                    return <Option key={el[options.key]} value={el[options.value]} label={el[options.value]} selected={true} />;
+                    return <Option key={el[options.key]} value={el[options.value]} label={el[options.value]} />;
                 })
             }
         </Select>);
