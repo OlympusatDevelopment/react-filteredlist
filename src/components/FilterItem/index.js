@@ -44,6 +44,8 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
         }
     }
 
+    // reload much from this comment
+
     onSelectChange(data) {
         const self = this,
             { options, selectedView, filterChange } = this.props,
