@@ -84,7 +84,7 @@ example/dist
 *.ipr
 *.iws
 *.sublime-*
-.idea/
+.idea
 *.DS_Store
 .editorConfig
 .vscode

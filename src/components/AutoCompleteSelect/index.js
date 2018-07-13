@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Select, i18n } from 'element-react';
 import locale from 'element-react/src/locale/lang/en';
-import 'element-theme-chalk';
+
 i18n.use(locale);
 const { Option } = Select;
 
@@ -10,7 +10,7 @@ class AutoCompleteSelect extends Component{
         super(props);
 
         this.state = {
-            items: [],
+            items: [], 
             loading: false,
             values: []
         };
@@ -25,17 +25,17 @@ class AutoCompleteSelect extends Component{
             }
         }
     }
-
-    onSelectChange = (data) => {
+ 
+    onSelectChange(data) {
         const {options, onSelectChange} = this.props;
 
         const formattedData = (data && Array.isArray(data) ?
         data.map(d => {return {[options.key]: d} ;}) : null);
 
-        onSelectChange(formattedData);
-    }
+        onSelectChange(formattedData); 
+    } 
 
-    onSearch = (query) => {
+    onSearch(query) {
         const { options } = this.props;
 
         if (query !== '') {
