@@ -1,6 +1,7 @@
 .dl__filterItem{
   position: relative;
   @extend .cf;
+  z-index: 101;
 
 	label{
 	  display: block;
