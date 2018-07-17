@@ -9,11 +9,13 @@ import AutoCompleteSelect from '../AutoCompleteSelect';
 import { CheckboxGroup, Checkbox } from 'react-checkbox-group';
 import {RadioGroup, Radio} from 'react-radio-group';
 import { SortItem } from '../SortItem';
+import Promise from 'bluebird';;
 
 class FilterItem extends Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props)
     this.state = {
+      Filter: '',// the built filter item
       focusedInput: null,
       lastFocusedInput: null,
       startDate: null,
@@ -22,14 +24,16 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
     };
 
     this.makeFilter = this.makeFilter.bind(this);
-    this.onSelectChange = this.onSelectChange.bind(this);
-    this.onSortClick = this.onSortClick.bind(this);
+    this._onSelectChange = this._onSelectChange.bind(this);
+    this._onSortClick = this._onSortClick.bind(this);
     this.makeSelectInitialValue = this.makeSelectInitialValue.bind(this);
-    this.onRangeChange = this.onRangeChange.bind(this);
+    this._onRangeChange = this._onRangeChange.bind(this);
+
+    // Create the initial filter inner component
+    this.makeFilter(props.options).then(Filter => this.setState({Filter}));
   }
 
   componentWillReceiveProps(nextProps) {
-   
     if (nextProps.options.type === "radio") {
       this.setState({radioValue: Array.isArray(nextProps.options.value) ? nextProps.options.value[0] : nextProps.options.value});
     }
@@ -43,11 +47,13 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
           this.setState({endDate: moment(dateRange.end * 1)});
       }
     }
+
+    // Rerender the filter item in case options have changed
+    this.makeFilter(nextProps.options).then(Filter => this.setState({Filter}));
   }
 
-  onSelectChange(data) {
-    const self = this,
-    { options, selectedView, filterChange } = this.props,
+  _onSelectChange(data) {
+    const { options, selectedView, filterChange } = this.props,
     value = (data && Array.isArray(data)) ? 
               // (Array.isArray(data[0].entityUUID)  ? data[0].entityUUID :
                 data.map(obj=> {
@@ -62,8 +68,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
     });
   }
 
-  onSortClick(direction) {
-    const self = this;
+  _onSortClick(direction) {
     const { options, selectedView, filterChange } = this.props;
 
     filterChange({
@@ -78,7 +83,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
    * @param startDate
    * @param endDate
    */
-  onRangeChange(args) {
+  _onRangeChange(args) {
     let startDate = args.startDate || this.state.startDate;
     let endDate = args.endDate ||  this.state.endDate;
     const {options, selectedView, filterChange} = this.props;
@@ -109,7 +114,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
     }
   }
 
-  onRangeReset(e) {
+  _onRangeReset(e) {
     e.preventDefault();
     const { options, selectedView, filterChange } = this.props;
 
@@ -127,15 +132,14 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
     ]);
   }
 
-  onRangeFocusChange(focusedInput) {
-
+  _onRangeFocusChange(focusedInput) {
     // State loop bug fix for dates component
     if (this.state.lastFocusedInput !== focusedInput) {
       this.setState({ lastFocusedInput: focusedInput, focusedInput });
     }
   }
 
-  handleCheckboxChange(options, values) {
+  _handleCheckboxChange(options, values) {
     const { selectedView, filterChange } = this.props,
       optValues = options.options.getOptions();
     let value = [];
@@ -155,7 +159,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
     });
   }
 
-  handleRadioChange(options, value) {
+  _handleRadioChange(options, value) {
     const { selectedView, filterChange } = this.props;
 
     filterChange({
@@ -167,179 +171,184 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
     this.setState({radioValue: value});
   }
 
+  /**
+   * ALLOWS the getOptions function in a filter config to either return a promise or data directly. 
+   * @param {*} options 
+   */
+  _getOptionsData(options){
+    return new Promise((resolve, reject) => {
+      if (options.options && options.options.getOptions) {
+        try{
+          return options.options.getOptions()
+            .then(resolve);
+        }catch(e){
+          resolve(options.options.getOptions());
+        }
+      } else {
+        resolve([]);
+      }
+    });
+  }
+
   makeFilter(options) {
     const self = this;
-    const _opts = options.options ? options.options.getOptions() : [];
-    const selectValue = {
-      label: 'test',
-      value: self.props.options.value
-    };
-
-    switch (self.props.options.type) {
-      case 'range':
-        return [
-          (<span key={Math.random() * 100000} className="dl__filterItemRangeClear"><a href="#" onClick={self.onRangeReset.bind(self)}>reset</a></span>),
-            (<div className="dr__wrapper">
-              <DatePicker
-                placeholderText="Start Date"
-                key={Math.random()*10000}
-                className="dr__datePicker"
-                selected={this.state.startDate}
-                selectsStart
-                startDate={this.state.startDate}
-                endDate={this.state.endDate}
-                onChange={startDate => {
-                  self.setState({startDate});
-	                self.onRangeChange({startDate});
-                }}
-            />
-              <div className="dr__divider">
-                <svg viewBox="0 0 1000 1000"><path d="M694.4 242.4l249.1 249.1c11 11 11 21 0 32L694.4 772.7c-5 5-10 7-16 7s-11-2-16-7c-11-11-11-21 0-32l210.1-210.1H67.1c-13 0-23-10-23-23s10-23 23-23h805.4L662.4 274.5c-21-21.1 11-53.1 32-32.1z"></path></svg>
-              </div>
-              <DatePicker
-                placeholderText="End Date"
-                className="dr__datePicker"
-                selected={this.state.endDate}
-                selectsEnd
-                startDate={this.state.startDate}
-                endDate={this.state.endDate}
-                onChange={endDate => {
-	                self.setState({endDate});
-	                self.onRangeChange({ endDate });
-                }}
-            /></div>)];
-      case 'checkbox':
-        let vals = [...decodeURIComponent(self.props.options.value)];
-
-        // Handle reading url values @todo: fix the read later when we get more time
-        if (vals[0] === "[" || (vals[0] === "n" && vals[1] === "u")) {
-          vals = vals.join('');
-        }
-
-        try {
-          vals = JSON.parse(vals);
-        } catch (e) { }
-
-        vals = vals === 'null' ? null : vals;
-
-        //@todo .need to spend some time looking at why this component won't render checked values if the first render had no values.
-        return (<CheckboxGroup name={options.id} values={vals} onChange={this.handleCheckboxChange.bind(this, options)}>
-          <div className="dl__filterItemCheckbox">{
-            _opts.map(option => {
-              return (<label key={Math.random() * 10000}><Checkbox value={option[options.options.key]} />{option[options.options.value]}</label>);
-            })
-          }</div>
-        </CheckboxGroup>);
-      case 'sort':
-        return (<SortItem options={self.props.options} onClick={this.onSortClick} />);
-        break;
-      case 'radio':
-        const Radios = _opts
-          .map(option => {
-            return (
-              <label key={Math.random() * 100}>
-                <Radio value={option[options.options.key]} />
-                {option[options.options.value]}
-              </label>
-            )
-          });
-
-        return (<RadioGroup
-                  className="dl__filterItemRadio" 
-                  name={options.label}
-                  selectedValue={this.state.radioValue}
-                  onChange={this.handleRadioChange.bind(this, options)}>
-                  {Radios}
-                </RadioGroup>
-              );
-        break;
-        case 'autocomplete':
-          resolve(<AutoCompleteSelect
-              onSelectChange={self.onSelectChange}
-              initalValues={options.value}
-              placeholder={options && options.placeholder ? options.placeholder : null}
-              {...options} />);
-          break;
-      case 'select':
-      default:
-        let val = null;
-        let defaults = self.props.selectedView.filterDefaults ? self.props.selectedView.filterDefaults() : {};
-        try { defaults = JSON.parse(defaults) }
-        catch (e) { }
-
-        // Decipher what set of defaults are to be used in the component options list
-        if (defaults) {
-          if (options.options && options.options.defaultsKey) {
-            val = defaults[options.options.defaultsKey] ? defaults[options.options.defaultsKey].filter(item => item[options.options.key] == self.props.options.value)[0] : null;
-          } else {
-            val = defaults[options.id] ? defaults[options.id].filter(item => item[options.options.key] == self.props.options.value)[0] : null;
+    return self._getOptionsData(options)
+      .then(_optionsData => 
+        new Promise((resolve, reject) => {
+          switch (self.props.options.type) {
+            case 'range':
+              resolve([
+                (<span key={Math.random() * 100000} className="dl__filterItemRangeClear"><a href="#" onClick={self._onRangeReset.bind(self)}>reset</a></span>),
+                  (<div className="dr__wrapper">
+                    <DatePicker
+                      placeholderText="Start Date"
+                      key={Math.random()*10000}
+                      className="dr__datePicker"
+                      selected={this.state.startDate}
+                      selectsStart
+                      startDate={this.state.startDate}
+                      endDate={this.state.endDate}
+                      onChange={startDate => {
+                        self.setState({startDate});
+                        self._onRangeChange({startDate});
+                      }}
+                  />
+                    <div className="dr__divider">
+                      <svg viewBox="0 0 1000 1000"><path d="M694.4 242.4l249.1 249.1c11 11 11 21 0 32L694.4 772.7c-5 5-10 7-16 7s-11-2-16-7c-11-11-11-21 0-32l210.1-210.1H67.1c-13 0-23-10-23-23s10-23 23-23h805.4L662.4 274.5c-21-21.1 11-53.1 32-32.1z"></path></svg>
+                    </div>
+                    <DatePicker
+                      placeholderText="End Date"
+                      className="dr__datePicker"
+                      selected={this.state.endDate}
+                      selectsEnd
+                      startDate={this.state.startDate}
+                      endDate={this.state.endDate}
+                      onChange={endDate => {
+                        self.setState({endDate});
+                        self._onRangeChange({ endDate });
+                      }}
+                  /></div>)]);
+              break;
+            case 'checkbox':
+              let vals = [...decodeURIComponent(self.props.options.value)];
+      
+              // Handle reading url values @todo: fix the read later when we get more time
+              if (vals[0] === "[" || (vals[0] === "n" && vals[1] === "u")) {
+                vals = vals.join('');
+              }
+      
+              try {
+                vals = JSON.parse(vals);
+              } catch (e) { }
+      
+              vals = vals === 'null' ? null : vals;
+      
+              //@todo .need to spend some time looking at why this component won't render checked values if the first render had no values.
+              resolve((<CheckboxGroup name={options.id} values={vals} onChange={this._handleCheckboxChange.bind(this, options)}>
+                <div className="dl__filterItemCheckbox">{
+                  _optionsData.map(option => {
+                    return (<label key={Math.random() * 10000}><Checkbox value={option[options.options.key]} />{option[options.options.value]}</label>);
+                  })
+                }</div>
+              </CheckboxGroup>));
+              break;
+            case 'sort':
+              resolve((<SortItem options={self.props.options} onClick={this._onSortClick} />));
+              break;
+            case 'radio':
+              const Radios = _optionsData
+                .map(option => {
+                  return (
+                    <label key={Math.random() * 100}>
+                      <Radio value={option[options.options.key]} />
+                      {option[options.options.value]}
+                    </label>
+                  )
+                });
+      
+              resolve((<RadioGroup
+                        className="dl__filterItemRadio" 
+                        name={options.label}
+                        selectedValue={this.state.radioValue}
+                        onChange={this._handleRadioChange.bind(this, options)}>
+                        {Radios}
+                      </RadioGroup>
+                    ));
+              break;
+            case 'autocomplete':
+                resolve(<AutoCompleteSelect
+                    _onSelectChange={self._onSelectChange}
+                    initalValues={options.value}
+                    placeholder={options && options.placeholder ? options.placeholder : null}
+                    {...options} />);
+                break;
+            case 'select':
+            default:
+              let val = null;
+      
+              // If a value exist via a query string run or state update, set the component initial val, otherwise leave blank to display the placeholder
+              if (self.props.options.value) {
+                resolve((
+                  <Select
+                    ajaxDataFetch={options.options.getOptions || []}
+                    optionLabelKey={options.options.value}
+                    optionValueKey={options.options.key}
+                    multiple={options.multi}
+                    initialValue={this.makeSelectInitialValue(options,_optionsData)}
+                    placeholder="Make Your Selections"
+                    onChange={(data) => self._onSelectChange(data)}
+                    searchable={false}
+                  />
+                ));
+              } else {           
+                resolve((
+                  <Select
+                    ajaxDataFetch={options.options.getOptions || []}
+                    optionLabelKey={options.options.value}
+                    optionValueKey={options.options.key}
+                    multiple={options.multi}
+                    placeholder="Make Your Selections"
+                    onChange={(data) => self._onSelectChange(data)}
+                    searchable={false}
+                  />
+                ));
+              }
           }
-        }
-
-        // If a value exist via a query string run or state update, set the component initial val, otherwise leave blank to display the placeholder
-        if (self.props.options.value) {
-          return (
-            <Select
-              ajaxDataFetch={options.options.getOptions || []}
-              optionLabelKey={options.options.value}
-              optionValueKey={options.options.key}
-              multiple={options.multi}
-              initialValue={this.makeSelectInitialValue(options,defaults)}
-              placeholder="Make Your Selections"
-              onChange={(data) => self.onSelectChange(data)}
-              searchable={false}
-            />
-          );
-        } else {           
-          return (
-            <Select
-              ajaxDataFetch={options.options.getOptions || []}
-              optionLabelKey={options.options.value}
-              optionValueKey={options.options.key}
-              multiple={options.multi}
-              placeholder="Make Your Selections"
-              onChange={(data) => self.onSelectChange(data)}
-              searchable={false}
-            />
-          );
-        }
-    }
+        })  
+      );
   }
 
   /**
    * Makes the select components initial values based on either an incoming array of ids or a collection
    * @param {*} options 
    */
-  makeSelectInitialValue(options,defaults){
+  makeSelectInitialValue(options,optionsData){
     const self = this;
    
-    const initVals  =  Array.isArray(self.props.options.value) ? self.props.options.value.map(v => {
-      const defaultsExtract = defaults[self.props.options.id].filter(def=>{
-        return def[options.options.key] === v;
-      })[0];
+    return Array.isArray(self.props.options.value) 
+      ? self.props.options.value.map(v => {
+        const defaultsExtract = optionsData[self.props.options.id].filter(def=>{
+          return def[options.options.key] === v;
+        })[0];
 
-      return { 
-        [options.options.key]: v, // entityUUID
-        [options.options.value]: defaultsExtract[options.options.value]}} // entityValue
-      ) : { 
+        return { 
+          [options.options.key]: v, // ie. entityUUID
+          [options.options.value]: defaultsExtract[options.options.value]}} // ie. entityValue
+        ) 
+      : { 
         [options.options.key]: self.props.options.value,
         [options.options.value]: val ? val[options.options.value] : null
-      }
-
-      console.log('INIT VALS', initVals);
-
-      return initVals;
+      };
   }
 
   render() {
-    const { options, config, selectedView, zIndex } = this.props,
-      filter = this.makeFilter(options);
-    const classNames = `dl__filterItem ${options.id}`
+    const { options, zIndex } = this.props;
+    const classNames = `dl__filterItem ${options.id}`;
 
     return (
       <div className={classNames} style={{zIndex}}>
         <label htmlFor={options.id}>{options.label}</label>
-        {filter}
+        {this.state.Filter}
       </div>
     );
   }
