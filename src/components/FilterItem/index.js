@@ -332,12 +332,12 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
   }
 
   render() {
-    const { options, config, selectedView } = this.props,
+    const { options, config, selectedView, zIndex } = this.props,
       filter = this.makeFilter(options);
     const classNames = `dl__filterItem ${options.id}`
 
     return (
-      <div className={classNames}>
+      <div className={classNames} style={{zIndex}}>
         <label htmlFor={options.id}>{options.label}</label>
         {filter}
       </div>
