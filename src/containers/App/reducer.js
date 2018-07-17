@@ -137,9 +137,9 @@ function appReducer(state = initialState, action) {
 
       return _state;
 
-    case UPDATE_CURRENT_TAB:
+    case UPDATE_CURRENT_TAB: 
       queries.clearURLQueryString();
-
+      
       _state.selectedView = _state.views.filter(view => {
         return view.id === _data;
       })[0];

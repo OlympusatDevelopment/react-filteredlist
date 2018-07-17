@@ -67,7 +67,7 @@ class ViewInfo extends Component { // eslint-disable-line react/prefer-stateless
         //    lines.push((<Pagination key={Math.random()*10000}> </Pagination>));
         //}
 
-        return lines;
+        return lines; 
     }
 
     render() {

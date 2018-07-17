@@ -40,7 +40,7 @@ class FilterGroup extends Component { // eslint-disable-line react/prefer-statel
                 </div>
                 <div className="dl__filterGroupFilters">
                     {options.filters.map((filter,i)=>{
-                        return (<FilterItem key={i} options={filter} selectedView={selectedView}> </FilterItem>);
+                        return (<FilterItem key={i} zIndex={options.filters.length - i} options={filter} selectedView={selectedView}> </FilterItem>);
                     })}
 
                     {filtersets}
