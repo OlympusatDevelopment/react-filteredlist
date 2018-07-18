@@ -203,7 +203,6 @@ Views are higher level filters & datalist pairs that run independent of eachothe
 | infoDisplaySettings.iconComponents | array | undefined | undefined,[React component]| Accepts an array of React components to create icons for displaying in the info/icon bar. The component will receive the entire config and the selectedView data in its props. Useful for custom actions on the dataset. |
 |  |  |  | | |
 | filterGroups | array | undefined | undefined,[FilterGroup]| An array of Filter Group object. See filter groups documentation for details on their contents.|
-| filterDefaults | object | undefined | undefined,{} | An object of keyed defaults collections. The key is the default property types and the value is a collection of items. These are made avialable to select filter item components. The select component will find the defaults collection that matches the filter item id it has set. |
 | itemIdProp | string | '' | ''| The property containing the item id in the datalist item being rendered.|
 | listEntityTypes | [] | undefined | undefined,[]| LEGACY. Most likely not used anymore. @todo this one.|
 | renderTo | string | undefined | undefined,'store'| 'store' is the default. In the future we could render html, or to Meteor sessions, or anywhere else. |
