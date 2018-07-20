@@ -277,7 +277,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
               break;
             case 'autocomplete':
                 resolve(<AutoCompleteSelect
-                    _onSelectChange={self._onSelectChange}
+                    onSelectChange={self._onSelectChange}
                     initalValues={options.value}
                     placeholder={options && options.placeholder ? options.placeholder : null}
                     {...options} />);
@@ -327,9 +327,9 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
    
     return Array.isArray(self.props.options.value) 
       ? self.props.options.value.map(v => {
-        const defaultsExtract = optionsData[self.props.options.id].filter(def=>{
+        const defaultsExtract = (optionsData[self.props.options.id] || []).filter(def=>{
           return def[options.options.key] === v;
-        })[0];
+        })[0] || {};
 
         return { 
           [options.options.key]: v, // ie. entityUUID
