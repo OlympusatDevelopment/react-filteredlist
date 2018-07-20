@@ -14,6 +14,9 @@ class AutoCompleteSelect extends Component{
             loading: false,
             values: []
         };
+
+        this.onSearch = this.onSearch.bind(this);
+        this.onSelectChange = this.onSelectChange.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
