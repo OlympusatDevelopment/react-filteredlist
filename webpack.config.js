@@ -1,9 +1,11 @@
 const path = require('path');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   watch: true,
   performance: { hints: false },
-  entry: './src/index.js',
+  entry: ['./src/index.js', './src/style/main.scss'],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'react-filteredlist.js',
@@ -20,18 +22,38 @@ module.exports = {
         }
       },
       {
-        test: /\.scss$/,
+        test: /\.(sa|sc|c)ss$/,
         use: [
-          {loader: "style-loader"},// create style nodes from JS strings
-          {loader: "css-loader"},// css into CommonJS
-          {loader: "sass-loader"}// scss to css
-        ]
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader',
+        ],
       }
     ]
   },
   resolve: {
     alias: {
       src: path.resolve(__dirname, './src')
+    }
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: 'main.css',
+      // chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+    })
+  ],
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true
+        }
+      }
     }
   }
 };
