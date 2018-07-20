@@ -40,6 +40,7 @@ class AutoCompleteSelect extends Component{
 
     onSearch(query) {
         const { options } = this.props;
+        const self = this;
 
         if (query !== '') {
             this.setState({
@@ -47,7 +48,7 @@ class AutoCompleteSelect extends Component{
             });
             options.getOptions(query)
                 .then((items) => {
-                    this.setState({
+                    self.setState({
                         loading: false,
                         items: items
                     });
