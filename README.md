@@ -70,6 +70,9 @@ See that `dataListConfig` being passed into the config prop on the component usa
 
 **Note:** The `pushDispatch={Items: users.items, count: users.totalCount}` prop is optional. If it's provided and passed data, then the list and pagination will prefer the data here for list rendering over incoming data via other sources. This behavior mimicks the pushDispatch hook for using socket based data pushes into the component. This prop is useful for when you want a record of your list items to come from your parent application's store. This way changes in the parent store will be propagated to the list. This is useful for orm based store structures.
 
+##### Styles
+It's important that the stylesheet be imported separately. In ES6, depending on your tooling, import directly into js otherwise use `@import '../node_modules/react-filteredlist/dist/main.css';` in your stylesheet. Fix the path to point correctly to your node_modules folder.
+
 ```
 const FilteredList = require('react-filteredlist');
 
@@ -80,9 +83,11 @@ __Or in ES6__
 
 ```
 import FilteredList from 'react-filteredlist';
+import '../node_modules/react-filteredlist/dist/main.css';
 
 <FilteredList config={dataListConfig} pushDispatch={Items: users.items, count: users.totalCount}/>
 ```
+
 # Breaking Changes
 
     1. OnCheck hook arg is has been updated to {item: {}, items: [], checkedItems: [], action: checked/unchecked}
