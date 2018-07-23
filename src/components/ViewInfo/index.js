@@ -4,20 +4,40 @@ import { connect } from 'react-redux';
 import * as ViewInfoActions from './actions';
 import Pagination from '../Pagination';
 import copy from 'copy-to-clipboard';
+import Modal from '../Modal';
 
 class ViewInfo extends Component { // eslint-disable-line react/prefer-stateless-function
     constructor(props) {
-        super(props)
+        super(props);
+
+        this._controlExportsUI = this._controlExportsUI.bind(this);
+        this.makeViewInfo = this.makeViewInfo.bind(this);
     }
 
-    copyToClipboard(){
+    _copyToClipboard() {
         const path = window.location.href;
         copy(path);
 
         this.props.config.notify(`Copied ${path} to the clipboard`,'success','br');
     }
 
-    updatePagingDisplay(s,ta,to){
+    _controlExportsUI(e, options) {
+      const settings = options.infoDisplaySettings;
+    
+      if(settings.hasOwnProperty('exports')) {
+        if(settings.exports.Component) {
+          // Render the component inside a modal here.
+          // Pass it the settings so it has access to the apiUrl
+        } else {
+          
+          this.props.controlModal({show: true, Component: (<p>I[m the exports interface</p>)});
+          // INject our custom exports interface into the modal
+          // If there's an apiUrl, use it. Just pass it the settings
+        }
+      }
+    }
+
+    updatePagingDisplay(s,ta,to) {
         const skip = parseInt(s,10),
               take = parseInt(ta,10),
               total = parseInt(to,10);
@@ -39,43 +59,44 @@ class ViewInfo extends Component { // eslint-disable-line react/prefer-stateless
     }
 
     makeViewInfo(){
-        const {options, config, pagination, selectedView, app} = this.props,
-            settings = options.infoDisplaySettings;
-        let lines = [];
+      const {options, config, pagination, selectedView, app, modal} = this.props;
+      const settings = options.infoDisplaySettings;
+      const self = this;
+      let lines = [];
 
-        if(settings.showIconStrip){
-            let icons = [];
+      if(settings.showIconStrip){
+          let icons = [];
 
-            if(settings.showShareLink){
-                icons.push((<div title="Share" className="dl__viewInfo--share" key={Math.random()*10000} onClick={this.copyToClipboard.bind(this)}> </div>))
-            }
+          if(settings.showShareLink){
+              icons.push((<div title="Share" className="dl__viewInfo--share" key={Math.random()*10000} onClick={this._copyToClipboard.bind(this)}> </div>))
+          }
 
-            console.log("selectedView ", selectedView, config, options, this.props.app);
-            // this.props.config.hooks
-            //  app.queryObject, app.queryString, app.Items, app.pagination, app.workspace
+          if(settings.showExport){
+              icons.push((<div key={Math.random()*10000} title="Export" className="exportIcon" onClick={e => {
+                if(!modal.show) {
+                  self._controlExportsUI(e, options);
+                }
+              }}></div>))
+          }
 
-            if(settings.showExport){
-                icons.push((<div key={Math.random()*10000} title="Export" className="exportIcon" onClick={console.log}></div>))
-            }
+          if(settings.iconComponents.length > 0){
+              settings.iconComponents.forEach(Icon=>{
+                  icons.push((<Icon key={Math.random()*10000}/>));
+              });
+          }
 
-            if(settings.iconComponents.length > 0){
-                settings.iconComponents.forEach(Icon=>{
-                    icons.push((<Icon key={Math.random()*10000}/>));
-                });
-            }
+          lines.push((<li key={Math.random()*10000} className="dl__viewInfoIconStrip">{icons}</li>));
+      }
 
-            lines.push((<li key={Math.random()*10000} className="dl__viewInfoIconStrip">{icons}</li>));
-        }
+      if(settings.showPaginationData){
+          lines.push((<li key={Math.random()*10000} className="dl__viewInfoPaginationData"><span className="label">Displaying</span> <span>{this.updatePagingDisplay(pagination.skip,pagination.take,pagination.total)}</span></li>))
+      }
 
-        if(settings.showPaginationData){
-            lines.push((<li key={Math.random()*10000} className="dl__viewInfoPaginationData"><span className="label">Displaying</span> <span>{this.updatePagingDisplay(pagination.skip,pagination.take,pagination.total)}</span></li>))
-        }
+      //if(settings.showPagination){//Can't use two for now
+      //    lines.push((<Pagination key={Math.random()*10000}> </Pagination>));
+      //}
 
-        //if(settings.showPagination){//Can't use two for now
-        //    lines.push((<Pagination key={Math.random()*10000}> </Pagination>));
-        //}
-
-        return lines; 
+      return lines; 
     }
 
     render() {
@@ -95,7 +116,8 @@ function mapStateToProps(state,ownProps) {
         config:state.app.config,
         force: state.app.force,
         pagination: state.app.pagination,
-        app: state.app
+        app: state.app,
+        modal: state.app.modal
     };
 }
 

@@ -10,6 +10,7 @@ import Header from '../Header';
 import Filters from '../Filters';
 import DataList from '../DataList';
 import Footer from '../Footer';
+import Modal from '../../components/Modal';
 
 // Remove the first load marker,..
 // first_load gets used in the app reducer
@@ -360,13 +361,14 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
   }
 
   render() {
-    const { config: { selector }, app } = this.props,
+    const { config: { selector }, app, modal } = this.props,
       classNames = `dl ${selector}`,
       appBody = Object.keys(app.selectedView).length > 0 ? (this.makeAppBody(app)) : '';//Delay render until config is loaded
 
     return (
       <div className={classNames} >
         {appBody}
+        {modal.show ? <Modal component={modal.Component}/> : ''}
       </div>);
   }
 }
@@ -376,7 +378,8 @@ function mapStateToProps(state, ownProps) {
   //console.log('STATE in App/index.js',state,ownProps);
   return {
     config: state.app.config,
-    app: state.app
+    app: state.app,
+    modal: state.app.modal
   };
 }
 

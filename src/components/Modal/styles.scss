@@ -1,0 +1,104 @@
+.modal{
+  &__outer {
+	position   : fixed;
+	left       : -250px; // Allow to stretch over menu
+	right      : 0;
+	bottom     : 0;
+	top        : 10%;
+	background : rgba(0, 0, 0, 0.9);
+	z-index    : 99999999;
+  }
+
+  &__inner {
+	margin        : auto;
+	position      : absolute;
+	top           : 0; left : 250px; bottom : 0; right : 0;
+	width         : 60%;
+	height        : 80%;
+	background    : $color-base-white;
+	border-radius : 6px;
+	overflow      : hidden;
+	overflow-y    : auto;
+
+	> h1 {
+	  text-align  : center !important; // Special case override of theme default
+	  font-size   : 27px;
+	  line-height : 2;
+	}
+
+	input[type="text"],
+	input[type="email"],
+	input[type="password"],
+	input[type="submit"],
+	select {
+	  background    : none;
+	  border        : none;
+	  outline       : none;
+	  appearance    : none;
+	  padding       : 6px;
+	  border        : 1px solid $color-border;
+	  border-radius : 3px;
+	  display       : block;
+	  width         : 100%;
+	  margin-top    : 6px;
+	  height        : 45px;
+	}
+
+	input[type=submit] {
+	  background    : $color-go;
+	  color         : $color-base-white !important;
+	  margin-top    : 36px;
+	  border-top    : 1px solid $color-border-primary;
+	  border-radius : 6px;
+
+	  &:hover {
+		@extend .hover;
+	  }
+
+	}
+  }
+
+  &--close,
+  &--back{
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 57px;
+	height: 100%;
+	border-top-right-radius: 6px;
+
+	&:after {
+	  content     : $fa-var-times;
+	  font-family : FontAwesome;
+	  position    : absolute;
+	  color       : #eee;
+	  font-size   : 18px;
+	  left: 0;
+	  text-align: center;
+	  line-height: 57px;
+	  top: 0px;
+	  width: 100%;
+	  height: 100%;
+	}
+
+	&:hover{
+	  background: rgba(0,0,0,0.1);
+	  cursor: pointer;
+	}
+  }
+
+  &--back{
+	right: initial;
+	left: 0;
+
+	&:after{
+	  top: 44%;
+	  content: $fa-var-chevron-left;
+	}
+  }
+
+  &--close{
+	height: 57px;
+	border-bottom-left-radius: 6px;
+  }
+}
