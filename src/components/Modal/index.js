@@ -18,9 +18,8 @@ class Modal extends Component{
         return (
           <div className="modal__outer">
             <div className="modal__inner">
-              <div className="modal--close" onClick={() => this.props.controlModal({show: false, Component: false})}>
-                {component}
-              </div>
+              <div className="modal--close" onClick={() => this.props.controlModal({show: false, Component: false})}></div>
+              {component}
             </div>
           </div>);
     }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as ViewInfoActions from './actions';
 import Pagination from '../Pagination';
 import copy from 'copy-to-clipboard';
-import Modal from '../Modal';
+import Exports from '../Exports';
 
 class ViewInfo extends Component { // eslint-disable-line react/prefer-stateless-function
     constructor(props) {
@@ -30,7 +30,7 @@ class ViewInfo extends Component { // eslint-disable-line react/prefer-stateless
           // Pass it the settings so it has access to the apiUrl
         } else {
           
-          this.props.controlModal({show: true, Component: (<p>I[m the exports interface</p>)});
+          this.props.controlModal({show: true, Component: (<Exports />)});
           // INject our custom exports interface into the modal
           // If there's an apiUrl, use it. Just pass it the settings
         }

@@ -5496,7 +5496,7 @@ code {
     content: "\F00D";
     font-family: FontAwesome;
     position: absolute;
-    color: #eee;
+    color: #4e5961;
     font-size: 18px;
     left: 0;
     text-align: center;
@@ -5506,7 +5506,8 @@ code {
     height: 100%; }
   .modal--close:hover, .modal--back:hover {
     background: rgba(0, 0, 0, 0.1);
-    cursor: pointer; }
+    cursor: pointer;
+    color: #8c99a3; }
 
 .modal--back {
   right: initial;
@@ -5516,8 +5517,18 @@ code {
     content: "\F053"; }
 
 .modal--close {
-  height: 57px;
-  border-bottom-left-radius: 6px; }
+  height: 57px; }
+
+.exports__outer {
+  padding: 11px 18px 18px 18px; }
+
+.exports__inner h1 {
+  font-size: 24px;
+  color: #333;
+  border-bottom: 1px solid #ddd; }
+
+.exports__inner label {
+  display: block; }
 
 .dl {
   position: relative; }
