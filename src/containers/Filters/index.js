@@ -28,7 +28,7 @@ class Filters extends Component { // eslint-disable-line react/prefer-stateless-
                 {viewTabs}
 
                 {views.map((view,i)=>{
-                    return (<View key={i} options={view} isSingle={config.views.length === 1} isActiveView={view.id === selectedView.id}> </View>);
+                    return (<View key={i} selectedView={selectedView} options={view} isSingle={config.views.length === 1} isActiveView={view.id === selectedView.id}> </View>);
                 })}
 
             </div>

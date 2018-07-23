@@ -39,7 +39,7 @@ class ViewInfo extends Component { // eslint-disable-line react/prefer-stateless
     }
 
     makeViewInfo(){
-        const {options,config,pagination} = this.props,
+        const {options, config, pagination, selectedView, app} = this.props,
             settings = options.infoDisplaySettings;
         let lines = [];
 
@@ -48,6 +48,14 @@ class ViewInfo extends Component { // eslint-disable-line react/prefer-stateless
 
             if(settings.showShareLink){
                 icons.push((<div title="Share" className="dl__viewInfo--share" key={Math.random()*10000} onClick={this.copyToClipboard.bind(this)}> </div>))
+            }
+
+            console.log("selectedView ", selectedView, config, options, this.props.app);
+            // this.props.config.hooks
+            //  app.queryObject, app.queryString, app.Items, app.pagination, app.workspace
+
+            if(settings.showExport){
+                icons.push((<div key={Math.random()*10000} title="Export" className="exportIcon" onClick={console.log}></div>))
             }
 
             if(settings.iconComponents.length > 0){
@@ -86,7 +94,8 @@ function mapStateToProps(state,ownProps) {
     return {
         config:state.app.config,
         force: state.app.force,
-        pagination: state.app.pagination
+        pagination: state.app.pagination,
+        app: state.app
     };
 }
 

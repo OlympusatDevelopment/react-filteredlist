@@ -15,9 +15,9 @@ class View extends Component { // eslint-disable-line react/prefer-stateless-fun
         this.props.resetFilters();
     }
 
-    makeActiveView(options){
+    makeActiveView(options, selectedView){
         let ar = [
-            (<ViewInfo key={Math.random()*10000} options={options}> </ViewInfo>)
+            (<ViewInfo key={Math.random()*10000} options={options} selectedView={selectedView}> </ViewInfo>)
         ];   
 
         if(options.showSearch){
@@ -25,7 +25,7 @@ class View extends Component { // eslint-disable-line react/prefer-stateless-fun
         }
 
         ar.push((options.filterGroups.map((filterGroup,i)=>{
-            return (<FilterGroup key={Math.random()*10000} selectedView={options} options={filterGroup} isSingle=               {options.filterGroups.length === 1}> </FilterGroup>);
+            return (<FilterGroup key={Math.random()*10000} selectedView={selectedView} options={filterGroup} isSingle={options.filterGroups.length === 1}> </FilterGroup>);
         })));
  
         if(options.showResetFiltersButton){
@@ -36,8 +36,8 @@ class View extends Component { // eslint-disable-line react/prefer-stateless-fun
     }
 
     render() {
-        const {options,config,isActiveView,isSingle}=this.props,
-              activeView = isActiveView ? this.makeActiveView(options) : '';
+        const {options,config,isActiveView,isSingle, selectedView}=this.props,
+              activeView = isActiveView ? this.makeActiveView(options, selectedView) : '';
 
         return (
             <div className="dl__view" data-issingle={isSingle} data-active={isActiveView}>

@@ -284,9 +284,8 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
                 break;
             case 'select':
             default:
-              let val = null;
-      
               // If a value exist via a query string run or state update, set the component initial val, otherwise leave blank to display the placeholder
+
               if (self.props.options.value) {
                 resolve((
                   <Select
@@ -324,21 +323,14 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
    */
   makeSelectInitialValue(options,optionsData){
     const self = this;
-   
-    return Array.isArray(self.props.options.value) 
-      ? self.props.options.value.map(v => {
-        const defaultsExtract = (optionsData[self.props.options.id] || []).filter(def=>{
-          return def[options.options.key] === v;
-        })[0] || {};
 
-        return { 
-          [options.options.key]: v, // ie. entityUUID
-          [options.options.value]: defaultsExtract[options.options.value]}} // ie. entityValue
-        ) 
-      : { 
-        [options.options.key]: self.props.options.value,
-        [options.options.value]: val ? val[options.options.value] : null
-      };
+    // Loop through optionsData and return all items that match the incoming stored values
+    return optionsData.filter(data => 
+      (Array.isArray(self.props.options.value) 
+        ? self.props.options.value 
+        : [self.props.options.value]
+      ).includes(data[options.options.key])
+    );
   }
 
   render() {
