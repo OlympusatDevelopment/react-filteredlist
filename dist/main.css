@@ -4494,6 +4494,29 @@ code {
     .dl__viewInfo--share:hover {
       cursor: pointer;
       background: #efefef; }
+  .dl__viewInfo .exportIcon {
+    width: 37px;
+    height: 37px;
+    vertical-align: middle;
+    float: right;
+    text-align: center;
+    font-size: 14px;
+    padding-top: 10px;
+    border: 1px solid #efefef;
+    border-top: none;
+    border-bottom: none;
+    position: relative; }
+    .dl__viewInfo .exportIcon:after {
+      content: "\F0ED";
+      position: absolute;
+      font-family: FontAwesome;
+      top: 26%;
+      right: 0;
+      bottom: 0;
+      left: 0; }
+    .dl__viewInfo .exportIcon:hover {
+      background: #efefef;
+      cursor: pointer; }
 
 .dl__saveFilterset label {
   line-height: 1.5;
