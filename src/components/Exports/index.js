@@ -23,17 +23,17 @@ class Exports extends Component{
         return (
           <div className="exports__outer">
             <div className="exports__inner">
-              <h1>Export Dataset</h1>
+              <h1>Export Dataset as CSV</h1>
               <form onSubmit={this._onSubmit}>
-                <label>Include all pages <small>(otherwise only the current page will be exported)</small>
-                  <input type="checkbox" name="exports.pages"/>
+                <label title="Otherwise only the current page will be exported">Include all pages in csv
+                  <input type="checkbox" name="exports.pages"/> &nbsp;
                 </label>
-                <label>Include files <small>(if there are files associated with entries they will be included in the download)</small>
-                  <input type="checkbox" name="exports.files"/>
+                <label title="If there are files associated with entries they will not be included in the download">Only metadata
+                  <input type="checkbox" name="exports.files"/> &nbsp;
                 </label>
 
-                <label>Email <small>(Where should we send the download?)</small>
-                  <input type="email" name="exports.email" />
+                <label title="Where should we send the download?">Email
+                  <input type="email" name="exports.email" placeholder="Email"/>
                 </label>
 
                 <input type="submit" value="Download" />

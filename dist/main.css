@@ -5527,8 +5527,19 @@ code {
   color: #333;
   border-bottom: 1px solid #ddd; }
 
+.exports__inner form {
+  width: 50%;
+  margin: 10% 20%; }
+  .exports__inner form input[type="checkbox"] {
+    float: left;
+    margin-right: 9px; }
+
 .exports__inner label {
-  display: block; }
+  display: block;
+  margin-bottom: 18px;
+  font-size: 16px; }
+  .exports__inner label small {
+    font-size: 12px; }
 
 .dl {
   position: relative; }

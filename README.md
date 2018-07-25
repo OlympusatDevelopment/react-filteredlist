@@ -27,6 +27,7 @@ More specific documentation to come.
     * [Hooks](#hooks)
     * [Complete Example](#complete-example)
       * [Example suggested folder structure](#example-suggested-folder-structure)
+    * [Troubleshooting](#troubleshooting)
 
 
 ## Dependencies
@@ -783,3 +784,17 @@ filteredlistConfig
     }
 }
 ```
+
+
+
+# Troubleshooting
+Because this is a react component library, you may find (after `react@16`) that you get a react `ref` error saying you could have ***multiple copies of react running***. If that's the case, in your parent application's `webpack.config.dev.js` or `webpack.config.prod.js` file add aliases for both `react` and `react-dom` that point to the parent app's `node_modules` folder.
+
+```
+alias: {
+  react: path.resolve('./node_modules/react'),
+  'react-dom': path.resolve('./node_modules/react-dom')
+},
+```
+
+Also, in doing these aliases, you may need to allow webpack to use scope outside your `src` folder. If you see `ModuleScopePlugin` in your webpack config file (Ejected Create React Apps), then just remove that plugin. See this issue for more info: [https://stackoverflow.com/questions/44114436/the-create-react-app-imports-restriction-outside-of-src-directory](https://stackoverflow.com/questions/44114436/the-create-react-app-imports-restriction-outside-of-src-directory)

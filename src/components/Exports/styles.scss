@@ -10,8 +10,24 @@
       border-bottom: 1px solid $color-border;
     }
 
+    form{
+      width: 50%;
+      margin: 10% 20%;
+
+      input[type="checkbox"]{
+        float: left;
+        margin-right: 9px;
+      }
+    }
+
     label{
       display: block;
+      margin-bottom: 18px;
+      font-size: 16px;
+
+      small{
+        font-size: 12px;
+      }
     }
   }
 }
