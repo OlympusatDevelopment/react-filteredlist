@@ -5,12 +5,17 @@ const devMode = process.env.NODE_ENV !== 'production';
 module.exports = {
   watch: true,
   performance: { hints: false },
-  entry: ['./src/index.js', './src/style/main.scss'],
+  entry: './src/index.js',
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'react-filteredlist.js',
-    library: 'reactfilteredlist',
-    libraryTarget: 'umd'
+    library: '',
+    libraryTarget: 'umd',
+    libraryExport: 'default'
+  },
+  externals: {
+		react: 'react',
+		'react-dom': 'react-dom'
   },
   module: {
     rules: [

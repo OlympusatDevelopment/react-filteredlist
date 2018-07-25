@@ -184,7 +184,7 @@ code {
   -ms-user-select: none;
   user-select: none; }
 
-.hover, .dl__button:hover, .dl__filterItemRangeClear:hover, .dl__search input[type="submit"]:hover, .dl__searchClearButton:hover, .dl__sortItem:hover {
+.hover, .dl__button:hover, .dl__filterItemRangeClear:hover, .dl__search input[type="submit"]:hover, .dl__searchClearButton:hover, .dl__sortItem:hover, .modal__inner input[type=submit]:hover {
   cursor: pointer;
   opacity: 0.7; }
 
@@ -4637,7 +4637,7 @@ code {
 .el-select-dropdown__item.is-disabled:hover {
   background-color: #fff; }
 
-.el-select-dropdown__item.hover, .el-select-dropdown__item.dl__button:hover, .el-select-dropdown__item.dl__filterItemRangeClear:hover, .dl__search input.el-select-dropdown__item[type="submit"]:hover, .el-select-dropdown__item.dl__searchClearButton:hover, .el-select-dropdown__item.dl__sortItem:hover, .el-select-dropdown__item:hover {
+.el-select-dropdown__item.hover, .el-select-dropdown__item.dl__button:hover, .el-select-dropdown__item.dl__filterItemRangeClear:hover, .dl__search input.el-select-dropdown__item[type="submit"]:hover, .el-select-dropdown__item.dl__searchClearButton:hover, .el-select-dropdown__item.dl__sortItem:hover, .modal__inner input.el-select-dropdown__item[type=submit]:hover, .el-select-dropdown__item:hover {
   background-color: #f5f7fa; }
 
 .el-select-dropdown__item.selected {
@@ -4745,7 +4745,7 @@ code {
   color: #409EFF;
   background-color: #fff; }
 
-.el-select-dropdown.is-multiple .el-select-dropdown__item.selected.hover, .el-select-dropdown.is-multiple .el-select-dropdown__item.selected.dl__button:hover, .el-select-dropdown.is-multiple .el-select-dropdown__item.selected.dl__filterItemRangeClear:hover, .el-select-dropdown.is-multiple .dl__search input.el-select-dropdown__item.selected[type="submit"]:hover, .dl__search .el-select-dropdown.is-multiple input.el-select-dropdown__item.selected[type="submit"]:hover, .el-select-dropdown.is-multiple .el-select-dropdown__item.selected.dl__searchClearButton:hover, .el-select-dropdown.is-multiple .el-select-dropdown__item.selected.dl__sortItem:hover {
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected.hover, .el-select-dropdown.is-multiple .el-select-dropdown__item.selected.dl__button:hover, .el-select-dropdown.is-multiple .el-select-dropdown__item.selected.dl__filterItemRangeClear:hover, .el-select-dropdown.is-multiple .dl__search input.el-select-dropdown__item.selected[type="submit"]:hover, .dl__search .el-select-dropdown.is-multiple input.el-select-dropdown__item.selected[type="submit"]:hover, .el-select-dropdown.is-multiple .el-select-dropdown__item.selected.dl__searchClearButton:hover, .el-select-dropdown.is-multiple .el-select-dropdown__item.selected.dl__sortItem:hover, .el-select-dropdown.is-multiple .modal__inner input.el-select-dropdown__item.selected[type=submit]:hover, .modal__inner .el-select-dropdown.is-multiple input.el-select-dropdown__item.selected[type=submit]:hover {
   background-color: #f5f7fa; }
 
 .el-select-dropdown.is-multiple .el-select-dropdown__item.selected::after {
@@ -5201,7 +5201,7 @@ code {
 .el-select-dropdown__item.is-disabled:hover {
   background-color: #fff; }
 
-.el-select-dropdown__item.hover, .el-select-dropdown__item.dl__button:hover, .el-select-dropdown__item.dl__filterItemRangeClear:hover, .dl__search input.el-select-dropdown__item[type="submit"]:hover, .el-select-dropdown__item.dl__searchClearButton:hover, .el-select-dropdown__item.dl__sortItem:hover, .el-select-dropdown__item:hover {
+.el-select-dropdown__item.hover, .el-select-dropdown__item.dl__button:hover, .el-select-dropdown__item.dl__filterItemRangeClear:hover, .dl__search input.el-select-dropdown__item[type="submit"]:hover, .el-select-dropdown__item.dl__searchClearButton:hover, .el-select-dropdown__item.dl__sortItem:hover, .modal__inner input.el-select-dropdown__item[type=submit]:hover, .el-select-dropdown__item:hover {
   background-color: #f5f7fa; }
 
 .el-select-dropdown__item.selected {
@@ -5436,10 +5436,117 @@ code {
     margin-left: 3px;
     color: #333; }
 
-.dl__container {
-  position: relative;
-  padding-bottom: 57px;
-  width: 102%; }
+.modal__outer {
+  position: fixed;
+  left: -250px;
+  right: 0;
+  bottom: 0;
+  top: 10%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 99999999; }
+
+.modal__inner {
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 250px;
+  bottom: 0;
+  right: 0;
+  width: 60%;
+  height: 80%;
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  overflow-y: auto; }
+  .modal__inner > h1 {
+    text-align: center !important;
+    font-size: 27px;
+    line-height: 2; }
+  .modal__inner input[type="text"],
+  .modal__inner input[type="email"],
+  .modal__inner input[type="password"],
+  .modal__inner input[type="submit"],
+  .modal__inner select {
+    background: none;
+    border: none;
+    outline: none;
+    appearance: none;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    height: 45px; }
+  .modal__inner input[type=submit] {
+    background: green;
+    color: #fff !important;
+    margin-top: 36px;
+    border-top: 1px solid #d0d0d0;
+    border-radius: 6px; }
+
+.modal--close, .modal--back {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 57px;
+  height: 100%;
+  border-top-right-radius: 6px; }
+  .modal--close:after, .modal--back:after {
+    content: "\F00D";
+    font-family: FontAwesome;
+    position: absolute;
+    color: #4e5961;
+    font-size: 18px;
+    left: 0;
+    text-align: center;
+    line-height: 57px;
+    top: 0px;
+    width: 100%;
+    height: 100%; }
+  .modal--close:hover, .modal--back:hover {
+    background: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    color: #8c99a3; }
+
+.modal--back {
+  right: initial;
+  left: 0; }
+  .modal--back:after {
+    top: 44%;
+    content: "\F053"; }
+
+.modal--close {
+  height: 57px; }
+
+.exports__outer {
+  padding: 11px 18px 18px 18px; }
+
+.exports__inner h1 {
+  font-size: 24px;
+  color: #333;
+  border-bottom: 1px solid #ddd; }
+
+.exports__inner form {
+  width: 50%;
+  margin: 10% 20%; }
+  .exports__inner form input[type="checkbox"] {
+    float: left;
+    margin-right: 9px; }
+
+.exports__inner label {
+  display: block;
+  margin-bottom: 18px;
+  font-size: 16px; }
+  .exports__inner label small {
+    font-size: 12px; }
+
+.dl {
+  position: relative; }
+  .dl__container {
+    position: relative;
+    padding-bottom: 57px;
+    width: 102%; }
 
 .dl__container {
   overflow: hidden; }

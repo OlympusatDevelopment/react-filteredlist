@@ -10,7 +10,8 @@ import {
   RESET_FILTERS,
   UPDATE_SEARCH_INPUT,
   UPDATE_PAGINATION,
-  UPDATE_WORKSPACE
+  UPDATE_WORKSPACE,
+  CONTROL_MODAL
 } from './constants';
 
 //@todo find a better place to inject this
@@ -59,7 +60,11 @@ const initialState = {
     actions: null,
     item: {}
   },
-  showLoading: false
+  showLoading: false,
+  modal: {
+    show: false,
+    Component: false
+  }
 };
 
 function appReducer(state = initialState, action) {
@@ -379,6 +384,14 @@ function appReducer(state = initialState, action) {
       _state.config.hooks.onStateUpdate(_state);
 
       return _state;
+
+      case CONTROL_MODAL: 
+        _state.modal = {
+          show: _data.show,
+          Component: _data.Component
+        }
+        
+        return _state;
 
     default:
       return _state;
