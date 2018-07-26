@@ -529,7 +529,7 @@ The hooks are powerful. At different points in time throughout the lifecycle of 
 
 | Property | Type | Return schema | Parameters | Description |
 |:---|:---|:---|:---|:---|
-| beforeXHR | function | {data, xhrOptions} | (data, xhrOptions, requestData) | Hook gets called just before the xhr request. It passes through the entire xhr params & the request body data raw. |
+| beforeXHR | function | {data, xhrOptions} | (data, xhrOptions, requestData, requestType) | Hook gets called just before the xhr request. It passes through the entire xhr params & the request body data raw. requestType will be undefined for primary requests, but can return a value of 'export' for when an export request is being generated. This allows specific export request handling inside the hook.|
 | onXHRSuccess | function | `resolve({Items:[{}],total:1})`,`resolve("some error message")` | (body,resolve,reject) |  Hook gets called when the xhr request returns successfully. A Promise is passed in the argument, it must be resolved. It's here that you can mutate data received from the api, then return wither an error message or an object of Items and the total.|
 | onXHRFail | function | body | (err,body) | Hook gets called when the xhr request kicks back an error |
 | onCheck | function | item | ({item,workspaceItems}) | Hook for picking up check events. Note: You have access to all items currently in the workspace, but you must only return the item being mutated. Warning: a select all command will run this hook once for each item as it builds the workspaceItems list |

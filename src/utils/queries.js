@@ -319,7 +319,7 @@ function makeXHRRequest(_state, options) {
 
       // Before request hook
       let hookedData = _state.config.hooks.beforeXHR
-        ? _state.config.hooks.beforeXHR(_state, opts, requestData)
+        ? _state.config.hooks.beforeXHR(_state, opts, requestData, options.requestType)
         : requestData;
 
       // Finally : Make our xhr call using either the xhr lib or our proxy

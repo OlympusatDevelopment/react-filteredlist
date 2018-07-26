@@ -5533,6 +5533,9 @@ code {
   .exports__inner form input[type="checkbox"] {
     float: left;
     margin-right: 9px; }
+  .exports__inner form [type="submit"] {
+    background: #105caa;
+    font-size: 14px; }
 
 .exports__inner label {
   display: block;

@@ -18,6 +18,11 @@
         float: left;
         margin-right: 9px;
       }
+
+      [type="submit"]{
+        background: $color-base-blue;
+        font-size: 14px;
+      }
     }
 
     label{
