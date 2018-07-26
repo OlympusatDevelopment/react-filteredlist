@@ -15,10 +15,6 @@ class Exports extends Component{
         this._onSubmit = this._onSubmit.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
-        
-    }
-
     _onSubmit(e) {
       e.preventDefault();
       const { _state, exportsSettings } = this.props;
