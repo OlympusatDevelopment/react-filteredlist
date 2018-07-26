@@ -5529,10 +5529,16 @@ code {
 
 .exports__inner form {
   width: 50%;
-  margin: 10% 20%; }
+  margin: 10% 0;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%); }
   .exports__inner form input[type="checkbox"] {
     float: left;
     margin-right: 9px; }
+  .exports__inner form [type="submit"] {
+    background: #105caa;
+    font-size: 14px; }
 
 .exports__inner label {
   display: block;
@@ -5540,6 +5546,35 @@ code {
   font-size: 16px; }
   .exports__inner label small {
     font-size: 12px; }
+
+.exports__success {
+  width: 50%;
+  margin: 10% 0;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center; }
+  .exports__success h3 {
+    font-weight: 100;
+    font-size: 32px;
+    line-height: 1.75; }
+  .exports__success p {
+    font-size: 16px;
+    line-height: 1.25; }
+  .exports__success button {
+    font-size: 14px;
+    border: none;
+    background: #4ab2cd;
+    color: #fff;
+    margin-top: 32px;
+    padding: 9px 64px;
+    border-radius: 3px; }
+    .exports__success button:hover {
+      opacity: 0.7;
+      cursor: pointer; }
+  .exports__success em {
+    font-style: italic;
+    opacity: 0.8; }
 
 .dl {
   position: relative; }

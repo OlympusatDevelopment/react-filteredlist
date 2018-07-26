@@ -204,6 +204,9 @@ Views are higher level filters & datalist pairs that run independent of eachothe
 | infoDisplaySettings.showShareLink | boolean | `false` | `true`,`false`| Enables a prebuilt share link in the icon strip that will copy to clipboard the current url and any query string in it.|
 | infoDisplaySettings.showPaginationData | boolean | `false` | `true`,`false`| Show data about the current page, total number of items, and loading status in the info bar. |
 | infoDisplaySettings.iconComponents | array | undefined | undefined,[React component]| Accepts an array of React components to create icons for displaying in the info/icon bar. The component will receive the entire config and the selectedView data in its props. Useful for custom actions on the dataset. |
+| infoDisplaySettings.exports | object | undefined | undefined, {} | Container for the export feature settings accessed when `showExport` is true. |
+| infoDisplaySettings.exports.apiUrl | string | undefined | undefined, 'url' | If a url is passed here, then the ajax call will use this url instead of the one set in the view's `api` settings. Useful for rest requests. |
+| infoDisplaySettings.exports.Component | React Component | undefined | undefined, <React Component/> | If a component is passed here, the internal modal will display this component over the built in internal export interface. The component is passed `exportsSettings`, `selectedView`, `parentProps` to its props. Important to note that the parent props has the modal in it as well as the action to `controlModal`. If you trigger `controlModal({show: false})`, you will close the modal. Useful for on success events. |
 |  |  |  | | |
 | filterGroups | array | undefined | undefined,[FilterGroup]| An array of Filter Group object. See filter groups documentation for details on their contents.|
 | itemIdProp | string | '' | ''| The property containing the item id in the datalist item being rendered.|
@@ -529,7 +532,7 @@ The hooks are powerful. At different points in time throughout the lifecycle of 
 
 | Property | Type | Return schema | Parameters | Description |
 |:---|:---|:---|:---|:---|
-| beforeXHR | function | {data, xhrOptions} | (data, xhrOptions, requestData) | Hook gets called just before the xhr request. It passes through the entire xhr params & the request body data raw. |
+| beforeXHR | function | {data, xhrOptions} | (data, xhrOptions, requestData, requestType) | Hook gets called just before the xhr request. It passes through the entire xhr params & the request body data raw. requestType will be undefined for primary requests, but can return a value of 'export' for when an export request is being generated. This allows specific export request handling inside the hook.|
 | onXHRSuccess | function | `resolve({Items:[{}],total:1})`,`resolve("some error message")` | (body,resolve,reject) |  Hook gets called when the xhr request returns successfully. A Promise is passed in the argument, it must be resolved. It's here that you can mutate data received from the api, then return wither an error message or an object of Items and the total.|
 | onXHRFail | function | body | (err,body) | Hook gets called when the xhr request kicks back an error |
 | onCheck | function | item | ({item,workspaceItems}) | Hook for picking up check events. Note: You have access to all items currently in the workspace, but you must only return the item being mutated. Warning: a select all command will run this hook once for each item as it builds the workspaceItems list |

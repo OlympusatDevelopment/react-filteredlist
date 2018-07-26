@@ -22,18 +22,14 @@ class ViewInfo extends Component { // eslint-disable-line react/prefer-stateless
     }
 
     _controlExportsUI(e, options) {
-      const settings = options.infoDisplaySettings;
-    
+      const settings = options.infoDisplaySettings
+
       if(settings.hasOwnProperty('exports')) {
-        if(settings.exports.Component) {
-          // Render the component inside a modal here.
-          // Pass it the settings so it has access to the apiUrl
-        } else {
-          
-          this.props.controlModal({show: true, Component: (<Exports />)});
-          // INject our custom exports interface into the modal
-          // If there's an apiUrl, use it. Just pass it the settings
-        }
+        let _Component = settings.exports.Component 
+          ? (<settings.exports.Component exportsSettings={settings.exports} selectedView={options} parentProps={this.props}/>) 
+          : (<Exports exportsSettings={settings.exports}/>); 
+
+        this.props.controlModal({show: true, Component: _Component });
       }
     }
 
