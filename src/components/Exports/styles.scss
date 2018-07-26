@@ -12,7 +12,10 @@
 
     form{
       width: 50%;
-      margin: 10% 20%;
+      margin: 10% 0;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
 
       input[type="checkbox"]{
         float: left;
@@ -33,6 +36,46 @@
       small{
         font-size: 12px;
       }
+    }
+  }
+
+  &__success{
+    width: 50%;
+    margin: 10% 0;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+
+    h3{
+      font-weight: 100;
+      font-size: 32px;
+      line-height: 1.75;
+    }
+
+    p{
+      font-size: 16px;
+      line-height: 1.25;
+    }
+
+    button{
+      font-size: 14px;
+      border: none;
+      background: $color-base-light-blue;
+      color: $color-base-white;
+      margin-top: 32px;
+      padding: 9px 64px;
+      border-radius: 3px;
+
+      &:hover{
+        opacity: 0.7;
+        cursor: pointer;
+      }
+    }
+
+    em{
+      font-style: italic;
+      opacity: 0.8;
     }
   }
 }

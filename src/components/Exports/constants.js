@@ -1,1 +1,1 @@
-// export const CONTROL_MODAL = 'dl/CONTROL_MODAL';
+export const CONTROL_MODAL = 'dl/CONTROL_MODAL';

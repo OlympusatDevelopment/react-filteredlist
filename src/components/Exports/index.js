@@ -9,7 +9,8 @@ class Exports extends Component{
         super(props);
         this.state = {
           email: '',
-          ignorePagination: false
+          ignorePagination: false,
+          success: false
         };
         this._onSubmit = this._onSubmit.bind(this);
     }
@@ -32,35 +33,49 @@ class Exports extends Component{
         }
       }
       _state.app.exportData = {
-        email: this.state.email,
+        email: this.state.email.split(','),
         ignorePagination: this.state.ignorePagination
       };
 
       queries.makeXHRRequest(_state.app, _opts)
-        .then(res => {
-          console.log('EXPORTS request', res);
-        });
+        .then(res => this.setState({success: true}));
+    }
+
+    makeForm() {
+      return (<form onSubmit={this._onSubmit}>
+        <label title="Otherwise only the current page will be exported">Include all pages in csv
+          <input type="checkbox" name="exports.pages" onChange={e => this.setState({ ignorePagination: e.target.value })} value={this.state.ignorePagination}/> &nbsp;
+        </label>
+
+        <label title="Where should we send the download?">Email <small>(comma separate recipients to send to multiple)</small>
+          <input type="text" name="exports.email" required placeholder="email@example.com" onChange={e => this.setState({ email: e.target.value })} value={this.state.email}/>
+        </label>
+
+        <input type="submit" value="Download" />
+      </form>);
+    }
+
+    makeSuccess() {
+      return (
+        <div className="exports__success">
+          <h3>Your request is being processed.</h3>
+          <p>When your data is ready it will be emailed to <em>{this.state.email}.</em></p>
+          <p>Please check your email.</p>
+
+          <button onClick={() => this.props.controlModal({show: false, Component: false})}>Done</button>
+        </div>
+      )
     }
 
     render() {
-        const { } = this.props;
-      
+        const {success, email} = this.state;
+        const innerHTML = success ? this.makeSuccess() : this.makeForm();
+
         return (
           <div className="exports__outer">
             <div className="exports__inner">
               <h1>Export Dataset as CSV</h1>
-              <form onSubmit={this._onSubmit}>
-                <label title="Otherwise only the current page will be exported">Include all pages in csv
-                  <input type="checkbox" name="exports.pages" onChange={e => this.setState({ ignorePagination: e.target.value })} value={this.state.ignorePagination}/> &nbsp;
-                </label>
-
-                <label title="Where should we send the download?">Email
-                  <input type="email" name="exports.email" placeholder="Email" onChange={e => this.setState({ email: e.target.value })} value={this.state.email}/>
-                </label>
-
-                <input type="submit" value="Download" />
-              </form>
-
+              {innerHTML}
             </div>
           </div>
         );
