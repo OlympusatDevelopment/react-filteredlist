@@ -56,9 +56,10 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
   }
 
   onChecked(e) {
-    const { Items, config, workspace, updateWorkspace } = this.props,
-      selectAll = e.target.checked,
-      workspaceAction = selectAll ? 'add' : 'remove';
+    const { Items, config, workspace, updateWorkspace } = this.props;
+    const selectAll = e.target.checked;
+    const hook = selectAll ? config.hooks.onCheck : config.hooks.onUnCheck;
+    const workspaceAction = selectAll ? 'add' : 'remove';
 
     [...document.querySelectorAll('.dl__listRow')].forEach(row => {
       const check = row.getElementsByTagName('input')[0];
@@ -68,21 +69,13 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
       }
     });
 
-    if (selectAll) {
-      Items.forEach(item => {
-        updateWorkspace({
-          Item: config.hooks.onCheck({ item, workspace }),
-          workspaceAction
-        });
+    Items.forEach(item => {
+      updateWorkspace({
+        Item: hook({ item, workspace }) || item,
+        workspaceAction,
+        selectAllChecked: selectAll
       });
-    } else {
-      Items.forEach(item => {
-        updateWorkspace({
-          Item: config.hooks.onUnCheck({ item, workspace }),
-          workspaceAction
-        });
-      });
-    }
+    });
   }
 
   makeDetachedSort(props) {
@@ -93,17 +86,33 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
   }
 
   render() {
-    const { selectedView, config, item } = this.props;
+    const { selectedView, config, item, workspace } = this.props;
     const props = selectedView.props;
-    const settingsIcon = selectedView.showListSettings ? (<span className="dl__listHeader-listSettings" onClick={this.onSettingsClick} style={{ backgroundColor: selectedView.listHeaderStyles ? selectedView.listHeaderStyles.background : '#333' }}> </span>) : '',
-      columnSelector = this.state.showColumnSelector ? (<ColumnSelector selectedView={selectedView} currentViewProps={props} item={item}> </ColumnSelector>) : '',
-      check = selectedView.enableRowChecks ? (
-        <span key={-1} style={{ width: '33px' }} className="dl__listHeader-item">
-          <Checkbox onChecked={this.onChecked.bind(this)} id={'dl-select-all'}> </Checkbox>
-        </span>) : '',
-      classNames = config.pinPagination ? 'dl__pinPagination dl__listHeader' : 'dl__listHeader',
-      sortIcon = (selectedView.enableListSort && selectedView.detachSort) ? (<span className="dl__listHeader-listSort" onClick={() => this.setState({ showDetachedSort: !this.state.showDetachedSort })}> </span>) : '',
-      detachedSort = this.state.showDetachedSort || selectedView.alwaysShowDetachedSort ? this.makeDetachedSort(props) : '';
+    const settingsIcon = selectedView.showListSettings 
+      ? (<span className="dl__listHeader-listSettings" 
+        onClick={this.onSettingsClick} 
+        style={{ backgroundColor: selectedView.listHeaderStyles 
+          ? selectedView.listHeaderStyles.background 
+          : '#333' 
+        }}> </span>) 
+      : '';
+    const columnSelector = this.state.showColumnSelector 
+      ? (<ColumnSelector selectedView={selectedView} currentViewProps={props} item={item}> </ColumnSelector>) 
+      : '';
+    const check = selectedView.enableRowChecks 
+      ? (<span key={-1} style={{ width: '33px' }} className="dl__listHeader-item">
+        <Checkbox checked={workspace.selectAllChecked} onChecked={this.onChecked.bind(this)} id={'dl-select-all'}> </Checkbox>
+        </span>) 
+      : '';
+    const classNames = config.pinPagination 
+      ? 'dl__pinPagination dl__listHeader' 
+      : 'dl__listHeader';
+    const sortIcon = (selectedView.enableListSort && selectedView.detachSort) 
+      ? (<span className="dl__listHeader-listSort" onClick={() => this.setState({ showDetachedSort: !this.state.showDetachedSort })}> </span>) 
+      : '';
+    const detachedSort = this.state.showDetachedSort || selectedView.alwaysShowDetachedSort 
+      ? this.makeDetachedSort(props) 
+      : '';
 
     return (
       <div className={classNames} style={{ ...selectedView.listHeaderStyles }}>
