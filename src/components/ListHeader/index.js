@@ -71,14 +71,14 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
     if (selectAll) {
       Items.forEach(item => {
         updateWorkspace({
-          Item: config.hooks.onCheck({ item, workspace }),
+          Item: config.hooks.onCheck({ item, workspace }) || item,
           workspaceAction
         });
       });
     } else {
       Items.forEach(item => {
         updateWorkspace({
-          Item: config.hooks.onUnCheck({ item, workspace }),
+          Item: config.hooks.onUnCheck({ item, workspace }) || item,
           workspaceAction
         });
       });

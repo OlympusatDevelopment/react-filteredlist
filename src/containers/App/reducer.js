@@ -305,11 +305,11 @@ function appReducer(state = initialState, action) {
       runFilters(_state, _state.selectedView);
 
       // CLEAR the Workspace
-      _state.workspace = {
-        checkedItems: [],
-        actions: null,
-        item: {}
-      };
+      // _state.workspace = {
+      //   checkedItems: [],
+      //   actions: null,
+      //   item: {}
+      // };
 
       _state.showLoading = true;
       _state.force = Math.random() * 10000000;
@@ -343,11 +343,11 @@ function appReducer(state = initialState, action) {
       runFilters(_state, _state.selectedView);
       
       // CLEAR the Workspace
-      _state.workspace = {
-        checkedItems: [],
-        actions: null,
-        item: {}
-      };
+      // _state.workspace = {
+      //   checkedItems: [],
+      //   actions: null,
+      //   item: {}
+      // };
 
       _state.config.hooks.onStateUpdate(_state);
 
