@@ -33,6 +33,7 @@
         border-radius: 3px;
         left: 2px;
         top: 2px;
+        @include duration(0.69s);
     }
 
     &:after{
@@ -52,6 +53,16 @@
         &:after{
             color: #fff;
         }
+    }
+
+    &--open{
+      left: 268px;
+      top: 3px;
+      transition-delay: 0.04s;
+
+      &:after{
+        @include faPseudo($fa-var-times, -1px,0,0,-1px);
+    }
     }
   }
 
