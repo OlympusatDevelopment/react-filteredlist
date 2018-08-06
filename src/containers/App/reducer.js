@@ -341,6 +341,14 @@ function appReducer(state = initialState, action) {
       });
 
       runFilters(_state, _state.selectedView);
+      
+      // CLEAR the Workspace
+      _state.workspace = {
+        checkedItems: [],
+        actions: null,
+        item: {}
+      };
+
       _state.config.hooks.onStateUpdate(_state);
 
       return _state;
