@@ -304,6 +304,13 @@ function appReducer(state = initialState, action) {
       _state = Object.assign({}, _state, makeQuery(_state, _state.selectedView.addons));
       runFilters(_state, _state.selectedView);
 
+      // CLEAR the Workspace
+      _state.workspace = {
+        checkedItems: [],
+        actions: null,
+        item: {}
+      };
+
       _state.showLoading = true;
       _state.force = Math.random() * 10000000;
       _state.config.hooks.onStateUpdate(_state);
@@ -334,6 +341,14 @@ function appReducer(state = initialState, action) {
       });
 
       runFilters(_state, _state.selectedView);
+      
+      // CLEAR the Workspace
+      _state.workspace = {
+        checkedItems: [],
+        actions: null,
+        item: {}
+      };
+
       _state.config.hooks.onStateUpdate(_state);
 
       return _state;

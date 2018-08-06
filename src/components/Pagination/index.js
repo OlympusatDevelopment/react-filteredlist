@@ -263,12 +263,14 @@ class Pagination extends Component {
   }
 
   render() {
-    const { config, bottom } = this.props,
-      classNames = config.pinPagination ? 'dl__pagination dl__pinPagination' : 'dl__pagination';
+    const { config, bottom } = this.props;
+    const classNames = config.pinPagination ? 'dl__pagination dl__pinPagination' : 'dl__pagination';
+    const disabledPagination = this.state.totalPages <= 1;
 
     return (
       <div className={classNames} style={{ bottom }}>
-        <div className="dl__pagination__wrapper">
+      {!disabledPagination && 
+        (<div className="dl__pagination__wrapper">
           <div className="dl__pagination__first" data-action="first" onClick={this.handleClick.bind(this)}></div>
           <div className="dl__pagination__prev" data-action="prev" onClick={this.handleClick.bind(this)}></div>
           <div className="dl__pagination__indicator">
@@ -281,7 +283,7 @@ class Pagination extends Component {
           </div>
           <div className="dl__pagination__next" data-action="next" onClick={this.handleClick.bind(this)}></div>
           <div className="dl__pagination__last" data-action="last" onClick={this.handleClick.bind(this)}></div>
-        </div>
+        </div>) }
       </div>
     )
   }

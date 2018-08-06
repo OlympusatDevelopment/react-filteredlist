@@ -343,9 +343,10 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
   }
 
   makeAppBody(app) {
-    const filters = this.props.config.showFilters ? (<Filters className={this.state.toggleFilter ? 'dl__filters--open' : ''} />) : '',
-      width = this.props.config.showFilters ? undefined : '100%',
-      filtersToggle = this.props.config.showFilters ? (<div className="dl__filters--toggle" onClick={() => this.setState({ toggleFilter: !this.state.toggleFilter })}></div>) : '';
+    const filters = this.props.config.showFilters ? (<Filters className={this.state.toggleFilter ? 'dl__filters--open' : ''} />) : '';
+      const width = this.props.config.showFilters ? undefined : '100%';
+      const toggleClasses = !this.state.toggleFilter ? 'dl__filters--toggle' : 'dl__filters--toggle--open dl__filters--toggle';
+      const filtersToggle = this.props.config.showFilters ? (<div className={toggleClasses} onClick={() => this.setState({ toggleFilter: !this.state.toggleFilter })}></div>) : '';
 
     return (
       <div>

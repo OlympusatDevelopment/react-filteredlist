@@ -25,8 +25,8 @@
   &-listSettings,
   &-listSort{
 	position: absolute;
-	right: 39px;
-	top: 9px;
+	right: 20px;
+	top: 0;
 	width: 33px;
 	height: 33px;
 	text-align: center;
@@ -35,7 +35,10 @@
 	  content: $fa-var-cog;
 	  font-family: FontAwesome;
 	  font-size: 14px;
-	  color: #fff;
+    color: #fff;
+    padding-top: 9px;
+    height: 100%;
+    display: block;
 	}
 
 	&:hover{
