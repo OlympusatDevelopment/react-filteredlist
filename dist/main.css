@@ -4367,8 +4367,8 @@ code {
     color: #fff; }
   .dl__listHeader-listSettings, .dl__listHeader-listSort {
     position: absolute;
-    right: 39px;
-    top: 9px;
+    right: 20px;
+    top: 0;
     width: 33px;
     height: 33px;
     text-align: center; }
@@ -4376,7 +4376,10 @@ code {
       content: "\F013";
       font-family: FontAwesome;
       font-size: 14px;
-      color: #fff; }
+      color: #fff;
+      padding-top: 9px;
+      height: 100%;
+      display: block; }
     .dl__listHeader-listSettings:hover, .dl__listHeader-listSort:hover {
       cursor: pointer;
       opacity: 0.7; }
