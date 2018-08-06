@@ -54,11 +54,11 @@ const initialState = {
   },
   dataSources: {},
   Items: [],
-  // workspace: {},
   workspace: {
     checkedItems: [],
     actions: null,
-    item: {}
+    item: {},
+    selectAllChecked: false
   },
   showLoading: false,
   modal: {
@@ -305,11 +305,12 @@ function appReducer(state = initialState, action) {
       runFilters(_state, _state.selectedView);
 
       // CLEAR the Workspace
-      // _state.workspace = {
-      //   checkedItems: [],
-      //   actions: null,
-      //   item: {}
-      // };
+      _state.workspace = {
+        checkedItems: [],
+        actions: null,
+        item: {},
+        selectAllChecked: false
+      };
 
       _state.showLoading = true;
       _state.force = Math.random() * 10000000;
@@ -343,11 +344,12 @@ function appReducer(state = initialState, action) {
       runFilters(_state, _state.selectedView);
       
       // CLEAR the Workspace
-      // _state.workspace = {
-      //   checkedItems: [],
-      //   actions: null,
-      //   item: {}
-      // };
+      _state.workspace = {
+        checkedItems: [],
+        actions: null,
+        item: {},
+        selectAllChecked: false
+      };
 
       _state.config.hooks.onStateUpdate(_state);
 
@@ -376,7 +378,8 @@ function appReducer(state = initialState, action) {
           _state.workspace = {
             checkedItems: collections.replaceItem(_state.workspace.checkedItems, _data.Item, _state.selectedView.itemIdProp),
               action: _data.workspaceAction,
-              item: _data.Item
+              item: _data.Item,
+              selectAllChecked: _data.selectAllChecked
           }
 
           if(_state.config.hooks.onCheck) {
@@ -388,7 +391,8 @@ function appReducer(state = initialState, action) {
             _state.workspace = {
                 checkedItems: collections.removeItem(_state.workspace.checkedItems, _data.Item, _state.selectedView.itemIdProp),
                 action: _data.workspaceAction,
-                item: _data.Item
+                item: _data.Item,
+                selectAllChecked: _data.selectAllChecked
             }
 
             if(_state.config.hooks.onUnCheck) {
