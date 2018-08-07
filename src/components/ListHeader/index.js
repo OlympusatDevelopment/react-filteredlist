@@ -98,7 +98,7 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
     const settingsIcon = selectedView.showListSettings ? (<span className="dl__listHeader-listSettings" onClick={this.onSettingsClick} style={{ backgroundColor: selectedView.listHeaderStyles ? selectedView.listHeaderStyles.background : '#333' }}> </span>) : '',
       columnSelector = this.state.showColumnSelector ? (<ColumnSelector selectedView={selectedView} currentViewProps={props} item={item}> </ColumnSelector>) : '',
       check = selectedView.enableRowChecks ? (
-        <span key={-1} style={{ width: '33px' }} className="dl__listHeader-item">
+        <span key={-1} style={{ width: '33px' }} className="dl__listHeader-item truncate">
           <Checkbox onChecked={this.onChecked.bind(this)} id={'dl-select-all'}> </Checkbox>
         </span>) : '',
       classNames = config.pinPagination ? 'dl__pinPagination dl__listHeader' : 'dl__listHeader',
