@@ -104,6 +104,9 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
       // Add the pagination listener
       self._initPaginationChangeListener();
 
+      // Add the programatic filter change hook listener
+      self._initFilterChangeHook();
+
       /** 
       * If the config option was set to allow run of query string on render & if there is a string in the url
       * Filter out pagination params & the view param from our filter query string detection
@@ -114,6 +117,18 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
       // @todo This is wiping out the pagination data on load
       // filterChange([]);//triggers an empty load to load the default dataset. No filters were in url or the config prevents running filter queries
       // }
+    }
+  }
+
+  /**
+   * Setup the doFilterChange hook for triggering filter changes from the parent app.
+   * FilterChange accepts: {id,view,value}
+   */
+  _initFilterChangeHook() {
+    const { dataListConfig, filterChange } = this.props;
+
+    if(dataListConfig && dataListConfig.hooks && dataListConfig.hooks.doFilterChange){
+      dataListConfig.hooks.doFilterChange(filterChange);// pass along the callback
     }
   }
 
