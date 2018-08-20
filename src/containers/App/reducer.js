@@ -289,6 +289,10 @@ function appReducer(state = initialState, action) {
           }
         });
       } else {
+        // FIll in the current view. Used mainly by the doSort action in App/index.js initDoSort
+        if (!_data.hasOwnProperty('view')) {
+          _data.view = _state.selectedView.id;
+        }
         //id,view,value
         _state.views = makeViews(_state, _data);
 
@@ -319,13 +323,12 @@ function appReducer(state = initialState, action) {
       return _state;
 
     case REFRESH: 
-      _state.views = makeViews(_state, { view: _state.selectedView.id, id: `sort-${_state.selectedView.filterGroups[0].filters[0].id}`, value: 'DESC' });
-
-      runFilters(_state, _state.selectedView);
-
+      _state.views = makeViews(_state, { view: _state.selectedView.id, id: '*', value: null });
       _state.showLoading = true;
       _state.force = Math.random() * 10000000;
       _state.config.hooks.onStateUpdate(_state);
+
+      runFilters(_state, _state.selectedView);
       
     return _state;
 

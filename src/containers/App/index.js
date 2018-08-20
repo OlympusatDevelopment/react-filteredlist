@@ -126,7 +126,7 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
   _initBootHooks() {
     if(this.props.dataListConfig && this.props.dataListConfig.hooks) {
       this._initDoFilterChange();
-      this._initRefresh();
+      this._initDoSort();
     }
   }
 
@@ -145,15 +145,18 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
   }
 
   /**
-   * Rerun the last filter run whenever the hook's callback is triggered.
+   * Run sort on the key passed in whenever the hook's callback is triggered.
    */
-  _initRefresh() {
-    const { dataListConfig, doRefresh } = this.props;
+  _initDoSort() {
+    const { dataListConfig, filterChange } = this.props;
 
-    if(dataListConfig.hooks.doRefresh){
-      dataListConfig.hooks.doRefresh(() => { 
+    if(dataListConfig.hooks.doSort){
+      dataListConfig.hooks.doSort((sortByKey, direction = 'DESC') => { 
         console.log('DR RAN', this.props); 
-        doRefresh();
+        filterChange({
+          id: `sort-${sortByKey}`,
+          value: direction
+        });
       });
     }
   }
