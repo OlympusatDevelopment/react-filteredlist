@@ -105,7 +105,7 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
       self._initPaginationChangeListener();
 
       // Add the programatic filter change hook listener
-      self._initFilterChangeHook();
+      self._initBootHooks();
 
       /** 
       * If the config option was set to allow run of query string on render & if there is a string in the url
@@ -121,14 +121,40 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
   }
 
   /**
+   * COnnect any hooks that need to be setup on boot here.
+   */
+  _initBootHooks() {
+    if(this.props.dataListConfig && this.props.dataListConfig.hooks) {
+      this._initDoFilterChange();
+      this._initRefresh();
+    }
+  }
+
+   /**
    * Setup the doFilterChange hook for triggering filter changes from the parent app.
    * FilterChange accepts: {id,view,value}
+   * 
+   * Whenever the doFilterChange callback is run it triggers a filterChange dispatch
    */
-  _initFilterChangeHook() {
+  _initDoFilterChange() {
     const { dataListConfig, filterChange } = this.props;
 
-    if(dataListConfig && dataListConfig.hooks && dataListConfig.hooks.doFilterChange){
+    if(dataListConfig.hooks.doFilterChange){
       dataListConfig.hooks.doFilterChange(filterChange);// pass along the callback
+    }
+  }
+
+  /**
+   * Rerun the last filter run whenever the hook's callback is triggered.
+   */
+  _initRefresh() {
+    const { dataListConfig, doRefresh } = this.props;
+
+    if(dataListConfig.hooks.doRefresh){
+      dataListConfig.hooks.doRefresh(() => { 
+        console.log('DR RAN', this.props); 
+        doRefresh();
+      });
     }
   }
 

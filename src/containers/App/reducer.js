@@ -11,7 +11,8 @@ import {
   UPDATE_SEARCH_INPUT,
   UPDATE_PAGINATION,
   UPDATE_WORKSPACE,
-  CONTROL_MODAL
+  CONTROL_MODAL,
+  REFRESH
 } from './constants';
 
 //@todo find a better place to inject this
@@ -143,6 +144,7 @@ function appReducer(state = initialState, action) {
       return _state;
 
     case UPDATE_CURRENT_TAB: 
+      _data = _data || _state.selectedView.id;
       queries.clearURLQueryString();
       
       _state.selectedView = _state.views.filter(view => {
@@ -222,8 +224,6 @@ function appReducer(state = initialState, action) {
           selectedView: _state.selectedView
         });
       }
-
-      console.log('ON view prop change', _state.selectedView.props, _data);
 
       // Override preferences because the user indicated they wanted to change the default/preferenced set of visible props
       // _state.overridePreferences.props = true;
@@ -318,11 +318,20 @@ function appReducer(state = initialState, action) {
 
       return _state;
 
+    case REFRESH: 
+      _state.views = makeViews(_state, { view: _state.selectedView.id, id: `sort-${_state.selectedView.filterGroups[0].filters[0].id}`, value: 'DESC' });
+
+      runFilters(_state, _state.selectedView);
+
+      _state.showLoading = true;
+      _state.force = Math.random() * 10000000;
+      _state.config.hooks.onStateUpdate(_state);
+      
+    return _state;
+
     case RESET_FILTERS:
 
-      _state.views = makeViews(_state, { view: '*', id: '*', value: null });
-      _state.queryString = null;
-      _state.queryObject = {};
+      _state.views = makeViews(_state, { view: _state.selectedView.id, id: '*', value: null });
       _state.showLoading = true;
       _state.Items = [];
       _state.force = Math.random() * 10000000;
@@ -340,6 +349,8 @@ function appReducer(state = initialState, action) {
       [...document.getElementsByClassName('dl__listHeader--sort')].forEach(node => {
         node.classList.remove('dl__listHeader--sort--desc');
       });
+
+      _state = Object.assign({}, _state, makeQuery(_state, _state.selectedView.addons));
 
       runFilters(_state, _state.selectedView);
       
