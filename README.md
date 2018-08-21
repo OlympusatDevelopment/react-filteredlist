@@ -542,6 +542,8 @@ The hooks are powerful. At different points in time throughout the lifecycle of 
 | onSaveFilterset | function | NA | ({name,queryString,queryObject}) | Hook gets called when the user opted to save their filter set. |
 | onDeleteFilterset | function | NA | ({name,filterset}) | Hook gets called when the user opted to delete their saved their filter set |
 | pushDispatch | function | ({Items: [{}],count: 1}) | NA | See the note below on the push dispatcher. |
+| doFilterChange | function | callback | cb({id: 'isActive', view: 'users', value: 'false'}) | Exposes a callback function that when called passed a filterChange object it will run that filter change request. Good for programmatically triggering filter changes from the parent application. A filterChange object accepts 3 properties in the object, `id`(the id of the filter), `view`(the id of the current selected view), and `value`(the value to run OR 'null' to clear the filter) |
+| doSort | function | callback()  | cb('createdAt', 'ASC'); | Because there is no easy to way refresh the last filter run(requests are memoized) it's convenient to have a sort hook. A callback function is exposed so you can programmatically trigger sort changes to refresh the current dataset. Use `ASC` or `DESC` as second argument values. If omitted `DESC` is the default value. |
 
 
 ### Push dispatch hook

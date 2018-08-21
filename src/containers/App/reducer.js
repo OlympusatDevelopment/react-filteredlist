@@ -11,8 +11,7 @@ import {
   UPDATE_SEARCH_INPUT,
   UPDATE_PAGINATION,
   UPDATE_WORKSPACE,
-  CONTROL_MODAL,
-  REFRESH
+  CONTROL_MODAL
 } from './constants';
 
 //@todo find a better place to inject this
@@ -321,16 +320,6 @@ function appReducer(state = initialState, action) {
       _state.config.hooks.onStateUpdate(_state);
 
       return _state;
-
-    case REFRESH: 
-      _state.views = makeViews(_state, { view: _state.selectedView.id, id: '*', value: null });
-      _state.showLoading = true;
-      _state.force = Math.random() * 10000000;
-      _state.config.hooks.onStateUpdate(_state);
-
-      runFilters(_state, _state.selectedView);
-      
-    return _state;
 
     case RESET_FILTERS:
 

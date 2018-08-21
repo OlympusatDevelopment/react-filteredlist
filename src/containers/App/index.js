@@ -152,7 +152,6 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
 
     if(dataListConfig.hooks.doSort){
       dataListConfig.hooks.doSort((sortByKey, direction = 'DESC') => { 
-        console.log('DR RAN', this.props); 
         filterChange({
           id: `sort-${sortByKey}`,
           value: direction

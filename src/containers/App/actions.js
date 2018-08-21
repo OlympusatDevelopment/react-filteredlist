@@ -2,9 +2,7 @@ import {
     UPDATE_ITEMS,
     ON_APP_INIT,
     FILTER_CHANGE,
-    RESET_FILTERS,
-    UPDATE_PAGINATION,
-    REFRESH
+    UPDATE_PAGINATION
   } from './constants';
 
 export function updateItems(data) {
@@ -31,13 +29,6 @@ export function updatePagination(data) {
 export function filterChange(data) {
     return {
         type: FILTER_CHANGE,
-        data
-    };
-}
-
-export function doRefresh(data) {
-    return {
-        type: REFRESH,
         data
     };
 }
