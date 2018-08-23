@@ -5750,7 +5750,7 @@ figure[class^="figure"] div[class^="footer"] {
       border-bottom: none; }
     .dl__filters .dl__viewTab[data-issingle="true"] {
       border: none;
-      font-size: 18px;
+      font-size: 12px;
       margin-bottom: -14px;
       font-weight: 100; }
       .dl__filters .dl__viewTab[data-issingle="true"]:hover {
