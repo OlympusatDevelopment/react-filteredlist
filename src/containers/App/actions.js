@@ -2,9 +2,8 @@ import {
     UPDATE_ITEMS,
     ON_APP_INIT,
     FILTER_CHANGE,
-    RESET_FILTERS,
     UPDATE_PAGINATION
-} from './constants';
+  } from './constants';
 
 export function updateItems(data) {
     return {

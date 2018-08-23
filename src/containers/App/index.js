@@ -104,6 +104,9 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
       // Add the pagination listener
       self._initPaginationChangeListener();
 
+      // Add the programatic filter change hook listener
+      self._initBootHooks();
+
       /** 
       * If the config option was set to allow run of query string on render & if there is a string in the url
       * Filter out pagination params & the view param from our filter query string detection
@@ -114,6 +117,46 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
       // @todo This is wiping out the pagination data on load
       // filterChange([]);//triggers an empty load to load the default dataset. No filters were in url or the config prevents running filter queries
       // }
+    }
+  }
+
+  /**
+   * COnnect any hooks that need to be setup on boot here.
+   */
+  _initBootHooks() {
+    if(this.props.dataListConfig && this.props.dataListConfig.hooks) {
+      this._initDoFilterChange();
+      this._initDoSort();
+    }
+  }
+
+   /**
+   * Setup the doFilterChange hook for triggering filter changes from the parent app.
+   * FilterChange accepts: {id,view,value}
+   * 
+   * Whenever the doFilterChange callback is run it triggers a filterChange dispatch
+   */
+  _initDoFilterChange() {
+    const { dataListConfig, filterChange } = this.props;
+
+    if(dataListConfig.hooks.doFilterChange){
+      dataListConfig.hooks.doFilterChange(filterChange);// pass along the callback
+    }
+  }
+
+  /**
+   * Run sort on the key passed in whenever the hook's callback is triggered.
+   */
+  _initDoSort() {
+    const { dataListConfig, filterChange } = this.props;
+
+    if(dataListConfig.hooks.doSort){
+      dataListConfig.hooks.doSort((sortByKey, direction = 'DESC') => { 
+        filterChange({
+          id: `sort-${sortByKey}`,
+          value: direction
+        });
+      });
     }
   }
 

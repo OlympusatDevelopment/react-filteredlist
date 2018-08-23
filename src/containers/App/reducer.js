@@ -54,11 +54,11 @@ const initialState = {
   },
   dataSources: {},
   Items: [],
-  // workspace: {},
   workspace: {
     checkedItems: [],
     actions: null,
-    item: {}
+    item: {},
+    selectAllChecked: false
   },
   showLoading: false,
   modal: {
@@ -143,6 +143,7 @@ function appReducer(state = initialState, action) {
       return _state;
 
     case UPDATE_CURRENT_TAB: 
+      _data = _data || _state.selectedView.id;
       queries.clearURLQueryString();
       
       _state.selectedView = _state.views.filter(view => {
@@ -223,8 +224,6 @@ function appReducer(state = initialState, action) {
         });
       }
 
-      console.log('ON view prop change', _state.selectedView.props, _data);
-
       // Override preferences because the user indicated they wanted to change the default/preferenced set of visible props
       // _state.overridePreferences.props = true;
 
@@ -289,6 +288,10 @@ function appReducer(state = initialState, action) {
           }
         });
       } else {
+        // FIll in the current view. Used mainly by the doSort action in App/index.js initDoSort
+        if (!_data.hasOwnProperty('view')) {
+          _data.view = _state.selectedView.id;
+        }
         //id,view,value
         _state.views = makeViews(_state, _data);
 
@@ -308,7 +311,8 @@ function appReducer(state = initialState, action) {
       _state.workspace = {
         checkedItems: [],
         actions: null,
-        item: {}
+        item: {},
+        selectAllChecked: false
       };
 
       _state.showLoading = true;
@@ -319,9 +323,7 @@ function appReducer(state = initialState, action) {
 
     case RESET_FILTERS:
 
-      _state.views = makeViews(_state, { view: '*', id: '*', value: null });
-      _state.queryString = null;
-      _state.queryObject = {};
+      _state.views = makeViews(_state, { view: _state.selectedView.id, id: '*', value: null });
       _state.showLoading = true;
       _state.Items = [];
       _state.force = Math.random() * 10000000;
@@ -340,13 +342,16 @@ function appReducer(state = initialState, action) {
         node.classList.remove('dl__listHeader--sort--desc');
       });
 
+      _state = Object.assign({}, _state, makeQuery(_state, _state.selectedView.addons));
+
       runFilters(_state, _state.selectedView);
       
       // CLEAR the Workspace
       _state.workspace = {
         checkedItems: [],
         actions: null,
-        item: {}
+        item: {},
+        selectAllChecked: false
       };
 
       _state.config.hooks.onStateUpdate(_state);
@@ -376,7 +381,8 @@ function appReducer(state = initialState, action) {
           _state.workspace = {
             checkedItems: collections.replaceItem(_state.workspace.checkedItems, _data.Item, _state.selectedView.itemIdProp),
               action: _data.workspaceAction,
-              item: _data.Item
+              item: _data.Item,
+              selectAllChecked: _data.selectAllChecked
           }
 
           if(_state.config.hooks.onCheck) {
@@ -388,7 +394,8 @@ function appReducer(state = initialState, action) {
             _state.workspace = {
                 checkedItems: collections.removeItem(_state.workspace.checkedItems, _data.Item, _state.selectedView.itemIdProp),
                 action: _data.workspaceAction,
-                item: _data.Item
+                item: _data.Item,
+                selectAllChecked: _data.selectAllChecked
             }
 
             if(_state.config.hooks.onUnCheck) {

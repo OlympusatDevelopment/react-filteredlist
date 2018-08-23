@@ -19,3 +19,4 @@ export const UPDATE_SEARCH_INPUT = 'dl/UPDATE_SEARCH_INPUT';
 export const UPDATE_PAGINATION = 'dl/UPDATE_PAGINATION';
 export const UPDATE_WORKSPACE = 'dl/UPDATE_WORKSPACE';
 export const CONTROL_MODAL = 'dl/CONTROL_MODAL';
+export const REFRESH = 'dl/REFRESH';
