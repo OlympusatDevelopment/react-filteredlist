@@ -5597,7 +5597,7 @@ code {
   width: 82%;
   float: left;
   position: relative;
-  padding: 0 0 129px; }
+  padding: 0 37px 129px 10px; }
   @media (max-width: 1199px) {
     .dl__dataList {
       width: 100%;
