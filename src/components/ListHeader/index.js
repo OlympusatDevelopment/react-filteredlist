@@ -100,7 +100,7 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
       ? (<ColumnSelector selectedView={selectedView} currentViewProps={props} item={item}> </ColumnSelector>) 
       : '';
     const check = selectedView.enableRowChecks 
-      ? (<span key={-1} style={{ width: '33px' }} className="dl__listHeader-item">
+      ? (<span key={-1} style={{ width: '33px' }} className="dl__listHeader-item truncate">
         <Checkbox checked={workspace.selectAllChecked} onChecked={this.onChecked.bind(this)} id={'dl-select-all'}> </Checkbox>
         </span>) 
       : '';
