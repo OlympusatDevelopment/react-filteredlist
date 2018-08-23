@@ -3012,6 +3012,10 @@ code {
     cursor: pointer;
     opacity: 0.7; }
 
+/** Hack to fix element UI's select input leaving complete values in the shadow DOM of the inner input**/
+.dl__filterItem .el-select .el-input__inner:not(:focus) {
+  color: white; }
+
 /*!
  * Generated with CSS Flag Sprite generator (https://www.flag-sprites.com/)
  */

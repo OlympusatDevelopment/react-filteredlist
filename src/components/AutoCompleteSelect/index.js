@@ -15,7 +15,7 @@ class AutoCompleteSelect extends Component{
             values: []
         };
 
-        this.onSearch = this.onSearch.bind(this);
+        // this.onSearch = this.onSearch.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
     }
 
@@ -36,7 +36,7 @@ class AutoCompleteSelect extends Component{
         data.map(d => {return {[options.key]: d} ;}) : null);
 
         onSelectChange(formattedData); 
-    } 
+    }   
 
     onSearch(query) {
         const { options } = this.props;
@@ -67,7 +67,7 @@ class AutoCompleteSelect extends Component{
         const { placeholder, options } = this.props;
 
         return (<Select onChange={this.onSelectChange} placeholder={placeholder} style={{width: '100%'}} clearable={true} size={'large'} value={values} multiple={true}
-                        filterable={true} remote={true} remoteMethod={this.onSearch} loading={this.state.loading}>
+                        filterable={true} remote={true} remoteMethod={this.onSearch.bind(this)} loading={this.state.loading}>
             {
                 items && items.map(el => {
                     return <Option key={el[options.key]} value={el[options.value]} label={el[options.value]} />;
