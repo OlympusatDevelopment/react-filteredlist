@@ -10,7 +10,7 @@ class AutoCompleteSelect extends Component{
             items: []
         };
 
-        this.onSearch = this.onSearch.bind(this);
+        // this.onSearch = this.onSearch.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
     }
 
@@ -35,7 +35,7 @@ class AutoCompleteSelect extends Component{
         data.map(d => {return {[options.key]: d} ;}) : null);
 
         onSelectChange(formattedData); 
-    } 
+    }   
 
     onSearch(query) {
         const { options } = this.props;

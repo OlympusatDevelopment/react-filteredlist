@@ -3012,6 +3012,10 @@ code {
     cursor: pointer;
     opacity: 0.7; }
 
+/** Hack to fix element UI's select input leaving complete values in the shadow DOM of the inner input**/
+.dl__filterItem .el-select .el-input__inner:not(:focus) {
+  color: white; }
+
 /*!
  * Generated with CSS Flag Sprite generator (https://www.flag-sprites.com/)
  */
@@ -4773,7 +4777,7 @@ code {
   width: 82%;
   float: left;
   position: relative;
-  padding: 0 0 129px; }
+  padding: 0 37px 129px 10px; }
   @media (max-width: 1199px) {
     .dl__dataList {
       width: 100%;
@@ -4926,7 +4930,7 @@ figure[class^="figure"] div[class^="footer"] {
       border-bottom: none; }
     .dl__filters .dl__viewTab[data-issingle="true"] {
       border: none;
-      font-size: 18px;
+      font-size: 12px;
       margin-bottom: -14px;
       font-weight: 100; }
       .dl__filters .dl__viewTab[data-issingle="true"]:hover {

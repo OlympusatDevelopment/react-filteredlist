@@ -42,17 +42,18 @@ class Search extends Component { // eslint-disable-line react/prefer-stateless-f
   }
 
   render() {
-    const { options, config, search, addons } = this.props;//options are the current view options
+    const { options, config, search, addons, app } = this.props;//options are the current view options
     const a = addons.map(addon => addon.id === 'search' ? addon : false)[0];
     const val = a ? decodeURIComponent(a.value) : '';
     const searchVal = (val == 'null' || val == null) ? '' : val;
     const searchButton = options.searchButton || {};
+    const searchPlaceholder = `Search ${app.selectedView.label}`;
 
     return (
       <div className="dl__search">
         {/* could put options.label here if the search should have a label */}
         <form onSubmit={this.onSearchSubmit.bind(this)}>
-          <input data-lpignore="true" id={`dl-search--${options.id}`} className="dl__searchInput" autoFocus type="text" name="dl-search" placeholder="Search" value={searchVal} onChange={this.bindSearch.bind(this)} />
+          <input data-lpignore="true" id={`dl-search--${options.id}`} className="dl__searchInput" autoFocus type="text" name="dl-search" placeholder={searchPlaceholder} value={searchVal} onChange={this.bindSearch.bind(this)} />
           <span className="dl__searchClearButton" onClick={this.onSearchClear.bind(this)}> </span>
           <input type="submit" value="Search" style={{ background: searchButton.background, color: searchButton.text }} />
         </form>
@@ -64,6 +65,7 @@ class Search extends Component { // eslint-disable-line react/prefer-stateless-f
 //Which part of the Redux global state does our component want to receive as props?
 function mapStateToProps(state, ownProps) {
   return {
+    app: state.app,
     config: state.app.config,
     search: state.search,
     forceSearch: state.app.forceSearch,
