@@ -54,16 +54,6 @@ class AutoCompleteSelect extends Component{
         const { items } = this.state;
         const { placeholder } = this.props;
 
-<<<<<<< HEAD
-        return (<Select onChange={this.onSelectChange} placeholder={placeholder} style={{width: '100%'}} clearable={true} size={'large'} value={values} multiple={true}
-                        filterable={true} remote={true} remoteMethod={this.onSearch.bind(this)} loading={this.state.loading}>
-            {
-                items && items.map(el => {
-                    return <Option key={el[options.key]} value={el[options.value]} label={el[options.value]} />;
-                })
-            }
-        </Select>);
-=======
         return (<Chips
             value={items}
             theme={theme}
@@ -72,7 +62,6 @@ class AutoCompleteSelect extends Component{
             fetchSuggestionsThrushold={5}
             fetchSuggestions={(value) => this.onSearch(value)}
           />);
->>>>>>> upstream/master
     }
 
 }
