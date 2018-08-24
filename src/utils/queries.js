@@ -263,7 +263,7 @@ function makeXHRRequest(_state, options) {
   return new Promise((resolve, reject) => {
     const skip = _state.pagination.hasOwnProperty('skip') ? _state.pagination.skip * 1 : 0,
       take = _state.pagination.hasOwnProperty('take') ? _state.pagination.take * 1 : 25;
-
+console.log("MAKE XHR ", _state, options);
     let opts = {
       method: options.api.method,
       // uri: `${options.api.url}?skip=${skip}&take=${take}`,
