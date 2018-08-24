@@ -18,7 +18,7 @@ class Exports extends Component{
     _onSubmit(e) {
       e.preventDefault();
       const { _state, exportsSettings } = this.props;
-      let _opts = _state.app.selectedView;
+      let _opts = Object.assign({}, _state.app.selectedView);
       _opts.requestType = 'export';
 
       if (exportsSettings) {
