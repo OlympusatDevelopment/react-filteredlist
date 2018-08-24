@@ -19,6 +19,7 @@ More specific documentation to come.
       * [Special user filterset group](#special-user-filterset-group)
     * [Filters](#filters)
       * [Select filter type](#select-filter-type)
+      * [Autocomplete filter type](#autocomplete-filter-type)
       * [Radio filter type](#radio-filter-type)
       * [Range filter type](#range-filter-type)
       * [Checkbox filter type](#checkbox-filter-type)
@@ -414,7 +415,7 @@ Used to take action on the dataset. Primary items used in building a query objec
 | Property | Type | Default | Possible Values | Description |
 |:---|:---|:---|:---|:---|
 | id | string | '' | NA | The id of the filter. Must be UNIQUE. |
-| type | string | 'select' | 'select', 'range', 'checkbox', 'radio', 'search', 'sort', 'autocomplete' | This determines what type of filter item will be rendered. ***Special NOTE:*** Search type is a special filter that will render a search box where anything input will be passed as the value of a search filter property on the final object. The sort type is also special. It enables a sort toggle & request for the specified id/prop property. Also of note, the select and autocomplete type options.getOptions function needs to return a Promise. The rest just return the data they need. |
+| type | string | 'select' | 'select', 'autocomplete', 'range', 'checkbox', 'radio', 'search', 'sort' | This determines what type of filter item will be rendered. ***Special NOTE:*** Search type is a special filter that will render a search box where anything input will be passed as the value of a search filter property on the final object. The sort type is also special. It enables a sort toggle & request for the specified id/prop property. Also of note, the select and autocomplete type options.getOptions function needs to return a Promise. The rest just return the data they need. |
 | prop | string | '' | NA | Essentially the same as id. Just match this to the id until the api changes, then we'll handle that by default. |
 | label | string | '' | NA |  The filter item's Label property. THis displays to the user above the filter item.|
 | value | array/null/undefined | null | [{},{},{}] | Use this to set a default value. Value must be an array of objects (matching options), null or undefined to be excluded. (Filters recognize boolean true/false. An collection matching the select filter type can be passed to pre-populate the value. |
@@ -448,6 +449,29 @@ export default {
         ]);
       })
   },
+};
+```
+#### Autocomplete filter type
+```
+export default {
+    id: 'tags',
+    type: 'autocomplete',
+    prop: 'tags',
+    label: 'Tags',
+    value: null,
+    placeholder: 'Search for tags',
+    options: {
+        key: 'id',
+        value: 'label',
+        // Must return a promise containing a collection
+        getOptions: new Promise((resolve,reject)=>{
+            resolve([
+                  {myPropId : 1, myPropValue: "Canada"},
+                  {myPropId : 2, myPropValue: "United States"},
+                  {myPropId : 3, myPropValue: "Mexico"}
+            ]);
+        })
+    }
 };
 ```
 

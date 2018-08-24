@@ -43,7 +43,7 @@ class AutoCompleteSelect extends Component{
         if (query !== '') {
             return options.getOptions(query)
                 .then((items) => {
-                    return items.map(i => i.label);
+                    return items.map(i => i[options.value]);
                 })
                 .catch(err => console.log(err));
 
