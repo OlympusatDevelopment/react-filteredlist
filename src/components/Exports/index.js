@@ -33,7 +33,6 @@ class Exports extends Component{
         ignorePagination: this.state.ignorePagination
       };
 
-      console.log('_onSubmit', _opts);
       queries.makeXHRRequest(_state.app, _opts)
         .then(res => this.setState({success: true}));
     }
