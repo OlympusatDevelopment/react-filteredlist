@@ -91,10 +91,10 @@ function appReducer(state = initialState, action) {
         // Set pagination options
         _state.pagination = {
           skip: 0,
-          take: config.views.filter(view => {
+          take: (config.views.filter(view => {
             const viewQueryParam = queries.getViewParamFromURL();// Get the view from the url or from the set default if not defined
             return viewQueryParam ? view.id === viewQueryParam : (view.id === config.defaultView || true);// falls back to any view in case the default wasn't set
-          })[0].paginationTake,
+          })[0] || {}).paginationTake || 100, 
           page: 1,
           total: 0
         };
