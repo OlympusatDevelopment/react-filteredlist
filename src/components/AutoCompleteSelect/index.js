@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
-import { Select, i18n } from 'element-react';
-import locale from 'element-react/src/locale/lang/en';
-
-i18n.use(locale);
-const { Option } = Select;
+import Chips from 'react-chips';
+import theme from './theme';
 
 class AutoCompleteSelect extends Component{
     constructor(props) {
         super(props);
 
         this.state = {
-            items: [], 
-            loading: false,
-            values: []
+            items: []
         };
 
         // this.onSearch = this.onSearch.bind(this);
@@ -22,14 +17,18 @@ class AutoCompleteSelect extends Component{
     componentWillReceiveProps(nextProps) {
         if(nextProps !== this.props) {
             const { initalValues, options } = nextProps;
-            const items = initalValues && Array.isArray(initalValues) ? initalValues.map(v => { return {[options.key]: v, [options.value]: v }; }) : [];
-            if (initalValues && items && Array.isArray(items)) {
-                this.setState({values: initalValues, items: items});
+
+            if (initalValues && Array.isArray(initalValues)) {
+                if(initalValues.length >= 1 && initalValues[0] !== ''){
+                    this.setState({items: initalValues});
+                }
             }
         }
     }
  
     onSelectChange(data) {
+        this.setState({ items: data });
+
         const {options, onSelectChange} = this.props;
 
         const formattedData = (data && Array.isArray(data) ?
@@ -41,31 +40,21 @@ class AutoCompleteSelect extends Component{
     onSearch(query) {
         const { options } = this.props;
         const self = this;
-
         if (query !== '') {
-            this.setState({
-                loading: true
-            });
-            options.getOptions(query)
+            return options.getOptions(query)
                 .then((items) => {
-                    self.setState({
-                        loading: false,
-                        items: items
-                    });
+                    return items.map(i => i.label);
                 })
                 .catch(err => console.log(err));
 
-        } else {
-            this.setState({
-                items: []
-            });
         }
     }
 
     render() {
-        const { items, values } = this.state;
-        const { placeholder, options } = this.props;
+        const { items } = this.state;
+        const { placeholder } = this.props;
 
+<<<<<<< HEAD
         return (<Select onChange={this.onSelectChange} placeholder={placeholder} style={{width: '100%'}} clearable={true} size={'large'} value={values} multiple={true}
                         filterable={true} remote={true} remoteMethod={this.onSearch.bind(this)} loading={this.state.loading}>
             {
@@ -74,6 +63,16 @@ class AutoCompleteSelect extends Component{
                 })
             }
         </Select>);
+=======
+        return (<Chips
+            value={items}
+            theme={theme}
+            placeholder={placeholder}
+            onChange={this.onSelectChange}
+            fetchSuggestionsThrushold={5}
+            fetchSuggestions={(value) => this.onSearch(value)}
+          />);
+>>>>>>> upstream/master
     }
 
 }

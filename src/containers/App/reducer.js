@@ -137,7 +137,7 @@ function appReducer(state = initialState, action) {
 
       // HOOK @todo should allow returning new state from hook
       if (_state.config && _state.config.hooks && _state.config.hooks.onStateUpdate) { 
-        _state.config.hooks.onStateUpdate(_state);
+        _state.config.hooks.onStateUpdate(_state, action.type);
       }
 
       return _state;
@@ -180,7 +180,7 @@ function appReducer(state = initialState, action) {
         _state = applyPreferences(_state);
       }
     
-      _state.config.hooks.onStateUpdate(_state);
+      _state.config.hooks.onStateUpdate(_state, action.type);
 
       return _state;
 
@@ -189,7 +189,7 @@ function appReducer(state = initialState, action) {
       _state.pagination.total = _data.count;
       _state.force = Math.random() * 10000000;
       _state.showLoading = false;
-      _state.config.hooks.onStateUpdate(_state);
+      _state.config.hooks.onStateUpdate(_state, action.type);
       return _state;
 
     case UPDATE_VIEW_PROPS:
@@ -212,7 +212,7 @@ function appReducer(state = initialState, action) {
        * @type {number}
        */
       _state.force = Math.random() * 10000000;
-      _state.config.hooks.onStateUpdate(_state);
+      _state.config.hooks.onStateUpdate(_state, action.type);
 
       // Run the on Update hook
       if (_state.config.hooks.onViewPropChange) {
@@ -317,7 +317,7 @@ function appReducer(state = initialState, action) {
 
       _state.showLoading = true;
       _state.force = Math.random() * 10000000;
-      _state.config.hooks.onStateUpdate(_state);
+      _state.config.hooks.onStateUpdate(_state, action.type);
 
       return _state;
 
@@ -354,7 +354,7 @@ function appReducer(state = initialState, action) {
         selectAllChecked: false
       };
 
-      _state.config.hooks.onStateUpdate(_state);
+      _state.config.hooks.onStateUpdate(_state, action.type);
 
       return _state;
 
@@ -364,13 +364,13 @@ function appReducer(state = initialState, action) {
       _state = Object.assign({}, _state, makeQuery(_state, [_data]));//update the queryObject and queryString
 
       _state.forceSearch = Math.random() * 10000000;
-      _state.config.hooks.onStateUpdate(_state);
+      _state.config.hooks.onStateUpdate(_state, action.type);
 
       return _state;
 
     case UPDATE_PAGINATION:
       _state.pagination = _data.pagination;
-      _state.config.hooks.onStateUpdate(_state);
+      _state.config.hooks.onStateUpdate(_state, action.type);
 
       return _state;
 
@@ -403,7 +403,7 @@ function appReducer(state = initialState, action) {
             }
           break;
       }
-      _state.config.hooks.onStateUpdate(_state);
+      _state.config.hooks.onStateUpdate(_state, action.type);
 
       return _state;
 

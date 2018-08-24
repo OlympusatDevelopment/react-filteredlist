@@ -1,6 +1,10 @@
 {
   "name": "react-filteredlist",
+<<<<<<< HEAD
   "version": "16.2.2",
+=======
+  "version": "16.2.3",
+>>>>>>> upstream/master
   "description": "FilteredList",
   "main": "./dist/react-filteredlist.js",
   "author": "Adam Gedney",
@@ -15,13 +19,12 @@
   "dependencies": {
     "bluebird": "^3.5.0",
     "copy-to-clipboard": "^3.0.6",
-    "element-react": "^1.4.19",
     "history": "^4.6.1",
-    "i18n": "^0.8.3",
     "moment": "^2.18.1",
     "prop-types": "^15.6.2",
     "react-addons-shallow-compare": "^15.5.2",
     "react-checkbox-group": "^3.1.1",
+    "react-chips": "^0.7.0",
     "react-datepicker": "^1.5.0",
     "react-images": "^0.5.4",
     "react-intl": "^2.3.0",
