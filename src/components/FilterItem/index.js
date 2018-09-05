@@ -199,7 +199,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
             case 'range':
               resolve([
                 (<span key={Math.random() * 100000} className="dl__filterItemRangeClear"><a href="#" onClick={self._onRangeReset.bind(self)}>reset</a></span>),
-                  (<div className="dr__wrapper">
+                  (<div key={Math.random() * 100000} className="dr__wrapper">
                     <DatePicker
                       placeholderText="Start Date"
                       key={Math.random()*10000}
@@ -244,7 +244,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
               vals = vals === 'null' ? null : vals;
       
               //@todo .need to spend some time looking at why this component won't render checked values if the first render had no values.
-              resolve((<CheckboxGroup name={options.id} values={vals} onChange={this._handleCheckboxChange.bind(this, options)}>
+              resolve((<CheckboxGroup key={Math.random() * 100000} name={options.id} values={vals} onChange={this._handleCheckboxChange.bind(this, options)}>
                 <div className="dl__filterItemCheckbox">{
                   _optionsData.map(option => {
                     return (<label key={Math.random() * 10000}><Checkbox value={option[options.options.key]} />{option[options.options.value]}</label>);
@@ -253,30 +253,32 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
               </CheckboxGroup>));
               break;
             case 'sort':
-              resolve((<SortItem options={self.props.options} onClick={this._onSortClick} />));
+              resolve((<SortItem key={Math.random() * 100000} options={self.props.options} onClick={this._onSortClick} />));
               break;
             case 'radio':
               const Radios = _optionsData
                 .map(option => {
                   return (
-                    <label key={Math.random() * 100}>
+                    <label key={Math.random() * 10000}>
                       <Radio value={option[options.options.key]} />
                       {option[options.options.value]}
                     </label>
                   )
                 });
       
-              resolve((<RadioGroup
-                        className="dl__filterItemRadio" 
-                        name={options.label}
-                        selectedValue={this.state.radioValue}
-                        onChange={this._handleRadioChange.bind(this, options)}>
-                        {Radios}
-                      </RadioGroup>
-                    ));
+                resolve((<RadioGroup
+                  key={Math.random() * 100000}
+                  className="dl__filterItemRadio" 
+                  name={options.label}
+                  selectedValue={this.state.radioValue}
+                  onChange={this._handleRadioChange.bind(this, options)}>
+                  {Radios}
+                </RadioGroup>
+              ));
               break;
             case 'autocomplete':
                 resolve(<AutoCompleteSelect
+                    key={Math.random() * 100000}
                     onSelectChange={self._onSelectChange}
                     initalValues={options.value}
                     placeholder={options && options.placeholder ? options.placeholder : null}
@@ -289,6 +291,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
               if (self.props.options.value) {
                 resolve((
                   <Select
+                    key={Math.random() * 100000}
                     ajaxDataFetch={options.options.getOptions || []}
                     optionLabelKey={options.options.value}
                     optionValueKey={options.options.key}
@@ -302,6 +305,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
               } else {           
                 resolve((
                   <Select
+                    key={Math.random() * 100000}
                     ajaxDataFetch={options.options.getOptions || []}
                     optionLabelKey={options.options.value}
                     optionValueKey={options.options.key}
@@ -338,7 +342,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
     const classNames = `dl__filterItem ${options.id}`;
 
     return (
-      <div className={classNames} style={{zIndex}}>
+      <div key={Math.random() * 1000}className={classNames} style={{zIndex}}>
         <label htmlFor={options.id}>{options.label}</label>
         {this.state.Filter}
       </div>
