@@ -129,13 +129,14 @@ $blue : #4ab2cd !default;
 
   &__loading{
     position: absolute;
-    height: 21px;
-    width: 50px !important;
+    height: 15px;
+    width: 23% !important;
     background: white;
-    top: 2px;
+    top: 4px;
+    left: 34%;
 
     &:after{
-      @include faPseudo($fa-var-spinner,4px,0,0,48%);
+      @include faPseudo($fa-var-spinner,2px,0,0,40%);
       color: #333;
       font-size: 11px;
       line-height: 11px;

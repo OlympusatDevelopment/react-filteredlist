@@ -119,19 +119,22 @@ class Pagination extends Component {
           break;
       }
 
-      const calculatedSkip = page === 1 ? 0 : page * (this.state.pagination.take) - this.state.pagination.take,
-        event = {
-          skip: calculatedSkip,
-          take: this.state.pagination.take,
-          page
-        };
+      const calculatedSkip = page === 1 
+      ? 0 
+      : page * (this.state.pagination.take) - this.state.pagination.take;
+
+      const event = {
+        skip: calculatedSkip,
+        take: this.state.pagination.take,
+        page
+      };
 
       if (this.state.currentPage !== page) {
         this.sendEvent(event)
           .writeQueryStringToURL(`?skip=${event.skip}&take=${event.take}&page=${event.page}`);
-      }
 
-      this.setState({ currentPage: page, loading: true });
+          this.setState({ currentPage: page, loading: true });
+      }
     }
   }
 
@@ -288,7 +291,8 @@ class Pagination extends Component {
           <div className={this.state.loading ? "dl__pagination__prev dl__pagination--loading" : "dl__pagination__prev"} data-action="prev" onClick={this.handleClick.bind(this)}></div>
           <div className="dl__pagination__indicator">
             <span>Page&nbsp;</span>
-            {this.state.loading && <span className="dl__pagination__loading"></span>}          
+            {this.state.loading && <div className="dl__pagination__loading"></div>}          
+
             <form id="dl__pagination__pageForm" onSubmit={this.handleSubmit.bind(this)}>
               <input data-lpignore="true" className="dl__pagination--search" type="text" id="dl__pagination--search" value={this.state.currentPage} onChange={this.handleInputChange.bind(this)} onBlur={this.handleBlur.bind(this)} />
             </form>

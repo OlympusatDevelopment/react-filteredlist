@@ -4360,18 +4360,19 @@ code {
 
 .dl__pagination__loading {
   position: absolute;
-  height: 21px;
-  width: 50px !important;
+  height: 15px;
+  width: 23% !important;
   background: white;
-  top: 2px; }
+  top: 4px;
+  left: 34%; }
   .dl__pagination__loading:after {
     content: "\F110";
     position: absolute;
     font-family: FontAwesome;
-    top: 4px;
+    top: 2px;
     right: 0;
     bottom: 0;
-    left: 48%;
+    left: 40%;
     color: #333;
     font-size: 11px;
     line-height: 11px;
