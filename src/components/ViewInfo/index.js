@@ -51,7 +51,7 @@ class ViewInfo extends Component { // eslint-disable-line react/prefer-stateless
             of = 0;
         }
 
-        return `${num}-${of} of ${total || 'loading...'}`;
+        return `${num}-${of} of ${total || 'loading...'} ${total ? 'items' : ''}`;
     }
 
     makeViewInfo(){
