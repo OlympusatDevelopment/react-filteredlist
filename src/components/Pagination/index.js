@@ -13,8 +13,15 @@ class Pagination extends Component {
     this.state = {
       currentPage: props.pagination.page,
       totalPages: 0,
-      pagination: props.pagination
-    }
+      pagination: props.pagination,
+      loading: false
+    };
+
+    this._runPagingComputation = this._runPagingComputation.bind(this);
+
+    const self = this;
+
+    document.addEventListener('renderToStore', self._runPagingComputation);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -23,7 +30,7 @@ class Pagination extends Component {
 
     // Init the state
     self.runStateUpdate(pagination);
-    this.startComputation();
+    self._runPagingComputation();
   }
 
   componentDidMount() {
@@ -32,57 +39,53 @@ class Pagination extends Component {
 
     // Init the state
     self.runStateUpdate(pagination);
-    this.startComputation();
+    self._runPagingComputation();
   }
 
-  /**
-   * Listens for list changes to update the current page data
-   */
-  startComputation() {
+  _runPagingComputation(){
     const self = this;
+    const { config, pagination } = self.props,
+      totalPages = Math.ceil(pagination.total / pagination.take);
+    let currentPage = 1;
 
-    const runPagingComputation = (self) => {
-      const { config, pagination } = self.props,
-        totalPages = Math.ceil(pagination.total / pagination.take);
-      let currentPage = 1;
-
-      // Make current page
-      if (isFinite(pagination.skip / pagination.take)) {
-        switch (Math.floor((pagination.skip / pagination.take))) {
-          case 0://Skip was zero = page 1
-            currentPage = 1;
-            break;
-          case 1://skip is same as take = page 2
-            currentPage = 2;
-            break;
-          default:
-            currentPage = Math.floor((pagination.skip / pagination.take)) + 1;
-            break;
-        }
+    // Make current page
+    if (isFinite(pagination.skip / pagination.take)) {
+      switch (Math.floor((pagination.skip / pagination.take))) {
+        case 0://Skip was zero = page 1
+          currentPage = 1;
+          break;
+        case 1://skip is same as take = page 2
+          currentPage = 2;
+          break;
+        default:
+          currentPage = Math.floor((pagination.skip / pagination.take)) + 1;
+          break;
       }
+    }
 
-      //page === 1 ? 0 : page * (this.state.pagination.take) - this.state.pagination.take,
+    //page === 1 ? 0 : page * (this.state.pagination.take) - this.state.pagination.take,
 
-      // Handle busted query strings. Happens when the last query to set the url had more results
-      // than the current query. Can happen when result amounts change as well.
-      if (currentPage > totalPages) {
-        currentPage = 0;
-        self.writeQueryStringToURL(`?skip=0&take=${pagination.take}&page=1`);
-      }
+    // Handle busted query strings. Happens when the last query to set the url had more results
+    // than the current query. Can happen when result amounts change as well.
+    if (currentPage > totalPages) {
+      currentPage = 0;
+      self.writeQueryStringToURL(`?skip=0&take=${pagination.take}&page=1`);
+    }
 
-      self.setState({
-        pagination,
-        totalPages,
-        currentPage,
-      });
+    let params = {
+      pagination,
+      totalPages,
+      currentPage,
+      loading: false
     };
 
-    runPagingComputation(self);
+    // Loading logic. Used to tell component data is currenty being loaded. Used for the spinner
+    if (this.state.currentPage !== currentPage) {
+      params['loading'] = true;
+    }
 
-    document.addEventListener('renderToStore', function (e) {
-      runPagingComputation(self);
-    });
-  }
+    self.setState(params);
+  };
 
   /**
    * Closure to handle setting state
@@ -95,40 +98,43 @@ class Pagination extends Component {
     this.setState({
       pagination,
       totalPages,
-      currentPage
+      currentPage,
+      loading: false
     });
   }
 
   handleClick(e) {
-    let page = 1;
+    if (!this.state.loading){
+      let page = 1;
 
-    switch (e.currentTarget.getAttribute('data-action')) {
-      case 'first':
-        break;
-      case 'prev':
-        page = this.state.currentPage === 1 ? 1 : this.state.currentPage - 1;
-        break;
-      case 'next':
-        page = this.state.currentPage === this.state.totalPages ? this.state.totalPages : this.state.currentPage + 1;
-        break;
-      case 'last':
-        page = this.state.totalPages;
-        break;
+      switch (e.currentTarget.getAttribute('data-action')) {
+        case 'first':
+          break;
+        case 'prev':
+          page = this.state.currentPage === 1 ? 1 : this.state.currentPage - 1;
+          break;
+        case 'next':
+          page = this.state.currentPage === this.state.totalPages ? this.state.totalPages : this.state.currentPage + 1;
+          break;
+        case 'last':
+          page = this.state.totalPages;
+          break;
+      }
+
+      const calculatedSkip = page === 1 ? 0 : page * (this.state.pagination.take) - this.state.pagination.take,
+        event = {
+          skip: calculatedSkip,
+          take: this.state.pagination.take,
+          page
+        };
+
+      if (this.state.currentPage !== page) {
+        this.sendEvent(event)
+          .writeQueryStringToURL(`?skip=${event.skip}&take=${event.take}&page=${event.page}`);
+      }
+
+      this.setState({ currentPage: page, loading: true });
     }
-
-    const calculatedSkip = page === 1 ? 0 : page * (this.state.pagination.take) - this.state.pagination.take,
-      event = {
-        skip: calculatedSkip,
-        take: this.state.pagination.take,
-        page
-      };
-
-    if (this.state.currentPage !== page) {
-      this.sendEvent(event)
-        .writeQueryStringToURL(`?skip=${event.skip}&take=${event.take}&page=${event.page}`);
-    }
-
-    this.setState({ currentPage: page });
   }
 
   /**
@@ -139,9 +145,9 @@ class Pagination extends Component {
     const page = e.currentTarget.value;
 
     if (page <= this.state.totalPages && page > 0) {
-      this.setState({ currentPage: page });
+      this.setState({ currentPage: page, loading: true });
     } else {
-      this.setState({ currentPage: this.state.currentPage });
+      this.setState({ currentPage: this.state.currentPage});
     }
   }
 
@@ -158,6 +164,8 @@ class Pagination extends Component {
     if (page <= this.state.totalPages) {
       this.sendEvent(event)
         .writeQueryStringToURL(`?skip=${event.skip}&take=${event.take}&page=${event.page}`);
+
+        this.setState({ loading: true });
     }
   }
 
@@ -165,18 +173,21 @@ class Pagination extends Component {
     const page = e.currentTarget.value,
       calculatedSkip = page === 1 ? 0 : page * (this.state.pagination.take) - this.state.pagination.take;
 
-    let event = {
-      skip: calculatedSkip,
-      take: this.state.pagination.take,
-      page
-    };
+      console.log("this.state.currentPage === page", this.state.currentPage , page, this.state.currentPage === page);
+    if (this.state.currentPage === page) {
+      let event = {
+        skip: calculatedSkip,
+        take: this.state.pagination.take,
+        page
+      };
 
-    if (page <= this.state.totalPages) {
-      this.sendEvent(event)
-        .writeQueryStringToURL(`?skip=${event.skip}&take=${event.take}&page=${event.page}`)
-        .setState({ currentPage: page });
-    } else {
-      this.setState({ currentPage: this.state.totalPages });
+      if (page <= this.state.totalPages) {
+        this.sendEvent(event)
+          .writeQueryStringToURL(`?skip=${event.skip}&take=${event.take}&page=${event.page}`)
+          .setState({ currentPage: page, loading: true});
+      } else {
+        this.setState({ currentPage: this.state.totalPages});
+      }
     }
   }
 
@@ -263,26 +274,29 @@ class Pagination extends Component {
   }
 
   render() {
-    const { config, bottom } = this.props;
+    const { config, bottom, app } = this.props;
     const classNames = config.pinPagination ? 'dl__pagination dl__pinPagination' : 'dl__pagination';
     const disabledPagination = this.state.totalPages <= 1;
 
+    console.log("this.state.totalPages", this.state.totalPages, this.props, app, this.state.loading);
     return (
       <div className={classNames} style={{ bottom }}>
       {!disabledPagination && 
         (<div className="dl__pagination__wrapper">
-          <div className="dl__pagination__first" data-action="first" onClick={this.handleClick.bind(this)}></div>
-          <div className="dl__pagination__prev" data-action="prev" onClick={this.handleClick.bind(this)}></div>
+          <div className={this.state.loading ? "dl__pagination__first dl__pagination--loading" : "dl__pagination__first"} data-action="first" onClick={this.handleClick.bind(this)}></div>
+          <div className={this.state.loading ? "dl__pagination__prev dl__pagination--loading" : "dl__pagination__prev"} data-action="prev" onClick={this.handleClick.bind(this)}></div>
           <div className="dl__pagination__indicator">
             <span>Page&nbsp;</span>
+            {this.state.loading && <span className="dl__pagination__loading"></span>}          
             <form id="dl__pagination__pageForm" onSubmit={this.handleSubmit.bind(this)}>
               <input data-lpignore="true" className="dl__pagination--search" type="text" id="dl__pagination--search" value={this.state.currentPage} onChange={this.handleInputChange.bind(this)} onBlur={this.handleBlur.bind(this)} />
             </form>
-            <span>&nbsp;of</span>
-            <span>{this.state.totalPages || 'loading...'}</span>
+    
+            <span>&nbsp;of</span> 
+            {this.state.totalPages && <span>{this.state.totalPages}</span>}
           </div>
-          <div className="dl__pagination__next" data-action="next" onClick={this.handleClick.bind(this)}></div>
-          <div className="dl__pagination__last" data-action="last" onClick={this.handleClick.bind(this)}></div>
+          <div className={this.state.loading ? "dl__pagination__next dl__pagination--loading" : "dl__pagination__next"} data-action="next" onClick={this.handleClick.bind(this)}></div>
+          <div className={this.state.loading ? "dl__pagination__last dl__pagination--loading" : "dl__pagination__last"} data-action="last" onClick={this.handleClick.bind(this)}></div>
         </div>) }
       </div>
     )
@@ -294,7 +308,8 @@ function mapStateToProps(state, ownProps) {
   return {
     config: state.app.config,
     pagination: state.app.pagination,
-    force: state.app.force
+    force: state.app.force,
+    app: state.app
   };
 }
 

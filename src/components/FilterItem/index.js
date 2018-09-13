@@ -302,7 +302,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
                     searchable={false}
                   />
                 ));
-              } else {           
+              } else {            
                 resolve((
                   <Select
                     key={Math.random() * 100000}
