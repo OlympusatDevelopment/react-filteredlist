@@ -45,7 +45,7 @@ class Pagination extends Component {
     const { config, pagination } = self.props,
       totalPages = Math.ceil(pagination.total / pagination.take);
     let currentPage = 1;
-    console.log("_runPagingComputation");
+
     // Make current page
     if (isFinite(pagination.skip / pagination.take)) {
       switch (Math.floor((pagination.skip / pagination.take))) {
@@ -92,7 +92,6 @@ class Pagination extends Component {
   runStateUpdate(pagination) {
     const totalPages = Math.ceil(pagination.total / pagination.take),
       currentPage = isFinite(pagination.total / pagination.skip) ? Math.ceil((pagination.total / pagination.skip)) : 1;
-    console.log("runStateUpdate");
 
     this.setState({
       pagination,
@@ -145,8 +144,7 @@ class Pagination extends Component {
 
     if (page <= this.state.totalPages && page > 0) {
       this.setState({ currentPage: page });
-    } else if (isNaN(this.state.totalPages)){
-      console.log("isNan", this.state.totalPages);
+    } else if (isNaN(this.state.totalPages)){// empty string value protection
       this.setState({ currentPage: 0});
     } else {
       this.setState({ currentPage: ''});
@@ -157,7 +155,7 @@ class Pagination extends Component {
     e.preventDefault();
 
     if (!this.state.loading) {
-      const page = document.getElementById('dl__pagination--search').value || 0,
+      const page = document.getElementById('dl__pagination--search').value || 1,
         calculatedSkip = page === 1 ? 0 : page * (this.state.pagination.take) - this.state.pagination.take,
         event = {
           skip: calculatedSkip,

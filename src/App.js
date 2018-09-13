@@ -32,16 +32,16 @@ import { translationMessages } from './i18n';
 // Create redux store with historys
 const initialState = {};
 
+const store = configureStore(initialState);
+
 class DataList extends Component {
   constructor(props) {
     super(props);
-
-    this.store = configureStore(initialState, this.props.config.parentStore);
   }
  
   render() {
     return (
-      <Provider store={this.store}>
+      <Provider store={store}>
         <LanguageProvider locale='en' messages={translationMessages}>
           <App dataListConfig={this.props.config} pushDispatch={this.props.pushDispatch || {}}> </App>
         </LanguageProvider> 
