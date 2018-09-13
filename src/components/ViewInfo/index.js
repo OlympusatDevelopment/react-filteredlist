@@ -24,7 +24,9 @@ class ViewInfo extends Component { // eslint-disable-line react/prefer-stateless
     _controlExportsUI(e, options) {
       const settings = options.infoDisplaySettings
 
-      if(settings.hasOwnProperty('exports')) {
+      if(settings.showExport) {
+        if (!settings.hasOwnProperty('exports')) { settings.exports = {}}// Default a missing export config
+
         let _Component = settings.exports.Component 
           ? (<settings.exports.Component exportsSettings={settings.exports} selectedView={options} parentProps={this.props}/>) 
           : (<Exports exportsSettings={settings.exports}/>); 
