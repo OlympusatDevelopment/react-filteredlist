@@ -25,21 +25,19 @@ class Pagination extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { pagination } = nextProps,
-      self = this;
+    const { pagination } = nextProps;
 
     // Init the state
-    self.runStateUpdate(pagination);
-    self._runPagingComputation();
+    // this.runStateUpdate(pagination);
+    this._runPagingComputation();
   }
 
   componentDidMount() {
-    const { pagination } = this.props,
-      self = this;
+    const { pagination } = this.props;
 
     // Init the state
-    self.runStateUpdate(pagination);
-    self._runPagingComputation();
+    // this.runStateUpdate(pagination);
+    this._runPagingComputation();
   }
 
   _runPagingComputation(){
@@ -47,7 +45,7 @@ class Pagination extends Component {
     const { config, pagination } = self.props,
       totalPages = Math.ceil(pagination.total / pagination.take);
     let currentPage = 1;
-
+    console.log("_runPagingComputation");
     // Make current page
     if (isFinite(pagination.skip / pagination.take)) {
       switch (Math.floor((pagination.skip / pagination.take))) {
@@ -94,6 +92,7 @@ class Pagination extends Component {
   runStateUpdate(pagination) {
     const totalPages = Math.ceil(pagination.total / pagination.take),
       currentPage = isFinite(pagination.total / pagination.skip) ? Math.ceil((pagination.total / pagination.skip)) : 1;
+    console.log("runStateUpdate");
 
     this.setState({
       pagination,
@@ -145,35 +144,40 @@ class Pagination extends Component {
     const page = e.currentTarget.value;
 
     if (page <= this.state.totalPages && page > 0) {
-      this.setState({ currentPage: page, loading: true });
+      this.setState({ currentPage: page });
+    } else if (isNaN(this.state.totalPages)){
+      console.log("isNan", this.state.totalPages);
+      this.setState({ currentPage: 0});
     } else {
-      this.setState({ currentPage: this.state.currentPage});
+      this.setState({ currentPage: ''});
     }
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    const page = document.getElementById('dl__pagination--search').value,
-      calculatedSkip = page === 1 ? 0 : page * (this.state.pagination.take) - this.state.pagination.take,
-      event = {
-        skip: calculatedSkip,
-        take: this.state.pagination.take,
-        page
-      };
 
-    if (page <= this.state.totalPages) {
-      this.sendEvent(event)
-        .writeQueryStringToURL(`?skip=${event.skip}&take=${event.take}&page=${event.page}`);
+    if (!this.state.loading) {
+      const page = document.getElementById('dl__pagination--search').value || 0,
+        calculatedSkip = page === 1 ? 0 : page * (this.state.pagination.take) - this.state.pagination.take,
+        event = {
+          skip: calculatedSkip,
+          take: this.state.pagination.take,
+          page
+        };
 
-        this.setState({ loading: true });
+      if (page <= this.state.totalPages) {
+        this.sendEvent(event)
+          .writeQueryStringToURL(`?skip=${event.skip}&take=${event.take}&page=${event.page}`);
+
+          this.setState({ loading: true });
+      }
     }
   }
 
   handleBlur(e) {
-    const page = e.currentTarget.value,
+    const page = e.currentTarget.value || 0,
       calculatedSkip = page === 1 ? 0 : page * (this.state.pagination.take) - this.state.pagination.take;
 
-      console.log("this.state.currentPage === page", this.state.currentPage , page, this.state.currentPage === page);
     if (this.state.currentPage === page) {
       let event = {
         skip: calculatedSkip,
@@ -278,7 +282,6 @@ class Pagination extends Component {
     const classNames = config.pinPagination ? 'dl__pagination dl__pinPagination' : 'dl__pagination';
     const disabledPagination = this.state.totalPages <= 1;
 
-    console.log("this.state.totalPages", this.state.totalPages, this.props, app, this.state.loading);
     return (
       <div className={classNames} style={{ bottom }}>
       {!disabledPagination && 

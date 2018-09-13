@@ -108,7 +108,6 @@ This (in the example folder structure this is the top-level index.js file) is th
 |:---|:---|:---|:---|:---|
 | id | string | '' | ''| The UNIQUE id of the filteredlist component. |
 | selector | string | '' | ''| Currently not used. @todo program in the custom selector option for the entire component. |
-| parentStore | string | falsy | false, [Redux Store] | The parent application's Redux store can be passed in here. |
 | defaultView | string | '' | ''| The UNIQUE id of the view to use by default. Matches the view's id property. |
 | writeQueryStringToURL | boolean | `false` | `true`,`false` | If true, the queries will be converted to query string params and written to the url. |
 | runQueryStringURLOnRender | boolean | `false` | `true`,`false` | If true, when a filters query string is present in the url, the component will attempt to run it. This is necessary for sharing and in general for tracking internal state. |
@@ -139,7 +138,6 @@ import utils from '../../';
 export default {
   id: 'main',
   selector: '',
-  parentStore: false,
   defaultView: 'buyer',
   writeQueryStringToURL: true,
   runQueryStringURLOnRender: true,
@@ -633,7 +631,6 @@ filteredlistConfig
   export default {
     id: 'main',
     selector: '',
-    parentStore: false,
     defaultView: 'buyer',
     writeQueryStringToURL: true,
     runQueryStringURLOnRender: true,
