@@ -195,6 +195,7 @@ Views are higher level filters & datalist pairs that run independent of eachothe
 | showSearch | boolean | `false` | `true`,`false`| Force hide the search component, even if it was provided as a special filter group(see filter groups below).|
 | enableListSort | boolean | `false` | `true`,`false`| Switch the data list header click column name to sort behavior.|
 | showListSettings | boolean | `false` | `true`,`false`| Shows/hides a list properties checkbox interface for showing and hiding datalist columns. It sits in the top right corner of the datalist.|
+| persistListSettings | boolean | `false` | `true`,`false` | This is used to set whether or not the user list settings options (what columns to show/hide) are persisted on reload. If true, the selected settings are stored in localstorage. |
 | showResetFiltersButton | boolean | `false` | `true`,`false`| Enables the reset filters link at the bottom of the filters sidebar UI.|
 | showSaveFiltersInterface | boolean | `false` | `true`,`false`| Enables the user saved filterset interface. If set to false it will not show up even if you have the filterset filter group imported in your configuration. (See the filter groups documentation for details.)|
 |  |  |  | | |

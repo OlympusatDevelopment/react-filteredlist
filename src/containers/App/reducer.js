@@ -125,6 +125,22 @@ function appReducer(state = initialState, action) {
         _state.queryObject = _data.queryObject;
       }
 
+      /**
+      * Allow for a synchronous fetch of preferences. Does not support async at this stage
+      */
+      if (_state.selectedView.persistListSettings) {
+        let columnPrefs;
+        try { columnPrefs = JSON.parse(localStorage.getItem(COLUMN_PREFS_LS_KEY)); }catch(e){} 
+        
+        if(columnPrefs){
+          _state.preferences = columnPrefs;
+          _state = applyPreferences(_state);
+        }
+      } else {
+        _state.preferences = [];
+        _state = applyPreferences(_state);
+      }
+
       _state.showLoading = true;
       _state.Items = [];
 
@@ -173,12 +189,12 @@ function appReducer(state = initialState, action) {
 
       runFilters(_state, _state.selectedView);
 
-      /**
-      * Allow for a synchronous fetch of preferences. Does not support async at this stage
-      */
-     if (_state.selectedView.persistListSettings) {
+    /**
+    * Allow for a synchronous fetch of preferences. Does not support async at this stage
+    */
+    if (_state.selectedView.persistListSettings) {
       let columnPrefs;
-      try { JSON.parse(localStorage.getItem(COLUMN_PREFS_LS_KEY)); }catch(e){} 
+      try { columnPrefs = JSON.parse(localStorage.getItem(COLUMN_PREFS_LS_KEY)); }catch(e){} 
       
       if(columnPrefs){
         _state.preferences = columnPrefs;
@@ -563,12 +579,14 @@ function mergePropsAndPreferences(selectedView, preferences = []) {
       .filter(pref => pref && pref.view === selectedView.id && pref.data.props)
       .reduce((acc, curr) => acc.concat(curr.data.props), [])
     : [];
+  console.log("propsPreferences", propsPreferences);
+  return selectedView.persistListSettings 
+    ? selectedView.props
+      .map(prop => {
+        const propPref = propsPreferences
+          .filter(pref => pref.key === prop.key);
 
-  return selectedView.props
-    .map(prop => {
-      const propPref = propsPreferences
-        .filter(pref => pref.key === prop.key);
-
-      return propPref ? { ...prop, ...propPref[0] } : prop
-    });
+        return propPref ? { ...prop, ...propPref[0] } : prop
+      })
+    : selectedView.props;
 }
