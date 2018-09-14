@@ -108,7 +108,6 @@ This (in the example folder structure this is the top-level index.js file) is th
 |:---|:---|:---|:---|:---|
 | id | string | '' | ''| The UNIQUE id of the filteredlist component. |
 | selector | string | '' | ''| Currently not used. @todo program in the custom selector option for the entire component. |
-| parentStore | string | falsy | false, [Redux Store] | The parent application's Redux store can be passed in here. |
 | defaultView | string | '' | ''| The UNIQUE id of the view to use by default. Matches the view's id property. |
 | writeQueryStringToURL | boolean | `false` | `true`,`false` | If true, the queries will be converted to query string params and written to the url. |
 | runQueryStringURLOnRender | boolean | `false` | `true`,`false` | If true, when a filters query string is present in the url, the component will attempt to run it. This is necessary for sharing and in general for tracking internal state. |
@@ -139,7 +138,6 @@ import utils from '../../';
 export default {
   id: 'main',
   selector: '',
-  parentStore: false,
   defaultView: 'buyer',
   writeQueryStringToURL: true,
   runQueryStringURLOnRender: true,
@@ -197,6 +195,7 @@ Views are higher level filters & datalist pairs that run independent of eachothe
 | showSearch | boolean | `false` | `true`,`false`| Force hide the search component, even if it was provided as a special filter group(see filter groups below).|
 | enableListSort | boolean | `false` | `true`,`false`| Switch the data list header click column name to sort behavior.|
 | showListSettings | boolean | `false` | `true`,`false`| Shows/hides a list properties checkbox interface for showing and hiding datalist columns. It sits in the top right corner of the datalist.|
+| persistListSettings | boolean | `false` | `true`,`false` | This is used to set whether or not the user list settings options (what columns to show/hide) are persisted on reload. If true, the selected settings are stored in localstorage. |
 | showResetFiltersButton | boolean | `false` | `true`,`false`| Enables the reset filters link at the bottom of the filters sidebar UI.|
 | showSaveFiltersInterface | boolean | `false` | `true`,`false`| Enables the user saved filterset interface. If set to false it will not show up even if you have the filterset filter group imported in your configuration. (See the filter groups documentation for details.)|
 |  |  |  | | |
@@ -562,7 +561,7 @@ The hooks are powerful. At different points in time throughout the lifecycle of 
 | onCheck | function | item | ({item,workspaceItems}) | Hook for picking up check events. Note: You have access to all items currently in the workspace, but you must only return the item being mutated. Warning: a select all command will run this hook once for each item as it builds the workspaceItems list |
 | onUnCheck | function | NA | ({item,workspaceItems}) | Hook for picking up check events. Note: You have access to all items currently in the workspace, but you must only return the item being mutated. Warning: a select all command will run this hook once for each item as it empties the workspaceItems list |
 | onStateUpdate | function | NA | (state, actionType) | Hook gets called whenever the main application state gets updated. Useful for getting the filters' current queryObject, queryString or the action type. Pagination can also be read here as well as the current Selected View |
-| onInit | function | NA | (app) | Hook used to know when the app is initialized. |
+| onInit | function | NA | (app) | Hook used to know when the app is initialized. If a fn is returned a callback is made accessible. If that callback is called(it has to be) then whatever data (an object) is passed to it will be made avialable in the preferences branch of the internal store on bootstrap. ie. onInit=(app)=>cb=>{cb({someDataForPrefs})}}|
 | onSaveFilterset | function | NA | ({name,queryString,queryObject}) | Hook gets called when the user opted to save their filter set. |
 | onDeleteFilterset | function | NA | ({name,filterset}) | Hook gets called when the user opted to delete their saved their filter set |
 | pushDispatch | function | ({Items: [{}],count: 1}) | NA | See the note below on the push dispatcher. |
@@ -633,7 +632,6 @@ filteredlistConfig
   export default {
     id: 'main',
     selector: '',
-    parentStore: false,
     defaultView: 'buyer',
     writeQueryStringToURL: true,
     runQueryStringURLOnRender: true,

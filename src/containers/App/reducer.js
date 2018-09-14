@@ -1,6 +1,6 @@
 import _ from 'underscore';
 
-import { collections, queries, filters } from '../../utils';
+import { collections, queries, filters, prefs_merge, prefs_createInitial } from '../../utils';
 import {
   UPDATE_CURRENT_TAB,
   UPDATE_VIEW_PROPS,
@@ -11,7 +11,8 @@ import {
   UPDATE_SEARCH_INPUT,
   UPDATE_PAGINATION,
   UPDATE_WORKSPACE,
-  CONTROL_MODAL
+  CONTROL_MODAL,
+  COLUMN_PREFS_LS_KEY
 } from './constants';
 
 //@todo find a better place to inject this
@@ -124,6 +125,22 @@ function appReducer(state = initialState, action) {
         _state.queryObject = _data.queryObject;
       }
 
+      /**
+      * Allow for a synchronous fetch of preferences. Does not support async at this stage
+      */
+      if (_state.selectedView.persistListSettings) {
+        let columnPrefs;
+        try { columnPrefs = JSON.parse(localStorage.getItem(COLUMN_PREFS_LS_KEY)); }catch(e){} 
+        
+        if(columnPrefs){
+          _state.preferences = columnPrefs;
+          _state = applyPreferences(_state);
+        }
+      } else {
+        _state.preferences = [];
+        _state = applyPreferences(_state);
+      }
+
       _state.showLoading = true;
       _state.Items = [];
 
@@ -172,13 +189,18 @@ function appReducer(state = initialState, action) {
 
       runFilters(_state, _state.selectedView);
 
-      /**
-      * Allow for a synchronous fetch of preferences. Does not support async at this stage
-      */
-      if(_state.config.hooks.onGetPreferences){
-        _state.preferences = _state.config.hooks.onGetPreferences();
+    /**
+    * Allow for a synchronous fetch of preferences. Does not support async at this stage
+    */
+    if (_state.selectedView.persistListSettings) {
+      let columnPrefs;
+      try { columnPrefs = JSON.parse(localStorage.getItem(COLUMN_PREFS_LS_KEY)); }catch(e){} 
+      
+      if(columnPrefs){
+        _state.preferences = columnPrefs;
         _state = applyPreferences(_state);
       }
+    }
     
       _state.config.hooks.onStateUpdate(_state, action.type);
 
@@ -222,6 +244,19 @@ function appReducer(state = initialState, action) {
           viewId: _data.viewId,
           selectedView: _state.selectedView
         });
+      }
+
+      // Handle updating internal storage of column settings
+      if (_state.selectedView.persistListSettings) {
+        let columnPrefs;
+        try { columnPrefs = JSON.parse(localStorage.getItem(COLUMN_PREFS_LS_KEY)); } catch (e) {}
+
+        const mutatedPrefs = columnPrefs
+          ? prefs_merge(columnPrefs)(_data.prop, _data.checked, _data.viewId)
+          : prefs_createInitial(_state.selectedView)(_data.prop, _data.checked);
+
+
+        localStorage.setItem(COLUMN_PREFS_LS_KEY, JSON.stringify(mutatedPrefs));
       }
 
       // Override preferences because the user indicated they wanted to change the default/preferenced set of visible props
@@ -544,12 +579,14 @@ function mergePropsAndPreferences(selectedView, preferences = []) {
       .filter(pref => pref && pref.view === selectedView.id && pref.data.props)
       .reduce((acc, curr) => acc.concat(curr.data.props), [])
     : [];
+  console.log("propsPreferences", propsPreferences);
+  return selectedView.persistListSettings 
+    ? selectedView.props
+      .map(prop => {
+        const propPref = propsPreferences
+          .filter(pref => pref.key === prop.key);
 
-  return selectedView.props
-    .map(prop => {
-      const propPref = propsPreferences
-        .filter(pref => pref.key === prop.key);
-
-      return propPref ? { ...prop, ...propPref[0] } : prop
-    });
+        return propPref ? { ...prop, ...propPref[0] } : prop
+      })
+    : selectedView.props;
 }

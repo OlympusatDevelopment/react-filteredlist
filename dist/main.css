@@ -305,7 +305,7 @@ code {
 .fa.pull-right {
   margin-left: .3em; }
 
-.fa-spin, .dl__dataList--loading > div:after {
+.fa-spin, .dl__pagination__loading:after, .dl__dataList--loading > div:after {
   -webkit-animation: fa-spin 2s infinite linear;
   animation: fa-spin 2s infinite linear; }
 
@@ -4303,7 +4303,8 @@ code {
 .dl__pagination__indicator {
   text-align: center;
   padding-left: 2%;
-  height: 24px; }
+  height: 24px;
+  position: relative; }
   .dl__pagination__indicator > span,
   .dl__pagination__indicator > #dl__pagination__pageForm {
     display: inline-block;
@@ -4356,6 +4357,32 @@ code {
 .dl__pagination__last:after {
   content: "\F051";
   text-align: right; }
+
+.dl__pagination__loading {
+  position: absolute;
+  height: 15px;
+  width: 23% !important;
+  background: white;
+  top: 4px;
+  left: 34%; }
+  .dl__pagination__loading:after {
+    content: "\F110";
+    position: absolute;
+    font-family: FontAwesome;
+    top: 2px;
+    right: 0;
+    bottom: 0;
+    left: 40%;
+    color: #333;
+    font-size: 11px;
+    line-height: 11px;
+    width: 11px;
+    height: 11px; }
+
+.dl__pagination--loading {
+  opacity: 0.6; }
+  .dl__pagination--loading:hover {
+    color: #333; }
 
 .dl__listHeader {
   border-bottom: 1px solid #efefef;

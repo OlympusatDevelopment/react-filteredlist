@@ -41,7 +41,7 @@ class DataList extends Component {
  
   render() {
     return (
-      <Provider store={store} parentStore={this.props.config.parentStore}>
+      <Provider store={store}>
         <LanguageProvider locale='en' messages={translationMessages}>
           <App dataListConfig={this.props.config} pushDispatch={this.props.pushDispatch || {}}> </App>
         </LanguageProvider> 

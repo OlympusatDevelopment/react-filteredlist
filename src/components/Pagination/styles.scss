@@ -3,7 +3,7 @@ $blue : #4ab2cd !default;
 
 
 .dl__pagination{
-  $this : &; 
+  $this : &;
 
   &.dl__pinPagination{ 
 	position: absolute;
@@ -40,7 +40,8 @@ $blue : #4ab2cd !default;
   &__indicator{
 	text-align: center;
 	padding-left: 2%;
-	height: 24px;
+  height: 24px;
+  position: relative;
 
 	>span,
 	>#dl__pagination__pageForm{
@@ -83,7 +84,7 @@ $blue : #4ab2cd !default;
   &__last{
 	position: relative;
 	//width: 33px;
-	height: 24px;
+  height: 24px;
 
 	&:after{
 	  font-family: FontAwesome;
@@ -124,5 +125,32 @@ $blue : #4ab2cd !default;
 	  content: $fa-var-step-forward;
 	  text-align: right;
 	}
+  }
+
+  &__loading{
+    position: absolute;
+    height: 15px;
+    width: 23% !important;
+    background: white;
+    top: 4px;
+    left: 34%;
+
+    &:after{
+      @include faPseudo($fa-var-spinner,2px,0,0,40%);
+      color: #333;
+      font-size: 11px;
+      line-height: 11px;
+      width: 11px;
+      height: 11px;
+      @extend .fa-spin;
+    }
+  }
+
+  &--loading{
+    opacity: 0.6;
+
+    &:hover{
+      color: #333;
+    }
   }
 }

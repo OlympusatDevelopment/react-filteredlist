@@ -20,3 +20,4 @@ export const UPDATE_PAGINATION = 'dl/UPDATE_PAGINATION';
 export const UPDATE_WORKSPACE = 'dl/UPDATE_WORKSPACE';
 export const CONTROL_MODAL = 'dl/CONTROL_MODAL';
 export const REFRESH = 'dl/REFRESH';
+export const COLUMN_PREFS_LS_KEY = 'dl.column.prefs';

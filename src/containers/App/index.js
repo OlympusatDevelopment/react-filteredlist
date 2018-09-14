@@ -5,6 +5,7 @@ import * as AppActions from './actions';
 import { queries, filters, collections } from '../../utils';
 import _ from 'underscore';
 import Promise from 'bluebird';
+import { COLUMN_PREFS_LS_KEY } from './constants';
 
 import Header from '../Header';
 import Filters from '../Filters';
@@ -97,9 +98,14 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
         id: `dl__items__${dataListConfig.id}`
       };
 
-      appInit({
-        pagination,
-      });// Set the initial pagination from query string read
+      let params = {pagination};
+
+      // Used to persist list settings
+      let columnPrefs;
+      try {columnPrefs = JSON.parse(localStorage.getItem(COLUMN_PREFS_LS_KEY)) }catch(e){};
+      if (columnPrefs) { params['preferences'] = columnPrefs; }
+      
+      appInit(params);// Set the initial pagination from query string read
 
       // Add the pagination listener
       self._initPaginationChangeListener();
