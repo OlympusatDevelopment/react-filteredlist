@@ -287,6 +287,16 @@ class Pagination extends Component {
       <div className={classNames} style={{ bottom }}>
       {!disabledPagination && 
         (<div className="dl__pagination__wrapper">
+          <div className="dl__pagination__perPageWrapper">
+          <span>per page</span>
+          <select placeholder="per page">
+              <option>10</option>
+              <option>25</option>
+              <option>50</option>
+              <option>100</option>
+            </select>
+          </div>
+
           <div className={this.state.loading ? "dl__pagination__first dl__pagination--loading" : "dl__pagination__first"} data-action="first" onClick={this.handleClick.bind(this)}></div>
           <div className={this.state.loading ? "dl__pagination__prev dl__pagination--loading" : "dl__pagination__prev"} data-action="prev" onClick={this.handleClick.bind(this)}></div>
           <div className="dl__pagination__indicator">
