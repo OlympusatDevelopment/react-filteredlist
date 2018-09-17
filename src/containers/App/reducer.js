@@ -579,8 +579,8 @@ function mergePropsAndPreferences(selectedView, preferences = []) {
       .filter(pref => pref && pref.view === selectedView.id && pref.data.props)
       .reduce((acc, curr) => acc.concat(curr.data.props), [])
     : [];
-  console.log("propsPreferences", propsPreferences);
-  return selectedView.persistListSettings 
+
+    return selectedView.persistListSettings 
     ? selectedView.props
       .map(prop => {
         const propPref = propsPreferences

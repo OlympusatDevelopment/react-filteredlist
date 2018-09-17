@@ -49,7 +49,8 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
     }
 
     // Rerender the filter item in case options have changed
-    this.makeFilter(nextProps.options).then(Filter => this.setState({Filter}));
+    this.makeFilter(nextProps.options)
+      .then(Filter => this.setState({Filter}));
   }
 
   _onSelectChange(data) {
@@ -88,30 +89,30 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
     let endDate = args.endDate ||  this.state.endDate;
     const {options, selectedView, filterChange} = this.props;
 
-    if (startDate) {
-	    if (startDate.isAfter(endDate)) {
-		    endDate = startDate;
-	    }
-
-        let local = moment(startDate.utc()).local();
-
-        filterChange({
-            id: `${options.id}--start`,
-            view: selectedView.id,
-            value: local.unix() * 1000
-            //value : parseInt(startDate.unix()+'000',10)
-        });
+    if (startDate && startDate.isAfter(endDate || startDate)) {
+      endDate = startDate;
     }
 
-    if (endDate) {
-        let local = moment(endDate.utc()).local();
+    const momentToMS = (dt) => {
+      const mmt = dt 
+        ? moment(dt.utc()) 
+        : moment(moment().utc())
 
-        filterChange({
-            id: `${options.id}--end`,
-            view: selectedView.id,
-            value: local.unix() * 1000
-        });
+      return mmt.local().unix() * 1000;
     }
+
+    filterChange([
+      {
+        id: `${options.id}--start`,
+        view: selectedView.id,
+        value: startDate ? momentToMS(startDate) : momentToMS()
+      }, 
+      {
+        id: `${options.id}--end`,
+        view: selectedView.id,
+        value: endDate ? momentToMS(endDate) : momentToMS()
+      }
+    ]);
   }
 
   _onRangeReset(e) {
@@ -192,6 +193,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
 
   makeFilter(options) {
     const self = this;
+
     return self._getOptionsData(options)
       .then(_optionsData => 
         new Promise((resolve, reject) => {
