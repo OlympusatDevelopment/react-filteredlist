@@ -38,13 +38,13 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
       this.setState({radioValue: Array.isArray(nextProps.options.value) ? nextProps.options.value[0] : nextProps.options.value});
     }
 
-    if(nextProps.options.range) {
-      const dateRange = nextProps.options.range;
-      if(dateRange.start) {
-          this.setState({startDate: moment(dateRange.start * 1)});
+    const dateRange = nextProps.options.range;
+    if(dateRange) {
+      if(dateRange.hasOwnProperty('start')) {
+          this.setState({startDate: dateRange.start === null ? dateRange.start : moment(dateRange.start * 1)});
       }
-      if(dateRange.end) {
-          this.setState({endDate: moment(dateRange.end * 1)});
+      if(dateRange.hasOwnProperty('end')) {
+          this.setState({endDate: dateRange.end === null ? dateRange.end : moment(dateRange.end * 1)});
       }
     }
 
@@ -93,24 +93,31 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
       endDate = startDate;
     }
 
-    const momentToMS = (dt) => {
-      const mmt = dt 
+    // COnvert moment date to local timestamp
+    const momentToMS = dt => (
+      dt 
         ? moment(dt.utc()) 
-        : moment(moment().utc())
-
-      return mmt.local().unix() * 1000;
-    }
+        : moment(moment().utc()))
+      .local().unix() * 1000;
+    
+    // Calculates proper value for empties ie. if endDate is later than start, make start equal to end date
+    const calculateEmptyDates = (dateToCalc, checkDate) => 
+      dateToCalc 
+        ? momentToMS(dateToCalc) 
+        : checkDate 
+          ? momentToMS(checkDate) 
+          : momentToMS();
 
     filterChange([
       {
         id: `${options.id}--start`,
         view: selectedView.id,
-        value: startDate ? momentToMS(startDate) : momentToMS()
+        value: calculateEmptyDates(startDate, endDate)
       }, 
       {
         id: `${options.id}--end`,
         view: selectedView.id,
-        value: endDate ? momentToMS(endDate) : momentToMS()
+        value: calculateEmptyDates(endDate, startDate)
       }
     ]);
   }
