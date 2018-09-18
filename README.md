@@ -225,6 +225,7 @@ Views are higher level filters & datalist pairs that run independent of eachothe
 | link.row | function | undefined | undefined, function | This gets called when building the datalist item rows. The item is passed into the function and you need to return a link that the row item's anchor href will use when the user clicks a row item. |
 | link.target | string | '' | '', '_blank'|  The row item link target settings. _blank opens the row item click in a new tab/window, '' opens it in place.|
 |  |  |  | | |
+| paginationPerPageOptions | Array or int | undefined | undefined, int, [int,int] | THis array of ints populates the pagination bar's items per page dropdown, providing the possible values the user can choose from. |
 | paginationTake | int | undefined | undefined,int | Sets the number of items to fetch on each paginated request. This is page size.|
 | noResultsMessage | string | '' | ''| The message to display in the datalist container when the filter query returned no results.|
 | usersSavedFiltersets | function | undefined | undefined, function | Must return a Promise containing a collection of items. This is how you populate the user saved filtersets select box options. In the hooks you can save to a database or local storage what the user saved then here you can retrieve it for option population.|

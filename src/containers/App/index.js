@@ -5,7 +5,7 @@ import * as AppActions from './actions';
 import { queries, filters, collections } from '../../utils';
 import _ from 'underscore';
 import Promise from 'bluebird';
-import { COLUMN_PREFS_LS_KEY } from './constants';
+import { LIST_SETTINGS_LS_KEY } from './constants';
 
 import Header from '../Header';
 import Filters from '../Filters';
@@ -102,7 +102,7 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
 
       // Used to persist list settings
       let columnPrefs;
-      try {columnPrefs = JSON.parse(localStorage.getItem(COLUMN_PREFS_LS_KEY)) }catch(e){};
+      try {columnPrefs = JSON.parse(localStorage.getItem(LIST_SETTINGS_LS_KEY)) }catch(e){};
       if (columnPrefs) { params['preferences'] = columnPrefs; }
       
       appInit(params);// Set the initial pagination from query string read

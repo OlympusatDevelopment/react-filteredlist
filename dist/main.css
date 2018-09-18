@@ -4282,20 +4282,21 @@ code {
   bottom: 0px;
   left: 50%;
   transform: translateX(-50%);
-  width: 300px;
+  width: 357px;
   z-index: 200; }
   .dl__pagination.dl__pinPagination .dl__pagination__wrapper {
     background: #fff; }
 
 .dl__pagination__wrapper {
+  position: relative;
   border: 1px solid #efefef;
   border-radius: 3px;
-  padding: 0 9px;
-  max-width: 300px;
+  padding: 0 9px 0 82px;
+  max-width: 357px;
   width: 100%;
   margin: 18px auto; }
   .dl__pagination__wrapper > div {
-    width: 8.33333333%;
+    width: 6%;
     float: left; }
   .dl__pagination__wrapper .dl__pagination__indicator {
     width: 66.6666666%; }
@@ -4383,6 +4384,50 @@ code {
   opacity: 0.6; }
   .dl__pagination--loading:hover {
     color: #333; }
+
+.dl__pagination div.dl__pagination__perPageWrapper {
+  position: absolute;
+  left: 6px;
+  width: 48px;
+  height: 30px;
+  top: 2px; }
+  .dl__pagination div.dl__pagination__perPageWrapper:after {
+    content: "\F0D7";
+    position: absolute;
+    font-family: FontAwesome;
+    top: 3px;
+    right: 6px;
+    bottom: 0;
+    left: auto;
+    font-size: 14px;
+    color: #aaa;
+    pointer-events: none; }
+  .dl__pagination div.dl__pagination__perPageWrapper span {
+    position: absolute;
+    top: 22px;
+    color: #444;
+    display: block;
+    width: 100%;
+    height: 14px;
+    text-align: center;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    font-size: 9px;
+    line-height: 8px; }
+  .dl__pagination div.dl__pagination__perPageWrapper select {
+    display: inline-block;
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 20px;
+    border-radius: 0;
+    padding: 0 0 0 6px;
+    color: #aaa; }
+    .dl__pagination div.dl__pagination__perPageWrapper select:hover {
+      cursor: pointer; }
 
 .dl__listHeader {
   border-bottom: 1px solid #efefef;

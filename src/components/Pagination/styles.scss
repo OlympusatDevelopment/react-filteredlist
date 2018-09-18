@@ -10,7 +10,7 @@ $blue : #4ab2cd !default;
 	bottom:0px;  
 	left: 50%;
 	transform: translateX(-50%); 
-	width: 300px;
+	width: 357px;
 	z-index: 200;
 
 	.dl__pagination__wrapper{
@@ -19,16 +19,17 @@ $blue : #4ab2cd !default;
   }
 
   &__wrapper{
-	@extend .cf;
+  @extend .cf;
+  position: relative;
 	border: 1px solid $border-primary;
 	border-radius: 3px;
-	padding: 0 9px;
-	max-width: 300px;
+	padding: 0 9px 0 82px;
+	max-width: 357px;
 	width: 100%;
 	margin: 18px auto;
 
 	>div{
-	  @include col(1);
+	  width: 6%;
 	  float: left;
 	}
 
@@ -151,6 +152,55 @@ $blue : #4ab2cd !default;
 
     &:hover{
       color: #333;
+    }
+  }
+
+  div.dl__pagination__perPageWrapper{
+    position: absolute;
+    left: 6px;
+    width: 48px;
+    height: 30px;
+    top: 2px;
+
+    &:after{
+      @include faPseudo($fa-var-caret-down, 3px, 6px, 0, auto);
+      font-size: 14px;
+      color: #aaa;
+      pointer-events: none;
+    }
+
+    span{
+      position: absolute;
+      top: 22px;
+      // background: #dedede;
+      color: #444;
+      display: block;
+      width: 100%;
+      height: 14px;
+      // padding: 0 6px 0 0;
+      text-align: center;
+      border-top-right-radius: 3px;
+      border-top-left-radius: 3px;
+      font-size: 9px;
+      line-height: 8px;
+    }
+
+    select {
+      display: inline-block;
+      appearance: none;
+      -webkit-appearance: none;
+      border: none;
+      position: absolute;
+      top: 0px;
+      width: 100%;
+      height: 20px;
+      border-radius: 0;
+      padding: 0 0 0 6px;
+      color: #aaa;
+
+      &:hover{
+        cursor: pointer;
+      }
     }
   }
 }
