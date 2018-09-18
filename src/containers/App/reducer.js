@@ -12,7 +12,7 @@ import {
   UPDATE_PAGINATION,
   UPDATE_WORKSPACE,
   CONTROL_MODAL,
-  COLUMN_PREFS_LS_KEY
+  LIST_SETTINGS_LS_KEY
 } from './constants';
 
 //@todo find a better place to inject this
@@ -129,12 +129,13 @@ function appReducer(state = initialState, action) {
       * Allow for a synchronous fetch of preferences. Does not support async at this stage
       */
       if (_state.selectedView.persistListSettings) {
-        let columnPrefs;
-        try { columnPrefs = JSON.parse(localStorage.getItem(COLUMN_PREFS_LS_KEY)); }catch(e){} 
+        let prefs;
+        try { prefs = JSON.parse(localStorage.getItem(LIST_SETTINGS_LS_KEY)); }catch(e){} 
         
-        if(columnPrefs){
-          _state.preferences = columnPrefs;
+        if(prefs){
+          _state.preferences = prefs;
           _state = applyPreferences(_state);
+          _state.selectedView.paginationTake = prefs.paginationTake;
         }
       } else {
         _state.preferences = [];
@@ -194,7 +195,7 @@ function appReducer(state = initialState, action) {
     */
     if (_state.selectedView.persistListSettings) {
       let columnPrefs;
-      try { columnPrefs = JSON.parse(localStorage.getItem(COLUMN_PREFS_LS_KEY)); }catch(e){} 
+      try { columnPrefs = JSON.parse(localStorage.getItem(LIST_SETTINGS_LS_KEY)); }catch(e){} 
       
       if(columnPrefs){
         _state.preferences = columnPrefs;
@@ -249,14 +250,14 @@ function appReducer(state = initialState, action) {
       // Handle updating internal storage of column settings
       if (_state.selectedView.persistListSettings) {
         let columnPrefs;
-        try { columnPrefs = JSON.parse(localStorage.getItem(COLUMN_PREFS_LS_KEY)); } catch (e) {}
+        try { columnPrefs = JSON.parse(localStorage.getItem(LIST_SETTINGS_LS_KEY)); } catch (e) {}
 
         const mutatedPrefs = columnPrefs
           ? prefs_merge(columnPrefs)(_data.prop, _data.checked, _data.viewId)
           : prefs_createInitial(_state.selectedView)(_data.prop, _data.checked);
 
 
-        localStorage.setItem(COLUMN_PREFS_LS_KEY, JSON.stringify(mutatedPrefs));
+        localStorage.setItem(LIST_SETTINGS_LS_KEY, JSON.stringify(mutatedPrefs));
       }
 
       // Override preferences because the user indicated they wanted to change the default/preferenced set of visible props
@@ -405,6 +406,21 @@ function appReducer(state = initialState, action) {
 
     case UPDATE_PAGINATION:
       _state.pagination = _data.pagination;
+
+      // If the user changed the default take number, set it
+      if ((_state.selectedView.paginationTake !== _data.pagination.take)) {
+        
+        _state.selectedView.paginationTake = _data.pagination.take;
+
+        _state.views = _state.views.map(view => {
+          if (view.id === _state.selectedView.id) {
+            view.paginationTake = _data.pagination.take;
+          } 
+
+          return view;
+        })
+      }
+
       _state.config.hooks.onStateUpdate(_state);
 
       return _state;

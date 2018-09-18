@@ -16,7 +16,7 @@ class Pagination extends Component {
       pagination: props.pagination,
       loading: false
     };
-
+    console.log("Constructor");
     this._runPagingComputation = this._runPagingComputation.bind(this);
 
     const self = this;
@@ -26,7 +26,7 @@ class Pagination extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { pagination } = nextProps;
-
+    console.log("WILL REC", nextProps, this.state);
     // Init the state
     // this.runStateUpdate(pagination);
     this._runPagingComputation();
@@ -34,7 +34,7 @@ class Pagination extends Component {
 
   componentDidMount() {
     const { pagination } = this.props;
-
+    console.log("MOUNT", this.state);
     // Init the state
     // this.runStateUpdate(pagination);
     this._runPagingComputation();
@@ -74,12 +74,25 @@ class Pagination extends Component {
       pagination,
       totalPages,
       currentPage,
-      loading: false
+      // loading: false
     };
 
+    console.log("params", this.state.loading, this.props.pagination.page, this.state.currentPage, this.state.action, ['prev', 'first'].includes(this.state.action));
     // Loading logic. Used to tell component data is currenty being loaded. Used for the spinner
-    if (this.state.currentPage !== currentPage) {
-      params['loading'] = true;
+    // if (this.state.loading 
+    //   && ((['prev', 'first'].includes(this.state.action) && this.props.pagination.page < this.state.currentPage) || (['next', 'last'].includes(this.state.action) && this.props.pagination.page > this.state.currentPage))
+    // ) {
+    //   params['loading'] = false;
+    // }
+
+    if ((['prev', 'first'].includes(this.state.action) && this.props.pagination.page < this.state.currentPage) 
+      || this.props.pagination.page == this.state.currentPage) {
+        params['loading'] = false;
+    }
+
+    if ((['next', 'last'].includes(this.state.action) && this.props.pagination.page > this.state.currentPage) 
+      || this.props.pagination.page == this.state.currentPage) {
+        params['loading'] = false;
     }
 
     self.setState(params);
@@ -89,30 +102,35 @@ class Pagination extends Component {
    * Closure to handle setting state
    * @param pagination
    */
-  runStateUpdate(pagination) {
-    const totalPages = Math.ceil(pagination.total / pagination.take),
-      currentPage = isFinite(pagination.total / pagination.skip) ? Math.ceil((pagination.total / pagination.skip)) : 1;
+  // runStateUpdate(pagination) {
+  //   const totalPages = Math.ceil(pagination.total / pagination.take),
+  //     currentPage = isFinite(pagination.total / pagination.skip) ? Math.ceil((pagination.total / pagination.skip)) : 1;
 
-    this.setState({
-      pagination,
-      totalPages,
-      currentPage,
-      loading: false
-    });
-  }
+  //   this.setState({
+  //     pagination,
+  //     totalPages,
+  //     currentPage,
+  //     loading: false
+  //   });
+  // }
 
   handleClick(e) {
     if (!this.state.loading){
       let page = 1;
+      const action = e.currentTarget.getAttribute('data-action');
 
-      switch (e.currentTarget.getAttribute('data-action')) {
+      switch (action) {
         case 'first':
           break;
         case 'prev':
-          page = this.state.currentPage === 1 ? 1 : this.state.currentPage - 1;
+          page = this.state.currentPage === 1 
+            ? 1 
+            : this.state.currentPage - 1;
           break;
         case 'next':
-          page = this.state.currentPage === this.state.totalPages ? this.state.totalPages : this.state.currentPage + 1;
+          page = this.state.currentPage === this.state.totalPages 
+            ? this.state.totalPages 
+            : this.state.currentPage + 1;
           break;
         case 'last':
           page = this.state.totalPages;
@@ -120,8 +138,8 @@ class Pagination extends Component {
       }
 
       const calculatedSkip = page === 1 
-      ? 0 
-      : page * (this.state.pagination.take) - this.state.pagination.take;
+        ? 0 
+        : page * (this.state.pagination.take) - this.state.pagination.take;
 
       const event = {
         skip: calculatedSkip,
@@ -131,9 +149,8 @@ class Pagination extends Component {
 
       if (this.state.currentPage !== page) {
         this.sendEvent(event)
-          .writeQueryStringToURL(`?skip=${event.skip}&take=${event.take}&page=${event.page}`);
-
-          this.setState({ currentPage: page, loading: true });
+          .writeQueryStringToURL(`?skip=${event.skip}&take=${event.take}&page=${event.page}`)
+          .setState({ currentPage: page, loading: true, action });
       }
     }
   }
@@ -278,15 +295,43 @@ class Pagination extends Component {
     return str === '=&' ? '' : str.slice(0, -1);// removes the last ampersand
   }
 
-  render() {
-    const { config, bottom, app } = this.props;
+  onPerPageClick(e){
+    const userSetTake = +e.target.value;
+
+    if (!this.state.loading) {
+      const event = {
+          skip: 0,
+          take: userSetTake,
+          page: 1
+        };
+
+      this.sendEvent(event)
+        .writeQueryStringToURL(`?skip=${event.skip}&take=${event.take}&page=${event.page}`)
+        .setState({ loading: true });
+    }
+  }
+
+  render() { 
+    const { config, bottom, app, selectedView } = this.props;
     const classNames = config.pinPagination ? 'dl__pagination dl__pinPagination' : 'dl__pagination';
     const disabledPagination = this.state.totalPages <= 1;
-
+    const paginationPerPageOptions = selectedView.paginationPerPageOptions 
+      ? (Array.isArray(selectedView.paginationPerPageOptions) 
+        ? selectedView.paginationPerPageOptions 
+        : [selectedView.paginationPerPageOptions]) 
+      : [25];
+  
     return (
       <div className={classNames} style={{ bottom }}>
-      {!disabledPagination && 
-        (<div className="dl__pagination__wrapper">
+        <div className="dl__pagination__wrapper">
+          <div className="dl__pagination__perPageWrapper">
+            <select placeholder="per page" defaultValue={selectedView.paginationTake} onChange={this.onPerPageClick.bind(this)} {...(this.state.loading && {disabled: true})}>
+              {paginationPerPageOptions.map(num => 
+                (<option key={num} >{num}</option>)
+              )}
+            </select>
+          </div>
+
           <div className={this.state.loading ? "dl__pagination__first dl__pagination--loading" : "dl__pagination__first"} data-action="first" onClick={this.handleClick.bind(this)}></div>
           <div className={this.state.loading ? "dl__pagination__prev dl__pagination--loading" : "dl__pagination__prev"} data-action="prev" onClick={this.handleClick.bind(this)}></div>
           <div className="dl__pagination__indicator">
@@ -302,7 +347,7 @@ class Pagination extends Component {
           </div>
           <div className={this.state.loading ? "dl__pagination__next dl__pagination--loading" : "dl__pagination__next"} data-action="next" onClick={this.handleClick.bind(this)}></div>
           <div className={this.state.loading ? "dl__pagination__last dl__pagination--loading" : "dl__pagination__last"} data-action="last" onClick={this.handleClick.bind(this)}></div>
-        </div>) }
+        </div>
       </div>
     )
   }
@@ -314,7 +359,8 @@ function mapStateToProps(state, ownProps) {
     config: state.app.config,
     pagination: state.app.pagination,
     force: state.app.force,
-    app: state.app
+    app: state.app,
+    selectedView: state.app.selectedView
   };
 }
 
