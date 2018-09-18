@@ -28,6 +28,7 @@
     "react-redux": "^5.0.5",
     "react-scrolllock": "^2.0.1",
     "react-super-select": "^1.0.4",
+    "react-themeable": "^1.1.0",
     "redux": "^3.6.0",
     "underscore": "^1.8.3",
     "xhr": "^2.4.0"

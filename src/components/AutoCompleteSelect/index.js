@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Chips from 'react-chips';
-import theme from './theme';
+import theme, { chipTheme } from './theme.js';
+
+const NO_RESULTS_FOUND = 'No results found.';
 
 class AutoCompleteSelect extends Component{
     constructor(props) {
@@ -14,19 +16,27 @@ class AutoCompleteSelect extends Component{
         this.onSelectChange = this.onSelectChange.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
-        if(nextProps !== this.props) {
-            const { initalValues, options } = nextProps;
+    static getDerivedStateFromProps(props, state) {
+        const {initalValues} = props;
 
-            if (initalValues && Array.isArray(initalValues)) {
-                if(initalValues.length >= 1 && initalValues[0] !== ''){
-                    this.setState({items: initalValues});
+        if (initalValues && Array.isArray(initalValues)) {
+            if(initalValues.length >= 1 && initalValues[0] !== ''){
+
+                if(initalValues !== state.items) {
+                    return {
+                        items: initalValues
+                    }
                 }
             }
         }
+        return null;
     }
  
     onSelectChange(data) {
+
+        if(data.includes(NO_RESULTS_FOUND))
+            return false;
+
         this.setState({ items: data });
 
         const {options, onSelectChange} = this.props;
@@ -34,18 +44,21 @@ class AutoCompleteSelect extends Component{
         const formattedData = (data && Array.isArray(data) ?
         data.map(d => {return {[options.key]: d} ;}) : null);
 
-        onSelectChange(formattedData); 
+        onSelectChange(formattedData);
     }   
 
     onSearch(query) {
         const { options } = this.props;
-        const self = this;
+        // const self = this;
         if (query !== '') {
             return options.getOptions(query)
                 .then((items) => {
+                    if (items.length === 0) {
+                        return [NO_RESULTS_FOUND];
+                    }
                     return items.map(i => i[options.value]);
                 })
-                .catch(err => console.log(err));
+                .catch(err => console.log('filteredlist autocomplete error: ', err));
 
         }
     }
@@ -57,9 +70,12 @@ class AutoCompleteSelect extends Component{
         return (<Chips
             value={items}
             theme={theme}
+            chipTheme={chipTheme}
             placeholder={placeholder}
             onChange={this.onSelectChange}
             fetchSuggestionsThrushold={5}
+            fromSuggestionsOnly={true}
+            highlightFirstSuggestion={true}
             fetchSuggestions={(value) => this.onSearch(value)}
           />);
     }
