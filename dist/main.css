@@ -4008,6 +4008,7 @@ code {
     right: 18px;
     top: 9px;
     font-size: 14px;
+    pointer-events: none;
     -webkit-transition-duration: 0.3;
     -moz-transition-duration: 0.3;
     -o-transition-duration: 0.3;
@@ -4040,7 +4041,8 @@ code {
     border-bottom: 1px solid #efefef; }
   .dl__filterGroupFilters {
     padding: 6px;
-    padding-bottom: 24px; }
+    padding-bottom: 24px;
+    cursor: auto; }
 
 .dl__filterItem {
   position: relative;

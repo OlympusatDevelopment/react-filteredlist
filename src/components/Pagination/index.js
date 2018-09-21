@@ -16,7 +16,7 @@ class Pagination extends Component {
       pagination: props.pagination,
       loading: false
     };
-    console.log("Constructor");
+    // console.log("Constructor");
     this._runPagingComputation = this._runPagingComputation.bind(this);
 
     const self = this;
@@ -26,7 +26,7 @@ class Pagination extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { pagination } = nextProps;
-    console.log("WILL REC", nextProps, this.state);
+    // console.log("WILL REC", nextProps, this.state);
     // Init the state
     // this.runStateUpdate(pagination);
     this._runPagingComputation();
@@ -34,7 +34,7 @@ class Pagination extends Component {
 
   componentDidMount() {
     const { pagination } = this.props;
-    console.log("MOUNT", this.state);
+    // console.log("MOUNT", this.state);
     // Init the state
     // this.runStateUpdate(pagination);
     this._runPagingComputation();
@@ -77,7 +77,7 @@ class Pagination extends Component {
       // loading: false
     };
 
-    console.log("params", this.state.loading, this.props.pagination.page, this.state.currentPage, this.state.action, ['prev', 'first'].includes(this.state.action));
+    // console.log("params", this.state.loading, this.props.pagination.page, this.state.currentPage, this.state.action, ['prev', 'first'].includes(this.state.action));
     // Loading logic. Used to tell component data is currenty being loaded. Used for the spinner
     // if (this.state.loading 
     //   && ((['prev', 'first'].includes(this.state.action) && this.props.pagination.page < this.state.currentPage) || (['next', 'last'].includes(this.state.action) && this.props.pagination.page > this.state.currentPage))

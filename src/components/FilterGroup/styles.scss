@@ -16,6 +16,7 @@
         right: 18px;
         top: 9px;
         font-size: 14px;
+        pointer-events: none;
 
         // color: $text;
         @include duration(0.3);
@@ -49,6 +50,7 @@
     &Filters {
         padding: 6px;
         padding-bottom: 24px;
+        cursor: auto;
     }
 
     // &[data-issingle="true"]{
