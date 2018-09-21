@@ -9,6 +9,9 @@ import ViewInfo from '../../components/ViewInfo';
 class View extends Component { // eslint-disable-line react/prefer-stateless-function
     constructor(props) {
         super(props)
+
+        this.resetFilters = this.resetFilters.bind(this);
+        window.ReactFilteredlist['resetFilters'] = this.resetFilters;
     }
 
     resetFilters(){

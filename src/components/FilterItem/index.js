@@ -31,6 +31,10 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
 
     // Create the initial filter inner component
     this.makeFilter(props.options).then(Filter => this.setState({Filter}));
+
+    // Main entry point for global filter Change 
+    // Usage: window.ReactFilteredlist.runFilterChange({id: 'isActive', view: 'apps', value: 'true'})
+    window.ReactFilteredlist['runFilterChange'] = ({id, view, value}) => props.filterChange({id, view, value});
   }
 
   componentWillReceiveProps(nextProps) {
