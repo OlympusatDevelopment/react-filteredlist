@@ -12,6 +12,7 @@ More specific documentation to come.
   * [Breaking Changes](#breaking-changes)
   * [Documentation](#documentation)
     * [Top level configuration](#top-level-configuration)
+    * [window.ReactFilteredlist](#window.ReactFilteredlist)
     * [Datalist](#datalist)
     * [Views](#views)
     * [View Props](#view-props)
@@ -156,6 +157,17 @@ export default {
   graphql
 }
 ```
+
+## window.ReactFilteredlist
+There is a global object on the window that has some useful functions. It's in its early development so it's sparse.
+
+| Property | Type | Default | Possible Values | Description |
+|:---|:---|:---|:---|:---|
+| changeView | function | undefined | (viewId) | Passing this fn a view id, ie. `apps`, will behave the same as if you clicked on a tab in the views section. |
+| resetFilters | function | undefined | () | Calling this runs a reset filter command |
+| runFilterChange | function | undefined | ({id, view, value}) | Calling this with a valid filter object will run that filter query. ie. `window.ReactFilteredlist.runFilterChange({id: 'isActive', view: 'apps', value: 'true'})` |
+
+
 
 ## Datalist
 Some basic properties for the datalist. Most of the datalist props are controlled by the view, specifically. These properties apply across views. Honestly, these should really be reprogrammed to exist in the index.js file or vice-versa.

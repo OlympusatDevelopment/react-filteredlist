@@ -7,6 +7,9 @@ import View from '../../components/View';
 class Filters extends Component { // eslint-disable-line react/prefer-stateless-function
     constructor(props) {
         super(props)
+
+        this.onTabClick = this.onTabClick.bind(this);
+        window.ReactFilteredlist['changeView'] = viewId => this.onTabClick(viewId);
     }
 
     onTabClick(id){
