@@ -62,7 +62,7 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
           <Checkbox onChecked={this.onChecked.bind(this)} id={item[selectedView.itemIdProp]}> </Checkbox>
         </span>) : '';
 
-    return (
+    return (  
       <div className="dl__textItem">
         <a target={selectedView.link.target} href={selectedView.link.row(item)} onClick={this.onLinkClick.bind(this)}>
           {check}
