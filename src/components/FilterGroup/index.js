@@ -34,8 +34,8 @@ class FilterGroup extends Component { // eslint-disable-line react/prefer-statel
         filtersets = options.hasOwnProperty('id') && options.id === 'filterset' && selectedView.showSaveFiltersInterface ? (<SaveFilterset selectedView={selectedView} key={Math.random()*10000}/>) : '';  
 
         return (
-            <div className={classNames} style={{color: options.accordian.color.text}} data-issingle={isSingle} onClick={this.toggleFilterAccordian.bind(this)}>
-                <div className="dl__filterGroupLabel" style={{background: options.accordian.color.background}}>
+            <div className={classNames} style={{color: options.accordian.color.text}} data-issingle={isSingle}>
+                <div className="dl__filterGroupLabel" style={{background: options.accordian.color.background}} onClick={this.toggleFilterAccordian.bind(this)}>
                     <span style={{color: options.accordian.color.text}}>{options.label}</span>
                 </div>
                 <div className="dl__filterGroupFilters">
