@@ -45,7 +45,7 @@ const initialState = {
   selectedView: {},//Must be an empty object by default
   queryString: '',// the current query string based on filter value
   queryObject: {},
-  sortBy: '',// a sortBy Value,
+  sortBy: '',// a sortBy Value,.
   filters: [],// Contains all applied filters
   pagination: {
     skip: 0,

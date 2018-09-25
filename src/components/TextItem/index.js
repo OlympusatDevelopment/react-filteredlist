@@ -11,6 +11,7 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
     super(props);
 
     this.copyToClipboard = this.copyToClipboard.bind(this);
+    this._highlightSearchTerm = this._highlightSearchTerm.bind(this);
   }
 
   copyToClipboard(val) {
@@ -46,22 +47,48 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
       }
   }
 
-  renderHTML(html, prop) {
+  renderHTML(_html, prop) {
+    let html = _html;
+
     if (prop.isImage) {
       return (<img className="dl__textItemImage" src={html} alt={prop.label} />);
+    }
+
+    if (this.props.selectedView.highlightSearchTermInText){
+      html = this._highlightSearchTerm(html)
     }
 
     return (<span dangerouslySetInnerHTML={{ __html: html }} title={html}></span>);
   }
 
+  // Wrap search term in Mark element if present
+  _highlightSearchTerm(_text){
+    let text = _text;
+    const { searchTerm } = this.props;
+    
+    if (typeof searchTerm !== 'undefined') {
+      const index = text.toLowerCase().indexOf(searchTerm);
+
+      if (index > -1) {
+        const termLength = searchTerm.length;
+        let _tmpText = text.split('');
+        _tmpText.splice(index, 0, '<mark>');
+        _tmpText.splice(index + termLength + 1, 0, '</mark>');
+        text = _tmpText.join('');
+      }
+    }
+
+    return text;
+  }
+
   render() {
-    const { item, selectedView, preferencedProps } = this.props;
+    const { item, selectedView, preferencedProps, searchTerm } = this.props;
     const props = preferencedProps,
       check = selectedView.enableRowChecks ? (
         <span key={-1} style={{ width: '33px' }} className="dl__textItem-item">
           <Checkbox onChecked={this.onChecked.bind(this)} id={item[selectedView.itemIdProp]}> </Checkbox>
         </span>) : '';
-
+ 
     return (  
       <div className="dl__textItem">
         <a target={selectedView.link.target} href={selectedView.link.row(item)} onClick={this.onLinkClick.bind(this)}>
@@ -105,6 +132,11 @@ function mapStateToProps(state, ownProps) {
     config: state.app.config,
     workspace: state.app.workspace,
     force: state.app.force,
+    searchTerm: state.app.queryObject.search 
+      ? Array.isArray(state.app.queryObject.search) 
+        ? state.app.queryObject.search[0]
+        : state.app.queryObject.search
+      : undefined
   };
 }
 
