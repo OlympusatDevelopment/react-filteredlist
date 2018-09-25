@@ -1,6 +1,7 @@
 import fltrs from './filters';
 import cllctns from './collections';
 import qrs from './queries';
+import _ from 'underscore'; 
 
 const utils = {
     convertUNIXToHumanDate(UNIX_timestamp){
@@ -20,33 +21,6 @@ const utils = {
         .replace(/([A-Z])/g, (match) => ` ${match}`)
         .replace(/^./, (match) => match.toUpperCase())
 };
-
-//export function* sagaRequest(fn, fnParams, CON_SUCCESS, CON_FAIL, {take,call,put,select,cancel,takeLatest}) {
-//    try {
-//        let res = yield fn(fnParams);
-//        l('SAGA', res);
-//
-//        // Catch the error and notify the user
-//        if(res.hasOwnProperty('Error')){
-//            utils.notify({message: `Server error: ${JSON.stringify(res.Error)}`, level: 'error', position: 'br'});
-//            res = null;
-//        }
-//
-//        yield put({type: CON_SUCCESS, data: res});
-//    } catch (err) {
-//        l('SAGA ERR', err);
-//        utils.notify({message: JSON.stringify(err), level: 'error', position: 'br'});
-//
-//        yield put({type: CON_FAIL, err});
-//    }
-//}
-//
-//export function* sagaRequestSetup(fn, CON, {take,call,put,select,cancel,takeLatest}) {
-//    const watcher = yield takeLatest(CON, fn);
-//
-//    // Suspend execution until location changes
-//    yield cancel(watcher);
-//}
 
 export const filters = fltrs;
 export const collections = cllctns;
