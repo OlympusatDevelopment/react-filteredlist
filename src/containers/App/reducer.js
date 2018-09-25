@@ -49,7 +49,7 @@ const initialState = {
   filters: [],// Contains all applied filters
   pagination: {
     skip: 0,
-    take: 100,
+    take: 25,
     page: 1,
     total: 0
   },
@@ -95,7 +95,7 @@ function appReducer(state = initialState, action) {
           take: (config.views.filter(view => {
             const viewQueryParam = queries.getViewParamFromURL();// Get the view from the url or from the set default if not defined
             return viewQueryParam ? view.id === viewQueryParam : (view.id === config.defaultView || true);// falls back to any view in case the default wasn't set
-          })[0] || {}).paginationTake || 100, 
+          })[0] || {}).paginationTake || 25, 
           page: 1,
           total: 0
         };
@@ -135,8 +135,8 @@ function appReducer(state = initialState, action) {
         if(prefs){
           _state.preferences = prefs;
           _state = applyPreferences(_state);
-          _state.selectedView.paginationTake = prefs.paginationTake;
-        }
+          _state.selectedView.paginationTake = prefs.paginationTake || _state.selectedView.paginationTake;
+        } 
       } else {
         _state.preferences = [];
         _state = applyPreferences(_state);

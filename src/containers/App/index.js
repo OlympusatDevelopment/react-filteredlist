@@ -98,6 +98,8 @@ class App extends Component { // eslint-disable-line react/prefer-stateless-func
         id: `dl__items__${dataListConfig.id}`
       };
 
+      console.log("Pagination", pagination, paginationParams, app.pagination);
+
       let params = {pagination};
 
       // Used to persist list settings
