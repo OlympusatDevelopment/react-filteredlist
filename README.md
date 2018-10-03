@@ -432,7 +432,7 @@ Used to take action on the dataset. Primary items used in building a query objec
 | prop | string | '' | NA | Essentially the same as id. Just match this to the id until the api changes, then we'll handle that by default. |
 | label | string | '' | NA |  The filter item's Label property. THis displays to the user above the filter item.|
 | value | array/null/undefined | null | [{},{},{}] | Use this to set a default value. Value must be an array of objects (matching options), null or undefined to be excluded. (Filters recognize boolean true/false. An collection matching the select filter type can be passed to pre-populate the value. |
-| multiple | boolean | `false` | `true`,`false` | For select filter types, this allows the select to be a multi select when set to `true`|
+| multi | boolean | `false` | `true`,`false` | For select filter types, this allows the select to be a multi select when set to `true`|
 | options | object | {} |  {},falsy | ***For 'select' & 'checkbox' type only:*** The select type filter item's options handling. This takes care of property matching items so they can fill the value of the options element. |
 | options.key | string | '' |  NA | This is the select box options item's key(property) to use for the option element's value property. |
 | options.value | string | '' | NA | This is the select box options item's Label/Text to use in the option item's display. |
