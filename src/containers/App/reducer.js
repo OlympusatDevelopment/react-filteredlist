@@ -267,7 +267,7 @@ function appReducer(state = initialState, action) {
 
     case FILTER_CHANGE:
       const isBatchUpdate = _.isArray(_data);
-
+      console.log("FILTER_CHANGE ", _state, action);
       // Only clear on fresh filter runs, not paginated filter runs
       // Compare the pagination and filters in the current state with the incoming request to determine 
       // if this should be flagged as a fresh filter run. If fresh, reset pagination
@@ -605,4 +605,23 @@ function mergePropsAndPreferences(selectedView, preferences = []) {
         return propPref ? { ...prop, ...propPref[0] } : prop
       })
     : selectedView.props;
+}
+
+/**
+ * Controls updating anything that must be tied to state
+ * @param {*} _state 
+ */
+function runStateUpdateHook(_state, actionType, action){
+  let stateData = _state;
+
+  if (_state.config && _state.config.hooks && _state.config.hooks.onStateUpdate){ 
+
+    // This assignment allows the hook to overide the entire state object. Very powerful and also very easy to break.
+    stateData = _state.config.hooks.onStateUpdate(_state, actionType, action) || _state;
+  }
+
+  // Update the global reference
+  if (!window.ReactFilteredlist) { window.ReactFilteredlist = {}; }
+  window.ReactFilteredlist['state'] = stateData;
+  return stateData;
 }

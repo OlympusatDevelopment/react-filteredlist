@@ -58,14 +58,15 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
   }
 
   _onSelectChange(data) {
-    const { options, selectedView, filterChange } = this.props,
-    value = (data && Array.isArray(data)) ? 
-              // (Array.isArray(data[0].entityUUID)  ? data[0].entityUUID :
-                data.map(obj=> {
-                  return obj[options.options.key];
-              }) : 
-            (data ? [data[options.options.key]] : null);    
-      
+    const { options, selectedView, filterChange } = this.props;
+    let value = (data && Array.isArray(data)) 
+      ? // (Array.isArray(data[0].entityUUID)  ? data[0].entityUUID :
+        data.map(obj=> obj[options.options.key]) 
+      : (data 
+          ? [data[options.options.key]] 
+          : null
+        );    
+      console.log("_onSelectChange ", data);
     filterChange({
       id: options.id,
       view: selectedView.id,
@@ -300,7 +301,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
             case 'select':
             default:
               // If a value exist via a query string run or state update, set the component initial val, otherwise leave blank to display the placeholder
-
+                  console.log("select ", self.props.options.value);
               if (self.props.options.value) {
                 resolve((
                   <Select
@@ -324,7 +325,8 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
                     optionValueKey={options.options.key}
                     multiple={options.multi}
                     placeholder="Make Your Selections"
-                    onChange={(data) => self._onSelectChange(data)}
+                    onChange={(data) => console.log("data ", data ) || self._onSelectChange(data)}
+                    onClick={(data) => console.log("data click", data ) || self._onSelectChange(data)}
                     searchable={false}
                   />
                 ));
