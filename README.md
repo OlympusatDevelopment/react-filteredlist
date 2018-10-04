@@ -166,6 +166,7 @@ There is a global object on the window that has some useful functions. It's in i
 | changeView | function | undefined | (viewId) | Passing this fn a view id, ie. `apps`, will behave the same as if you clicked on a tab in the views section. |
 | resetFilters | function | undefined | () | Calling this runs a reset filter command |
 | runFilterChange | function | undefined | ({id, view, value}) | Calling this with a valid filter object will run that filter query. ie. `window.ReactFilteredlist.runFilterChange({id: 'isActive', view: 'apps', value: 'true'})` |
+| state | object | {} | {} | This will always be the up-to-date state of the internal store. It is closesly connected to `onStateUpdate`. When `onStateUpdate` run, that's when the `state` property is populated. |
 
 
 
