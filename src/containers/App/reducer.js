@@ -267,7 +267,7 @@ function appReducer(state = initialState, action) {
 
     case FILTER_CHANGE:
       const isBatchUpdate = _.isArray(_data);
-      console.log("FILTER_CHANGE ", _state, action);
+      // console.log("FILTER_CHANGE ", _state, action);
       // Only clear on fresh filter runs, not paginated filter runs
       // Compare the pagination and filters in the current state with the incoming request to determine 
       // if this should be flagged as a fresh filter run. If fresh, reset pagination

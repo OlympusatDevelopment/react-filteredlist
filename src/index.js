@@ -6,7 +6,7 @@ var pjson = require('../package.json');
 import './style/main.scss'; 
  
 // if(window.Oly && window.Oly.debugMode) {
-  console.log(`react-filteredlist | version ${pjson.version}`);
+  console.log(`react-filteredlist | version ${pjson.version}`); 
 // } 
 
 // Create the global
