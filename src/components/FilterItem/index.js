@@ -6,6 +6,7 @@ import Select from 'react-super-select';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import AutoCompleteSelect from '../AutoCompleteSelect';
+import PropertySearch from '../PropertySearch';
 import { CheckboxGroup, Checkbox } from 'react-checkbox-group';
 import {RadioGroup, Radio} from 'react-radio-group';
 import { SortItem } from '../SortItem';
@@ -290,12 +291,19 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
               ));
               break;
             case 'autocomplete':
-                resolve(<AutoCompleteSelect
+                // resolve(<AutoCompleteSelect
+                //     key={Math.random() * 100000}
+                //     onSelectChange={self._onSelectChange}
+                //     initalValues={options.value}
+                //     placeholder={options && options.placeholder ? options.placeholder : null}
+                //     {...options} />);
+                break;
+            case 'property-search':
+                resolve(<PropertySearch
                     key={Math.random() * 100000}
-                    onSelectChange={self._onSelectChange}
-                    initalValues={options.value}
-                    placeholder={options && options.placeholder ? options.placeholder : null}
-                    {...options} />);
+                    initialValue={this.makeSelectInitialValue(options,_optionsData)}
+                    {...options}
+                    selectedView={self.props.selectedView} />);
                 break;
             case 'select':
             default:
@@ -368,7 +376,8 @@ function mapStateToProps(state, ownProps) {
   return {
     config: state.app.config,
     force: state.app.force,
-    filterItem: state.filterItem
+    filterItem: state.filterItem,
+    selectedView: state.app.selectedView
   };
 }
 
