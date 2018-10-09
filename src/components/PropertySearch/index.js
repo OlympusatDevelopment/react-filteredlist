@@ -8,6 +8,7 @@ export default class PropertySearch extends Component{
         const options = this.props.options;
         this.state = {
           searchValue: null,
+          initialValue: [],
           selectedProperty: null,
           _selectOptionsKeys: {
             k: (options && options.key) ? options.key : 'k',
@@ -17,33 +18,71 @@ export default class PropertySearch extends Component{
         this.onSelectChange = this.onSelectChange.bind(this);
     }
 
+    static getDerivedStateFromProps(props, state){
+      let values = {prop: '', query: ''};
+      let initialValue = [];
+
+      if(Array.isArray(props.value) && props.value[0]){
+        try{
+          values = JSON.parse(decodeURIComponent(props.value.join(',')));
+            if(values.query){ 
+              initialValue = [{
+                [state._selectOptionsKeys.v]: values.prop,
+                [state._selectOptionsKeys.k]: values.prop
+              }
+          ];}
+
+          return Object.assign({}, state, {searchValue: values.query, initialValue});
+        }catch(e){}
+      }
+
+      return Object.assign({}, state, {initialValue});
+    }
+
     onSelectChange(prop){
-      this.setState({selectedProperty:prop[this.state._selectOptionsKeys.k]});
+      if (prop) {
+        this.setState({selectedProperty:prop[this.state._selectOptionsKeys.k]});
+      }
       // Update filter request here, if there is a search value only
     }
 
     onSearchSubmit(e){
       e.preventDefault();
-      // Set state to filter change
-      console.log("SUBMIT ", this.state);
+      const {filterChange, selectedView, id} = this.props;
+
+      filterChange({
+        id,
+        view: selectedView.id,
+        value: [JSON.stringify({
+          prop: this.state.selectedProperty,
+          query: this.state.searchValue
+        })]
+      });
     }
+
     bindSearch(e){
       const searchValue = e.target.value;
       this.setState({searchValue});
     }
+
     onSearchClear(){
-      this.setState({searchValue: null});
+      const {filterChange, selectedView, id} = this.props;
+
+      filterChange({
+        id,
+        view: selectedView.id,
+        value: null
+      });
     }
 
     render() {
-        const { multi, value, options, initialValue, selectedView } = this.props;
+        let { multi, options, selectedView } = this.props;
         const self = this;
-      console.log("PS ", options, initialValue, selectedView);
 
-        return (<div>
+      return (<div>
           <div className="dl__search">
             <form onSubmit={this.onSearchSubmit.bind(this)}>
-              <input data-lpignore="true" id={`dl-search--${this.props.id}`} className="dl__searchInput" autoFocus type="text" name="dl-search" placeholder={"Search on property"} value={this.state.searchValue || value || ''} onChange={this.bindSearch.bind(this)} />
+              <input data-lpignore="true" id={`dl-search--${this.props.id}`} className="dl__searchInput" autoFocus type="text" name="dl-search" placeholder={"Search on property"} value={this.state.searchValue || ''} onChange={this.bindSearch.bind(this)} />
 
               <span className="dl__searchClearButton" onClick={this.onSearchClear.bind(this)}> </span>
               
@@ -61,7 +100,7 @@ export default class PropertySearch extends Component{
             optionLabelKey={this.state._selectOptionsKeys.v}
             optionValueKey={this.state._selectOptionsKeys.k}
             multiple={multi}
-            initialValue={initialValue.length > 0 ? initialValue : null}
+            initialValue={this.state.initialValue.length > 0 ? this.state.initialValue : null}
             placeholder="Property to search on"
             onChange={self.onSelectChange}
             searchable={false}

@@ -67,6 +67,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
               }) : 
             (data ? [data[options.options.key]] : null);    
       
+            console.log("Select change ", value);
     filterChange({
       id: options.id,
       view: selectedView.id,
@@ -291,19 +292,20 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
               ));
               break;
             case 'autocomplete':
-                // resolve(<AutoCompleteSelect
-                //     key={Math.random() * 100000}
-                //     onSelectChange={self._onSelectChange}
-                //     initalValues={options.value}
-                //     placeholder={options && options.placeholder ? options.placeholder : null}
-                //     {...options} />);
+                resolve(<AutoCompleteSelect
+                    key={Math.random() * 100000}
+                    onSelectChange={self._onSelectChange}
+                    initalValues={options.value}
+                    placeholder={options && options.placeholder ? options.placeholder : null}
+                    {...options} />);
                 break;
             case 'property-search':
                 resolve(<PropertySearch
                     key={Math.random() * 100000}
                     initialValue={this.makeSelectInitialValue(options,_optionsData)}
                     {...options}
-                    selectedView={self.props.selectedView} />);
+                    selectedView={self.props.selectedView} 
+                    filterChange={this.props.filterChange}/>);
                 break;
             case 'select':
             default:
