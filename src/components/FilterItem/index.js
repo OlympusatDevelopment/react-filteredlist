@@ -6,6 +6,7 @@ import Select from 'react-super-select';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import AutoCompleteSelect from '../AutoCompleteSelect';
+import PropertySearch from '../PropertySearch';
 import { CheckboxGroup, Checkbox } from 'react-checkbox-group';
 import {RadioGroup, Radio} from 'react-radio-group';
 import { SortItem } from '../SortItem';
@@ -66,6 +67,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
               }) : 
             (data ? [data[options.options.key]] : null);    
       
+            console.log("Select change ", value);
     filterChange({
       id: options.id,
       view: selectedView.id,
@@ -297,6 +299,14 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
                     placeholder={options && options.placeholder ? options.placeholder : null}
                     {...options} />);
                 break;
+            case 'property-search':
+                resolve(<PropertySearch
+                    key={Math.random() * 100000}
+                    initialValue={this.makeSelectInitialValue(options,_optionsData)}
+                    {...options}
+                    selectedView={self.props.selectedView} 
+                    filterChange={this.props.filterChange}/>);
+                break;
             case 'select':
             default:
               // If a value exist via a query string run or state update, set the component initial val, otherwise leave blank to display the placeholder
@@ -311,7 +321,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
                     multiple={options.multi}
                     initialValue={this.makeSelectInitialValue(options,_optionsData)}
                     placeholder="Make Your Selections"
-                    onChange={(data) => self._onSelectChange(data)}
+                    onChange={self._onSelectChange}
                     searchable={false}
                   />
                 ));
@@ -324,7 +334,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
                     optionValueKey={options.options.key}
                     multiple={options.multi}
                     placeholder="Make Your Selections"
-                    onChange={(data) => self._onSelectChange(data)}
+                    onChange={self._onSelectChange}
                     searchable={false}
                   />
                 ));
@@ -368,7 +378,8 @@ function mapStateToProps(state, ownProps) {
   return {
     config: state.app.config,
     force: state.app.force,
-    filterItem: state.filterItem
+    filterItem: state.filterItem,
+    selectedView: state.app.selectedView
   };
 }
 

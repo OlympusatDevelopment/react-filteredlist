@@ -21,6 +21,7 @@ More specific documentation to come.
     * [Filters](#filters)
       * [Select filter type](#select-filter-type)
       * [Autocomplete filter type](#autocomplete-filter-type)
+      * [Property Search filter type](#property-search-filter-type)
       * [Radio filter type](#radio-filter-type)
       * [Range filter type](#range-filter-type)
       * [Checkbox filter type](#checkbox-filter-type)
@@ -166,6 +167,7 @@ There is a global object on the window that has some useful functions. It's in i
 | changeView | function | undefined | (viewId) | Passing this fn a view id, ie. `apps`, will behave the same as if you clicked on a tab in the views section. |
 | resetFilters | function | undefined | () | Calling this runs a reset filter command |
 | runFilterChange | function | undefined | ({id, view, value}) | Calling this with a valid filter object will run that filter query. ie. `window.ReactFilteredlist.runFilterChange({id: 'isActive', view: 'apps', value: 'true'})` |
+| state | object | {} | {} | This will always be the up-to-date state of the internal store. It is closesly connected to `onStateUpdate`. When `onStateUpdate` run, that's when the `state` property is populated. |
 
 
 
@@ -485,6 +487,35 @@ export default {
             ]);
         })
     }
+};
+```
+
+#### Property Search filter type
+This filter is used for doing an "OR" search across a certain property. ie. search for a list of email addresses across the 'email' field on an entity.
+
+When the options object is not being used to provide defaults for the select box, then the select box is automatically populated with all the properties listed in the `props` array for the selected view.
+
+
+```
+export default {
+  id: "propertySearch",
+  type: 'property-search',
+  prop: "propertySearch",
+  label: 'Property Search',
+  value: null
+  // options: {
+    // key: 'id',
+    // value: 'name'
+
+    // Must return a promise containing a collection
+    // Optional getOptions. If falsy, the component will get properties from the selectedView props
+    // getOptions: () => Promise.resolve([
+    //   {id: 0, name: 'entityUUID'},
+    //   {id: 1, name: 'email'},
+    //   {id: 2, name: 'name'},
+    //   {id: 3, name: 'olyId'}
+    // ])
+  // }
 };
 ```
 

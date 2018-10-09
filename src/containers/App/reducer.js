@@ -153,12 +153,7 @@ function appReducer(state = initialState, action) {
         _state = applyPreferences(_state);
       }
 
-      // HOOK @todo should allow returning new state from hook
-      if (_state.config && _state.config.hooks && _state.config.hooks.onStateUpdate) { 
-        _state.config.hooks.onStateUpdate(_state);
-      }
-
-      return _state;
+      return runStateUpdateHook(_state, action.type, action);
 
     case UPDATE_CURRENT_TAB: 
       _data = _data || _state.selectedView.id;
@@ -203,17 +198,15 @@ function appReducer(state = initialState, action) {
       }
     }
     
-      _state.config.hooks.onStateUpdate(_state, action.type);
-
-      return _state;
+      return runStateUpdateHook(_state, action.type, action);
 
     case UPDATE_ITEMS:
       _state.Items = _data.Items;
       _state.pagination.total = _data.count;
       _state.force = Math.random() * 10000000;
       _state.showLoading = false;
-      _state.config.hooks.onStateUpdate(_state);
-      return _state;
+
+      return runStateUpdateHook(_state, action.type, action);
 
     case UPDATE_VIEW_PROPS:
 
@@ -235,7 +228,6 @@ function appReducer(state = initialState, action) {
        * @type {number}
        */
       _state.force = Math.random() * 10000000;
-      _state.config.hooks.onStateUpdate(_state);
 
       // Run the on Update hook
       if (_state.config.hooks.onViewPropChange) {
@@ -263,11 +255,11 @@ function appReducer(state = initialState, action) {
       // Override preferences because the user indicated they wanted to change the default/preferenced set of visible props
       // _state.overridePreferences.props = true;
 
-      return _state;
+      return runStateUpdateHook(_state, action.type, action);
 
     case FILTER_CHANGE:
       const isBatchUpdate = _.isArray(_data);
-
+      // console.log("FILTER_CHANGE ", _state, action);
       // Only clear on fresh filter runs, not paginated filter runs
       // Compare the pagination and filters in the current state with the incoming request to determine 
       // if this should be flagged as a fresh filter run. If fresh, reset pagination
@@ -353,9 +345,8 @@ function appReducer(state = initialState, action) {
 
       _state.showLoading = true;
       _state.force = Math.random() * 10000000;
-      _state.config.hooks.onStateUpdate(_state);
 
-      return _state;
+      return runStateUpdateHook(_state, action.type, action);
 
     case RESET_FILTERS:
 
@@ -390,9 +381,7 @@ function appReducer(state = initialState, action) {
         selectAllChecked: false
       };
 
-      _state.config.hooks.onStateUpdate(_state);
-
-      return _state;
+      return runStateUpdateHook(_state, action.type, action);
 
     case UPDATE_SEARCH_INPUT:
 
@@ -400,9 +389,8 @@ function appReducer(state = initialState, action) {
       _state = Object.assign({}, _state, makeQuery(_state, [_data]));//update the queryObject and queryString
 
       _state.forceSearch = Math.random() * 10000000;
-      _state.config.hooks.onStateUpdate(_state);
 
-      return _state;
+      return runStateUpdateHook(_state, action.type, action);
 
     case UPDATE_PAGINATION:
       _state.pagination = _data.pagination;
@@ -421,9 +409,7 @@ function appReducer(state = initialState, action) {
         })
       }
 
-      _state.config.hooks.onStateUpdate(_state);
-
-      return _state;
+      return runStateUpdateHook(_state, action.type, action);
 
     case UPDATE_WORKSPACE:
       switch (_data.workspaceAction) {
@@ -454,9 +440,8 @@ function appReducer(state = initialState, action) {
             }
           break;
       }
-      _state.config.hooks.onStateUpdate(_state);
 
-      return _state;
+      return _strunStateUpdateHook(_state, action.type, action);
 
       case CONTROL_MODAL: 
         _state.modal = {
@@ -464,10 +449,10 @@ function appReducer(state = initialState, action) {
           Component: _data.Component
         }
         
-        return _state;
+        return runStateUpdateHook(_state, action.type, action);
 
     default:
-      return _state;
+      return runStateUpdateHook(_state, action.type, action);
   }
 }
 
@@ -605,4 +590,23 @@ function mergePropsAndPreferences(selectedView, preferences = []) {
         return propPref ? { ...prop, ...propPref[0] } : prop
       })
     : selectedView.props;
+}
+
+/**
+ * Controls updating anything that must be tied to state
+ * @param {*} _state 
+ */
+function runStateUpdateHook(_state, actionType, action){
+  let stateData = _state;
+
+  if (_state.config && _state.config.hooks && _state.config.hooks.onStateUpdate){ 
+
+    // This assignment allows the hook to overide the entire state object. Very powerful and also very easy to break.
+    stateData = _state.config.hooks.onStateUpdate(_state, actionType, action) || _state;
+  }
+
+  // Update the global reference
+  if (!window.ReactFilteredlist) { window.ReactFilteredlist = {}; }
+  window.ReactFilteredlist['state'] = stateData;
+  return stateData;
 }

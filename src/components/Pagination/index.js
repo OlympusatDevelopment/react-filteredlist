@@ -318,14 +318,13 @@ class Pagination extends Component {
           <div className={this.state.loading ? "dl__pagination__first dl__pagination--loading" : "dl__pagination__first"} data-action="first" onClick={this.handleClick.bind(this)}></div>
           <div className={this.state.loading ? "dl__pagination__prev dl__pagination--loading" : "dl__pagination__prev"} data-action="prev" onClick={this.handleClick.bind(this)}></div>
           <div className="dl__pagination__indicator">
-            <span>Page&nbsp;</span>
+            <span>Page</span>
             {this.state.loading && <div className="dl__pagination__loading"></div>}          
-
             <form id="dl__pagination__pageForm" onSubmit={this.handleSubmit.bind(this)}>
               <input data-lpignore="true" className="dl__pagination--search" type="text" id="dl__pagination--search" value={this.state.currentPage} onChange={this.handleInputChange.bind(this)} onBlur={this.handleBlur.bind(this)} />
             </form>
     
-            <span>&nbsp;of</span> 
+            <span>of</span> 
             {this.state.totalPages && <span>{this.state.totalPages}</span>}
           </div>
           <div className={this.state.loading ? "dl__pagination__next dl__pagination--loading" : "dl__pagination__next"} data-action="next" onClick={this.handleClick.bind(this)}></div>
