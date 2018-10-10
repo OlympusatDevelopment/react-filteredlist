@@ -7,7 +7,7 @@
 
 // Needed for redux-saga es6 generator support
 //import 'babel-polyfill';
-
+ 
 // Import all the third party stuff
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -28,7 +28,7 @@ import configureStore from './store';
 
 // Import i18n messages
 import { translationMessages } from './i18n';
-
+ 
 // Create redux store with historys
 const initialState = {};
 
