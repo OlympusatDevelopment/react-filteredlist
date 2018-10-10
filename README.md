@@ -120,7 +120,6 @@ This (in the example folder structure this is the top-level index.js file) is th
 | header | object | undefined | undefined,object | Header options container. |
 | header.title | string | '' | ''| A title for the entire component. |
 | footer | object | undefined | undefined,object | Currently not used but could contain footer specific options in the future. |
-| googleAnalyticsUAId | string | '' | ''| Pass it a Google Analytics id to start sending custom events on filter actions and row clicks to Google Analytics. |
 |  |  |  | | |
 | dataList | object | undefined | undefined,object | The datalist config object gets passed in here. |
 | views | array | undefined | undefined,array | The views config objects array gets passed in here. |
@@ -151,7 +150,6 @@ export default {
     title: ''
   },
   footer: {},
-  googleAnalyticsUAId: GOOGLE_UA_ID,
   dataList,
   views,
   hooks,
@@ -605,7 +603,7 @@ The hooks are powerful. At different points in time throughout the lifecycle of 
 | onXHRFail | function | body | (err,body) | Hook gets called when the xhr request kicks back an error |
 | onCheck | function | item | ({item,workspaceItems}) | Hook for picking up check events. Note: You have access to all items currently in the workspace, but you must only return the item being mutated. Warning: a select all command will run this hook once for each item as it builds the workspaceItems list |
 | onUnCheck | function | NA | ({item,workspaceItems}) | Hook for picking up check events. Note: You have access to all items currently in the workspace, but you must only return the item being mutated. Warning: a select all command will run this hook once for each item as it empties the workspaceItems list |
-| onStateUpdate | function | NA | (state, actionType) | Hook gets called whenever the main application state gets updated. Useful for getting the filters' current queryObject, queryString or the action type. Pagination can also be read here as well as the current Selected View |
+| onStateUpdate | function | NA | (state, actionType, action) | Hook gets called whenever the main application state gets updated. Useful for getting the filters' current queryObject, queryString or the action type. Pagination can also be read here as well as the current Selected View. THis is the ideal place to tie in Google Analytics from your parent app. You can use the `actionType` argument to determine what took place for your custom events. |
 | onInit | function | NA | (app) | Hook used to know when the app is initialized. If a fn is returned a callback is made accessible. If that callback is called(it has to be) then whatever data (an object) is passed to it will be made avialable in the preferences branch of the internal store on bootstrap. ie. onInit=(app)=>cb=>{cb({someDataForPrefs})}}|
 | onSaveFilterset | function | NA | ({name,queryString,queryObject}) | Hook gets called when the user opted to save their filter set. |
 | onDeleteFilterset | function | NA | ({name,filterset}) | Hook gets called when the user opted to delete their saved their filter set |
@@ -688,7 +686,6 @@ filteredlistConfig
       title: ''
     },
     footer: {},
-    googleAnalyticsUAId: false,
     dataList:{
       height: undefined,
       paginationBottomPosition: '36px'

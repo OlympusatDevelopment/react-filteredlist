@@ -85,10 +85,6 @@ function appReducer(state = initialState, action) {
         config = _data.config;
         _state.config = _data.config;
 
-        if (config.hasOwnProperty('googleAnalyticsUAId') && config.googleAnalyticsUAId) {
-          // visitor = ua(config.googleAnalyticsUAId);
-        }
-
         // Set pagination options
         _state.pagination = {
           skip: 0,
