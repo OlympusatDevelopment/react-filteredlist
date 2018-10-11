@@ -91,7 +91,7 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
  
     return (  
       <div className="dl__textItem">
-        <a target={selectedView.link.target} href={selectedView.link.row(item)} onClick={this.onLinkClick.bind(this)}>
+        <a className="dl__listGridContainer" target={selectedView.link.target} href={selectedView.link.row(item)} onClick={this.onLinkClick.bind(this)}>
           {check}
 
           {
@@ -112,7 +112,7 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 
               if (prop.display) {
                 return (
-                  <span key={prop.key} data-id={id} style={{ width: prop.width }} className="dl__textItem-item" >
+                  <span key={prop.key} data-id={id} data-style={{ width: prop.width }} className="dl__textItem-item" >
                     {copyIcon}
                     {parsedVal}
                   </span>

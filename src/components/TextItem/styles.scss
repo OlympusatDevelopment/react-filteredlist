@@ -2,25 +2,34 @@
   position: relative;
 
   a{
-	color: $color-link;
-	//position: relative;
+    color: $color-link;
+    //position: relative;
+    text-decoration: none;
   }
 
 	&-item{
 	  display: inline-block;
-	  line-height: 33px;
+	  line-height: 1.2;
 	  position: relative;
 	  z-index: 1;
     overflow: hidden;
     width: 100%;
-	  //@extend .truncate;
+    // @extend .truncate;
+    // word-break: keep-all;
+    // white-space: pre-wrap !important;
+    padding-left: 6px;
+    padding-top: 12px;
+
+    >span{
+      word-break: break-all;
+    }
 
 	  &--copy{
       position: relative;
       z-index: 2;
       display: inline-block;
       width: 21px;
-      height: 21px;
+      height: 12px;
 
       &:after{
         content: $fa-var-copy;
