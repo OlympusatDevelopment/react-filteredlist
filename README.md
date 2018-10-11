@@ -33,12 +33,6 @@ More specific documentation to come.
     * [Troubleshooting](#troubleshooting)
 
 
-## Dependencies
-
-Uses the universal-analytics package to track filtering
-https://www.npmjs.com/package/universal-analytics
-
-
 ## Screenshots
 #### Filteredlist w/ custom display component screenshot ![](doc_images/filteredlist_display.png?raw=true)
 
