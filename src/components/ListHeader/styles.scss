@@ -1,16 +1,21 @@
-.dl__listHeader{
+.dl__listHeader{// grid item
   border-bottom: 1px solid #efefef;
   position: relative;
   padding-left: 6px;
   background: #333;
-  white-space: nowrap;
-  width: auto;
+  // white-space: nowrap;
+  // width: auto;
+
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
 
 	&-item{
 	  display: inline-block;
 	  font-weight: 700;
 	  line-height: 33px;
-	  color: #fff;
+    color: #fff;
+    padding-left: 6px;
 	}
 
   &.dl__pinPagination{
@@ -24,27 +29,31 @@
 
   &-listSettings,
   &-listSort{
-	position: absolute;
-	right: 20px;
-	top: 0;
-	width: 33px;
-	height: 33px;
-	text-align: center;
+    position: absolute;
+    right: 20px;
+    top: 0;
+    width: 33px;
+    height: 33px;
+    text-align: center;
 
-	&:after{
-	  content: $fa-var-cog;
-	  font-family: FontAwesome;
-	  font-size: 14px;
-    color: #fff;
-    padding-top: 9px;
-    height: 100%;
-    display: block;
-	}
+    &:after{
+      content: $fa-var-cog;
+      font-family: FontAwesome;
+      font-size: 14px;
+      color: #fff;
+      padding-top: 9px;
+      height: 100%;
+      display: block;
+    }
 
-	&:hover{
-	  cursor: pointer;
-	  opacity: 0.7;
-	}
+    &:hover{
+      cursor: pointer;
+      opacity: 0.7;
+    }
+  }
+
+  &-listSettings{
+    right: 6px;
   }
 
   &-listSort{

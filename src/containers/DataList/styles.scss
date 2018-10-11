@@ -21,12 +21,12 @@
         height: 92%;
         height: auto;
 
-        // overflow-y:scroll;
+        overflow-y: auto;
         z-index: 100;
 
         @include break(md-lg) {
-            margin-top: 33px;
-            border-top: 1px solid #efefef;
+            // margin-top: 33px;
+            // border-top: 1px solid #efefef;
         }
     }
 
@@ -38,7 +38,14 @@
     &-list { //ul
         margin: 0;
         min-height: 500px;
-        padding-left: 0; 
+        padding-left: 0;
+        min-width: 550px;
+        // overflow-y: visible;
+
+        .dl__listGridContainer{
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+        }
     }
 
     &--noResults,

@@ -105,8 +105,8 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
         </span>) 
       : '';
     const classNames = config.pinPagination 
-      ? 'dl__pinPagination dl__listHeader' 
-      : 'dl__listHeader';
+      ? 'dl__pinPagination dl__listHeader dl__listGridContainer' 
+      : 'dl__listHeader dl__listGridContainer';
     const sortIcon = (selectedView.enableListSort && selectedView.detachSort) 
       ? (<span className="dl__listHeader-listSort" onClick={() => this.setState({ showDetachedSort: !this.state.showDetachedSort })}> </span>) 
       : '';
@@ -115,7 +115,7 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
       : '';
 
     return (
-      <div className={classNames} style={{ ...selectedView.listHeaderStyles }}>
+      <li className={classNames} style={{ ...selectedView.listHeaderStyles }}>
         {check}
 
         {props.map(prop => {
@@ -132,7 +132,7 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
         {sortIcon}
         {columnSelector}
         {detachedSort}
-      </div>
+      </li>
     );
   }
 }
