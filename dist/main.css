@@ -4448,7 +4448,8 @@ code {
     font-weight: 700;
     line-height: 33px;
     color: #fff;
-    padding-left: 6px; }
+    padding-left: 6px;
+    word-break: break-all; }
   .dl__listHeader-listSettings, .dl__listHeader-listSort {
     position: absolute;
     right: 20px;
