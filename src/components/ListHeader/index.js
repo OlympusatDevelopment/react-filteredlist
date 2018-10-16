@@ -124,7 +124,7 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
             : (this.state.sortAsc[prop.key] ? 'dl__listHeader--sort dl__listHeader--sort--disabled' : 'dl__listHeader--sort dl__listHeader--sort--disabled dl__listHeader--sort--desc');
 
           if (prop.display) {
-            return (<span key={Math.random() * 100000} data-key={prop.key} style={{ ...Object.assign({}, { width: prop.width }, selectedView.listHeaderItemStyles) }} className="dl__listHeader-item truncate" onClick={this.toggleSort.bind(this)}>{prop.label} <span className={sortClasses}> </span></span>);
+            return (<span key={Math.random() * 100000} data-key={prop.key} data-style={{ ...Object.assign({}, { width: prop.width }, selectedView.listHeaderItemStyles) }} className="dl__listHeader-item truncate" onClick={this.toggleSort.bind(this)}>{prop.label} <span className={sortClasses}> </span></span>);
           }
         })}
 
