@@ -4175,14 +4175,14 @@ code {
     color: #4ab2cd;
     text-decoration: none; }
   .dl__textItem-item {
-    display: inline-block;
-    line-height: 1.2;
+    display: flex;
+    min-height: 35px;
     position: relative;
     z-index: 1;
     overflow: hidden;
     width: 100%;
-    padding-left: 6px;
-    padding-top: 12px; }
+    align-items: center;
+    padding: 6px; }
     .dl__textItem-item > span {
       word-break: break-all; }
     .dl__textItem-item--copy {
