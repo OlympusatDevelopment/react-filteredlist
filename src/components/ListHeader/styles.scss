@@ -9,6 +9,7 @@
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+  z-index: 2;// Keeps settings popover over the grid items
 
 	&-item{
 	  display: inline-block;
@@ -54,7 +55,7 @@
   }
 
   &-listSettings{
-    right: 6px;
+    right: 12px;
   }
 
   &-listSort{

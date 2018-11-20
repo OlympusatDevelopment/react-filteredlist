@@ -4442,7 +4442,8 @@ code {
   background: #333;
   position: -webkit-sticky;
   position: sticky;
-  top: 0; }
+  top: 0;
+  z-index: 2; }
   .dl__listHeader-item {
     display: inline-block;
     font-weight: 700;
@@ -4469,7 +4470,7 @@ code {
       cursor: pointer;
       opacity: 0.7; }
   .dl__listHeader-listSettings {
-    right: 6px; }
+    right: 12px; }
   .dl__listHeader-listSort:after {
     content: "\F0DC";
     font-family: FontAwesome;
