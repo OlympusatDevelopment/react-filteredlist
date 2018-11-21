@@ -58,7 +58,7 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
       html = this._highlightSearchTerm(html)
     }
 
-    return (<span dangerouslySetInnerHTML={{ __html: html }} title={html}></span>);
+    return (<span dangerouslySetInnerHTML={{ __html: html }} title={html} className={prop.cssClass}></span>);
   }
 
   // Wrap search term in Mark element if present
@@ -84,14 +84,15 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
   render() {
     const { item, selectedView, preferencedProps, searchTerm } = this.props;
     const props = preferencedProps,
-      check = selectedView.enableRowChecks ? (
-        <span key={-1} style={{ width: '33px' }} className="dl__textItem-item">
+      enableRowChecks = selectedView.enableRowChecks || false,
+      check = enableRowChecks ? (
+        <span key={-1} style={{ width: '33px' }} className="dl__textItem-item check">
           <Checkbox onChecked={this.onChecked.bind(this)} id={item[selectedView.itemIdProp]}> </Checkbox>
         </span>) : '';
  
     return (  
       <div className="dl__textItem">
-        <a className="dl__listGridContainer" target={selectedView.link.target} href={selectedView.link.row(item)} onClick={this.onLinkClick.bind(this)}>
+        <a className={`dl__listGridContainer ${enableRowChecks ? 'withCheck': ''}`} target={selectedView.link.target} href={selectedView.link.row(item)} onClick={this.onLinkClick.bind(this)}>
           {check}
 
           {

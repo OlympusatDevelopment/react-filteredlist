@@ -45,6 +45,11 @@
         .dl__listGridContainer{
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+
+            &.withCheck {
+                grid-template-columns: 40px repeat(auto-fit, minmax(50px, 1fr));
+
+            }
         }
     }
 
