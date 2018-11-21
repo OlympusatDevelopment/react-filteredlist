@@ -58,7 +58,7 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
   onChecked(e) {
     const { Items, config, workspace, updateWorkspace } = this.props;
     const selectAll = e.target.checked;
-    const hook = selectAll ? config.hooks.onCheck : config.hooks.onUnCheck;
+    const hook = (selectAll ? config.hooks.onCheck : config.hooks.onUnCheck);
     const workspaceAction = selectAll ? 'add' : 'remove';
 
     [...document.querySelectorAll('.dl__listRow')].forEach(row => {
@@ -78,7 +78,7 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
     });
   }
 
-  makeDetachedSort(props) {
+  makeDetachedSort(props) { 
     // props = the sortable items
     return (<div className="dl__detachedSort">
       detached sort
