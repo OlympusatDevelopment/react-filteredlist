@@ -437,7 +437,7 @@ function appReducer(state = initialState, action) {
           break;
       }
 
-      return _strunStateUpdateHook(_state, action.type, action);
+      return runStateUpdateHook(_state, action.type, action);
 
       case CONTROL_MODAL: 
         _state.modal = {
