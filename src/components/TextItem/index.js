@@ -58,7 +58,7 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
       html = this._highlightSearchTerm(html)
     }
 
-    return (<span dangerouslySetInnerHTML={{ __html: html }} title={html} className={prop.cssClass}></span>);
+    return (<span dangerouslySetInnerHTML={{ __html: html }} title={html}></span>);
   }
 
   // Wrap search term in Mark element if present
@@ -113,7 +113,7 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 
               if (prop.display) {
                 return (
-                  <span key={prop.key} data-id={id} data-style={{ width: prop.width }} className="dl__textItem-item" >
+                  <span key={prop.key} data-id={id} data-style={{ width: prop.width }} className={`dl__textItem-item dl__textItem-${prop.key}`} >
                     {copyIcon}
                     {parsedVal}
                   </span>
