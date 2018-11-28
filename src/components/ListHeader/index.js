@@ -108,7 +108,6 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
     let classNames = config.pinPagination
       ? 'dl__pinPagination dl__listHeader dl__listGridContainer' 
       : 'dl__listHeader dl__listGridContainer';
-    classNames = `${classNames} ${enableRowChecks ? 'withCheck' : ''}`;
     console.log('classNames: ', classNames)
     const sortIcon = (selectedView.enableListSort && selectedView.detachSort) 
       ? (<span className="dl__listHeader-listSort" onClick={() => this.setState({ showDetachedSort: !this.state.showDetachedSort })}> </span>) 
@@ -118,7 +117,7 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
       : '';
 
     return (
-      <li className={classNames} style={{ ...selectedView.listHeaderStyles }}>
+      <li className={classNames} style={{ ...selectedView.listHeaderStyles, ...{gridTemplateColumns: selectedView.listCssGridLayout} }}>
         {check}
 
         {props.map(prop => {

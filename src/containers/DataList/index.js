@@ -34,7 +34,7 @@ class DataList extends Component { // eslint-disable-line react/prefer-stateless
 
   makeDataList(Items, selectedView) {
     return (Items.map((item, i) => {
-      return (<ListRow key={i} item={item} selectedView={selectedView} preferencedProps={selectedView.props}> </ListRow>);
+      return (<ListRow key={i} item={item} items={Items} selectedView={selectedView} preferencedProps={selectedView.props}> </ListRow>);
     }));
   }
 

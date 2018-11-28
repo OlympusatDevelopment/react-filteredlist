@@ -56,6 +56,8 @@ class DisplayItem extends Component { // eslint-disable-line react/prefer-statel
 
     makeLightboxImages(item){
         let images = [];
+        
+        console.log(item)
 
         if(item.images && item.images.length > 0){
             images.push(...item.images.map(art=>{return {src:art.url,caption:art.caption};}));
