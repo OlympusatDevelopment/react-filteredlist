@@ -27,9 +27,17 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 	}
 	
 	onLinkClick(e) {
+		e.stopPropagation();
+		const {selectedView, item} = this.props;
+		const link = selectedView.link;
+		const tagName =  e.target.tagName.toLowerCase();
 		// Prevent linking when the copy icon is clicked...
 		if (e.target.classList.contains('dl__textItem-item--copy')) {
 			e.preventDefault();
+		} else {
+			if(tagName !== 'img') {
+				window.open(link.row(item), '_self');
+			}
 		}
 	}
 	
@@ -109,8 +117,9 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 		
 		return (
 			<div className="dl__textItem">
-				<div className={`dl__listGridContainer ${enableRowChecks ? 'withCheck' : ''}`} style={{gridTemplateColumns: selectedView.listCssGridLayout }} target={selectedView.link.target}
-					 href={selectedView.link.row(item)} onClick={this.onLinkClick.bind(this)}>
+				<div className={`dl__listGridContainer ${enableRowChecks ? 'withCheck' : ''}`}
+						 style={{ gridTemplateColumns: selectedView.listCssGridLayout }}
+					  onClick={this.onLinkClick.bind(this)}>
 					{check}
 					
 					{
@@ -167,7 +176,7 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 							
 							if (prop.display) {
 								return (
-									<span key={prop.key} data-id={id} style={{width: prop.width}}
+									<span key={prop.key} data-id={id}
 												className={`dl__textItem-item dl__textItem-${prop.key}`}>
                     {copyIcon}
 										{parsedVal}
