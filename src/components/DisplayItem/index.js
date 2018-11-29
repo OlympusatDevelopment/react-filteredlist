@@ -91,7 +91,7 @@ class DisplayItem extends Component { // eslint-disable-line react/prefer-statel
 			still = item.assets && item.assets.still.length > 0 ? item.assets.still[0].url : false,
 			featuredImage = artwork ? artwork : (still ? still : noImageAvailable),
 			featuredImageDisplayClass = artwork ? 'dl__featuredImg dl__imgMaxWidth' : 'dl__featuredImg';
-		if (featuredImage !== noImageAvailable && this.state.imgIsOpen && selectedView.enableGalleryLightbox) {
+		if (featuredImage !== noImageAvailable && this.state.imgIsOpen && selectedView.enableGalleryLightbox && prop.hasOwnProperty('lightboxImages')) {
 			//@todo This is a hack-attack. Must clean up this entire method including the lightbox functionality
 			const lightboxImages = this.makeLightboxImages(props[0], item, items);
 			lightboxGallery = <Lightbox

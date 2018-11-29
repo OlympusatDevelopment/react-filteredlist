@@ -31,13 +31,19 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 		const {selectedView, item} = this.props;
 		const link = selectedView.link;
 		const tagName =  e.target.tagName.toLowerCase();
+		const enabledLightbox = selectedView.enableGalleryLightbox;
+		
 		// Prevent linking when the copy icon is clicked...
 		if (e.target.classList.contains('dl__textItem-item--copy')) {
 			e.preventDefault();
 		} else {
-			if(tagName !== 'img') {
-				window.open(link.row(item), '_self');
+			// Prevents linking if lightbox is enabled
+			// element is an image
+			if(tagName === 'img' && enabledLightbox) {
+				return false;
 			}
+			
+			window.open(link.row(item), link.target !== '' ? link.target : '_self');
 		}
 	}
 	
@@ -141,7 +147,7 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 												onClick={this.copyToClipboard.bind(this, hookedVal)}> </span>)
 								: '';
 							
-							if(this.state.imgIsOpen && selectedView.enableGalleryLightbox && prop.isImage) {
+							if(this.state.imgIsOpen && selectedView.enableGalleryLightbox && prop.hasOwnProperty('lightboxImages')) {
 								const lightboxImages = this.makeLightboxImages(prop, item, items);
 								lightboxPreview = (<Lightbox
 									images={lightboxImages}
