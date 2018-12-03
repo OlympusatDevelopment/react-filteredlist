@@ -33,6 +33,10 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 		const tagName =  e.target.tagName.toLowerCase();
 		const enabledLightbox = selectedView.enableGalleryLightbox;
 		
+		if (tagName === 'input') {
+			return false;
+		}
+		
 		// Prevent linking when the copy icon is clicked...
 		if (e.target.classList.contains('dl__textItem-item--copy')) {
 			e.preventDefault();
