@@ -48,13 +48,13 @@ export default class PropertySearch extends Component{
 
     onSearchSubmit(e){
       e.preventDefault();
-      const {filterChange, selectedView, id} = this.props;
+      const {filterChange, selectedView, id, fixedKey} = this.props;
 
       filterChange({
         id,
         view: selectedView.id,
         value: [JSON.stringify({
-          prop: this.state.selectedProperty,
+          prop: fixedKey ? fixedKey : this.state.selectedProperty,
           query: this.state.searchValue
         })]
       });
@@ -76,7 +76,7 @@ export default class PropertySearch extends Component{
     }
 
     render() {
-        let { multi, options, selectedView } = this.props;
+        let { multi, options, selectedView, fixedKey } = this.props;
         const self = this;
 
       return (<div>
@@ -89,22 +89,24 @@ export default class PropertySearch extends Component{
               <input type="submit" value="Search" style={{ background: selectedView.searchButton.background, color: selectedView.searchButton.text }} />
             </form>
           </div>
-          <Select
-            ajaxDataFetch={(options && options.getOptions) 
-              || (() => Promise.resolve(selectedView.props.map(prop => 
-                ({
-                  [this.state._selectOptionsKeys.k]: prop.key,// assign the view prop key as the collection key value to match format of the react-select
-                  [this.state._selectOptionsKeys.v]: prop.key
-                }))) 
-              || [])}
-            optionLabelKey={this.state._selectOptionsKeys.v}
-            optionValueKey={this.state._selectOptionsKeys.k}
-            multiple={multi}
-            initialValue={this.state.initialValue.length > 0 ? this.state.initialValue : null}
-            placeholder="Property to search on"
-            onChange={self.onSelectChange}
-            searchable={false}
-          />
+				{!fixedKey &&
+					<Select
+						ajaxDataFetch={(options && options.getOptions)
+						|| (() => Promise.resolve(selectedView.props.map(prop =>
+								({
+									[this.state._selectOptionsKeys.k]: prop.key,// assign the view prop key as the collection key value to match format of the react-select
+									[this.state._selectOptionsKeys.v]: prop.key
+								})))
+							|| [])}
+						optionLabelKey={this.state._selectOptionsKeys.v}
+						optionValueKey={this.state._selectOptionsKeys.k}
+						multiple={multi}
+						initialValue={this.state.initialValue.length > 0 ? this.state.initialValue : null}
+						placeholder="Property to search on"
+						onChange={self.onSelectChange}
+						searchable={false}
+					/>
+				}
         </div>);
     }
 }
