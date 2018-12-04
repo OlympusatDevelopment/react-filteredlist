@@ -88,6 +88,7 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
   render() {
     const { selectedView, config, item, workspace } = this.props;
     const props = selectedView.props;
+		const enableRowChecks = selectedView.enableRowChecks || false;
     const settingsIcon = selectedView.showListSettings 
       ? (<span className="dl__listHeader-listSettings" 
         onClick={this.onSettingsClick} 
@@ -99,14 +100,16 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
     const columnSelector = this.state.showColumnSelector 
       ? (<ColumnSelector selectedView={selectedView} currentViewProps={props} item={item}> </ColumnSelector>) 
       : '';
-    const check = selectedView.enableRowChecks 
-      ? (<span key={-1} style={{ width: '33px' }} className="dl__listHeader-item truncate">
+    const check = enableRowChecks
+      ? (<span key={-1} className="dl__listHeader-item truncate">
         <Checkbox checked={workspace.selectAllChecked} onChecked={this.onChecked.bind(this)} id={'dl-select-all'}> </Checkbox>
         </span>) 
       : '';
-    const classNames = config.pinPagination 
+    let classNames = config.pinPagination
       ? 'dl__pinPagination dl__listHeader dl__listGridContainer' 
       : 'dl__listHeader dl__listGridContainer';
+    classNames = `${classNames} ${enableRowChecks ? 'withCheck' : ''}`;
+    
     const sortIcon = (selectedView.enableListSort && selectedView.detachSort) 
       ? (<span className="dl__listHeader-listSort" onClick={() => this.setState({ showDetachedSort: !this.state.showDetachedSort })}> </span>) 
       : '';
@@ -115,7 +118,7 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
       : '';
 
     return (
-      <li className={classNames} style={{ ...selectedView.listHeaderStyles }}>
+      <li className={classNames} style={{ ...selectedView.listHeaderStyles, gridTemplateColumns: selectedView.listCssGridLayout }}>
         {check}
 
         {props.map(prop => {

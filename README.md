@@ -236,6 +236,7 @@ Views are higher level filters & datalist pairs that run independent of eachothe
 | paginationTake | int | undefined | undefined,int | Sets the number of items to fetch on each paginated request. This is page size.|
 | noResultsMessage | string | '' | ''| The message to display in the datalist container when the filter query returned no results.|
 | usersSavedFiltersets | function | undefined | undefined, function | Must return a Promise containing a collection of items. This is how you populate the user saved filtersets select box options. In the hooks you can save to a database or local storage what the user saved then here you can retrieve it for option population.|
+| listCssGridLayout | string | '' | '' | The css override for custom grid column width sizing. |
 | props | array | undefined | undefined,[] | See the view props section below for an explaination of what goes in this array. |
 | addons | array | undefined | undefined, [] | Addons are pseudo filter types that can be added to the view outside of a a filter group. These exist in the internal store a filters and can store state. e.g. The search filter item is a built-in addon filter type.|
 |  |  |  | | |
@@ -318,6 +319,7 @@ export default {
   usersSavedFiltersets: () => new Promise((resolve, reject) => {
     //Do some stuff with the data, like storing it in your api, then resolve the promise.
   }),//returns a promise .
+  listCssGridLayout: '40px 100px 20% 10% 30% repeat(auto-fit, minmax(50px, 1fr))',
   props: [
    //See the view props object below for the contents of this array.
    // There should be one props object for each column displayed
@@ -350,6 +352,7 @@ Available item properties to the row. Also controls which props are visible by d
 | width | string | '' | '11px', '100%' | A stringified css value to determine the column width on the default text. |
 | display | boolean | `false` | `true`,`false`| Lets the datalist know that it should display that column on load. If it's false, it will not dipslay on load but will still be available to the column settings interface. |
 | before | function |  | | A hook to transform the value (mostly for mapping) before rendering to the screen. If not using it, please set it like this until a default can be built in: `before :(val,item)=>val` @todo add default function check|
+| lightboxImages | function | `({}, [{}])` | `(item, items)`| A hook to send an array of images for `react-images` lightbox configuration. The function takes an initial image, then an array of images as its params. Please see [react-images](https://jossmac.github.io/react-images/ "React Images") for configuration settings|
 
 #### Example
 ```
@@ -362,7 +365,8 @@ Available item properties to the row. Also controls which props are visible by d
   isSortable : true,
   width:'12%',
   display: true,
-  before :(val,item)=>val
+  before :(val,item)=>val,
+  lightboxImages: (item, items) => {}
 }
 ```
 
@@ -427,6 +431,7 @@ Used to take action on the dataset. Primary items used in building a query objec
 | label | string | '' | NA |  The filter item's Label property. THis displays to the user above the filter item.|
 | value | array/null/undefined | null | [{},{},{}] | Use this to set a default value. Value must be an array of objects (matching options), null or undefined to be excluded. (Filters recognize boolean true/false. An collection matching the select filter type can be passed to pre-populate the value. |
 | multi | boolean | `false` | `true`,`false` | For select filter types, this allows the select to be a multi select when set to `true`|
+| fixedKey | string | `` | `prop1` | For property-search filter types, this allows the the filter to search on a fixed property and removes the select component |
 | options | object | {} |  {},falsy | ***For 'select' & 'checkbox' type only:*** The select type filter item's options handling. This takes care of property matching items so they can fill the value of the options element. |
 | options.key | string | '' |  NA | This is the select box options item's key(property) to use for the option element's value property. |
 | options.value | string | '' | NA | This is the select box options item's Label/Text to use in the option item's display. |
@@ -488,12 +493,15 @@ This filter is used for doing an "OR" search across a certain property. ie. sear
 When the options object is not being used to provide defaults for the select box, then the select box is automatically populated with all the properties listed in the `props` array for the selected view.
 
 
+
+
 ```
 export default {
   id: "propertySearch",
   type: 'property-search',
   prop: "propertySearch",
   label: 'Property Search',
+  fixedProperty: 'property',
   value: null
   // options: {
     // key: 'id',

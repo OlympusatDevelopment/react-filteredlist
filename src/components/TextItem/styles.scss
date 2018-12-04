@@ -8,21 +8,18 @@
   }
 
 	&-item{
-	  display: inline-block;
-	  line-height: 1.2;
+	  display: flex;
+      min-height: 35px;
 	  position: relative;
 	  z-index: 1;
-    overflow: hidden;
-    width: 100%;
-    // @extend .truncate;
-    // word-break: keep-all;
-    // white-space: pre-wrap !important;
-    padding-left: 6px;
-    padding-top: 12px;
+      overflow: hidden;
+      width: 100%;
+      align-items: center;
+      padding: 6px;
 
-    >span{
-      word-break: break-all;
-    }
+      >span{
+        word-break: break-all;
+      }
 
 	  &--copy{
       position: relative;
@@ -42,7 +39,11 @@
         cursor: pointer;
         opacity: 0.7;
       }
-	  }
+    }
+
+    &.check {
+      justify-content: center;
+    }
   }
   
   &Image{
