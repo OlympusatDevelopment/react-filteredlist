@@ -16,6 +16,5 @@ export const makeCssGridLayout = (props, enableRowChecks, gridColumnMinMaxWidth 
 		cssGridStyles.unshift(rowChecksWidth);
 	}
 	
-	console.log(cssGridStyles.join(' '))
 	return cssGridStyles.join(' ');
 }
