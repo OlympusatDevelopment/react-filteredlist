@@ -3,6 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as TextItemActions from './actions';
 import utils, {makeHumanDate} from '../../utils';
+import { makeCssGridLayout } from "src/utils/helpers";
 import copy from 'copy-to-clipboard';
 import Checkbox from '../Checkbox';
 import Lightbox from 'react-images';
@@ -120,15 +121,16 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 		const {item, items=[], selectedView, preferencedProps, searchTerm} = this.props;
 		const props = preferencedProps,
 			enableRowChecks = selectedView.enableRowChecks || false,
+			listCssGridLayout = makeCssGridLayout(props, enableRowChecks),
 			check = enableRowChecks ? (
-				<span key={-1} style={{width: '33px'}} className="dl__textItem-item check">
+				<span key={-1} className="dl__textItem-item check">
           <Checkbox onChecked={this.onChecked.bind(this)} id={item[selectedView.itemIdProp]}> </Checkbox>
         </span>) : '';
 		
 		return (
 			<div className="dl__textItem">
 				<div className={`dl__listGridContainer ${enableRowChecks ? 'withCheck' : ''}`}
-						 style={{ gridTemplateColumns: selectedView.listCssGridLayout }}
+						 style={{ gridTemplateColumns: listCssGridLayout }}
 					  onClick={this.onLinkClick.bind(this)}>
 					{check}
 					

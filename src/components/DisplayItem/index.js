@@ -66,7 +66,6 @@ class DisplayItem extends Component { // eslint-disable-line react/prefer-statel
 	
 	//@todo when We get time, clean up this code. It was rushed.
 	makeDisplayItem(item, items, selectedView, props) {
-		console.log('props: ', props)
 		let lightboxGallery = '';
 		const languageFlag = item.languageLabel ? (<span className={`dl__displayItemFlag flag flag-us`}> </span>) : '',
 			language = item.languageLabel ? (

@@ -14,6 +14,8 @@ class ListRow extends Component { // eslint-disable-line react/prefer-stateless-
             renderDropdown: false
         };
     }
+    
+    
 
     makeListItem(item,selectedView,props){
         switch(selectedView.displayType){

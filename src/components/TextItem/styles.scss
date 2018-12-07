@@ -15,7 +15,7 @@
       overflow: hidden;
       width: 100%;
       align-items: center;
-      padding: 6px;
+      padding: 6px 0px 6px 8px;
 
       >span{
         word-break: break-all;
@@ -43,12 +43,13 @@
 
     &.check {
       justify-content: center;
+      padding: 0;
     }
   }
   
   &Image{
     max-height: 24px;
-    padding-left: 3px;
+    // padding-left: 3px;
   }
 
 }
