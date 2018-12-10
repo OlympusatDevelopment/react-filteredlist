@@ -23,11 +23,17 @@ export const makeCssGridLayout = (props, enableRowChecks, gridColumnMinMaxWidth 
 }
 
 
+
+/***
+ * Validates the input value and returns if the value is valid
+ * @param value
+ * @param validator
+ * @returns {Boolean}
+ */
 const validators = {
 	number: validator.isNumeric,
 	date: validator.isDate,
 }
-
 export const restricInptValidator = (value, validator = 'text') => {
 	
 	if(validator && validator === 'text') {
