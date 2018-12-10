@@ -4285,6 +4285,100 @@ code {
       color: #b3b3b3;
       line-height: 36px; }
 
+.dl__search {
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  position: relative;
+  margin: 0;
+  clear: both; }
+  @media (max-width: 767px) {
+    .dl__search {
+      width: 66.6666666%;
+      margin-left: 16.6666667%;
+      margin-right: 16.6666667%; } }
+  @media (max-width: 479px) {
+    .dl__search {
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+      margin-bottom: 30px; } }
+  .dl__search h3 {
+    text-align: left;
+    color: #f2f2f2; }
+  .dl__search form {
+    position: relative; }
+    .dl__search form input {
+      height: 34px; }
+  .dl__search input[type="text"] {
+    width: 91.6666666%;
+    display: inline-block;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    outline: none;
+    background: #fff;
+    padding-left: 6px;
+    color: #5e5e5e;
+    z-index: 2;
+    border: 1px solid #ccc;
+    border-right: none;
+    margin: 0;
+    position: relative;
+    top: 0; }
+    .dl__search input[type="text"]::-webkit-input-placeholder {
+      color: #5e5e5e; }
+    .dl__search input[type="text"]:-moz-placeholder {
+      /* Firefox 18- */
+      color: #5e5e5e; }
+    .dl__search input[type="text"]::-moz-placeholder {
+      /* Firefox 19+ */
+      color: #5e5e5e; }
+    .dl__search input[type="text"]:-ms-input-placeholder {
+      color: #5e5e5e; }
+  .dl__search .propertySearchButton {
+    width: 8.33333333%;
+    float: right;
+    height: 34px;
+    z-index: 1;
+    border: 1px solid #ccc; }
+  .dl__search input {
+    border: 1px solid #f7f7f7;
+    background: rgba(255, 255, 255, 0.05); }
+  .dl__search button {
+    width: 100%;
+    color: #999;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    display: inline-block;
+    background: #fff;
+    height: 100%;
+    z-index: 1;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    cursor: pointer; }
+  .dl__searchClearButton {
+    position: absolute;
+    right: 8%;
+    top: 0;
+    display: block;
+    width: 33px;
+    height: 100%;
+    z-index: 2; }
+    .dl__searchClearButton:after {
+      content: "\F057";
+      font-family: FontAwesome;
+      font-size: 15px;
+      width: 100%;
+      height: 100%;
+      color: #b3b3b3;
+      line-height: 36px; }
+  .dl__search .errorMessage {
+    display: block;
+    color: #aaa;
+    text-align: left;
+    padding: 5px; }
+
 .dl__pagination.dl__pinPagination {
   position: absolute;
   bottom: 0px;

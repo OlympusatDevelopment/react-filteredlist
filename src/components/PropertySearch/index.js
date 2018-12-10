@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Promise from 'bluebird';
 import Select from 'react-super-select';
+import { restricInptValidator } from '../../utils/helpers';
 
 export default class PropertySearch extends Component{
     constructor(props) {
@@ -13,7 +14,8 @@ export default class PropertySearch extends Component{
           _selectOptionsKeys: {
             k: (options && options.key) ? options.key : 'k',
             v: (options && options.value) ? options.value : 'v'
-          }
+          },
+          inputTypeError: false
         };
         this.onSelectChange = this.onSelectChange.bind(this);
     }
@@ -61,8 +63,15 @@ export default class PropertySearch extends Component{
     }
 
     bindSearch(e){
+      const { inputType } = this.props;
       const searchValue = e.target.value;
-      this.setState({searchValue});
+      
+      if (restricInptValidator(searchValue, inputType)) {
+				this.setState({searchValue, inputTypeError: false});
+      } else {
+				this.setState({inputTypeError: true});
+      }
+      
     }
 
     onSearchClear(){
@@ -76,18 +85,22 @@ export default class PropertySearch extends Component{
     }
 
     render() {
-        let { multi, options, selectedView, fixedKey } = this.props;
+        let { multi, options, selectedView, fixedKey, inputType } = this.props;
         const self = this;
 
       return (<div>
           <div className="dl__search">
             <form onSubmit={this.onSearchSubmit.bind(this)}>
               <input data-lpignore="true" id={`dl-search--${this.props.id}`} className="dl__searchInput" autoFocus type="text" name="dl-search" placeholder={"Search on property"} value={this.state.searchValue || ''} onChange={this.bindSearch.bind(this)} />
-
-              <span className="dl__searchClearButton" onClick={this.onSearchClear.bind(this)}> </span>
-              
-              <input type="submit" value="Search" style={{ background: selectedView.searchButton.background, color: selectedView.searchButton.text }} />
+							<span className="dl__searchClearButton" onClick={this.onSearchClear.bind(this)}> </span>
+              <span className="propertySearchButton">
+                <button type="submit" value="Search" className="propertySearchBtn"><i className="fa fa-check fa-lg"></i></button>
+              </span>
             </form>
+						{this.state.inputTypeError && <div className="errorMessage">
+              Please enter a {inputType} value
+						</div>
+						}
           </div>
 				{!fixedKey &&
 					<Select

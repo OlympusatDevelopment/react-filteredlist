@@ -1,3 +1,6 @@
+import validator from 'validator';
+import utils from '../utils'
+
 /***
  * Creates a css grid style for css grid.
  * @param props
@@ -17,4 +20,24 @@ export const makeCssGridLayout = (props, enableRowChecks, gridColumnMinMaxWidth 
 	}
 	
 	return cssGridStyles.join(' ');
+}
+
+
+const validators = {
+	number: validator.isNumeric,
+	date: validator.isDate,
+}
+
+export const restricInptValidator = (value, validator = 'text') => {
+	
+	if(validator && validator === 'text') {
+		return true;
+	}
+	
+	if(!validators.hasOwnProperty(validator)) {
+		console.warn('Invalid input validator.');
+		return false;
+	}
+	
+	return validators[validator](value);
 }

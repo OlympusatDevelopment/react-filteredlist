@@ -499,7 +499,8 @@ export default {
   type: 'property-search',
   prop: "propertySearch",
   label: 'Property Search',
-  fixedProperty: 'property',
+  fixedKey: 'property',
+  inputType: 'number | text | date | ...' // value corresponds to the html input types
   value: null
   // options: {
     // key: 'id',
