@@ -236,8 +236,7 @@ Views are higher level filters & datalist pairs that run independent of eachothe
 | paginationTake | int | undefined | undefined,int | Sets the number of items to fetch on each paginated request. This is page size.|
 | noResultsMessage | string | '' | ''| The message to display in the datalist container when the filter query returned no results.|
 | usersSavedFiltersets | function | undefined | undefined, function | Must return a Promise containing a collection of items. This is how you populate the user saved filtersets select box options. In the hooks you can save to a database or local storage what the user saved then here you can retrieve it for option population.|
-| listCssGridLayout | string | '' | '' | The css override for custom grid column width sizing. |
-| props | array | undefined | undefined,[] | See the view props section below for an explaination of what goes in this array. |
+| props | array | undefined | undefined,[] | See the view props section below for an explanation of what goes in this array. |
 | addons | array | undefined | undefined, [] | Addons are pseudo filter types that can be added to the view outside of a a filter group. These exist in the internal store a filters and can store state. e.g. The search filter item is a built-in addon filter type.|
 |  |  |  | | |
 | searchButton | object | undefined | undefined,object | Container for search button themeing options. |
@@ -319,7 +318,6 @@ export default {
   usersSavedFiltersets: () => new Promise((resolve, reject) => {
     //Do some stuff with the data, like storing it in your api, then resolve the promise.
   }),//returns a promise .
-  listCssGridLayout: '40px 100px 20% 10% 30% repeat(auto-fit, minmax(50px, 1fr))',
   props: [
    //See the view props object below for the contents of this array.
    // There should be one props object for each column displayed
@@ -501,7 +499,8 @@ export default {
   type: 'property-search',
   prop: "propertySearch",
   label: 'Property Search',
-  fixedProperty: 'property',
+  fixedKey: 'property',
+  inputType: 'number | text | date | ...' // value corresponds to the html input types
   value: null
   // options: {
     // key: 'id',

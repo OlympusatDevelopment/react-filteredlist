@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as ListHeaderActions from './actions';
 import ColumnSelector from '../ColumnSelector';
 import Checkbox from '../Checkbox';
+import {makeCssGridLayout} from "src/utils/helpers";
 
 class ListHeader extends Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -89,6 +90,7 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
     const { selectedView, config, item, workspace } = this.props;
     const props = selectedView.props;
 		const enableRowChecks = selectedView.enableRowChecks || false;
+		const listCssGridLayout = makeCssGridLayout(props, enableRowChecks);
     const settingsIcon = selectedView.showListSettings 
       ? (<span className="dl__listHeader-listSettings" 
         onClick={this.onSettingsClick} 
@@ -118,7 +120,7 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
       : '';
 
     return (
-      <li className={classNames} style={{ ...selectedView.listHeaderStyles, gridTemplateColumns: selectedView.listCssGridLayout }}>
+      <li className={classNames} style={{ ...selectedView.listHeaderStyles, gridTemplateColumns: listCssGridLayout }}>
         {check}
 
         {props.map(prop => {
