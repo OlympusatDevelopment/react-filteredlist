@@ -15,7 +15,8 @@ export default class PropertySearch extends Component{
             k: (options && options.key) ? options.key : 'k',
             v: (options && options.value) ? options.value : 'v'
           },
-          inputTypeError: false
+          inputTypeError: false,
+          isFocused: false
         };
         this.onSelectChange = this.onSelectChange.bind(this);
     }
@@ -39,6 +40,10 @@ export default class PropertySearch extends Component{
       }
 
       return Object.assign({}, state, {initialValue});
+    }
+    
+    componentDidMount() {
+	    this.onInputFocus();
     }
 
     onSelectChange(prop){
@@ -83,21 +88,37 @@ export default class PropertySearch extends Component{
         value: null
       });
     }
+    
+    onInputFocus() {
+      const _self = this;
+	    const containerId = `dl-search-property--${this.props.id}`;
+	    
+			document.addEventListener("click", function(e) {
+			  const closest = e.target.closest(`#${containerId}`);
+				if(closest && closest.id === containerId) {
+					_self.setState({isFocused: true});
+				} else {
+					_self.setState({isFocused: false});
+				}
+			});
+    }
 
     render() {
         let { multi, options, selectedView, fixedKey, inputType } = this.props;
+        const { searchValue, isFocused, _selectOptionsKeys, initialValue, inputTypeError } = this.state;
         const self = this;
+        const classNames = isFocused ? 'onFocus' : '';
 
       return (<div>
-          <div className="dl__search">
+          <div id={`dl-search-property--${this.props.id}`} className="dl__propertySearch">
             <form onSubmit={this.onSearchSubmit.bind(this)}>
-              <input data-lpignore="true" id={`dl-search--${this.props.id}`} className="dl__searchInput" autoFocus type="text" name="dl-search" placeholder={"Search on property"} value={this.state.searchValue || ''} onChange={this.bindSearch.bind(this)} />
-							<span className="dl__searchClearButton" onClick={this.onSearchClear.bind(this)}> </span>
-              <span className="propertySearchButton">
+              <input data-lpignore="true" id={`dl-search--${this.props.id}`} className={`dl__propertySearchInput`} autoFocus type="text" name="dl-search" placeholder={"Search on property"} value={searchValue || ''} onChange={this.bindSearch.bind(this)} />
+              { isFocused && <span className="dl__propertySearchButtonActions">
+                <span className="dl__propertySearchClearButton" onClick={this.onSearchClear.bind(this)}> </span>
                 <button type="submit" value="Search" className="propertySearchBtn"><i className="fa fa-check fa-lg"></i></button>
-              </span>
+              </span> }
             </form>
-						{this.state.inputTypeError && <div className="errorMessage">
+						{inputTypeError && <div className="errorMessage">
               Please enter a {inputType} value
 						</div>
 						}
@@ -107,14 +128,14 @@ export default class PropertySearch extends Component{
 						ajaxDataFetch={(options && options.getOptions)
 						|| (() => Promise.resolve(selectedView.props.map(prop =>
 								({
-									[this.state._selectOptionsKeys.k]: prop.key,// assign the view prop key as the collection key value to match format of the react-select
-									[this.state._selectOptionsKeys.v]: prop.key
+									[_selectOptionsKeys.k]: prop.key,// assign the view prop key as the collection key value to match format of the react-select
+									[_selectOptionsKeys.v]: prop.key
 								})))
 							|| [])}
-						optionLabelKey={this.state._selectOptionsKeys.v}
-						optionValueKey={this.state._selectOptionsKeys.k}
+						optionLabelKey={_selectOptionsKeys.v}
+						optionValueKey={_selectOptionsKeys.k}
 						multiple={multi}
-						initialValue={this.state.initialValue.length > 0 ? this.state.initialValue : null}
+						initialValue={initialValue.length > 0 ? initialValue : null}
 						placeholder="Property to search on"
 						onChange={self.onSelectChange}
 						searchable={false}

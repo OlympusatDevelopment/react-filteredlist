@@ -34,7 +34,11 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 		const tagName =  e.target.tagName.toLowerCase();
 		const enabledLightbox = selectedView.enableGalleryLightbox;
 		
+		// Prevents linking if lightbox is enabled
+		// element is an image
 		if (tagName === 'input') {
+			return false;
+		} else if (tagName === 'img' && enabledLightbox) {
 			return false;
 		}
 		
@@ -42,12 +46,6 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 		if (e.target.classList.contains('dl__textItem-item--copy')) {
 			e.preventDefault();
 		} else {
-			// Prevents linking if lightbox is enabled
-			// element is an image
-			if(tagName === 'img' && enabledLightbox) {
-				return false;
-			}
-			
 			window.open(link.row(item), link.target !== '' ? link.target : '_self');
 		}
 	}

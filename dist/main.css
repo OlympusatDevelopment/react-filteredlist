@@ -184,7 +184,7 @@ code {
   -ms-user-select: none;
   user-select: none; }
 
-.hover, .dl__button:hover, .dl__filterItemRangeClear:hover, .dl__search input[type="submit"]:hover, .dl__searchClearButton:hover, .dl__sortItem:hover, .modal__inner input[type=submit]:hover {
+.hover, .dl__button:hover, .dl__filterItemRangeClear:hover, .dl__search input[type="submit"]:hover, .dl__searchClearButton:hover, .dl__propertySearchClearButton:hover, .dl__sortItem:hover, .modal__inner input[type=submit]:hover {
   cursor: pointer;
   opacity: 0.7; }
 
@@ -4204,6 +4204,20 @@ code {
       padding: 0; }
   .dl__textItemImage {
     max-height: 24px; }
+    .dl__textItemImage:after {
+      content: "\F1C5" " " attr(alt);
+      font-size: 14px;
+      font-family: FontAwesome;
+      color: #4e5961;
+      display: flex;
+      align-items: center;
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      bottom: 0;
+      height: 100%;
+      width: 100%;
+      background-color: #fff; }
 
 .dl__search {
   width: 100%;
@@ -4285,7 +4299,7 @@ code {
       color: #b3b3b3;
       line-height: 36px; }
 
-.dl__search {
+.dl__propertySearch {
   width: 100%;
   text-align: center;
   color: #fff;
@@ -4293,25 +4307,25 @@ code {
   margin: 0;
   clear: both; }
   @media (max-width: 767px) {
-    .dl__search {
+    .dl__propertySearch {
       width: 66.6666666%;
       margin-left: 16.6666667%;
       margin-right: 16.6666667%; } }
   @media (max-width: 479px) {
-    .dl__search {
+    .dl__propertySearch {
       width: 100%;
       margin-left: 0;
       margin-right: 0;
       margin-bottom: 30px; } }
-  .dl__search h3 {
+  .dl__propertySearch h3 {
     text-align: left;
     color: #f2f2f2; }
-  .dl__search form {
+  .dl__propertySearch form {
     position: relative; }
-    .dl__search form input {
+    .dl__propertySearch form input {
       height: 34px; }
-  .dl__search input[type="text"] {
-    width: 91.6666666%;
+  .dl__propertySearch input[type="text"] {
+    width: 100%;
     display: inline-block;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -4321,31 +4335,38 @@ code {
     color: #5e5e5e;
     z-index: 2;
     border: 1px solid #ccc;
-    border-right: none;
     margin: 0;
     position: relative;
     top: 0; }
-    .dl__search input[type="text"]::-webkit-input-placeholder {
+    .dl__propertySearch input[type="text"]:focus {
+      padding-right: 60px; }
+    .dl__propertySearch input[type="text"]::-webkit-input-placeholder {
       color: #5e5e5e; }
-    .dl__search input[type="text"]:-moz-placeholder {
+    .dl__propertySearch input[type="text"]:-moz-placeholder {
       /* Firefox 18- */
       color: #5e5e5e; }
-    .dl__search input[type="text"]::-moz-placeholder {
+    .dl__propertySearch input[type="text"]::-moz-placeholder {
       /* Firefox 19+ */
       color: #5e5e5e; }
-    .dl__search input[type="text"]:-ms-input-placeholder {
+    .dl__propertySearch input[type="text"]:-ms-input-placeholder {
       color: #5e5e5e; }
-  .dl__search .propertySearchButton {
-    width: 8.33333333%;
-    float: right;
+  .dl__propertySearchButtonActions {
+    position: absolute;
+    top: 0;
+    right: 0;
     height: 34px;
-    z-index: 1;
-    border: 1px solid #ccc; }
-  .dl__search input {
+    width: 60px;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #ccc;
+    border-left: 0;
+    background: #fff; }
+  .dl__propertySearch input {
     border: 1px solid #f7f7f7;
     background: rgba(255, 255, 255, 0.05); }
-  .dl__search button {
-    width: 100%;
+  .dl__propertySearch button {
+    width: 28px;
     color: #999;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -4357,15 +4378,12 @@ code {
     margin: 0;
     padding: 0;
     cursor: pointer; }
-  .dl__searchClearButton {
-    position: absolute;
-    right: 8%;
-    top: 0;
+  .dl__propertySearchClearButton {
     display: block;
     width: 33px;
     height: 100%;
     z-index: 2; }
-    .dl__searchClearButton:after {
+    .dl__propertySearchClearButton:after {
       content: "\F057";
       font-family: FontAwesome;
       font-size: 15px;
@@ -4373,7 +4391,7 @@ code {
       height: 100%;
       color: #b3b3b3;
       line-height: 36px; }
-  .dl__search .errorMessage {
+  .dl__propertySearch .errorMessage {
     display: block;
     color: #aaa;
     text-align: left;
