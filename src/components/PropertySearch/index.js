@@ -3,6 +3,7 @@ import Promise from 'bluebird';
 import Select from 'react-super-select';
 import { restricInptValidator } from '../../utils/helpers';
 
+let documentEvent;
 export default class PropertySearch extends Component{
     constructor(props) {
         super(props);
@@ -19,6 +20,7 @@ export default class PropertySearch extends Component{
           isFocused: false
         };
         this.onSelectChange = this.onSelectChange.bind(this);
+        this.onInputFocus = this.onInputFocus.bind(this);
     }
 
     static getDerivedStateFromProps(props, state){
@@ -43,7 +45,10 @@ export default class PropertySearch extends Component{
     }
     
     componentDidMount() {
-	    this.onInputFocus();
+			document.addEventListener('click', this.onInputFocus);
+    }
+    componentWillUnmount() {
+			document.removeEventListener('click', this.onInputFocus);
     }
 
     onSelectChange(prop){
@@ -89,18 +94,15 @@ export default class PropertySearch extends Component{
       });
     }
     
-    onInputFocus() {
+    onInputFocus(e) {
       const _self = this;
 	    const containerId = `dl-search-property--${this.props.id}`;
-	    
-			document.addEventListener("click", function(e) {
-			  const closest = e.target.closest(`#${containerId}`);
-				if(closest && closest.id === containerId) {
-					_self.setState({isFocused: true});
-				} else {
-					_self.setState({isFocused: false});
-				}
-			});
+      const closest = e.target.closest(`#${containerId}`);
+      if(closest && closest.id === containerId) {
+        _self.setState({isFocused: true});
+      } else {
+        _self.setState({isFocused: false});
+      }
     }
 
     render() {
