@@ -9,6 +9,7 @@ export default class PropertySearch extends Component{
         super(props);
         const options = this.props.options;
         this.state = {
+          value: null,
           searchValue: null,
           initialValue: [],
           selectedProperty: null,
@@ -24,29 +25,18 @@ export default class PropertySearch extends Component{
     }
 
     static getDerivedStateFromProps(props, state){
-      let values = {prop: '', query: ''};
-      let initialValue = [];
-
-      if(Array.isArray(props.value) && props.value[0]){
-        try{
-          values = JSON.parse(decodeURIComponent(props.value.join(',')));
-            if(values.query){ 
-              initialValue = [{
-                [state._selectOptionsKeys.v]: values.prop,
-                [state._selectOptionsKeys.k]: values.prop
-              }
-          ];}
-
-          return Object.assign({}, state, {searchValue: values.query, initialValue});
-        }catch(e){}
-      }
-
-      return Object.assign({}, state, {initialValue});
+      if(props.value !== state.value) {
+        return { value: props.value}
+			}
+			
+			return null;
     }
     
     componentDidMount() {
+      this.onUpdateQueryValues();
 			document.addEventListener('click', this.onInputFocus);
     }
+    
     componentWillUnmount() {
 			document.removeEventListener('click', this.onInputFocus);
     }
@@ -55,7 +45,6 @@ export default class PropertySearch extends Component{
       if (prop) {
         this.setState({selectedProperty:prop[this.state._selectOptionsKeys.k]});
       }
-      // Update filter request here, if there is a search value only
     }
 
     onSearchSubmit(e){
@@ -81,7 +70,6 @@ export default class PropertySearch extends Component{
       } else {
 				this.setState({inputTypeError: true});
       }
-      
     }
 
     onSearchClear(){
@@ -104,12 +92,32 @@ export default class PropertySearch extends Component{
         _self.setState({isFocused: false});
       }
     }
+    
+    onUpdateQueryValues() {
+			let values = {prop: '', query: ''};
+			let initialValue = [];
+			const { value, _selectOptionsKeys } = this.state;
+			
+      if (Array.isArray(value) && value[0]) {
+				try {
+					values = JSON.parse(decodeURIComponent(value.join(',')));
+					if (values.query) {
+						initialValue = [{
+							[_selectOptionsKeys.v]: values.prop,
+							[_selectOptionsKeys.k]: values.prop
+						}];
+						
+					  this.setState({searchValue: values.query, initialValue});
+					}
+				} catch (e) {
+				}
+			}
+    }
 
     render() {
         let { multi, options, selectedView, fixedKey, inputType } = this.props;
         const { searchValue, isFocused, _selectOptionsKeys, initialValue, inputTypeError } = this.state;
         const self = this;
-        const classNames = isFocused ? 'onFocus' : '';
 
       return (<div>
           <div id={`dl-search-property--${this.props.id}`} className="dl__propertySearch">
