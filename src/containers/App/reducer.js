@@ -500,7 +500,6 @@ function makeQuery(_state, addons = []) {
  * @param options
  */
 function runFilters(_state, options) {
-	console.log('state on run filters: ', _state)
   queries.writeQueryStringToURL(_state.queryString, options);
   filters.run(_state, options);// The response calls a render method that handles where we render to utils/filter._render
 }
