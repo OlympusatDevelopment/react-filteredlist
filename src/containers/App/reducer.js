@@ -376,6 +376,13 @@ function appReducer(state = initialState, action) {
         item: {},
         selectAllChecked: false
       };
+			// CLEAR the Pagination
+			_state.pagination = {
+				skip: 0,
+				take: _state.selectedView.paginationTake,
+				page: 1,
+				total: 0
+			};
 
       return runStateUpdateHook(_state, action.type, action);
 

@@ -122,7 +122,7 @@ export default class PropertySearch extends Component{
       return (<div>
           <div id={`dl-search-property--${this.props.id}`} className="dl__propertySearch">
             <form onSubmit={this.onSearchSubmit.bind(this)}>
-              <input data-lpignore="true" id={`dl-search--${this.props.id}`} className={`dl__propertySearchInput`} autoFocus type="text" name="dl-search" placeholder={"Search on property"} value={searchValue || ''} onChange={this.bindSearch.bind(this)} />
+              <input data-lpignore="true" id={`dl-search--${this.props.id}`} className={`dl__propertySearchInput`} type="text" name="dl-search" placeholder={"Search on property"} value={searchValue || ''} onChange={this.bindSearch.bind(this)} />
               { isFocused && <span className="dl__propertySearchButtonActions">
                 <span className="dl__propertySearchClearButton" onClick={this.onSearchClear.bind(this)}> </span>
                 <button type="submit" value="Search" className="propertySearchBtn"><i className="fa fa-check fa-lg"></i></button>
