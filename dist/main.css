@@ -4365,6 +4365,12 @@ code {
   .dl__propertySearch input {
     border: 1px solid #f7f7f7;
     background: rgba(255, 255, 255, 0.05); }
+  .dl__propertySearch input:-webkit-autofill,
+  .dl__propertySearch input:-webkit-autofill:hover,
+  .dl__propertySearch input:-webkit-autofill:focus,
+  .dl__propertySearch input:-webkit-autofill:active {
+    -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+    -webkit-transition-delay: 9999s; }
   .dl__propertySearch button {
     width: 28px;
     color: #999;
