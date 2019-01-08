@@ -608,7 +608,7 @@ The hooks are powerful. At different points in time throughout the lifecycle of 
 | onInit | function | NA | (app) | Hook used to know when the app is initialized. If a fn is returned a callback is made accessible. If that callback is called(it has to be) then whatever data (an object) is passed to it will be made avialable in the preferences branch of the internal store on bootstrap. ie. onInit=(app)=>cb=>{cb({someDataForPrefs})}}|
 | onSaveFilterset | function | NA | ({name,queryString,queryObject}) | Hook gets called when the user opted to save their filter set. |
 | onDeleteFilterset | function | NA | ({name,filterset}) | Hook gets called when the user opted to delete their saved their filter set |
-| onRowClick | function | `true`,`false` | (e, rowPath) | Hook used to override the default row click event of a TextItem component. Return values of 'true' or 'false' enables this hook to break or continue the default TextItem onclick event. |
+| onRowClick | function | `true`,`falsy` | (e, rowPath) | Hook used to override the default row click event of a TextItem component. Return values of 'true' or 'falsy' enables this hook to break or continue the default TextItem onclick event respectively. |
 | pushDispatch | function | ({Items: [{}],count: 1}) | NA | See the note below on the push dispatcher. |
 | doFilterChange | function | callback | cb({id: 'isActive', view: 'users', value: 'false'}) | Exposes a callback function that when called passed a filterChange object it will run that filter change request. Good for programmatically triggering filter changes from the parent application. A filterChange object accepts 3 properties in the object, `id`(the id of the filter), `view`(the id of the current selected view), and `value`(the value to run OR 'null' to clear the filter) |
 | doSort | function | callback()  | cb('createdAt', 'ASC'); | Because there is no easy to way refresh the last filter run(requests are memoized) it's convenient to have a sort hook. A callback function is exposed so you can programmatically trigger sort changes to refresh the current dataset. Use `ASC` or `DESC` as second argument values. If omitted `DESC` is the default value. |
@@ -848,7 +848,7 @@ filteredlistConfig
       onCheck: ({item,workspaceItems})=>item,
       onUnCheck: ({item,workspaceItems})=>item,
       onStateUpdate: state => {},
-      onRowClick: (e, rowPath) => true || false,
+      onRowClick: (e, rowPath) => true || falsy,
       onInit: app=>{},
       onSaveFilterset: ({name,queryString,queryObject})=>{},
       onDeleteFilterset: ({name,filterset})=>{},
