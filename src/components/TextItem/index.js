@@ -29,12 +29,24 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 	
 	onLinkClick(e) {
 		e.stopPropagation();
-		const {selectedView, item} = this.props;
+		const {selectedView, item, config} = this.props;
 		const link = selectedView.link;
 		const tagName =  e.target.tagName.toLowerCase();
 		const enabledLightbox = selectedView.enableGalleryLightbox;
+		const routePath = link.row && link.row(item) || '/';
 		
-		if (tagName === 'input') {
+		// _shouldBreak is a ho
+		let _shouldBreak = false;
+		if(config.hooks.onRowClick) {
+			_shouldBreak = config.hooks.onRowClick(e, routePath);
+			if(_shouldBreak) {
+				return false;
+			}
+		}
+		
+		// Prevents linking if lightbox is enabled
+		// element is an image
+		if (tagName === 'input' || tagName === 'img' && enabledLightbox) {
 			return false;
 		}
 		
@@ -42,13 +54,7 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 		if (e.target.classList.contains('dl__textItem-item--copy')) {
 			e.preventDefault();
 		} else {
-			// Prevents linking if lightbox is enabled
-			// element is an image
-			if(tagName === 'img' && enabledLightbox) {
-				return false;
-			}
-			
-			window.open(link.row(item), link.target !== '' ? link.target : '_self');
+			window.open(routePath, link.target !== '' ? link.target : '_self');
 		}
 	}
 	

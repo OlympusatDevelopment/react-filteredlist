@@ -1,4 +1,4 @@
-.dl__search {
+.dl__propertySearch {
   @include col(12);
   text-align: center;
   color: #fff;
@@ -31,7 +31,7 @@
   }
 
   input[type="text"] {
-    @include col(11);
+    @include col(12);
     display: inline-block;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -41,13 +41,13 @@
     color: $color-text-primary;
     z-index: 2;
     border: 1px solid #ccc;
-    border-right: none;
     margin: 0;
     position: relative;
     top: 0;
 
     &:focus {
       //border-color: $color-base-blue !important;
+      padding-right: 60px;
     }
 
     &::-webkit-input-placeholder {
@@ -67,21 +67,34 @@
     }
   }
 
-  .propertySearchButton {
-    @include col(1);
-    float:right;
+  &ButtonActions {
+    position: absolute;
+    top: 0;
+    right: 0;
     height: 34px;
-    z-index: 1;
+    width: 60px;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
     border: 1px solid #ccc;
+    border-left: 0;
+    background: #fff;
   }
 
   input {
     border: 1px solid lighten($color-border, 10%);
     background: rgba(255, 255, 255, 0.05);
   }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+    -webkit-transition-delay: 9999s;
+  }
 
   button {
-    width: 100%;
+    width: 28px;
     color: #999;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -96,9 +109,6 @@
   }
 
   &ClearButton {
-    position: absolute;
-    right: 8%;
-    top: 0;
     display: block;
     width: 33px;
     height: 100%;

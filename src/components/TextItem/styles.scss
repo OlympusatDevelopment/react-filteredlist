@@ -50,6 +50,23 @@
   &Image{
     max-height: 24px;
     // padding-left: 3px;
+
+    &:after {
+      content: "\f1c5" " " attr(alt);
+      font-size: 14px;
+      font-family: FontAwesome;
+      color: $color-icon;
+
+      display: flex;
+      align-items: center;
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      bottom: 0;
+      height: 100%;
+      width: 100%;
+      background-color: #fff;
+    }
   }
 
 }
