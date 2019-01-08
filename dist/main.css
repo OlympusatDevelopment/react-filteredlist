@@ -2492,7 +2492,11 @@ code {
   width: 0;
   padding: 0;
   border: 0.45rem solid transparent;
-  z-index: 1; }
+  z-index: 1;
+  height: 10px;
+  width: 10px;
+  text-indent: -999em;
+  overflow: hidden; }
 
 .react-datepicker__navigation--previous {
   left: 10px;
@@ -2686,7 +2690,8 @@ code {
 
 .react-datepicker__input-container {
   position: relative;
-  display: inline-block; }
+  display: inline-block;
+  height: 100%; }
 
 .react-datepicker__year-read-view,
 .react-datepicker__month-read-view,
