@@ -118,11 +118,15 @@ export default class PropertySearch extends Component{
         let { multi, options, selectedView, fixedKey, inputType } = this.props;
         const { searchValue, isFocused, _selectOptionsKeys, initialValue, inputTypeError } = this.state;
         const self = this;
+        const inputConfig = {
+        	type: inputType || 'text',
+					min: inputType === 'number' ? 0 : null
+				}
 
       return (<div>
           <div id={`dl-search-property--${this.props.id}`} className="dl__propertySearch">
-            <form onSubmit={this.onSearchSubmit.bind(this)}>
-              <input data-lpignore="true" id={`dl-search--${this.props.id}`} className={`dl__propertySearchInput`} type="text" name="dl-search" placeholder={"Search on property"} value={searchValue || ''} onChange={this.bindSearch.bind(this)} />
+            <form onSubmit={this.onSearchSubmit.bind(this)} autoComplete="off">
+              <input data-lpignore="true" id={`dl-search--${this.props.id}`} className={`dl__propertySearchInput`} name="dl-search" placeholder={"Search on property"} value={searchValue || ''} onChange={this.bindSearch.bind(this)} {...inputConfig} />
               { isFocused && <span className="dl__propertySearchButtonActions">
                 <span className="dl__propertySearchClearButton" onClick={this.onSearchClear.bind(this)}> </span>
                 <button type="submit" value="Search" className="propertySearchBtn"><i className="fa fa-check fa-lg"></i></button>

@@ -4329,7 +4329,7 @@ code {
     position: relative; }
     .dl__propertySearch form input {
       height: 34px; }
-  .dl__propertySearch input[type="text"] {
+  .dl__propertySearch input {
     width: 100%;
     display: inline-block;
     border-top-right-radius: 0;
@@ -4343,17 +4343,17 @@ code {
     margin: 0;
     position: relative;
     top: 0; }
-    .dl__propertySearch input[type="text"]:focus {
+    .dl__propertySearch input:focus {
       padding-right: 60px; }
-    .dl__propertySearch input[type="text"]::-webkit-input-placeholder {
+    .dl__propertySearch input::-webkit-input-placeholder {
       color: #5e5e5e; }
-    .dl__propertySearch input[type="text"]:-moz-placeholder {
+    .dl__propertySearch input:-moz-placeholder {
       /* Firefox 18- */
       color: #5e5e5e; }
-    .dl__propertySearch input[type="text"]::-moz-placeholder {
+    .dl__propertySearch input::-moz-placeholder {
       /* Firefox 19+ */
       color: #5e5e5e; }
-    .dl__propertySearch input[type="text"]:-ms-input-placeholder {
+    .dl__propertySearch input:-ms-input-placeholder {
       color: #5e5e5e; }
   .dl__propertySearchButtonActions {
     position: absolute;
@@ -4368,7 +4368,7 @@ code {
     border-left: 0;
     background: #fff; }
   .dl__propertySearch input {
-    border: 1px solid #f7f7f7;
+    border: 1px solid #c4c4c4;
     background: rgba(255, 255, 255, 0.05); }
   .dl__propertySearch input:-webkit-autofill,
   .dl__propertySearch input:-webkit-autofill:hover,
