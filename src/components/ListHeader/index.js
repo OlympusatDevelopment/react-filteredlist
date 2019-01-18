@@ -23,7 +23,13 @@ class ListHeader extends Component { // eslint-disable-line react/prefer-statele
     const { selectedView, filterChange } = this.props,
       elem = e.currentTarget,
       cls = 'dl__listHeader--sort--desc',
-      key = e.currentTarget.getAttribute('data-key');
+      key = e.currentTarget.getAttribute('data-key'),
+      prop = selectedView.props.find(k => k.key ===key);
+    
+    // Do nothing if sortable in the configuration is disabled.
+    if(prop && !prop.isSortable) {
+      return false;
+    }
 
     if (selectedView.enableListSort) {
 
