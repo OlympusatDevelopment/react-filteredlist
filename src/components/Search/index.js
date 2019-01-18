@@ -52,7 +52,7 @@ class Search extends Component { // eslint-disable-line react/prefer-stateless-f
     return (
       <div className="dl__search">
         {/* could put options.label here if the search should have a label */}
-        <form onSubmit={this.onSearchSubmit.bind(this)}>
+        <form onSubmit={this.onSearchSubmit.bind(this)} autoComplete="off">
           <input data-lpignore="true" id={`dl-search--${options.id}`} className="dl__searchInput" autoFocus type="text" name="dl-search" placeholder={searchPlaceholder} value={searchVal} onChange={this.bindSearch.bind(this)} />
           <span className="dl__searchClearButton" onClick={this.onSearchClear.bind(this)}> </span>
           <input type="submit" value="Search" style={{ background: searchButton.background, color: searchButton.text }} />

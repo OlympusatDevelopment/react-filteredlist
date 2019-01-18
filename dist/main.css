@@ -4343,7 +4343,7 @@ code {
     margin: 0;
     position: relative;
     top: 0; }
-    .dl__propertySearch input:focus {
+    .dl__propertySearch input.focus {
       padding-right: 60px; }
     .dl__propertySearch input::-webkit-input-placeholder {
       color: #5e5e5e; }
