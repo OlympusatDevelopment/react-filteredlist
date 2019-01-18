@@ -65,7 +65,6 @@ export default class PropertySearch extends Component{
       const searchValue = e.target.value;
 			const isFocused = searchValue.trim().length > 0;
 			const inputTypeError = !InputValidator(searchValue, inputType);
-			console.log(inputTypeError)
 
       this.setState({ searchValue, isFocused, inputTypeError })
     }
