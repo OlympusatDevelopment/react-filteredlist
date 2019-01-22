@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import Promise from 'bluebird';
 import Select from 'react-super-select';
-import { restricInptValidator } from '../../utils/helpers';
+import { InputValidator } from '../../utils/helpers';
 
-let documentEvent;
 export default class PropertySearch extends Component{
     constructor(props) {
         super(props);
@@ -21,7 +20,7 @@ export default class PropertySearch extends Component{
           isFocused: false
         };
         this.onSelectChange = this.onSelectChange.bind(this);
-        this.onInputFocus = this.onInputFocus.bind(this);
+        // this.onInputFocus = this.onInputFocus.bind(this);
     }
 
     static getDerivedStateFromProps(props, state){
@@ -34,11 +33,11 @@ export default class PropertySearch extends Component{
     
     componentDidMount() {
       this.onUpdateQueryValues();
-			document.addEventListener('click', this.onInputFocus);
+			//document.addEventListener('click', this.onInputFocus);
     }
     
     componentWillUnmount() {
-			document.removeEventListener('click', this.onInputFocus);
+			//document.removeEventListener('click', this.onInputFocus);
     }
 
     onSelectChange(prop){
@@ -64,12 +63,10 @@ export default class PropertySearch extends Component{
     bindSearch(e){
       const { inputType } = this.props;
       const searchValue = e.target.value;
-      
-      if (restricInptValidator(searchValue, inputType)) {
-				this.setState({searchValue, inputTypeError: false});
-      } else {
-				this.setState({inputTypeError: true});
-      }
+			const isFocused = searchValue.trim().length > 0;
+			const inputTypeError = !InputValidator(searchValue, inputType);
+
+      this.setState({ searchValue, isFocused, inputTypeError })
     }
 
     onSearchClear(){
@@ -118,11 +115,15 @@ export default class PropertySearch extends Component{
         let { multi, options, selectedView, fixedKey, inputType } = this.props;
         const { searchValue, isFocused, _selectOptionsKeys, initialValue, inputTypeError } = this.state;
         const self = this;
+        const inputConfig = {
+        	type: inputType || 'text',
+					min: inputType === 'number' ? 1 : null
+				}
 
       return (<div>
           <div id={`dl-search-property--${this.props.id}`} className="dl__propertySearch">
-            <form onSubmit={this.onSearchSubmit.bind(this)}>
-              <input data-lpignore="true" id={`dl-search--${this.props.id}`} className={`dl__propertySearchInput`} type="text" name="dl-search" placeholder={"Search on property"} value={searchValue || ''} onChange={this.bindSearch.bind(this)} />
+            <form onSubmit={this.onSearchSubmit.bind(this)} autoComplete="off">
+              <input data-lpignore="true" id={`dl-search--${this.props.id}`} className={`dl__propertySearchInput ${isFocused && 'focus'}`} name="dl-search" placeholder={"Search on property"} value={searchValue || ''} onChange={this.bindSearch.bind(this)} {...inputConfig} />
               { isFocused && <span className="dl__propertySearchButtonActions">
                 <span className="dl__propertySearchClearButton" onClick={this.onSearchClear.bind(this)}> </span>
                 <button type="submit" value="Search" className="propertySearchBtn"><i className="fa fa-check fa-lg"></i></button>

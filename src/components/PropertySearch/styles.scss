@@ -30,7 +30,7 @@
     }
   }
 
-  input[type="text"] {
+  input {
     @include col(12);
     display: inline-block;
     border-top-right-radius: 0;
@@ -45,7 +45,7 @@
     position: relative;
     top: 0;
 
-    &:focus {
+    &.focus {
       //border-color: $color-base-blue !important;
       padding-right: 60px;
     }
@@ -65,6 +65,18 @@
     &:-ms-input-placeholder {
       color: $color-text-primary;
     }
+    //&::-webkit-outer-spin-button,
+    //&::-webkit-inner-spin-button {
+    //  /* display: none; <- Crashes Chrome on hover */
+    //  -webkit-appearance: none;
+    //  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+    //  background: #eee url('http://i.stack.imgur.com/YYySO.png') no-repeat 50% 50%;
+    //  width: 14px;
+    //  height: 14px;
+    //  padding: 4px;
+    //  position: relative;
+    //  right: 4px;
+    //}
   }
 
   &ButtonActions {
@@ -82,7 +94,7 @@
   }
 
   input {
-    border: 1px solid lighten($color-border, 10%);
+    border: 1px solid darken($color-border, 10%);
     background: rgba(255, 255, 255, 0.05);
   }
   input:-webkit-autofill,
