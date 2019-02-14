@@ -11,8 +11,10 @@ import utils from '../utils'
  */
 
 export const makeCssGridLayout = (props, enableRowChecks, gridColumnMinMaxWidth = 'minmax(100px, 1fr)', rowChecksWidth = '40px', ) => {
-	let cssGridStyles = props.reduce((acc, curr) => {
-		return acc.concat(curr.display ? (curr.width || gridColumnMinMaxWidth) : gridColumnMinMaxWidth);
+	let cssGridStyles = props
+		.filter(({ display }) => display)
+		.reduce((acc, curr) => {
+		return acc.concat(curr.width || gridColumnMinMaxWidth);
 	}, []);
 	
 	if(enableRowChecks) {
