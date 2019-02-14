@@ -75,7 +75,6 @@ function appReducer(state = initialState, action) {
   switch (action.type) {
 
     case ON_APP_INIT:
-
       /**
        * NOTE: INIT sets up the state object.
        * It gets called multiple times from multiple places in order to
@@ -501,7 +500,7 @@ function makeQuery(_state, addons = []) {
  */
 function runFilters(_state, options) {
   queries.writeQueryStringToURL(_state.queryString, options);
-  filters.run(_state, options);// The response calls a render method that handles where we render to utils/filter._render
+  filters.run(_state, options).catch(err => err);// The response calls a render method that handles where we render to utils/filter._render
 }
 
 

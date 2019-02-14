@@ -324,22 +324,27 @@ function makeXHRRequest(_state, options) {
 
       // Finally : Make our xhr call using either the xhr lib or our proxy
       caller(hookedData.xhrOptions, (err, res, body) => {
-        if (err) {
-          reject(_state.config.hooks.onXHRFail ? _state.config.hooks.onXHRFail(err, body) : body);
-          return false;
-        }
-
-        let result = body;
-        try {
-          result = JSON.parse(body)
-        } catch (e) { }
-
-        //console.log('XHR RESPONSE',result,hookedData.xhrOptions);
-        if (_state.config.hooks.onXHRSuccess) {
-          _state.config.hooks.onXHRSuccess(result, resolve, reject);
-        } else {
-          resolve(result);
-        }
+					if (err) {
+					  if(_state.config.hooks.onXHRFail) {
+					    _state.config.hooks.onXHRFail(err, body, resolve, reject);
+            }else {
+							reject(new Error(err));
+            }
+            return null;
+					}
+	
+					let result = body;
+					try {
+						result = JSON.parse(body)
+					} catch (e) { }
+	
+					//console.log('XHR RESPONSE',result,hookedData.xhrOptions);
+					if (_state.config.hooks.onXHRSuccess) {
+						_state.config.hooks.onXHRSuccess(result, resolve, reject);
+						return null;
+					} else {
+						resolve(result);
+					}
       });
 
       if (caller.hasOwnProperty('then')) {
