@@ -14,7 +14,8 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 		
 		this.state ={
 			imgIsOpen : false,
-			currentImage : 0
+			currentImage : 0,
+			imgError: false
 		};
 		
 		this.copyToClipboard = this.copyToClipboard.bind(this);
@@ -82,12 +83,29 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 		let html = _html;
 		
 		if (prop.isImage) {
-			if (this.props.selectedView.enableGalleryLightbox) {
-				return (
-					<img className="dl__textItemImage" onClick={() => this.setState({imgIsOpen: true})} src={html}
-										 alt={prop.label}/>);
+			let imageProps = {
+				src: html,
+				alt: prop.label,
+				onError: (e) => {
+					this.setState({ imgError: true})
+					if(prop.fallbackImageSrc) {
+						e.target.src = prop.fallbackImageSrc;
+						e.target.classList.add('fallback-image')
+					} else {
+						e.target.style.display = 'none';
+					}
+				}
+			};
+			
+			if(this.props.selectedView.enableGalleryLightbox) {
+				imageProps.onClick = () => {
+					if(!this.state.imgError) {
+						this.setState({imgIsOpen: true})
+					}
+				}
 			}
-			return (<img className="dl__textItemImage" src={html} alt={prop.label}/>);
+				
+			return <img {...imageProps} />;
 		}
 		
 		if (this.props.selectedView.highlightSearchTermInText) {
