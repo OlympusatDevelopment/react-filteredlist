@@ -36,25 +36,25 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 		const enabledLightbox = selectedView.enableGalleryLightbox;
 		const routePath = link.row && link.row(item) || '/';
 		
-		// _shouldBreak is a ho
-		let _shouldBreak = false;
-		if(config.hooks.onRowClick) {
-			_shouldBreak = config.hooks.onRowClick(e, routePath);
-			if(_shouldBreak) {
-				return false;
-			}
-		}
-		
-		// Prevents linking if lightbox is enabled
-		// element is an image
-		if (tagName === 'input' || tagName === 'img' && enabledLightbox) {
-			return false;
-		}
-		
 		// Prevent linking when the copy icon is clicked...
 		if (e.target.classList.contains('dl__textItem-item--copy')) {
 			e.preventDefault();
 		} else {
+			
+			let _shouldBreak = false;
+			if(config.hooks.onRowClick) {
+				_shouldBreak = config.hooks.onRowClick(e, routePath);
+				if(_shouldBreak) {
+					return false;
+				}
+			}
+			
+			// Prevents linking if lightbox is enabled
+			// element is an image
+			if (tagName === 'input' || tagName === 'img' && enabledLightbox) {
+				return false;
+			}
+			
 			window.open(routePath, link.target !== '' ? link.target : '_self');
 		}
 	}
@@ -90,7 +90,7 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 					this.setState({ imgError: true})
 					if(prop.fallbackImageSrc) {
 						e.target.src = prop.fallbackImageSrc;
-						e.target.classList.add('fallback-image')
+						e.target.classList.add('fallback-image');
 					} else {
 						e.target.style.display = 'none';
 					}
@@ -170,6 +170,7 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 							const parsedVal = prop.isDate
 								? makeHumanDate(hookedVal)
 								: this.renderHTML(hookedVal, prop);
+							
 							
 							const copyIcon = prop.hasCopy
 								? (
