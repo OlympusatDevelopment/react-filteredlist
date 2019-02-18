@@ -67,7 +67,6 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
               }) : 
             (data ? [data[options.options.key]] : null);    
       
-            console.log("Select change ", value);
     filterChange({
       id: options.id,
       view: selectedView.id,
@@ -307,6 +306,11 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
                     selectedView={self.props.selectedView} 
                     filterChange={this.props.filterChange}/>);
                 break;
+            case 'custom':
+                const CustomComponent = self.props.options.component,
+                  customComponentProps = {filterChange: this.props.filterChange, ...options, selectedView: this.props.selectedView};
+							  resolve(<CustomComponent {...customComponentProps} />);
+              break;
             case 'select':
             default:
               // If a value exist via a query string run or state update, set the component initial val, otherwise leave blank to display the placeholder
