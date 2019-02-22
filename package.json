@@ -1,6 +1,6 @@
 {
   "name": "react-filteredlist",
-  "version": "16.12.10",
+  "version": "16.12.11",
   "description": "FilteredList",
   "main": "./dist/react-filteredlist.js",
   "author": "Adam Gedney",
@@ -15,8 +15,10 @@
   "dependencies": {
     "bluebird": "^3.5.2",
     "copy-to-clipboard": "^3.0.6",
+    "flatpickr": "^4.5.2",
     "history": "^4.6.1",
     "moment": "^2.18.1",
+    "pikaday": "^1.8.0",
     "prop-types": "^15.6.2",
     "react-addons-shallow-compare": "^15.5.2",
     "react-checkbox-group": "^3.1.1",
@@ -29,6 +31,7 @@
     "react-scrolllock": "^2.0.1",
     "react-super-select": "^1.0.4",
     "redux": "^3.6.0",
+    "tiny-date-picker": "^3.2.8",
     "underscore": "^1.8.3",
     "validator": "^10.9.0",
     "xhr": "^2.4.0"
@@ -45,6 +48,7 @@
     "css-loader": "^0.28.11",
     "mini-css-extract-plugin": "^0.4.3",
     "node-sass": "^4.9.3",
+    "postcss-loader": "^3.0.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "sass-loader": "^7.1.0",
