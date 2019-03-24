@@ -75,7 +75,6 @@ function appReducer(state = initialState, action) {
   switch (action.type) {
 
     case ON_APP_INIT:
-
       /**
        * NOTE: INIT sets up the state object.
        * It gets called multiple times from multiple places in order to
@@ -344,7 +343,7 @@ function appReducer(state = initialState, action) {
 
       return runStateUpdateHook(_state, action.type, action);
 
-    case RESET_FILTERS:
+		case RESET_FILTERS:
 
       _state.views = makeViews(_state, { view: _state.selectedView.id, id: '*', value: null });
       _state.showLoading = true;
@@ -364,9 +363,18 @@ function appReducer(state = initialState, action) {
       [...document.getElementsByClassName('dl__listHeader--sort')].forEach(node => {
         node.classList.remove('dl__listHeader--sort--desc');
       });
+	
+			// CLEAR the Pagination
+			_state.pagination = {
+				skip: 0,
+				take: _state.selectedView.paginationTake,
+				page: 1,
+				total: 0
+			};
+			_state.selectedView.clearPaginationQueryString = true;
 
       _state = Object.assign({}, _state, makeQuery(_state, _state.selectedView.addons));
-
+      
       runFilters(_state, _state.selectedView);
       
       // CLEAR the Workspace
@@ -492,7 +500,7 @@ function makeQuery(_state, addons = []) {
  */
 function runFilters(_state, options) {
   queries.writeQueryStringToURL(_state.queryString, options);
-  filters.run(_state, options);// The response calls a render method that handles where we render to utils/filter._render
+  filters.run(_state, options).catch(err => err);// The response calls a render method that handles where we render to utils/filter._render
 }
 
 

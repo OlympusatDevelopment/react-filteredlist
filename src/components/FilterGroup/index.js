@@ -29,12 +29,12 @@ class FilterGroup extends Component { // eslint-disable-line react/prefer-statel
     }
 
     render() {
-        const {options,config,isSingle,selectedView}=this.props; 
+        const {options,config,isSingle,selectedView, zIndex}=this.props;
         const classNames = options.defaultOpen ? `dl__filterGroup dl__filterGroup--open ${options.id}`: `dl__filterGroup ${options.id}`,
         filtersets = options.hasOwnProperty('id') && options.id === 'filterset' && selectedView.showSaveFiltersInterface ? (<SaveFilterset selectedView={selectedView} key={Math.random()*10000}/>) : '';  
-
+        
         return (
-            <div className={classNames} style={{color: options.accordian.color.text}} data-issingle={isSingle}>
+            <div className={classNames} style={{color: options.accordian.color.text, zIndex: zIndex}} data-issingle={isSingle}>
                 <div className="dl__filterGroupLabel" style={{background: options.accordian.color.background}} onClick={this.toggleFilterAccordian.bind(this)}>
                     <span style={{color: options.accordian.color.text}}>{options.label}</span>
                 </div>

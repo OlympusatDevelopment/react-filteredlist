@@ -1,0 +1,150 @@
+.dl__propertySearch {
+  @include col(12);
+  text-align: center;
+  color: #fff;
+  position: relative;
+  margin: 0;
+  clear: both;
+
+  @include break(sm) {
+    @include col(8);
+    @include col_ctr(8);
+  }
+
+  @include break(xs) {
+    @include col(12);
+    @include col_ctr(12);
+    margin-bottom: 30px;
+  }
+
+  h3 {
+    text-align: left;
+    color: $color-text-primary-alt;
+  }
+
+  form {
+    position: relative;
+
+    input {
+      height: 34px;
+    }
+  }
+
+  input {
+    @include col(12);
+    display: inline-block;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    outline: none;
+    background: #fff;
+    padding-left: 6px;
+    color: $color-text-primary;
+    z-index: 2;
+    border: 1px solid #ccc;
+    margin: 0;
+    position: relative;
+    top: 0;
+
+    &.focus {
+      //border-color: $color-base-blue !important;
+      padding-right: 60px;
+    }
+
+    &::-webkit-input-placeholder {
+      color: $color-text-primary;
+    }
+
+    &:-moz-placeholder { /* Firefox 18- */
+      color: $color-text-primary;
+    }
+
+    &::-moz-placeholder { /* Firefox 19+ */
+      color: $color-text-primary;
+    }
+
+    &:-ms-input-placeholder {
+      color: $color-text-primary;
+    }
+    //&::-webkit-outer-spin-button,
+    //&::-webkit-inner-spin-button {
+    //  /* display: none; <- Crashes Chrome on hover */
+    //  -webkit-appearance: none;
+    //  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+    //  background: #eee url('http://i.stack.imgur.com/YYySO.png') no-repeat 50% 50%;
+    //  width: 14px;
+    //  height: 14px;
+    //  padding: 4px;
+    //  position: relative;
+    //  right: 4px;
+    //}
+  }
+
+  &ButtonActions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 34px;
+    width: 60px;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #ccc;
+    border-left: 0;
+    background: #fff;
+  }
+
+  input {
+    border: 1px solid darken($color-border, 10%);
+    background: rgba(255, 255, 255, 0.05);
+  }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+    -webkit-transition-delay: 9999s;
+  }
+
+  button {
+    width: 28px;
+    color: #999;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    display: inline-block;
+    background: #fff;
+    height: 100%;
+    z-index: 1;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  &ClearButton {
+    display: block;
+    width: 33px;
+    height: 100%;
+    z-index: 2;
+
+    &:after {
+      content: $fa-var-times-circle;
+      font-family: FontAwesome;
+      font-size: 15px;
+      width: 100%;
+      height: 100%;
+      color: darken(#fff, 30%);
+      line-height: 36px;
+    }
+
+    &:hover {
+      @extend .hover;
+    }
+  }
+
+  .errorMessage {
+    display: block;
+    color: #aaa;
+    text-align: left;
+    padding: 5px;
+  }
+}

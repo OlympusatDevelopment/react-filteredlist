@@ -236,7 +236,7 @@ Views are higher level filters & datalist pairs that run independent of eachothe
 | paginationTake | int | undefined | undefined,int | Sets the number of items to fetch on each paginated request. This is page size.|
 | noResultsMessage | string | '' | ''| The message to display in the datalist container when the filter query returned no results.|
 | usersSavedFiltersets | function | undefined | undefined, function | Must return a Promise containing a collection of items. This is how you populate the user saved filtersets select box options. In the hooks you can save to a database or local storage what the user saved then here you can retrieve it for option population.|
-| props | array | undefined | undefined,[] | See the view props section below for an explaination of what goes in this array. |
+| props | array | undefined | undefined,[] | See the view props section below for an explanation of what goes in this array. |
 | addons | array | undefined | undefined, [] | Addons are pseudo filter types that can be added to the view outside of a a filter group. These exist in the internal store a filters and can store state. e.g. The search filter item is a built-in addon filter type.|
 |  |  |  | | |
 | searchButton | object | undefined | undefined,object | Container for search button themeing options. |
@@ -346,10 +346,12 @@ Available item properties to the row. Also controls which props are visible by d
 | hasCopy | boolean | `false` | `true`,`false`| Switch on the "copy to clipboard" icon/feature for the particular cell data. |
 | isDate | boolean | `false` | `true`,`false`| If you're passing in a date, switching this will convert the date timestamp to a human readable date.|
 | isImage | boolean | `false` | `true`,`false`| Use this to tell the component we need to render the value as an image. This is useful for rendering a logo or user profile image in the cell.|
+| fallbackImageSrc | string |''| `image.ext`| Used in conjunction with the `isImage` prop. Ensures that a fallback is rendered if the previous image src is invalid. |
 | isSortable | boolean | `false` | `true`,`false`| Switch whether or not to allow the user to be able to sort this property from the list header column name interface. |
 | width | string | '' | '11px', '100%' | A stringified css value to determine the column width on the default text. |
 | display | boolean | `false` | `true`,`false`| Lets the datalist know that it should display that column on load. If it's false, it will not dipslay on load but will still be available to the column settings interface. |
 | before | function |  | | A hook to transform the value (mostly for mapping) before rendering to the screen. If not using it, please set it like this until a default can be built in: `before :(val,item)=>val` @todo add default function check|
+| lightboxImages | function | `({}, [{}])` | `(item, items)`| A hook to send an array of images for `react-images` lightbox configuration. The function takes an initial image, then an array of images as its params. Please see [react-images](https://jossmac.github.io/react-images/ "React Images") for configuration settings|
 
 #### Example
 ```
@@ -362,7 +364,8 @@ Available item properties to the row. Also controls which props are visible by d
   isSortable : true,
   width:'12%',
   display: true,
-  before :(val,item)=>val
+  before :(val,item)=>val,
+  lightboxImages: (item, items) => {}
 }
 ```
 
@@ -427,6 +430,7 @@ Used to take action on the dataset. Primary items used in building a query objec
 | label | string | '' | NA |  The filter item's Label property. THis displays to the user above the filter item.|
 | value | array/null/undefined | null | [{},{},{}] | Use this to set a default value. Value must be an array of objects (matching options), null or undefined to be excluded. (Filters recognize boolean true/false. An collection matching the select filter type can be passed to pre-populate the value. |
 | multi | boolean | `false` | `true`,`false` | For select filter types, this allows the select to be a multi select when set to `true`|
+| fixedKey | string | `` | `prop1` | For property-search filter types, this allows the the filter to search on a fixed property and removes the select component |
 | options | object | {} |  {},falsy | ***For 'select' & 'checkbox' type only:*** The select type filter item's options handling. This takes care of property matching items so they can fill the value of the options element. |
 | options.key | string | '' |  NA | This is the select box options item's key(property) to use for the option element's value property. |
 | options.value | string | '' | NA | This is the select box options item's Label/Text to use in the option item's display. |
@@ -488,12 +492,16 @@ This filter is used for doing an "OR" search across a certain property. ie. sear
 When the options object is not being used to provide defaults for the select box, then the select box is automatically populated with all the properties listed in the `props` array for the selected view.
 
 
+
+
 ```
 export default {
   id: "propertySearch",
   type: 'property-search',
   prop: "propertySearch",
   label: 'Property Search',
+  fixedKey: 'property',
+  inputType: 'number | text | date | ...' // value corresponds to the html input types
   value: null
   // options: {
     // key: 'id',
@@ -593,14 +601,15 @@ The hooks are powerful. At different points in time throughout the lifecycle of 
 | Property | Type | Return schema | Parameters | Description |
 |:---|:---|:---|:---|:---|
 | beforeXHR | function | {data, xhrOptions} | (data, xhrOptions, requestData, requestType) | Hook gets called just before the xhr request. It passes through the entire xhr params & the request body data raw. requestType will be undefined for primary requests, but can return a value of 'export' for when an export request is being generated. This allows specific export request handling inside the hook.|
-| onXHRSuccess | function | `resolve({Items:[{}],total:1})`,`resolve("some error message")` | (body,resolve,reject) |  Hook gets called when the xhr request returns successfully. A Promise is passed in the argument, it must be resolved. It's here that you can mutate data received from the api, then return wither an error message or an object of Items and the total.|
-| onXHRFail | function | body | (err,body) | Hook gets called when the xhr request kicks back an error |
+| onXHRSuccess | function | `resolve({Items:[{}],total:1})`,`reject("some error message")` | (body,resolve,reject) |  Hook gets called when the xhr request returns successfully. A Promise is passed in the argument, it must be resolved. It's here that you can mutate data received from the api, then return wither an error message or an object of Items and the total.|
+| onXHRError | function | `resolve({Items:[{}],total:1})`,`reject("some error message")` | (err, body,resolve,reject) | Hook gets called when the xhr request kicks back an error |
 | onCheck | function | item | ({item,workspaceItems}) | Hook for picking up check events. Note: You have access to all items currently in the workspace, but you must only return the item being mutated. Warning: a select all command will run this hook once for each item as it builds the workspaceItems list |
 | onUnCheck | function | NA | ({item,workspaceItems}) | Hook for picking up check events. Note: You have access to all items currently in the workspace, but you must only return the item being mutated. Warning: a select all command will run this hook once for each item as it empties the workspaceItems list |
 | onStateUpdate | function | NA | (state, actionType, action) | Hook gets called whenever the main application state gets updated. Useful for getting the filters' current queryObject, queryString or the action type. Pagination can also be read here as well as the current Selected View. THis is the ideal place to tie in Google Analytics from your parent app. You can use the `actionType` argument to determine what took place for your custom events. |
 | onInit | function | NA | (app) | Hook used to know when the app is initialized. If a fn is returned a callback is made accessible. If that callback is called(it has to be) then whatever data (an object) is passed to it will be made avialable in the preferences branch of the internal store on bootstrap. ie. onInit=(app)=>cb=>{cb({someDataForPrefs})}}|
 | onSaveFilterset | function | NA | ({name,queryString,queryObject}) | Hook gets called when the user opted to save their filter set. |
 | onDeleteFilterset | function | NA | ({name,filterset}) | Hook gets called when the user opted to delete their saved their filter set |
+| onRowClick | function | `true`,`falsy` | (e, rowPath) | Hook used to override the default row click event of a TextItem component. Return values of 'true' or 'falsy' enables this hook to break or continue the default TextItem onclick event respectively. |
 | pushDispatch | function | ({Items: [{}],count: 1}) | NA | See the note below on the push dispatcher. |
 | doFilterChange | function | callback | cb({id: 'isActive', view: 'users', value: 'false'}) | Exposes a callback function that when called passed a filterChange object it will run that filter change request. Good for programmatically triggering filter changes from the parent application. A filterChange object accepts 3 properties in the object, `id`(the id of the filter), `view`(the id of the current selected view), and `value`(the value to run OR 'null' to clear the filter) |
 | doSort | function | callback()  | cb('createdAt', 'ASC'); | Because there is no easy to way refresh the last filter run(requests are memoized) it's convenient to have a sort hook. A callback function is exposed so you can programmatically trigger sort changes to refresh the current dataset. Use `ASC` or `DESC` as second argument values. If omitted `DESC` is the default value. |
@@ -840,6 +849,7 @@ filteredlistConfig
       onCheck: ({item,workspaceItems})=>item,
       onUnCheck: ({item,workspaceItems})=>item,
       onStateUpdate: state => {},
+      onRowClick: (e, rowPath) => true || falsy,
       onInit: app=>{},
       onSaveFilterset: ({name,queryString,queryObject})=>{},
       onDeleteFilterset: ({name,filterset})=>{},

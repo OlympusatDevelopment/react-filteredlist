@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as FilterItemActions from './actions';
 import Select from 'react-super-select';
 import moment from 'moment';
-import DatePicker from 'react-datepicker';
+import DatePicker from '../DatePicker';
 import AutoCompleteSelect from '../AutoCompleteSelect';
 import PropertySearch from '../PropertySearch';
 import { CheckboxGroup, Checkbox } from 'react-checkbox-group';
@@ -42,7 +42,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
     if (nextProps.options.type === "radio") {
       this.setState({radioValue: Array.isArray(nextProps.options.value) ? nextProps.options.value[0] : nextProps.options.value});
     }
-
+    
     const dateRange = nextProps.options.range;
     if(dateRange) {
       if(dateRange.hasOwnProperty('start')) {
@@ -67,7 +67,6 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
               }) : 
             (data ? [data[options.options.key]] : null);    
       
-            console.log("Select change ", value);
     filterChange({
       id: options.id,
       view: selectedView.id,
@@ -216,33 +215,32 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
                 (<span key={Math.random() * 100000} className="dl__filterItemRangeClear"><a href="#" onClick={self._onRangeReset.bind(self)}>reset</a></span>),
                   (<div key={Math.random() * 100000} className="dr__wrapper">
                     <DatePicker
-                      placeholderText="Start Date"
-                      key={Math.random()*10000}
-                      className="dr__datePicker"
-                      selected={this.state.startDate}
-                      selectsStart
-                      startDate={this.state.startDate}
-                      endDate={this.state.endDate}
-                      onChange={startDate => {
-                        self.setState({startDate});
-                        self._onRangeChange({startDate});
-                      }}
-                  />
+											placeholderText="Start Date"
+											key={Math.random()*10000}
+											className="dr__datePicker"
+											selected={this.state.startDate}
+                      id={`${self.props.options.id}--start`}
+											onChange={(selectedDates) => {
+											  const startDate = moment(selectedDates[0]);
+												self.setState({startDate});
+												self._onRangeChange({startDate});
+											}}
+                    />
                     <div className="dr__divider">
                       <svg viewBox="0 0 1000 1000"><path d="M694.4 242.4l249.1 249.1c11 11 11 21 0 32L694.4 772.7c-5 5-10 7-16 7s-11-2-16-7c-11-11-11-21 0-32l210.1-210.1H67.1c-13 0-23-10-23-23s10-23 23-23h805.4L662.4 274.5c-21-21.1 11-53.1 32-32.1z"></path></svg>
                     </div>
-                    <DatePicker
-                      placeholderText="End Date"
-                      className="dr__datePicker"
-                      selected={this.state.endDate}
-                      selectsEnd
-                      startDate={this.state.startDate}
-                      endDate={this.state.endDate}
-                      onChange={endDate => {
-                        self.setState({endDate});
-                        self._onRangeChange({ endDate });
-                      }}
-                  /></div>)]);
+										<DatePicker
+											placeholderText="End Date"
+											key={Math.random()*10000}
+											className="dr__datePicker"
+											selected={this.state.endDate}
+											id={`${self.props.options.id}--end`}
+											onChange={(selectedDates) => {
+												const endDate = moment(selectedDates[0]);
+												self.setState({endDate});
+												self._onRangeChange({ endDate });
+											}}
+										/></div>)]);
               break;
             case 'checkbox':
               let vals = [...decodeURIComponent(self.props.options.value)];
@@ -307,6 +305,11 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
                     selectedView={self.props.selectedView} 
                     filterChange={this.props.filterChange}/>);
                 break;
+            case 'custom':
+                const CustomComponent = self.props.options.component,
+                  customComponentProps = {filterChange: this.props.filterChange, ...options, selectedView: this.props.selectedView};
+							  resolve(<CustomComponent {...customComponentProps} />);
+              break;
             case 'select':
             default:
               // If a value exist via a query string run or state update, set the component initial val, otherwise leave blank to display the placeholder

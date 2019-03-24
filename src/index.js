@@ -3,7 +3,7 @@ import App from './App';
 var pjson = require('../package.json');
 
 /** Style loading */   
-import './style/main.scss'; 
+import './style/main.scss';
  
 // if(window.Oly && window.Oly.debugMode) {
   console.log(`react-filteredlist | version ${pjson.version}`); 

@@ -14,18 +14,20 @@ class ListRow extends Component { // eslint-disable-line react/prefer-stateless-
             renderDropdown: false
         };
     }
+    
+    
 
     makeListItem(item,selectedView,props){
         switch(selectedView.displayType){
             case 'custom':
                 const CustomDisplayItem = selectedView.customDisplayTypeComponent;
 
-                return (<CustomItem CustomDisplayItem={CustomDisplayItem} item={item} selectedView={selectedView} parentProps={props} preferencedProps={props.preferencedProps}/>);
+                return (<CustomItem CustomDisplayItem={CustomDisplayItem} item={item} items={this.props.items} selectedView={selectedView} parentProps={props} preferencedProps={props.preferencedProps}/>);
             case 'display':
-                return (<DisplayItem item={item} selectedView={selectedView} preferencedProps={props.preferencedProps}/>);
+                return (<DisplayItem item={item} items={this.props.items} selectedView={selectedView} preferencedProps={props.preferencedProps}/>);
             case 'text':
             default:
-                return (<TextItem item={item} selectedView={selectedView} preferencedProps={props.preferencedProps}/>);
+                return (<TextItem item={item} items={this.props.items} selectedView={selectedView} preferencedProps={props.preferencedProps}/>);
         }
     }
     

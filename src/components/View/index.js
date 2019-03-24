@@ -28,7 +28,8 @@ class View extends Component { // eslint-disable-line react/prefer-stateless-fun
         }
 
         ar.push((options.filterGroups.map((filterGroup,i)=>{
-            return (<FilterGroup key={Math.random()*10000} selectedView={selectedView} options={filterGroup} isSingle={options.filterGroups.length === 1}> </FilterGroup>);
+					  const zIndex = options && options.filterGroups && options.filterGroups.length - i;
+            return (<FilterGroup key={Math.random()*10000} selectedView={selectedView} options={filterGroup} isSingle={options.filterGroups.length === 1} zIndex={zIndex}> </FilterGroup>);
         })));
  
         if(options.showResetFiltersButton){
