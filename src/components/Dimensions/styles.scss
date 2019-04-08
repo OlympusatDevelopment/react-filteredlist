@@ -1,0 +1,106 @@
+.dl__filterItemDimension {
+  width: 100%;
+  display: flex;
+  flex: 1;
+
+  form {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-container {
+    border: 1px solid #999;
+    border-radius: 2px;
+    min-height: 35px;
+    color: #999;
+    display: flex;
+    min-width: 45%;
+    position: relative;
+
+    input {
+      display: flex;
+      min-height: 35px;
+      width: 100%;
+      border: 0;
+      padding-left: 5px;
+      align-items: center;
+    }
+  }
+
+  &-separator {
+    font-size: 14px;
+    flex: 0;
+    display: flex;
+    min-width: 10%;
+    justify-content: center;
+  }
+
+  &__buttons {
+    position: absolute;
+    top: 0;
+    right: 15px;
+    height: 34px;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-left: 0;
+
+    &-search {
+      width: 25px;
+      height: 25px;
+      color: #999;
+      display: inline-block;
+      border: 0;
+      cursor: pointer;
+      background: transparent;
+    }
+
+    &-clear {
+      display: flex;
+      width: 25px;
+      height: 25px;
+      cursor: pointer;
+      justify-content: center;
+      align-items: center;
+
+      //&:after {
+      //  content: $fa-var-times-circle;
+      //  font-family: FontAwesome;
+      //  font-size: 15px;
+      //  width: 100%;
+      //  height: 100%;
+      //  color: darken(#fff, 30%);
+      //  line-height: 36px;
+      //}
+    }
+  }
+
+  //input[type=number]::-webkit-inner-spin-button {
+  //  -webkit-appearance: none;
+  //  cursor:pointer;
+  //  display:block;
+  //  width:8px;
+  //  color: #333;
+  //  text-align:center;
+  //  position:relative;
+  //}
+  //
+  //input[type=number]:hover::-webkit-inner-spin-button {
+  //  background: url(../images/up-down-arrows.jpg) no-repeat 50% 50%;
+  //  width: 20px;
+  //  height: 35px;
+  //  position: relative;
+  //}
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+    -webkit-transition-delay: 9999s;
+  }
+}
