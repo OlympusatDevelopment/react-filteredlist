@@ -5303,6 +5303,7 @@ span.flatpickr-day.selected {
   border-bottom: 1px solid #efefef;
   position: relative;
   background: #333;
+  white-space: nowrap;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
