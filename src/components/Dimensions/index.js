@@ -24,7 +24,6 @@ class AssetDimensions extends Component {
 			heightInputFocused: false
 		};
 		
-		this.form = React.createRef();
 		this._handleOnFocus = this._handleOnFocus.bind(this);
 		this._handleOnChange = this._handleOnChange.bind(this);
 		this._handleFormSubmit = this._handleFormSubmit.bind(this);
@@ -105,7 +104,7 @@ class AssetDimensions extends Component {
 			onChange: this._handleOnChange
 		}
 		return (<div className="dl__filterItemDimension">
-			<form autoComplete="off" onSubmit={this._handleFormSubmit} ref={this.form}>
+			<form autoComplete="off" onSubmit={this._handleFormSubmit}>
 				<div className="dl__filterItemDimension-container" onFocus={this._handleOnFocus}>
 					<input type="number" data-lpignore="true" name="width" placeholder="Width" value={width || ''} {...inputActions} />
 					{ widthInputFocused && <ActionButtons clearInputValue={this._handleInputClear} /> }

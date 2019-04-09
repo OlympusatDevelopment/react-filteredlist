@@ -293,12 +293,12 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
               ));
               break;
             case 'autocomplete':
-                resolve(<AutoCompleteSelect
-                    key={Math.random() * 100000}
-                    onSelectChange={self._onSelectChange}
-                    initalValues={options.value}
-                    placeholder={options && options.placeholder ? options.placeholder : null}
-                    {...options} />);
+							resolve(<AutoCompleteSelect
+								key={Math.random() * 100000}
+								onSelectChange={self._onSelectChange}
+								initalValues={options.value}
+								placeholder={options && options.placeholder ? options.placeholder : null}
+								{...options} />);
                 break;
             case 'property-search':
                 resolve(<PropertySearch

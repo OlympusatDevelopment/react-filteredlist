@@ -49,16 +49,14 @@
     "mini-css-extract-plugin": "^0.4.3",
     "node-sass": "^4.9.3",
     "postcss-loader": "^3.0.0",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.21.0",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2"
   },
   "peerDependencies": {
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0"
   },
   "browserify-shim": {
     "react": "global:React",
