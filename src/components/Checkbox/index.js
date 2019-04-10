@@ -10,7 +10,7 @@ export default class Checkbox extends Component { // eslint-disable-line react/p
         //onChange={(e)=>{console.log('changed /in Checkbox/index.js',this,e)}}
         return (
             <div className="dl__checkbox">
-                <input type="checkbox" name={id} checked={checked} onClick={(e)=>{onChecked(e,id)}}/>
+                <input type="checkbox" name={id} defaultChecked={checked} onClick={(e)=>{onChecked(e,id)}}/>
             </div>
         );
     }

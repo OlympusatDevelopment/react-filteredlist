@@ -30,8 +30,11 @@ class DataList extends Component { // eslint-disable-line react/prefer-stateless
     //     preferencedProps: nextprops.selectedView.props
     //   });
     // }
-  }
 
+		// console.log(this.refListHeader.current.offsetWidth)
+  
+  }
+  
   makeDataList(Items, selectedView) {
     return (Items.map((item, i) => {
       return (<ListRow key={i} item={item} items={Items} selectedView={selectedView} preferencedProps={selectedView.props}> </ListRow>);
@@ -102,6 +105,8 @@ class DataList extends Component { // eslint-disable-line react/prefer-stateless
       classNames = config.pinPagination ? 'dl__dataList dl__pinPagination' : 'dl__dataList',
       listHeader = selectedView.showListHeader ? (<ListHeader selectedView={selectedView} item={Items[0]}> </ListHeader>) : '',
       pagination = (Items && Items.length > 0) ? (<Pagination bottom={config.dataList.paginationBottomPosition}> </Pagination>) : '';
+    
+    // const datalistWidth = document.querySelector('.dl__dataList-list').offsetWidth;
 
     return (
       <div className={classNames} style={{ height: config.dataList.height, width }}>
