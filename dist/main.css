@@ -5334,7 +5334,7 @@ span.flatpickr-day.selected {
       cursor: pointer;
       opacity: 0.7; }
   .dl__listHeader-listSettings {
-    right: 12px; }
+    right: 30px; }
   .dl__listHeader-listSort:after {
     content: "\F0DC";
     font-family: FontAwesome;
