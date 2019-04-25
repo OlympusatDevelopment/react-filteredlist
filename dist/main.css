@@ -4820,18 +4820,6 @@ span.flatpickr-day.selected {
       color: rgba(255, 0, 0, 0.6);
       text-decoration: underline !important;
       font-size: 12px; }
-  .dl__filterItem .DateRangePicker {
-    width: 100%; }
-    .dl__filterItem .DateRangePicker__picker {
-      z-index: 100;
-      top: 29px; }
-    .dl__filterItem .DateRangePickerInput {
-      z-index: 0;
-      position: relative;
-      width: 100%; }
-      .dl__filterItem .DateRangePickerInput__arrow svg {
-        width: 17px;
-        height: 17px; }
   .dl__filterItem .DateInput {
     font-size: 11px;
     line-height: 9px;
@@ -4857,38 +4845,6 @@ span.flatpickr-day.selected {
     margin-right: 9px;
     font-size: 12px;
     opacity: 0.7; }
-
-.dr__wrapper {
-  display: flex;
-  justify-content: flex-start;
-  border-radius: 2px;
-  width: 100%;
-  padding: 3px 9px;
-  position: relative;
-  background: #fbfbfb; }
-  .dr__wrapper > div > input {
-    width: 100%; }
-    .dr__wrapper > div > input:focus {
-      background: #8EEAE2; }
-  .dr__wrapper .react-datepicker__input-container {
-    height: 21px; }
-    .dr__wrapper .react-datepicker__input-container input {
-      padding-left: 12px; }
-
-.dr__datePicker {
-  float: left;
-  display: inline-block;
-  height: auto;
-  min-height: 25px;
-  vertical-align: middle;
-  width: 100%; }
-
-.dr__divider svg {
-  vertical-align: middle !important;
-  fill: #565a5c !important;
-  height: 24px !important;
-  width: 18px !important;
-  margin: 0 3px; }
 
 .dl__listRow {
   border-bottom: 1px solid #efefef;
@@ -5711,10 +5667,36 @@ span.flatpickr-day.selected {
     font-style: italic;
     opacity: 0.8; }
 
-.dr__datePicker {
-  padding-left: 12px; }
-  .dr__datePicker:focus {
-    background: none; }
+.dr__wrapper {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  padding: 3px 0px;
+  position: relative; }
+  .dr__wrapper .dr__datePicker {
+    width: 45%;
+    position: relative;
+    line-height: 30px;
+    padding: .25rem 50px .25rem .25rem;
+    border: 1px solid rgba(51, 51, 51, 0.45);
+    text-decoration: none;
+    color: #666;
+    border-radius: 0.25rem 0.25rem 0.25rem 0.25rem;
+    background-clip: padding-box;
+    cursor: pointer;
+    outline: none;
+    word-wrap: break-word; }
+    .dr__wrapper .dr__datePicker:focus {
+      background: none; }
+  .dr__wrapper .dr__divider svg {
+    vertical-align: middle !important;
+    fill: #565a5c !important;
+    height: 24px !important;
+    width: 18px !important;
+    margin: 0 3px; }
 
 .dl__filterItemDimension {
   width: 100%;

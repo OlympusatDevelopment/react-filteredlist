@@ -1,6 +1,6 @@
 {
   "name": "react-filteredlist",
-  "version": "16.12.15",
+  "version": "16.12.16",
   "description": "FilteredList",
   "main": "./dist/react-filteredlist.js",
   "author": "Adam Gedney",
