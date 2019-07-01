@@ -5675,9 +5675,10 @@ span.flatpickr-day.selected {
   align-items: center;
   background: none;
   padding: 3px 0px;
-  position: relative; }
+  position: relative;
+  z-index: 10; }
   .dr__wrapper .dr__datePicker {
-    width: 45%;
+    width: 100%;
     position: relative;
     line-height: 30px;
     padding: .25rem 50px .25rem .25rem;

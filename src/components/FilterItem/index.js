@@ -224,7 +224,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
 											selected={this.state.startDate}
                       id={`${self.props.options.id}--start`}
 											onChange={(selectedDates) => {
-											  const startDate = moment(selectedDates[0]);
+											  const startDate = moment(selectedDates);
 												self.setState({startDate});
 												self._onRangeChange({startDate});
 											}}
@@ -239,7 +239,7 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
 											selected={this.state.endDate}
 											id={`${self.props.options.id}--end`}
 											onChange={(selectedDates) => {
-												const endDate = moment(selectedDates[0]);
+												const endDate = moment(selectedDates);
 												self.setState({endDate});
 												self._onRangeChange({ endDate });
 											}}
