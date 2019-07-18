@@ -4643,6 +4643,8 @@ span.flatpickr-day.selected {
 /* Application Component Styles*/
 .dl__checkbox {
   text-align: center; }
+  .dl__checkbox input {
+    font-size: 15px; }
 
 .dl__customItem {
   position: relative;

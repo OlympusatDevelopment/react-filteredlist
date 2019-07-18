@@ -36,10 +36,9 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 		const enabledLightbox = selectedView.enableGalleryLightbox;
 		const routePath = link.row && link.row(item) || '/';
 		
-		console.log('input on click: ', tagName);
-		
 		// Prevent linking when the copy icon is clicked...
-		if (e.target.classList.contains('dl__textItem-item--copy')) {
+		if (e.target.classList.contains('dl__textItem-item--copy') ||
+			e.target.classList.contains('dl__checkbox')) {
 			e.preventDefault();
 		} else {
 			

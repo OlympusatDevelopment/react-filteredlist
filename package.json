@@ -20,12 +20,10 @@
     "moment": "^2.18.1",
     "pikaday": "^1.8.0",
     "prop-types": "^15.6.2",
-    "react": "^16.8.6",
     "react-addons-shallow-compare": "^15.5.2",
     "react-checkbox-group": "^3.1.1",
     "react-chips": "^0.7.0",
     "react-datepicker": "^1.8.0",
-    "react-dom": "^16.8.6",
     "react-images": "^0.5.4",
     "react-intl": "^2.7.0",
     "react-radio-group": "^3.0.3",
@@ -56,8 +54,8 @@
     "webpack-cli": "^3.1.2"
   },
   "peerDependencies": {
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0"
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   },
   "browserify-shim": {
     "react": "global:React",
