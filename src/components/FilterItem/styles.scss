@@ -30,26 +30,6 @@
 	}
   }
 
-  .DateRangePicker{
-	width: 100%;
-
-	&__picker{
-	  z-index: 100;
-	  top: 29px;
-	}
-
-	&Input{
-	  z-index: 0;
-	  position: relative;
-	  width: 100%;
-
-	  &__arrow svg{
-		width: 17px;
-		height: 17px;
-	  }
-	}
-  }
-
   .DateInput{
 	font-size: 11px;
 	line-height: 9px;
@@ -91,55 +71,5 @@
       font-size: 12px;
       opacity: 0.7;
     }
-  }
-}
-
-.dr {
-  &__wrapper {
-    display: flex;
-    justify-content: flex-start;
-    // border: 1px solid #999;
-    border-radius: 2px;
-    width: 100%;
-    padding: 3px 9px;
-    position: relative;
-    background: #fbfbfb;
-    // padding-left: 15px;
-    // z-index: 101;
-
-    > div {
-      > input {
-        width: 100%;
-
-        &:focus {
-          background: #8EEAE2;
-        }
-      }
-    }
-
-    .react-datepicker__input-container{
-      height: 21px;
-
-      input{
-        padding-left: 12px;
-      }
-    }
-  }
-
-  &__datePicker {
-      float: left;
-      display: inline-block;
-      height: auto;
-      min-height: 25px;
-      vertical-align: middle;
-      width: 100%;
-  }
-
-	&__divider svg {
-		vertical-align: middle !important;
-		fill: #565a5c !important;
-		height: 24px !important;
-    width: 18px !important;
-    margin: 0 3px;
   }
 }

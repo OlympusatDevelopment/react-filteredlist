@@ -1,6 +1,10 @@
 {
   "name": "react-filteredlist",
+<<<<<<< HEAD
   "version": "17.0.0",
+=======
+  "version": "16.12.16",
+>>>>>>> d2ac211173ee0dcc95f04ec2067c5a9f737446fc
   "description": "FilteredList",
   "main": "./dist/react-filteredlist.js",
   "author": "Adam Gedney",
@@ -23,7 +27,7 @@
     "react-addons-shallow-compare": "^15.5.2",
     "react-checkbox-group": "^3.1.1",
     "react-chips": "^0.7.0",
-    "react-datepicker": "^1.6.0",
+    "react-datepicker": "^1.8.0",
     "react-images": "^0.5.4",
     "react-intl": "^2.7.0",
     "react-radio-group": "^3.0.3",
@@ -31,7 +35,6 @@
     "react-scrolllock": "^2.0.1",
     "react-super-select": "^1.0.4",
     "redux": "^3.6.0",
-    "tiny-date-picker": "^3.2.8",
     "underscore": "^1.8.3",
     "validator": "^10.9.0",
     "xhr": "^2.4.0"
@@ -56,6 +59,13 @@
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2"
   },
+<<<<<<< HEAD
+=======
+  "peerDependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+>>>>>>> d2ac211173ee0dcc95f04ec2067c5a9f737446fc
   "browserify-shim": {
     "react": "global:React",
     "react-dom": "global:ReactDOM"
