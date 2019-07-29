@@ -5716,6 +5716,7 @@ span.flatpickr-day.selected {
   .dr__datePicker:focus {
     background: none; }
 
+<<<<<<< HEAD
 .dl__filterItemDimension {
   width: 100%;
   display: flex;
@@ -5779,6 +5780,8 @@ span.flatpickr-day.selected {
     -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
     -webkit-transition-delay: 9999s; }
 
+=======
+>>>>>>> origin/master
 .dl {
   position: relative; }
   .dl__container {

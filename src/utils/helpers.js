@@ -10,7 +10,11 @@ import utils from '../utils'
  * @returns {*}
  */
 
+<<<<<<< HEAD
 export const makeCssGridLayout = (props, enableRowChecks, gridColumnMinMaxWidth = 'minmax(50px, 1fr)', rowChecksWidth = '40px', ) => {
+=======
+export const makeCssGridLayout = (props, enableRowChecks, gridColumnMinMaxWidth = 'minmax(100px, 1fr)', rowChecksWidth = '40px', ) => {
+>>>>>>> origin/master
 	let cssGridStyles = props
 		.filter(({ display }) => display)
 		.reduce((acc, curr) => {

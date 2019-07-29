@@ -5,9 +5,12 @@ import * as FilterItemActions from './actions';
 import Select from 'react-super-select';
 import moment from 'moment';
 import DatePicker from '../DatePicker';
+<<<<<<< HEAD
 /* NOTE: Temporarily add Dimensions component as a custom component. */
 /* NOTE: This setup will be removed after the next iteration of the filteredlist */
 import CustomComponent from '../Dimensions';
+=======
+>>>>>>> origin/master
 import AutoCompleteSelect from '../AutoCompleteSelect';
 import PropertySearch from '../PropertySearch';
 import { CheckboxGroup, Checkbox } from 'react-checkbox-group';
@@ -309,7 +312,12 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
                     filterChange={this.props.filterChange}/>);
                 break;
             case 'custom':
+<<<<<<< HEAD
                   const customComponentProps = {filterChange: this.props.filterChange, ...options, selectedView: this.props.selectedView};
+=======
+                const CustomComponent = self.props.options.component,
+                  customComponentProps = {filterChange: this.props.filterChange, ...options, selectedView: this.props.selectedView};
+>>>>>>> origin/master
 							  resolve(<CustomComponent {...customComponentProps} />);
               break;
             case 'select':
