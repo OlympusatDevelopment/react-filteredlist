@@ -1,10 +1,6 @@
 {
   "name": "react-filteredlist",
-<<<<<<< HEAD
   "version": "17.0.0",
-=======
-  "version": "16.12.16",
->>>>>>> d2ac211173ee0dcc95f04ec2067c5a9f737446fc
   "description": "FilteredList",
   "main": "./dist/react-filteredlist.js",
   "author": "Adam Gedney",
@@ -59,13 +55,6 @@
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2"
   },
-<<<<<<< HEAD
-=======
-  "peerDependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
-  },
->>>>>>> d2ac211173ee0dcc95f04ec2067c5a9f737446fc
   "browserify-shim": {
     "react": "global:React",
     "react-dom": "global:ReactDOM"
