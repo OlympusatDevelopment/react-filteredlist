@@ -113,12 +113,7 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 			html = this._highlightSearchTerm(html)
 		}
 		
-<<<<<<< HEAD
-		return(<span dangerouslySetInnerHTML={{__html: html}}
-								 title={(html || '').toString().replace(/(<([^>]+)>)/ig," ")}></span>);
-=======
 		return(<span dangerouslySetInnerHTML={{__html: html}} title={html}></span>);
->>>>>>> origin/master
 	}
 	
 	makeLightboxImages (prop, item, items){
