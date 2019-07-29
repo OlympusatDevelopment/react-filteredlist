@@ -37,9 +37,16 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 		const routePath = link.row && link.row(item) || '/';
 		
 		// Prevent linking when the copy icon is clicked...
-		if (e.target.classList.contains('dl__textItem-item--copy')) {
+		if (e.target.classList.contains('dl__textItem-item--copy') ||
+			e.target.classList.contains('dl__checkbox')) {
 			e.preventDefault();
 		} else {
+			
+			// Prevents linking if lightbox is enabled
+			// element is an image
+			if (tagName === 'input' || tagName === 'img' && enabledLightbox) {
+				return false;
+			}
 			
 			let _shouldBreak = false;
 			if(config.hooks.onRowClick) {
@@ -47,12 +54,6 @@ class TextItem extends Component { // eslint-disable-line react/prefer-stateless
 				if(_shouldBreak) {
 					return false;
 				}
-			}
-			
-			// Prevents linking if lightbox is enabled
-			// element is an image
-			if (tagName === 'input' || tagName === 'img' && enabledLightbox) {
-				return false;
 			}
 			
 			window.open(routePath, link.target !== '' ? link.target : '_self');
