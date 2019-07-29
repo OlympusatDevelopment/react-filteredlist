@@ -281,7 +281,7 @@ function makeXHRRequest(_state, options) {
     } else {
       // Decide if we need to make a tokened request or not
       if (options.api.token) {
-        opts.headers['authorization'] = options.api.token;
+        opts.headers['Authorization'] = options.api.token;
 
         // Handle token refresh in a hook
         if (options.api.onTokenNeedsRefresh && window.AWS.config.credentials.needsRefresh()) {
