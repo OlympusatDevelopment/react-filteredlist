@@ -501,7 +501,10 @@ export default {
   type: 'property-search',
   prop: "propertySearch",
   label: 'Property Search',
+<<<<<<< HEAD
   placeholder: 'Placeholder',
+=======
+>>>>>>> origin/master
   fixedKey: 'property',
   inputType: 'number | text | date | ...' // value corresponds to the html input types
   value: null
