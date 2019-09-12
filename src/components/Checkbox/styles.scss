@@ -1,8 +1,8 @@
 .dl__checkbox{
   display: flex;
-  flex: 0 0 100%;
+  flex: 1;
   justify-content: center;
-  min-height: 35px;
+  min-height: 100%;
   align-items: center;
 
   input {
