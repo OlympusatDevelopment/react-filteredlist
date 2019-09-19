@@ -5,6 +5,9 @@ import * as FilterItemActions from './actions';
 import Select from 'react-super-select';
 import moment from 'moment';
 import DatePicker from '../DatePicker';
+/* NOTE: Temporarily add Dimensions component as a custom component. */
+/* NOTE: This setup will be removed after the next iteration of the filteredlist */
+import DimensionComponent from '../Dimensions';
 import AutoCompleteSelect from '../AutoCompleteSelect';
 import PropertySearch from '../PropertySearch';
 import { CheckboxGroup, Checkbox } from 'react-checkbox-group';
@@ -305,11 +308,15 @@ class FilterItem extends Component { // eslint-disable-line react/prefer-statele
                     selectedView={self.props.selectedView} 
                     filterChange={this.props.filterChange}/>);
                 break;
-            case 'custom':
-                const CustomComponent = self.props.options.component,
-                  customComponentProps = {filterChange: this.props.filterChange, ...options, selectedView: this.props.selectedView};
-							  resolve(<CustomComponent {...customComponentProps} />);
-              break;
+            case 'dimension':
+							const dimensionsComponentProps = {filterChange: this.props.filterChange, ...options, selectedView: this.props.selectedView};
+							resolve(<DimensionComponent {...dimensionsComponentProps} />);
+							break;
+						case 'custom':
+							const CustomComponent = self.props.options.component,
+								customComponentProps = {filterChange: this.props.filterChange, ...options, selectedView: this.props.selectedView};
+							resolve(<CustomComponent {...customComponentProps} />);
+							break;
             case 'select':
             default:
               // If a value exist via a query string run or state update, set the component initial val, otherwise leave blank to display the placeholder

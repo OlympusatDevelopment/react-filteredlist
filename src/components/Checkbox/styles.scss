@@ -1,7 +1,11 @@
 .dl__checkbox{
-  text-align: center;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  min-height: 100%;
+  align-items: center;
 
   input {
-    font-size: 15px;
+    font-size: 16px;
   }
 }
